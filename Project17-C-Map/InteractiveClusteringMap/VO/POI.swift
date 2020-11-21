@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct POI {
+struct POI: Equatable {
     
     private(set) var x: Double
     private(set) var y: Double
