@@ -29,6 +29,30 @@ class InteractiveMapView: NMFNaverMapView {
         showZoomControls = true
         showLocationButton = true
         showCompass = true
+        showScaleBar = true
+        
+        mapView.minZoomLevel = 5
+        mapView.maxZoomLevel = 19
+        configureExtent()
+    }
+    
+    private func configureExtent() {
+        let extent = NMGLatLngBounds(southWestLat: Metric.southWestLat,
+                                     southWestLng: Metric.southWestLng,
+                                     northEastLat: Metric.northEastLat,
+                                     northEastLng: Metric.northEastLng)
+        mapView.extent = extent
+    }
+    
+}
+
+private extension InteractiveMapView {
+    
+    enum Metric {
+        static let southWestLat: Double = 35
+        static let southWestLng: Double = 126
+        static let northEastLat: Double = 40
+        static let northEastLng: Double = 128.0
     }
     
 }
