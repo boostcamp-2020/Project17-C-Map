@@ -8,9 +8,11 @@
 import Foundation
 import CoreData
 
-final class CoreDataStack {
-
-    static let container: NSPersistentContainer = {
+final class CoreDataStack: DataManagable {
+    
+    static let shared: CoreDataStack = CoreDataStack()
+    
+    private lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -20,25 +22,37 @@ final class CoreDataStack {
         return container
     }()
     
-    static let context: NSManagedObjectContext = container.viewContext
-
-    // MARK: - Core Data Saving support
-
-    static func saveContext () {
-       
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
+    private lazy var context: NSManagedObjectContext = container.viewContext
+    
+    private init() { }
+    
+    func fetch() {
+        
+    }
+    
+    func setValue() {
+        let entity = NSEntityDescription.entity(forEntityName: "POI", in: context)
+        
+        if let entity = entity {
+            let poi = NSManagedObject(entity: entity, insertInto: context)
+            poi.setValue(30.173648, forKey: "x")
+            poi.setValue(120.182837, forKey: "y")
+            let poi2 = NSManagedObject(entity: entity, insertInto: context)
+            poi2.setValue(33.3178, forKey: "x")
+            poi2.setValue(127.782837, forKey: "y")
         }
     }
     
-    
-    private init() { }
+    func save(successHandler: @escaping () -> Void, failureHandler: ((NSError) -> Void)? = nil) {
+        if context.hasChanges {
+            do {
+                try context.save()
+                successHandler()
+            } catch {
+                let nsError = error as NSError
+                failureHandler?(nsError)
+            }
+        }
+    }
     
 }
