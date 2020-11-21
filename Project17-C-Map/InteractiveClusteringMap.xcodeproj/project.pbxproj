@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */; };
+		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
+		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
+		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
+		3713D4032569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */; };
+		3713D4042569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */; };
+		3713D4052569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */; };
+		3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
+		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
 		37EB732D2562592700AC44D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732C2562592700AC44D6 /* ViewController.swift */; };
@@ -18,7 +27,6 @@
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
-		FA81D6672568FE3C0023E123 /* POI+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D6652568FE3C0023E123 /* POI+CoreDataClass.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +48,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
+		3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POIEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POIEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
+		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
 		37EB73252562592700AC44D6 /* InteractiveClusteringMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveClusteringMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EB73282562592700AC44D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EB732A2562592700AC44D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +71,6 @@
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA81D6652568FE3C0023E123 /* POI+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "POI+CoreDataClass.swift"; path = "InteractiveClusteringMap/Core Data/POI/POI+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		372216CB256943C800231245 /* VO */ = {
+			isa = PBXGroup;
+			children = (
+				372216CC256943D300231245 /* POI.swift */,
+			);
+			path = VO;
+			sourceTree = "<group>";
+		};
 		37EB731C2562592700AC44D6 = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +133,8 @@
 		37EB73272562592700AC44D6 /* InteractiveClusteringMap */ = {
 			isa = PBXGroup;
 			children = (
-				FA81D66E2568FEC50023E123 /* Core Data */,
+				372216CB256943C800231245 /* VO */,
+				FA81D66E2568FEC50023E123 /* CoreData */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732C2562592700AC44D6 /* ViewController.swift */,
@@ -131,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
+				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMapTests;
@@ -162,20 +183,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		FA81D66E2568FEC50023E123 /* Core Data */ = {
+		FA81D66E2568FEC50023E123 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				FAB1FC7F2568F1F0009E7535 /* POI */,
 				FA81D67725690F360023E123 /* CoreDataStack.swift */,
 				372216C02569325600231245 /* DataManagable.swift */,
 			);
-			path = "Core Data";
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		FAB1FC7F2568F1F0009E7535 /* POI */ = {
 			isa = PBXGroup;
 			children = (
-				FA81D6652568FE3C0023E123 /* POI+CoreDataClass.swift */,
+				3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */,
+				3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */,
 			);
 			path = POI;
 			sourceTree = "<group>";
@@ -354,8 +376,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				372216CD256943D300231245 /* POI.swift in Sources */,
+				3713D4042569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */,
+				3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
-				FA81D6672568FE3C0023E123 /* POI+CoreDataClass.swift in Sources */,
 				37EB732D2562592700AC44D6 /* ViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
@@ -368,7 +392,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3713D3E425694CD300E703EC /* POI.swift in Sources */,
+				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
+				3713D4052569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
+				3713D4032569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */,
+				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
+				3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
