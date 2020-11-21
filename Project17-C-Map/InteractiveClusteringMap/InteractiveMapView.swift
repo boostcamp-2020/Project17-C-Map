@@ -10,16 +10,16 @@ import NMapsMap
 
 final class InteractiveMapView: NMFNaverMapView {
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configure()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configure()
+    }
+       
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
