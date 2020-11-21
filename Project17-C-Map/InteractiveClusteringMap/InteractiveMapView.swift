@@ -10,13 +10,13 @@ import NMapsMap
 
 class InteractiveMapView: NMFNaverMapView {
     
-    init() {
-        super.init(frame: .zero)
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         configure()
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configure()
     }
     
