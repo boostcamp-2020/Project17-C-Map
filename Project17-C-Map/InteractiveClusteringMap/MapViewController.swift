@@ -7,8 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MapViewController: UIViewController {
 
+    @IBOutlet weak var mainMapView: InteractiveMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
