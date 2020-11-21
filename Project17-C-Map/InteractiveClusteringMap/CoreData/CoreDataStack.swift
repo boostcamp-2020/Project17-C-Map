@@ -26,13 +26,24 @@ final class CoreDataStack: DataManagable {
     
     private init() { }
     
+    func deleteAll() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "POIEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try container.persistentStoreCoordinator.execute(deleteRequest, with: context)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
     func fetch() -> [POI] {
         do {
             let entity = try context.fetch(POIEntity.fetchRequest()) as [POIEntity]
             var pois: [POI] = []
             
             entity.forEach {
-                pois.append(POI(x: $0.x, y: $0.y, id: $0.id, name: $0.name, imageUrl: $0.imageUrl, category: $0.category))
+                pois.append(POI(x: $0.x, y: $0.y, id: $0.id, name: $0.name, imageURL: $0.imageUrl, category: $0.category))
             }
             return pois
         } catch {
@@ -48,7 +59,7 @@ final class CoreDataStack: DataManagable {
             value.setValue(poi.y, forKey: "y")
             value.setValue(poi.id, forKey: "id")
             value.setValue(poi.name, forKey: "name")
-            value.setValue(poi.imageUrl, forKey: "imageUrl")
+            value.setValue(poi.imageURL, forKey: "imageUrl")
             value.setValue(poi.category, forKey: "category")
         }
     }
