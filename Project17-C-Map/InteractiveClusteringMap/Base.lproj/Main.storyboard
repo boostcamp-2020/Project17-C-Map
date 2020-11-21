@@ -31,7 +31,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="mainMapView" destination="Fov-2Y-YMb" id="nw5-3S-dA0"/>
+                        <outlet property="interactiveMapView" destination="Fov-2Y-YMb" id="nw5-3S-dA0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
