@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MapViewController: UIViewController {
 
@@ -13,6 +14,8 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let locationManger = CLLocationManager()
+        locationManger.requestWhenInUseAuthorization()
     }
     
 }
