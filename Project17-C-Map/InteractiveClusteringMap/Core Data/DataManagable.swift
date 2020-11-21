@@ -9,7 +9,7 @@ import Foundation
 
 protocol DataManagable {
     
-    func fetch()
+    func fetch() -> [POI]?
     func save(successHandler: @escaping () -> Void, failureHandler: ((NSError) -> Void)?)
     func setValue()
     

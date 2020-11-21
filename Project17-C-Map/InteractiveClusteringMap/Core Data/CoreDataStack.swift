@@ -26,8 +26,12 @@ final class CoreDataStack: DataManagable {
     
     private init() { }
     
-    func fetch() {
-        
+    func fetch() -> [POI]? {
+        do {
+            return try context.fetch(POI.fetchRequest()) as [POI]
+        } catch {
+            return []
+        }
     }
     
     func setValue() {
