@@ -11,7 +11,7 @@
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
 		37EB732D2562592700AC44D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732C2562592700AC44D6 /* ViewController.swift */; };
 		37EB73302562592700AC44D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EB732E2562592700AC44D6 /* Main.storyboard */; };
-		37EB73332562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73312562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld */; };
+		37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73312562592700AC44D6 /* Model.xcdatamodeld */; };
 		37EB73352562592800AC44D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37EB73342562592800AC44D6 /* Assets.xcassets */; };
 		37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EB73362562592800AC44D6 /* LaunchScreen.storyboard */; };
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
@@ -115,7 +115,7 @@
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
 				37EB73392562592800AC44D6 /* Info.plist */,
-				37EB73312562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld */,
+				37EB73312562592700AC44D6 /* Model.xcdatamodeld */,
 			);
 			path = InteractiveClusteringMap;
 			sourceTree = "<group>";
@@ -330,7 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37EB732D2562592700AC44D6 /* ViewController.swift in Sources */,
-				37EB73332562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld in Sources */,
+				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,
 			);
@@ -669,13 +669,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		37EB73312562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld */ = {
+		37EB73312562592700AC44D6 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				37EB73322562592700AC44D6 /* InteractiveClusteringMap.xcdatamodel */,
 			);
 			currentVersion = 37EB73322562592700AC44D6 /* InteractiveClusteringMap.xcdatamodel */;
-			path = InteractiveClusteringMap.xcdatamodeld;
+			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
