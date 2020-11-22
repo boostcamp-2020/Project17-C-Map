@@ -19,10 +19,6 @@ class MapViewController: UIViewController {
         requestLocationPermission()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     private func requestLocationPermission(){
         let locationManger = CLLocationManager()
         locationManger.requestWhenInUseAuthorization()
