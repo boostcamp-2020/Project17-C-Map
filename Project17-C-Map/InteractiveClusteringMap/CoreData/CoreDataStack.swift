@@ -48,11 +48,11 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func save(successHandler: @escaping () -> Void, failureHandler: ((NSError) -> Void)? = nil) {
+    func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
         if context.hasChanges {
             do {
                 try context.save()
-                successHandler()
+                successHandler?()
             } catch {
                 let nsError = error as NSError
                 failureHandler?(nsError)
