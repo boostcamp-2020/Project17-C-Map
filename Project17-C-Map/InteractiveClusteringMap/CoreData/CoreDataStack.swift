@@ -12,7 +12,7 @@ final class CoreDataStack: DataManagable {
     
     static let shared: CoreDataStack = CoreDataStack()
     
-    private let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    private weak var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     private lazy var container: NSPersistentContainer? = appDelegate?.container
     private lazy var context: NSManagedObjectContext? = container?.viewContext
     

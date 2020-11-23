@@ -1,0 +1,13 @@
+disabled_rules:
+- line_length
+- trailing_whitespace
+- multiple_closures_with_trailing_closure
+- empty_enum_arguments
+- identifier_name
+
+included:
+
+excluded:
+- Pods
+- InteractiveClusteringMap/SceneDelegate.swift
+- InteractiveClusteringMap/AppDelegate.swift
