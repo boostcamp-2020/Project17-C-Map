@@ -8,12 +8,6 @@
 import Foundation
 import NMapsMap
 
-//mockup POI
-struct POI {
-    let x: Double
-    let y: Double
-}
-
 final class MapController {
     
     private weak var interactiveMapView: InteractiveMapView?
