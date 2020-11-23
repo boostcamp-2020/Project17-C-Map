@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class POIService {
+protocol POIServicing {
+    
+    func fetch(completion: @escaping ([POI]) -> Void)
+    func save()
+}
+
+final class POIService: POIServicing {
     
     private let dataManager: DataManagable
     private var pois: [POI]

@@ -9,25 +9,25 @@ import Foundation
 
 class JSONReader {
     
-    private func readJSON(from fileName: String) -> Data? {
+    static func readPOIs(fileName: String) -> [POI]? {
+        guard let jsonData = readJSON(from: fileName) else { return nil }
+        
+        let decoder = JSONDecoder()
         do {
-            if let bundlePath = Bundle.main.path(forResource: fileName, ofType: "json"),
-               let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
-                return jsonData
-            }
+            let result = try decoder.decode(Places.self, from: jsonData)
+            return result.places
         } catch {
             print(error)
         }
         return nil
     }
     
-    func places(fileName: String) -> Places? {
-        guard let jsonData = readJSON(from: fileName) else { return nil }
-        
-        let decoder = JSONDecoder()
+    private static func readJSON(from fileName: String) -> Data? {
         do {
-            let result = try decoder.decode(Places.self, from: jsonData)
-            return result
+            if let bundlePath = Bundle.main.path(forResource: fileName, ofType: "json"),
+               let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
+                return jsonData
+            }
         } catch {
             print(error)
         }

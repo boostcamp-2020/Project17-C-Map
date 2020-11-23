@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
+		199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
+		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */; };
 		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
-		3713D4032569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */; };
-		3713D4042569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */; };
-		3713D4052569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */; };
-		3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
@@ -54,9 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
-		3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
@@ -115,6 +114,7 @@
 		372216CB256943C800231245 /* VO */ = {
 			isa = PBXGroup;
 			children = (
+				37352CDF25695EE000CAFDFD /* Place.swift */,
 				372216CC256943D300231245 /* POI.swift */,
 			);
 			path = VO;
@@ -123,7 +123,7 @@
 		37352CCF25695AA500CAFDFD /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				37352CDF25695EE000CAFDFD /* Place.swift */,
+				37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -161,7 +161,6 @@
 		37EB73272562592700AC44D6 /* InteractiveClusteringMap */ = {
 			isa = PBXGroup;
 			children = (
-				37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */,
 				37352CD925695E4D00CAFDFD /* Util */,
 				37352CCF25695AA500CAFDFD /* Resource */,
 				372216CB256943C800231245 /* VO */,
@@ -229,8 +228,8 @@
 		FAB1FC7F2568F1F0009E7535 /* POI */ = {
 			isa = PBXGroup;
 			children = (
-				3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */,
-				3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */,
+				199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */,
+				199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */,
 				3753DCEF256B4C5B006D26A9 /* POIService.swift */,
 			);
 			path = POI;
@@ -411,17 +410,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
+				199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
-				37EB73332562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld in Sources */,
+				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
-				3713D4042569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
-				3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
-				37EB732D2562592700AC44D6 /* ViewController.swift in Sources */,
+				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
@@ -437,9 +436,8 @@
 			files = (
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
-				3713D4052569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
-				3713D4032569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */,
+				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */,
 			);

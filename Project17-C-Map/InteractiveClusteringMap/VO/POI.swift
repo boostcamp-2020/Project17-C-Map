@@ -12,21 +12,15 @@ struct POI: Codable {
     let x, y: Double
     let id: Int64
     let name: String?
-    let imageURL: String?
+    let imageUrl: String?
     let category: String?
     
-    enum CodingKeys: String, CodingKey {
-        case id, name, x, y
-        case imageURL = "imageUrl"
-        case category
-    }
-    
-    init(x: Double, y: Double, id: Int64, name: String?, imageURL: String?, category: String?) {
+    init(x: Double, y: Double, id: Int64, name: String?, imageUrl: String?, category: String?) {
         self.x = x
         self.y = y
         self.id = id
         self.name = name
-        self.imageURL = imageURL
+        self.imageUrl = imageUrl
         self.category = category
     }
     
@@ -37,7 +31,7 @@ struct POI: Codable {
         x = Double(try container.decode(String.self, forKey: .x)) ?? 0
         y = Double(try container.decode(String.self, forKey: .y)) ?? 0
         name = try? container.decode(String.self, forKey: .name)
-        imageURL = try? container.decode(String.self, forKey: .imageURL)
+        imageUrl = try? container.decode(String.self, forKey: .imageUrl)
         category = try? container.decode(String.self, forKey: .category)
     }
 
@@ -45,8 +39,13 @@ struct POI: Codable {
 
 extension POI {
     
-    enum Name: String {
-        case x, y, id, name, imageUrl, category
+    enum Name {
+        static let x = "x"
+        static let y = "y"
+        static let id = "id"
+        static let name = "name"
+        static let imageUrl = "imageUrl"
+        static let category = "category"
     }
     
 }

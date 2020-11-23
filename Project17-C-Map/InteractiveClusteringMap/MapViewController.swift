@@ -13,15 +13,34 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     private var mapController: MapController?
+    private var dataManager: DataManagable?
+    
+    init?(coder: NSCoder, dataManager: DataManagable) {
+        self.dataManager = dataManager
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         requestLocationPermission()
+        configureMapController()
     }
     
-    private func requestLocationPermission(){
+    private func requestLocationPermission() {
         let locationManger = CLLocationManager()
         locationManger.requestWhenInUseAuthorization()
     }
     
+    private func configureMapController() {
+        guard let dataManager = dataManager else { return }
+    
+        let service = POIService(dataManager: dataManager)
+        mapController = MapController(mapView: interactiveMapView, poiServicing: service)
+        mapController?.loadMarkers()
+    }
+     
 }

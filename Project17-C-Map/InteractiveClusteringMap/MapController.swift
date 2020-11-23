@@ -11,21 +11,27 @@ import NMapsMap
 final class MapController {
     
     private weak var interactiveMapView: InteractiveMapView?
-    private let POIs: [POI]
+    private let poiServicing: POIServicing
     
-    init(mapView: InteractiveMapView, POIs: [POI]) {
+    init(mapView: InteractiveMapView, poiServicing: POIServicing) {
         self.interactiveMapView = mapView
-        self.POIs = POIs
+        self.poiServicing = poiServicing
     }
     
-    func createMarkers() {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.POIs.forEach { POI in
-                let location = NMGLatLng(lat: POI.x, lng: POI.y)
+    func loadMarkers() {
+        poiServicing.fetch { [weak self] pois in
+            self?.createMarkers(pois: pois)
+        }
+    }
+    
+    private func createMarkers(pois: [POI]) {
+        pois.forEach { POI in
+            DispatchQueue.global(qos: .userInteractive).async {
+                let location = NMGLatLng(lat: POI.y, lng: POI.x)
                 let marker = NMFMarker()
                 marker.position = location
                 marker.iconTintColor = .green
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
                     marker.mapView = self?.interactiveMapView?.mapView
                 }
             }
