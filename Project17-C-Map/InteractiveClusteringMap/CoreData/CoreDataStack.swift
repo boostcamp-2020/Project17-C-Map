@@ -12,9 +12,11 @@ final class CoreDataStack: DataManagable {
     
     static let shared: CoreDataStack = CoreDataStack()
     
+    private let containerName: String = "Model"
+    
     private lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        let container = NSPersistentContainer(name: containerName)
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 print(error.localizedDescription)
             }
@@ -37,30 +39,23 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch() -> [POI] {
-        do {
-            let entity = try context.fetch(POIEntity.fetchRequest()) as [POIEntity]
-            var pois: [POI] = []
-            
-            entity.forEach {
-                pois.append(POI(x: $0.x, y: $0.y, id: $0.id, name: $0.name, imageURL: $0.imageUrl, category: $0.category))
-            }
-            return pois
-        } catch {
+    func fetch() -> [POIEntity] {
+        guard let entities = try? context.fetch(POIEntity.fetchRequest()) as? [POIEntity] else {
             return []
         }
+        return entities
     }
     
     func setValue(_ poi: POI) {
-        let entity = NSEntityDescription.entity(forEntityName: "POIEntity", in: context)
+        let entity = NSEntityDescription.entity(forEntityName: POIEntity.name, in: context)
         if let entity = entity {
             let value = NSManagedObject(entity: entity, insertInto: context)
-            value.setValue(poi.x, forKey: "x")
-            value.setValue(poi.y, forKey: "y")
-            value.setValue(poi.id, forKey: "id")
-            value.setValue(poi.name, forKey: "name")
-            value.setValue(poi.imageURL, forKey: "imageUrl")
-            value.setValue(poi.category, forKey: "category")
+            value.setValue(poi.x, forKey: POI.Name.x.rawValue)
+            value.setValue(poi.y, forKey: POI.Name.y.rawValue)
+            value.setValue(poi.id, forKey: POI.Name.id.rawValue)
+            value.setValue(poi.name, forKey: POI.Name.name.rawValue)
+            value.setValue(poi.imageUrl, forKey: POI.Name.imageUrl.rawValue)
+            value.setValue(poi.category, forKey: POI.Name.category.rawValue)
         }
     }
     

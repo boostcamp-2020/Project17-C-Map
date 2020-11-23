@@ -9,8 +9,8 @@ import Foundation
 
 protocol DataManagable {
     
-    func fetch() -> [POI]
-    func save(successHandler: @escaping () -> Void, failureHandler: ((NSError) -> Void)?)
+    func fetch() -> [POIEntity]
+    func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)?)
     func setValue(_ poi: POI)
     
 }

@@ -40,5 +40,13 @@ struct POI: Codable {
         imageURL = try? container.decode(String.self, forKey: .imageURL)
         category = try? container.decode(String.self, forKey: .category)
     }
+
+}
+
+extension POI {
+    
+    enum Name: String {
+        case x, y, id, name, imageUrl, category
+    }
     
 }
