@@ -9,11 +9,19 @@ import Foundation
 
 struct POI: Equatable {
     
-    private(set) var x: Double
-    private(set) var y: Double
-    private(set) var id: Int64?
-    private(set) var name: String?
-    private(set) var imageUrl: String?
-    private(set) var category: String?
+    let x: Double
+    let y: Double
+    let id: Int64?
+    let name: String?
+    let imageUrl: String?
+    let category: String?
+    
+}
+
+extension POI {
+    
+    enum Name: String {
+        case x, y, id, name, imageUrl, category
+    }
     
 }
