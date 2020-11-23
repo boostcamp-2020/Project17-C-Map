@@ -49,10 +49,10 @@ final class InteractiveMapView: NMFNaverMapView {
 private extension InteractiveMapView {
     
     enum Metric {
-        static let southWestLat: Double = 35
-        static let southWestLng: Double = 126
-        static let northEastLat: Double = 40
-        static let northEastLng: Double = 128.0
+        static let southWestLat: Double = 33
+        static let southWestLng: Double = 124
+        static let northEastLat: Double = 43
+        static let northEastLng: Double = 132
     }
     
     enum ZoomLevel {
