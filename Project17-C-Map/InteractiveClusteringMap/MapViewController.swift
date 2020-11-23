@@ -7,13 +7,19 @@
 
 import UIKit
 import CoreLocation
+import NMapsMap
 
 class MapViewController: UIViewController {
 
-    @IBOutlet weak var mainMapView: InteractiveMapView!
+    @IBOutlet weak var interactiveMapView: InteractiveMapView!
+    private var mapController: MapController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestLocationPermission()
+    }
+    
+    private func requestLocationPermission(){
         let locationManger = CLLocationManager()
         locationManger.requestWhenInUseAuthorization()
     }

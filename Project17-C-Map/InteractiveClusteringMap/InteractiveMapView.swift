@@ -8,18 +8,18 @@
 import Foundation
 import NMapsMap
 
-class InteractiveMapView: NMFNaverMapView {
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configure()
-    }
+final class InteractiveMapView: NMFNaverMapView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configure()
+    }
+       
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
@@ -31,8 +31,8 @@ class InteractiveMapView: NMFNaverMapView {
         showCompass = true
         showScaleBar = true
         
-        mapView.minZoomLevel = 5
-        mapView.maxZoomLevel = 19
+        mapView.minZoomLevel = ZoomLevel.min
+        mapView.maxZoomLevel = ZoomLevel.max
         configureExtent()
     }
     
@@ -53,6 +53,11 @@ private extension InteractiveMapView {
         static let southWestLng: Double = 126
         static let northEastLat: Double = 40
         static let northEastLng: Double = 128.0
+    }
+    
+    enum ZoomLevel {
+        static let min: Double = 5
+        static let max: Double = 19
     }
     
 }

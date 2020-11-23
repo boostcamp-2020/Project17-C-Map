@@ -16,6 +16,7 @@
 		37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EB73362562592800AC44D6 /* LaunchScreen.storyboard */; };
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
+		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
 		46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B444572568F095001B79D4 /* InteractiveMapView.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
 /* End PBXBuildFile section */
@@ -54,6 +55,7 @@
 		37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveClusteringMapUITests.swift; sourceTree = "<group>"; };
 		37EB734F2562592900AC44D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
+		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		46B444572568F095001B79D4 /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
+				4623BD1225694A1400940B12 /* MapController.swift */,
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
@@ -336,6 +339,7 @@
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* InteractiveClusteringMap.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
