@@ -28,6 +28,17 @@ final class CoreDataStack: DataManagable {
     
     private init() { }
     
+    func deleteAll() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "POIEntity")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try container.persistentStoreCoordinator.execute(deleteRequest, with: context)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
+    
     func fetch() -> [POIEntity] {
         guard let entities = try? context.fetch(POIEntity.fetchRequest()) as? [POIEntity] else {
             return []
