@@ -17,6 +17,7 @@
 		3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
+		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
 		37EB732D2562592700AC44D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732C2562592700AC44D6 /* ViewController.swift */; };
@@ -49,10 +50,11 @@
 
 /* Begin PBXFileReference section */
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
-		3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataProperties.swift"; path = "/Users/alimelon/Documents/boostcamp2020/membership/GroupProject/MapC/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataClass.swift"; path = "/Users/alimelon/Documents/boostcamp2020/membership/GroupProject/MapC/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIEntity+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIEntity+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
+		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
 		37EB73252562592700AC44D6 /* InteractiveClusteringMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveClusteringMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EB73282562592700AC44D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EB732A2562592700AC44D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -196,8 +198,9 @@
 		FAB1FC7F2568F1F0009E7535 /* POI */ = {
 			isa = PBXGroup;
 			children = (
-				3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */,
 				3713D4022569511A00E703EC /* POIEntity+CoreDataClass.swift */,
+				3713D4012569511A00E703EC /* POIEntity+CoreDataProperties.swift */,
+				3753DCEF256B4C5B006D26A9 /* POIService.swift */,
 			);
 			path = POI;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 			files = (
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				3713D4042569511A00E703EC /* POIEntity+CoreDataClass.swift in Sources */,
+				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				3713D4062569511A00E703EC /* POIEntity+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				37EB732D2562592700AC44D6 /* ViewController.swift in Sources */,

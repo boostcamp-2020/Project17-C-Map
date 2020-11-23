@@ -22,5 +22,7 @@ extension POIEntity {
     @NSManaged public var name: String?
     @NSManaged public var x: Double
     @NSManaged public var y: Double
+    
+    static let name: String = "POIEntity"
 
 }
