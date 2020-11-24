@@ -30,6 +30,13 @@
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
+		46A12E1B256CD099007BDF3E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
+		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
+		46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
+		46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
+		46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
+		46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
+		46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */; };
 		46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B444572568F095001B79D4 /* InteractiveMapView.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
@@ -79,6 +86,9 @@
 		37EB734F2562592900AC44D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		46A12E1A256CD099007BDF3E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
+		46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
 		46B444572568F095001B79D4 /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
+				46A12E1A256CD099007BDF3E /* Extension.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -169,6 +180,7 @@
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
+				46153145256BDDD700BAE674 /* QuadTree */,
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
@@ -182,6 +194,7 @@
 		37EB73412562592900AC44D6 /* InteractiveClusteringMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
 				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
@@ -196,6 +209,22 @@
 				37EB734F2562592900AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMapUITests;
+			sourceTree = "<group>";
+		};
+		46153145256BDDD700BAE674 /* QuadTree */ = {
+			isa = PBXGroup;
+			children = (
+				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
+			);
+			path = QuadTree;
+			sourceTree = "<group>";
+		};
+		46A12E3E256CEDD3007BDF3E /* QuadTreeTests */ = {
+			isa = PBXGroup;
+			children = (
+				46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */,
+			);
+			path = QuadTreeTests;
 			sourceTree = "<group>";
 		};
 		7C26E5503146760CE550116C /* Frameworks */ = {
@@ -440,7 +469,9 @@
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
+				46A12E1B256CD099007BDF3E /* Extension.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
+				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
@@ -453,8 +484,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
+				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
+				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
+				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
+				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
+				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */,
