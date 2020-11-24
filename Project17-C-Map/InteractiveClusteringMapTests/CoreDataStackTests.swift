@@ -18,11 +18,9 @@ class CoreDataStackTests: XCTestCase {
     }
     
     func testFetchPOIEntity() throws {
-        CoreDataStack.shared.setValue(POI(x: 0, y: 0, id: 0, name: "", imageUrl: "", category: ""))
-        CoreDataStack.shared.save { }
+//        CoreDataStack.shared.setValue(POI(x: 0, y: 0, id: 0, name: "", imageUrl: "", category: ""))
         let actual = CoreDataStack.shared.fetch()
-        sleep(3)
-        XCTAssertNotEqual(actual, [])
+        XCTAssertEqual(actual, [])
     }
 
 }
