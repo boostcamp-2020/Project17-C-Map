@@ -23,7 +23,7 @@ struct BoundingBox {
         ]
     }()
     
-    private lazy var mid: Coordinate = {
+    lazy var mid: Coordinate = {
         let midX: Double = (bottomLeft.x + topRight.x) / 2.0
         let midY: Double = (bottomLeft.y + topRight.y) / 2.0
         return Coordinate(x: midX, y: midY)

@@ -56,15 +56,18 @@ class BoundingBoxTests: XCTestCase {
     func test_BoundingBox_겹칠_때_intersectsBoxBounds_테스트() {
         guard let boundingBox = boundingBox else { return }
         let newBox = BoundingBox(topRight: Coordinate(x: 150, y: 150), bottomLeft: Coordinate(x: 100, y: 100))
+        let newBox2 = BoundingBox(topRight: Coordinate(x: 1, y: 1), bottomLeft: Coordinate(x: -1, y: -1))
         
         XCTAssertTrue(boundingBox.isOverlapped(with: newBox))
+        XCTAssertTrue(boundingBox.isOverlapped(with: newBox2))
     }
     
     func test_BoundingBox_안_겹칠_때_intersectsBoxBounds_테스트() {
         guard let boundingBox = boundingBox else { return }
-        
         let newBox = BoundingBox(topRight: Coordinate(x: 150, y: 150), bottomLeft: Coordinate(x: 101, y: 101))
-        
+        let newBox2 = BoundingBox(topRight: Coordinate(x: -1, y: -1), bottomLeft: Coordinate(x: -100, y: -100))
+
         XCTAssertFalse(boundingBox.isOverlapped(with: newBox))
+        XCTAssertFalse(boundingBox.isOverlapped(with: newBox2))
     }
 }
