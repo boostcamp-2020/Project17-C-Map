@@ -41,7 +41,7 @@ struct BoundingBox {
     
 }
 
-struct Coordinate {
+struct Coordinate: Equatable {
     
     let x: Double
     let y: Double
