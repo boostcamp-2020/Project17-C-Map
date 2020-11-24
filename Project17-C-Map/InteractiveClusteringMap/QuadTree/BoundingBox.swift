@@ -12,22 +12,17 @@ struct BoundingBox {
     let topRight: Coordinate
     let bottomLeft: Coordinate
     
-    lazy var splitedQuadBoundingBox: [BoundingBox] = {
-        [
-            BoundingBox(topRight: Coordinate(x: mid.x, y: topRight.y),
-                        bottomLeft: Coordinate(x: bottomLeft.x, y: mid.y)),
-            BoundingBox(topRight: topRight, bottomLeft: mid),
-            BoundingBox(topRight: mid, bottomLeft: bottomLeft),
-            BoundingBox(topRight: Coordinate(x: topRight.x, y: mid.y),
-                        bottomLeft: Coordinate(x: mid.x, y: bottomLeft.y))
+    func splitedQuadBoundingBox() -> [BoundingBox] {
+        let center = topRight.center(other: bottomLeft)
+        return [
+            BoundingBox(topRight: Coordinate(x: center.x, y: topRight.y),
+                        bottomLeft: Coordinate(x: bottomLeft.x, y: center.y)),
+            BoundingBox(topRight: topRight, bottomLeft: center),
+            BoundingBox(topRight: center, bottomLeft: bottomLeft),
+            BoundingBox(topRight: Coordinate(x: topRight.x, y: center.y),
+                        bottomLeft: Coordinate(x: center.x, y: bottomLeft.y))
         ]
-    }()
-    
-    lazy var mid: Coordinate = {
-        let midX: Double = (bottomLeft.x + topRight.x) / 2.0
-        let midY: Double = (bottomLeft.y + topRight.y) / 2.0
-        return Coordinate(x: midX, y: midY)
-    }()
+    }
     
     func contains(coordinate: Coordinate) -> Bool {
         let containsX: Bool = (bottomLeft.x <= coordinate.x) && (coordinate.x <= topRight.x)
@@ -35,8 +30,8 @@ struct BoundingBox {
         return (containsX && containsY)
     }
     
-    func isOverlapped(with box: BoundingBox) -> Bool {
-        return (bottomLeft <= box.topRight &&  box.bottomLeft <= topRight)
+    func isOverlapped(with other: BoundingBox) -> Bool {
+        return (self.bottomLeft <= other.topRight && other.bottomLeft <= self.topRight)
     }
     
 }
@@ -48,6 +43,12 @@ struct Coordinate: Equatable {
     
     static func <= (left: Coordinate, right: Coordinate) -> Bool {
         left.x <= right.x && left.y <= right.y
+    }
+    
+    func center(other: Coordinate) -> Coordinate {
+        let centerX: Double = (self.x + other.x) / 2.0
+        let centerY: Double = (self.y + other.y) / 2.0
+        return Coordinate(x: centerX, y: centerY)
     }
     
 }
