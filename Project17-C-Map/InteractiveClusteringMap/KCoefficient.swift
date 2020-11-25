@@ -21,11 +21,12 @@ class AverageSilhouetteCalculator {
     }
     
     // AverageSilhouetteMethod
-    func findAverageSilhouette() {
-        clusters.forEach { cluster in
-           
+    func findAverageSilhouette(cluster: Cluster) -> Double {
+        var silhouettes  = [Double]()
+        cluster.coordinates.forEach { coordinate in
+            silhouettes.append(findSilhouette(with: cluster, target: coordinate))
         }
-        
+        return silhouettes.reduce(.zero, +) / Double(silhouettes.count)
     }
 
     func findSilhouette(with cluster: Cluster, target: Coordinate) -> Double {
