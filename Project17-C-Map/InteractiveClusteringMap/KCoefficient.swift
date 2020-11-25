@@ -7,6 +7,8 @@
 
 import Foundation
 
-func KwithRuleOfThumb(numberOfData : Int) -> Int {
+// rule of thumb
+func KwithRuleOfThumb(numberOfData: Int) -> Int {
     return Int(sqrt(Double(numberOfData/2)))
 }
+

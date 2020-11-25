@@ -41,6 +41,31 @@ struct Coordinate: Equatable {
     let x: Double
     let y: Double
     
+    func distanceTo(_ other: Coordinate) -> Double {
+        let powX = pow(self.x - other.x, 2.0)
+        let powY = pow(self.y - other.y, 2.0)
+        
+        return sqrt(powX + powY)
+    }
+    
+    static func + (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x + right.x
+        let y = left.y + right.y
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func - (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x - right.x
+        let y = left.y - right.y
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func / (left: Coordinate, right: Double) -> Coordinate {
+        let x = left.x / right
+        let y = left.y / right
+        return Coordinate(x: x, y: y)
+    }
+    
     static func <= (left: Coordinate, right: Coordinate) -> Bool {
         left.x <= right.x && left.y <= right.y
     }
