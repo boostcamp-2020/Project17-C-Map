@@ -14,15 +14,21 @@ func KwithRuleOfThumb(numberOfData: Int) -> Int {
 
 class AverageSilhouetteCalculator {
     
+    let clusters: [Cluster]
+    
+    init(clusters: [Cluster]) {
+        self.clusters = clusters
+    }
+    
     // AverageSilhouetteMethod
-    func findAverageSilhouette(with clusters: [Cluster]) {
+    func findAverageSilhouette() {
         clusters.forEach { cluster in
            
         }
         
     }
 
-    func findSilhoutte(with cluster: Cluster, target: Coordinate) -> Double {
+    func findSilhouette(with cluster: Cluster, target: Coordinate) -> Double {
         guard !cluster.coordinates.isEmpty else {
             return 0.0
         }
@@ -40,7 +46,12 @@ class AverageSilhouetteCalculator {
     }
 
     func findSeparation(in cluster: Cluster, target: Coordinate) -> Double {
-        var totalDistances: [Double] = []()
+        var totalDistances: [Double] = [Double]()
+        let otherClusters = clusters.filter { $0 != cluster }
+        otherClusters.forEach {
+            totalDistances.append(findCohesion(in: $0, target: target))
+        }
+        return totalDistances.min() ?? 0
     }
+    
 }
-

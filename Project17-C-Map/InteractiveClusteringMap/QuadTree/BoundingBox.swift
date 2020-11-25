@@ -78,7 +78,7 @@ struct Coordinate: Equatable {
     
 }
 
-struct Cluster {
+struct Cluster: Equatable {
     let center: Coordinate
     let coordinates: [Coordinate]
 }
