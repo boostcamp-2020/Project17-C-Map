@@ -109,13 +109,6 @@ class KMeansClustering {
         
         return clusters
     }
-    
-    private func move(clusters: [Cluster]) -> [Coordinate] {
-        // 새로운 센터를 리턴해줌 (points의 값을 모두 더해주고 points의 갯수로 나눠준다.)
-        clusters.map { cluster in
-            cluster.coordinates.reduce(.zero, +) / Double(cluster.coordinates.count)
-        }
-    }
 
     /// point 와 센터들 중 가장 가까운 센터의 index를 반환합니다.
     ///
