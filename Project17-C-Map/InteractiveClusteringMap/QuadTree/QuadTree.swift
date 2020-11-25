@@ -19,10 +19,10 @@ class QuadTree {
     private var boundingBox: BoundingBox
     private let nodeCapacity: Int
     
-    private var minX: Double = 0.0
-    private var maxX: Double = 0.0
-    private var minY: Double = 0.0
-    private var maxY: Double = 0.0
+    private var minX: Double = KoreaCoordinate.maxX
+    private var maxX: Double = KoreaCoordinate.minX
+    private var minY: Double = KoreaCoordinate.maxY
+    private var maxY: Double = KoreaCoordinate.minY
     
     init(boundingBox box: BoundingBox, nodeCapacity: Int) {
         self.boundingBox = box
@@ -46,9 +46,8 @@ class QuadTree {
     
     @discardableResult
     func insert(coordinate: Coordinate) -> Bool {
-        if boundingBox.contains(coordinate: coordinate) == false {
-            return false
-        }
+        guard boundingBox.contains(coordinate: coordinate) else { return false }
+        
         updateMinMax(coordinate: coordinate)
         
         if coordinates.count < nodeCapacity {
@@ -104,18 +103,18 @@ class QuadTree {
     }
     
     private func updateMinMax(coordinate: Coordinate) {
-        maxX = coordinate.x > maxX ? coordinate.x : maxX
-        minX = coordinate.x < minX ? coordinate.x : minX
-        maxY = coordinate.y > maxY ? coordinate.y : maxY
-        minY = coordinate.y < minY ? coordinate.y : minY
+        maxX = max(coordinate.x, maxX)
+        minX = min(coordinate.x, minX)
+        maxY = max(coordinate.y, maxY)
+        minY = min(coordinate.y, minY)
     }
 
     private func createSubTree() {
-        let boxes = boundingBox.splitedQuadBoundingBox()
-        guard let topLeftBoundingBox = boxes[safe: 0],
-              let topRightBoundingBox = boxes[safe: 1],
-              let bottomLeftBoundingBox = boxes[safe: 2],
-              let bottomRightBoundingBox = boxes[safe: 3]
+        let boxes = boundingBox.splittedQuadBoundingBoxes()
+        guard let topLeftBoundingBox = boxes[safe: SubTreeIndex.TL],
+              let topRightBoundingBox = boxes[safe: SubTreeIndex.TR],
+              let bottomLeftBoundingBox = boxes[safe: SubTreeIndex.BL],
+              let bottomRightBoundingBox = boxes[safe: SubTreeIndex.BR]
         else {
             return
         }
@@ -159,4 +158,21 @@ extension QuadTree: Equatable {
         lhs.nodeCapacity == rhs.nodeCapacity
     }
 
+}
+
+private extension QuadTree {
+    
+    enum SubTreeIndex {
+        static let TL: Int = 0
+        static let TR: Int = 1
+        static let BL: Int = 2
+        static let BR: Int = 3
+    }
+    
+    enum KoreaCoordinate {
+        static let minX: Double = 124
+        static let maxX: Double = 132
+        static let minY: Double = 33
+        static let maxY: Double = 43
+    }
 }

@@ -37,7 +37,7 @@ class QuadTreeTests: XCTestCase {
         XCTAssertEqual(quadTree, newQuadTree)
     }
     
-    func test_QuadTree_exclude_not_contains_at_boundingbox() {
+    func test_QuadTree_cannot_insert_coordinates_outside_boundingbox() {
         let newCoordinate = Coordinate(x: 11, y: 11)
         testQuadTreeExcludeNotContains(coordinate: newCoordinate)
     
@@ -82,9 +82,9 @@ class QuadTreeTests: XCTestCase {
     
     private func testQuadTreeExcludeNotContains(coordinate: Coordinate) {
         quadTree?.insert(coordinate: coordinate)
-        let findCoordinates = quadTree?.findCoordinates(region: boundingBox)
-        XCTAssertEqual(findCoordinates?.count, coordinates.count)
-        XCTAssertFalse(findCoordinates?.contains(coordinate) ?? true)
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        XCTAssertEqual(foundCoordinates?.count, coordinates.count)
+        XCTAssertFalse(foundCoordinates?.contains(coordinate) ?? true)
     }
     
     /*
@@ -95,7 +95,7 @@ class QuadTreeTests: XCTestCase {
                 3-1.() 3-2.(3,3) 3-3.() 3-4.()
      */
     private func mockupQuadTree() -> QuadTree {
-        let subtreeBoundingBox = boundingBox.splitedQuadBoundingBox()
+        let subtreeBoundingBox = boundingBox.splittedQuadBoundingBoxes()
         
         // 1.
         let topLeft = QuadTree(boundingBox: subtreeBoundingBox[0], nodeCapacity: nodeCapacity)
@@ -104,7 +104,7 @@ class QuadTreeTests: XCTestCase {
         let topRight = QuadTree(boundingBox: subtreeBoundingBox[1], nodeCapacity: nodeCapacity)
         topRight.insert(coordinate: Coordinate(x: 6, y: 6))
 
-        let bottomLeftSubtreeBoundingBox = subtreeBoundingBox[2].splitedQuadBoundingBox()
+        let bottomLeftSubtreeBoundingBox = subtreeBoundingBox[2].splittedQuadBoundingBoxes()
         // 3-1.
         let bottomLeftTopLeft = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[0], nodeCapacity: nodeCapacity)
         // 3-2.
