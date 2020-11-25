@@ -6,7 +6,6 @@
 
 # MapC [맵시: 아름답고 보기 좋은 모양새]
 
-
 | [@SeungeonKim](https://github.com/Seungeon-Kim) | [@A-by-alimelon](https://github.com/A-by-alimelon) | [@rnfxl92](https://github.com/rnfxl92) | [@DonggeonOh](https://github.com/DonggeonOh) | [@eunjeongS2](https://github.com/eunjeongS2) |
 | :-------: | :--------: | :-------: | :--------: | :-------: |
 | S010_김승언😇 | S016_문성주🙇🏻‍♀️ | S017_박성민🤡 | S033_오동건🤪 | S040_이은정🤓 |
