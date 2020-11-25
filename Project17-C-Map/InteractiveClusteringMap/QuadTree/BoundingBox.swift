@@ -36,6 +36,8 @@ struct BoundingBox {
     
 }
 
+extension BoundingBox: Equatable {}
+
 struct Coordinate: Equatable {
     
     let x: Double
