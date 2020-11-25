@@ -47,22 +47,55 @@ struct Coordinate {
         return Coordinate(x: centerX, y: centerY)
     }
     
+    func distanceTo(_ other: Coordinate) -> Double {
+        let powX = pow(self.x - other.x, 2.0)
+        let powY = pow(self.y - other.y, 2.0)
+        
+        return sqrt(powX + powY)
+    }
+    
 }
 
 extension Coordinate: Hashable {
+    
+    static let zero = Coordinate(x: 0, y: 0)
     
     static func <= (left: Coordinate, right: Coordinate) -> Bool {
         left.x <= right.x && left.y <= right.y
     }
     
+    static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
+        return Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+    }
+    
+    static func / (lhs: Coordinate, rhs: Double) -> Coordinate {
+        return Coordinate(x: lhs.x / rhs, y: lhs.y / rhs)
+    }
+    
 }
 
 struct Cluster {
-    let center: Coordinate
-    let coordinates: [Coordinate]
+    
+    var center: Coordinate
+    var coordinates: [Coordinate]
+    
+    var updateCenter: Coordinate {
+        coordinates.reduce(.zero, +) / Double(coordinates.count)
+    }
+    
+    init(center: Coordinate, coordinates: [Coordinate]) {
+        self.center = center
+        self.coordinates = coordinates
+    }
+    
 }
 
 extension Cluster: Hashable {
+    
+    static func == (lhs: Cluster, rhs: Cluster) -> Bool {
+        return lhs.center == rhs.center &&
+            lhs.coordinates == rhs.coordinates
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(coordinates)
