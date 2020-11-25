@@ -29,6 +29,21 @@ class QuadTree {
         self.nodeCapacity = nodeCapacity
     }
     
+    init(boundingBox box: BoundingBox,
+         nodeCapacity: Int,
+         topLeft: QuadTree,
+         topRight: QuadTree,
+         bottomLeft: QuadTree,
+         bottomRight: QuadTree
+    ) {
+        self.boundingBox = box
+        self.nodeCapacity = nodeCapacity
+        self.topLeft = topLeft
+        self.topRight = topRight
+        self.bottomLeft = bottomLeft
+        self.bottomRight = bottomRight
+    }
+    
     @discardableResult
     func insert(coordinate: Coordinate) -> Bool {
         if boundingBox.contains(coordinate: coordinate) == false {
@@ -141,11 +156,7 @@ extension QuadTree: Equatable {
         lhs.bottomLeft == rhs.bottomLeft &&
         lhs.bottomRight == rhs.bottomRight &&
         lhs.boundingBox == rhs.boundingBox &&
-        lhs.nodeCapacity == rhs.nodeCapacity &&
-        lhs.minX == rhs.minX &&
-        lhs.maxX == rhs.maxX &&
-        lhs.minY == rhs.minY &&
-        lhs.maxY == rhs.maxY
+        lhs.nodeCapacity == rhs.nodeCapacity
     }
 
 }
