@@ -36,14 +36,10 @@ struct BoundingBox {
     
 }
 
-struct Coordinate: Equatable {
+struct Coordinate {
     
     let x: Double
     let y: Double
-    
-    static func <= (left: Coordinate, right: Coordinate) -> Bool {
-        left.x <= right.x && left.y <= right.y
-    }
     
     func center(other: Coordinate) -> Coordinate {
         let centerX: Double = (self.x + other.x) / 2.0
@@ -53,7 +49,23 @@ struct Coordinate: Equatable {
     
 }
 
+extension Coordinate: Hashable {
+    
+    static func <= (left: Coordinate, right: Coordinate) -> Bool {
+        left.x <= right.x && left.y <= right.y
+    }
+    
+}
+
 struct Cluster {
     let center: Coordinate
     let coordinates: [Coordinate]
+}
+
+extension Cluster: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(coordinates)
+    }
+    
 }
