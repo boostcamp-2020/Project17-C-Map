@@ -32,7 +32,7 @@ class MapViewController: UIViewController {
     }
     
     private func requestLocationPermission() {
-        locationManger.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     private func configureMapController() {
