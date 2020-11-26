@@ -12,6 +12,7 @@ import NMapsMap
 class MapViewController: UIViewController {
 
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
+    private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
     
@@ -26,13 +27,8 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestLocationPermission()
+        locationManager.requestWhenInUseAuthorization()
         configureMapController()
-    }
-    
-    private func requestLocationPermission() {
-        let locationManger = CLLocationManager()
-        locationManger.requestWhenInUseAuthorization()
     }
     
     private func configureMapController() {

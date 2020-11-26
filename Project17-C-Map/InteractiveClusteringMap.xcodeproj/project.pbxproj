@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		192D34AD256E355500861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
+		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
+		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
+		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
+		192D34BE256E36B900861703 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
 		199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
 		199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
@@ -64,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
+		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
@@ -223,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
+				192D34AC256E355500861703 /* QuadTree.swift */,
 			);
 			path = QuadTree;
 			sourceTree = "<group>";
@@ -231,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */,
+				192D34B1256E368D00861703 /* QuadTreeTests.swift */,
 			);
 			path = QuadTreeTests;
 			sourceTree = "<group>";
@@ -477,6 +486,7 @@
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
+				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
 				46A12E1B256CD099007BDF3E /* Extension.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
@@ -493,15 +503,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */,
+				192D34BE256E36B900861703 /* Extension.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
+				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
-				FA84D560256F796700ECDD44 /* BoundingBox.swift in Sources */,
+
+				192D34BA256E36A200861703 /* BoundingBox.swift in Sources */,
+				192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */,

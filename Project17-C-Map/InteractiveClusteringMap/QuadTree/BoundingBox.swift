@@ -12,7 +12,7 @@ struct BoundingBox {
     let topRight: Coordinate
     let bottomLeft: Coordinate
     
-    func splitedQuadBoundingBox() -> [BoundingBox] {
+    func splittedQuadBoundingBoxes() -> [BoundingBox] {
         let center = topRight.center(other: bottomLeft)
         return [
             BoundingBox(topRight: Coordinate(x: center.x, y: topRight.y),
@@ -35,6 +35,8 @@ struct BoundingBox {
     }
     
 }
+
+extension BoundingBox: Equatable {}
 
 struct Coordinate: Equatable {
     
