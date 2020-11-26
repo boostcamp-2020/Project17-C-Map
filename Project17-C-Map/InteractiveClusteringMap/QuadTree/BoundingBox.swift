@@ -27,6 +27,7 @@ struct BoundingBox {
     func contains(coordinate: Coordinate) -> Bool {
         let containsX: Bool = (bottomLeft.x <= coordinate.x) && (coordinate.x <= topRight.x)
         let containsY: Bool = (bottomLeft.y <= coordinate.y) && (coordinate.y <= topRight.y)
+        
         return (containsX && containsY)
     }
     
@@ -40,8 +41,38 @@ extension BoundingBox: Equatable {}
 
 struct Coordinate: Equatable {
     
+    static let zero = Coordinate(x: 0, y: 0)
+    
     let x: Double
     let y: Double
+    
+    func distanceTo(_ other: Coordinate) -> Double {
+        let powX = pow(self.x - other.x, 2.0)
+        let powY = pow(self.y - other.y, 2.0)
+        
+        return sqrt(powX + powY)
+    }
+    
+    static func + (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x + right.x
+        let y = left.y + right.y
+        
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func - (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x - right.x
+        let y = left.y - right.y
+        
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func / (left: Coordinate, right: Double) -> Coordinate {
+        let x = left.x / right
+        let y = left.y / right
+        
+        return Coordinate(x: x, y: y)
+    }
     
     static func <= (left: Coordinate, right: Coordinate) -> Bool {
         left.x <= right.x && left.y <= right.y
@@ -50,12 +81,18 @@ struct Coordinate: Equatable {
     func center(other: Coordinate) -> Coordinate {
         let centerX: Double = (self.x + other.x) / 2.0
         let centerY: Double = (self.y + other.y) / 2.0
+        
         return Coordinate(x: centerX, y: centerY)
     }
     
 }
 
 struct Cluster {
-    let center: Coordinate
-    let coordinates: [Coordinate]
+    var coordinates: [Coordinate]
+    var center: Coordinate {
+        coordinates.reduce(.zero, +) / Double(coordinates.count)
+    }
+    init(coordinates: [Coordinate]) {
+        self.coordinates = coordinates
+    }
 }
