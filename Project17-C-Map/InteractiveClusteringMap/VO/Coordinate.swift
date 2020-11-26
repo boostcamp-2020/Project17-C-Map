@@ -26,6 +26,12 @@ struct Coordinate {
         return Coordinate(x: centerX, y: centerY)
     }
     
+    func findTheta(vertex: Coordinate) -> Double {
+        let gradient = (vertex.y - self.y) / (vertex.x - self.x)
+        
+        return atan(gradient) * 180 / .pi
+    }
+    
 }
 
 extension Coordinate: Hashable {
