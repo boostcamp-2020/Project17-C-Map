@@ -54,8 +54,4 @@ class KMeansTests: XCTestCase {
         XCTAssertNotEqual(cluster1, cluster2)
     }
     
-    func test_kmeans_classify() throws {
-        
-    }
-
 }
