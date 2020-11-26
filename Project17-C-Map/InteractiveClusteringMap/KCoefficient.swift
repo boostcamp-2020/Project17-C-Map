@@ -54,8 +54,6 @@ class AverageSilhouetteCalculator {
         let otherClusters = clusters.filter { $0.coordinates != cluster.coordinates }
         otherClusters.forEach {
             totalDistances.append(findCohesion(in: $0, target: target))
-            print("================")
-            print(totalDistances)
         }
         return totalDistances.min() ?? 0
     }
