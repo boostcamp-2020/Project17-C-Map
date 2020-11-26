@@ -18,7 +18,7 @@ class KMeansClustering {
     func randomCentroids(rangeOfLat lats: ClosedRange<Double>,
                          rangeOfLng lngs: ClosedRange<Double>) -> [Coordinate] {
         var centroids: [Coordinate] = []
-        for _ in 0..<number {
+        for _ in 0..<k {
             let lat = Double.random(in: lats)
             let lng = Double.random(in: lngs)
             let cluster = Coordinate(x: lng, y: lat)
@@ -33,11 +33,11 @@ class KMeansClustering {
         let boundary = Coordinate(x: bottomRight.x - center.x, y: topLeft.y - center.y)
         let pivot = center.findTheta(vertex: Coordinate(x: bottomRight.x, y: topLeft.y))
         
-        let increase = Degree.turn / Double(number)
+        let increase = Degree.turn / Double(k)
         var angle = increase
         var coords: [Coordinate] = []
         
-        for _ in 0..<number {
+        for _ in 0..<k {
             let quadrant = Quadrant.findQuadrant(angle: angle)
             let modulus = angle.truncatingRemainder(dividingBy: Degree.right)
             
