@@ -80,7 +80,7 @@ struct Coordinate: Equatable {
     
 }
 
-struct Cluster: Equatable {
+struct Cluster {
     var coordinates: [Coordinate]
     var center: Coordinate {
         coordinates.reduce(.zero, +) / Double(coordinates.count)

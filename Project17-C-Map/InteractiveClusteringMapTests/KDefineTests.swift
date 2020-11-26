@@ -33,4 +33,14 @@ class KDefineTests: XCTestCase {
         XCTAssertEqual(expected, result, accuracy: accuracy)
     }
     
+    func test_find_separation() throws {
+        let cluster1 = Cluster(coordinates: [Coordinate(x: 1, y: 1), Coordinate(x: 2, y: 2)])
+        let cluster2 = Cluster(coordinates: [Coordinate(x: -2, y: 1), Coordinate(x: -3, y: -2), Coordinate(x: 0, y: -2)])
+        let clusters = [cluster1, cluster2]
+        let avc = AverageSilhouetteCalculator(clusters: clusters)
+        let result = avc.findSeparation(in: cluster1, target: cluster1.coordinates[0])
+        let expected = 3.720759
+        XCTAssertEqual(expected, result, accuracy: accuracy)
+    }
+    
 }

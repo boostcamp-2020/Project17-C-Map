@@ -41,18 +41,21 @@ class AverageSilhouetteCalculator {
     // 점과 현재 포함된 클러스터의 응집도 계산
     func findCohesion(in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistance = 0.0
-        cluster.coordinates.forEach {
+        let coordinates = cluster.coordinates.filter { $0 != target }
+        coordinates.forEach {
             totalDistance += target.distanceTo($0)
         }
-        return totalDistance / Double(cluster.coordinates.count - 1)
+        return totalDistance / Double(coordinates.count)
     }
 
     // 점과 포함되지 않은 클러스터 간의 분리도 계산
     func findSeparation(in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistances: [Double] = [Double]()
-        let otherClusters = clusters.filter { $0 != cluster }
+        let otherClusters = clusters.filter { $0.coordinates != cluster.coordinates }
         otherClusters.forEach {
             totalDistances.append(findCohesion(in: $0, target: target))
+            print("================")
+            print(totalDistances)
         }
         return totalDistances.min() ?? 0
     }
