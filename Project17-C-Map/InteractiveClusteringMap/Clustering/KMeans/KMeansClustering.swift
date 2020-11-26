@@ -15,6 +15,19 @@ class KMeansClustering {
         self.k = k
     }
     
+    func randomCentroids(rangeOfLat lats: ClosedRange<Double>,
+                         rangeOfLng lngs: ClosedRange<Double>) -> [Coordinate] {
+        var centroids: [Coordinate] = []
+        for _ in 0..<number {
+            let lat = Double.random(in: lats)
+            let lng = Double.random(in: lngs)
+            let cluster = Coordinate(x: lng, y: lat)
+            centroids.append(cluster)
+        }
+        
+        return centroids
+    }
+    
     /// points에 대한 centroid를 계속 계산하여 centroid가 이동한 총 거리가
     /// convergeDistance 이하로 움직일 경우 cluster를 반환합니다.
     ///
