@@ -19,10 +19,10 @@ class QuadTree {
     private var boundingBox: BoundingBox
     private let nodeCapacity: Int
     
-    private var minX: Double = KoreaCoordinate.maxX
-    private var maxX: Double = KoreaCoordinate.minX
-    private var minY: Double = KoreaCoordinate.maxY
-    private var maxY: Double = KoreaCoordinate.minY
+    private lazy var minX: Double = boundingBox.topRight.x
+    private lazy var maxX: Double = boundingBox.bottomLeft.x
+    private lazy var minY: Double = boundingBox.topRight.y
+    private lazy var maxY: Double = boundingBox.bottomLeft.y
     
     init(boundingBox box: BoundingBox, nodeCapacity: Int) {
         self.boundingBox = box
@@ -168,11 +168,5 @@ private extension QuadTree {
         static let BL: Int = 2
         static let BR: Int = 3
     }
-    
-    enum KoreaCoordinate {
-        static let minX: Double = 124
-        static let maxX: Double = 132
-        static let minY: Double = 33
-        static let maxY: Double = 43
-    }
+
 }
