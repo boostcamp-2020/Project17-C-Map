@@ -24,9 +24,15 @@ class QuadTree {
     private lazy var minY: Double = boundingBox.topRight.y
     private lazy var maxY: Double = boundingBox.bottomLeft.y
     
-    init(boundingBox box: BoundingBox, nodeCapacity: Int) {
-        self.boundingBox = box
+    init(boundingBox: BoundingBox, nodeCapacity: Int) {
+        self.boundingBox = boundingBox
         self.nodeCapacity = nodeCapacity
+    }
+    
+    convenience init(nodeCapacity: Int) {
+        self.init(boundingBox: BoundingBox(topRight: Coordinate(x: 0, y: 0),
+                                           bottomLeft: Coordinate(x: 0, y: 0)),
+                  nodeCapacity: nodeCapacity)
     }
     
     init(boundingBox box: BoundingBox,
@@ -75,19 +81,19 @@ class QuadTree {
     }
     
     // 모든 Coordinate가 insert 되면 외부에서 한번 호출 -> 자식까지 모두 BoundingBox 조절
-    func updateBoundingBox() {
-        let topRightCoordinate = Coordinate(x: maxX, y: maxY)
-        let bottomLeftCoordinate = Coordinate(x: minX, y: minY)
-
+    func updateBoundingBox(topRight: Coordinate? = nil, bottomLeft: Coordinate? = nil) {
+        let topRightCoordinate = topRight ?? Coordinate(x: maxX, y: maxY)
+        let bottomLeftCoordinate = bottomLeft ?? Coordinate(x: minX, y: minY)
+        
         boundingBox = BoundingBox(
             topRight: topRightCoordinate,
             bottomLeft: bottomLeftCoordinate
         )
         
-        topRight?.updateBoundingBox()
-        topLeft?.updateBoundingBox()
-        bottomRight?.updateBoundingBox()
-        bottomLeft?.updateBoundingBox()
+        self.topRight?.updateBoundingBox()
+        self.topLeft?.updateBoundingBox()
+        self.bottomRight?.updateBoundingBox()
+        self.bottomLeft?.updateBoundingBox()
     }
     
     func findCoordinates(region: BoundingBox) -> [Coordinate] {
@@ -97,7 +103,7 @@ class QuadTree {
         guard boundingBox.isOverlapped(with: region) else { return [] }
         
         var coordinateInRegion = coordinates.filter { region.contains(coordinate: $0) }
-
+        
         coordinateInRegion += topLeft?.findCoordinates(region: region) ?? []
         coordinateInRegion += topRight?.findCoordinates(region: region) ?? []
         coordinateInRegion += bottomLeft?.findCoordinates(region: region) ?? []
@@ -112,7 +118,7 @@ class QuadTree {
         maxY = max(coordinate.y, maxY)
         minY = min(coordinate.y, minY)
     }
-
+    
     private func createSubTree() {
         let boxes = boundingBox.splittedQuadBoundingBoxes()
         guard let topLeftBoundingBox = boxes[safe: SubTreeIndex.TL],
@@ -139,14 +145,14 @@ extension QuadTree: Equatable {
     
     static func == (lhs: QuadTree, rhs: QuadTree) -> Bool {
         lhs.coordinates == rhs.coordinates &&
-        lhs.topLeft == rhs.topLeft &&
-        lhs.topRight == rhs.topRight &&
-        lhs.bottomLeft == rhs.bottomLeft &&
-        lhs.bottomRight == rhs.bottomRight &&
-        lhs.boundingBox == rhs.boundingBox &&
-        lhs.nodeCapacity == rhs.nodeCapacity
+            lhs.topLeft == rhs.topLeft &&
+            lhs.topRight == rhs.topRight &&
+            lhs.bottomLeft == rhs.bottomLeft &&
+            lhs.bottomRight == rhs.bottomRight &&
+            lhs.boundingBox == rhs.boundingBox &&
+            lhs.nodeCapacity == rhs.nodeCapacity
     }
-
+    
 }
 
 private extension QuadTree {
@@ -157,5 +163,5 @@ private extension QuadTree {
         static let BL: Int = 2
         static let BR: Int = 3
     }
-
+    
 }

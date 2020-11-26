@@ -34,6 +34,7 @@
 		37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EB73362562592800AC44D6 /* LaunchScreen.storyboard */; };
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
+		461DC3D6256F8303004B9DAA /* QuadTreeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeService.swift */; };
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
 		46A12E1B256CD099007BDF3E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
 		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
@@ -92,6 +93,7 @@
 		37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveClusteringMapUITests.swift; sourceTree = "<group>"; };
 		37EB734F2562592900AC44D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
+		461DC3D5256F8303004B9DAA /* QuadTreeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeService.swift; sourceTree = "<group>"; };
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		46A12E1A256CD099007BDF3E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				192D34AC256E355500861703 /* QuadTree.swift */,
+				461DC3D5256F8303004B9DAA /* QuadTreeService.swift */,
 			);
 			path = QuadTree;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
+				461DC3D6256F8303004B9DAA /* QuadTreeService.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
