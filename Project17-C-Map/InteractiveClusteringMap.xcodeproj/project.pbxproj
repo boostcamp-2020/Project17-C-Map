@@ -19,6 +19,8 @@
 		37279B03256EBC5200EA689A /* KMeansTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37279B02256EBC5200EA689A /* KMeansTests.swift */; };
 		37279B07256EBC6300EA689A /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		37279B0B256EBC6E00EA689A /* KMeansClustering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */; };
+		37311088256F641400350D55 /* MockPOIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311087256F641400350D55 /* MockPOIService.swift */; };
+		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
@@ -70,6 +72,7 @@
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
 		37279B02256EBC5200EA689A /* KMeansTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeansTests.swift; sourceTree = "<group>"; };
+		37311087256F641400350D55 /* MockPOIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPOIService.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -203,9 +206,10 @@
 			children = (
 				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
+				37279B02256EBC5200EA689A /* KMeansTests.swift */,
+				37311087256F641400350D55 /* MockPOIService.swift */,
 				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
-				37279B02256EBC5200EA689A /* KMeansTests.swift */,
 			);
 			path = InteractiveClusteringMapTests;
 			sourceTree = "<group>";
@@ -496,10 +500,12 @@
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeansClustering.swift in Sources */,
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
+				3731108C256F641F00350D55 /* POIService.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
+				37311088256F641400350D55 /* MockPOIService.swift in Sources */,
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,

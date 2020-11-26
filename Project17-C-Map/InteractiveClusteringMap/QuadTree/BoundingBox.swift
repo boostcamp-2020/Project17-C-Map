@@ -83,11 +83,6 @@ struct Cluster {
         coordinates.reduce(.zero, +) / Double(coordinates.count)
     }
     
-    init(center: Coordinate, coordinates: [Coordinate]) {
-        self.center = center
-        self.coordinates = coordinates
-    }
-    
 }
 
 extension Cluster: Hashable {
