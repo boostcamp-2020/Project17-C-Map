@@ -15,7 +15,7 @@ func KwithRuleOfThumb(numberOfData: Int) -> Int {
 // AverageSilhouetteMethod
 class AverageSilhouetteCalculator {
     
-    let clusters: [Cluster]
+    private let clusters: [Cluster]
     
     init(clusters: [Cluster]) {
         self.clusters = clusters
@@ -44,7 +44,7 @@ class AverageSilhouetteCalculator {
         cluster.coordinates.forEach {
             totalDistance += target.distanceTo($0)
         }
-        return totalDistance / Double(cluster.coordinates.count)
+        return totalDistance / Double(cluster.coordinates.count - 1)
     }
 
     // 점과 포함되지 않은 클러스터 간의 분리도 계산
