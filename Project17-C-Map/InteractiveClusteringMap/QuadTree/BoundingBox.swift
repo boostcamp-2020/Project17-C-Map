@@ -44,6 +44,7 @@ struct Coordinate {
     func center(other: Coordinate) -> Coordinate {
         let centerX: Double = (self.x + other.x) / 2.0
         let centerY: Double = (self.y + other.y) / 2.0
+        
         return Coordinate(x: centerX, y: centerY)
     }
     
@@ -76,11 +77,13 @@ extension Coordinate: Hashable {
 
 struct Cluster {
     
-    var center: Coordinate
     var coordinates: [Coordinate]
-    
-    var updateCenter: Coordinate {
+    var center: Coordinate {
         coordinates.reduce(.zero, +) / Double(coordinates.count)
+    }
+    
+    init(coordinates: [Coordinate]) {
+        self.coordinates = coordinates
     }
     
 }
