@@ -39,9 +39,7 @@ struct BoundingBox {
 
 extension BoundingBox: Equatable {}
 
-struct Coordinate: Equatable {
-    
-    static let zero = Coordinate(x: 0, y: 0)
+struct Coordinate {
     
     let x: Double
     let y: Double
@@ -52,6 +50,19 @@ struct Coordinate: Equatable {
         
         return sqrt(powX + powY)
     }
+    
+    func center(other: Coordinate) -> Coordinate {
+        let centerX: Double = (self.x + other.x) / 2.0
+        let centerY: Double = (self.y + other.y) / 2.0
+        
+        return Coordinate(x: centerX, y: centerY)
+    }
+    
+}
+
+extension Coordinate: Hashable {
+    
+    static let zero = Coordinate(x: 0, y: 0)
     
     static func + (left: Coordinate, right: Coordinate) -> Coordinate {
         let x = left.x + right.x
@@ -78,13 +89,6 @@ struct Coordinate: Equatable {
         left.x <= right.x && left.y <= right.y
     }
     
-    func center(other: Coordinate) -> Coordinate {
-        let centerX: Double = (self.x + other.x) / 2.0
-        let centerY: Double = (self.y + other.y) / 2.0
-        
-        return Coordinate(x: centerX, y: centerY)
-    }
-    
 }
 
 struct Cluster {
@@ -92,7 +96,17 @@ struct Cluster {
     var center: Coordinate {
         coordinates.reduce(.zero, +) / Double(coordinates.count)
     }
-    init(coordinates: [Coordinate]) {
-        self.coordinates = coordinates
+}
+
+extension Cluster: Hashable {
+    
+    static func == (lhs: Cluster, rhs: Cluster) -> Bool {
+        return lhs.center == rhs.center &&
+            lhs.coordinates == rhs.coordinates
     }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(coordinates)
+    }
+    
 }

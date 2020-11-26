@@ -21,10 +21,17 @@
 		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
+		37279B03256EBC5200EA689A /* KMeansTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37279B02256EBC5200EA689A /* KMeansTests.swift */; };
+		37279B07256EBC6300EA689A /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
+		37279B0B256EBC6E00EA689A /* KMeansClustering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */; };
+		37311088256F641400350D55 /* MockPOIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311087256F641400350D55 /* MockPOIService.swift */; };
+		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
+		376E43BA256F9811002D3EE9 /* MockPOIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311087256F641400350D55 /* MockPOIService.swift */; };
+		379DC4C6256E1EC60044DA6C /* KMeansClustering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */; };
 		37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
 		37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732C2562592700AC44D6 /* MapViewController.swift */; };
@@ -76,10 +83,13 @@
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
+		37279B02256EBC5200EA689A /* KMeansTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeansTests.swift; sourceTree = "<group>"; };
+		37311087256F641400350D55 /* MockPOIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPOIService.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
+		379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeansClustering.swift; sourceTree = "<group>"; };
 		37EB73252562592700AC44D6 /* InteractiveClusteringMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveClusteringMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EB73282562592700AC44D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EB732A2562592700AC44D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +149,7 @@
 			children = (
 				37352CDF25695EE000CAFDFD /* Place.swift */,
 				372216CC256943D300231245 /* POI.swift */,
+				379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */,
 			);
 			path = VO;
 			sourceTree = "<group>";
@@ -210,6 +221,8 @@
 			children = (
 				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
+				37279B02256EBC5200EA689A /* KMeansTests.swift */,
+				37311087256F641400350D55 /* MockPOIService.swift */,
 				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
 				FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
@@ -482,6 +495,7 @@
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
+				379DC4C6256E1EC60044DA6C /* KMeansClustering.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
@@ -492,6 +506,7 @@
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				376E43BA256F9811002D3EE9 /* MockPOIService.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,
@@ -506,18 +521,22 @@
 				192D34BE256E36B900861703 /* Extension.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
+				37279B0B256EBC6E00EA689A /* KMeansClustering.swift in Sources */,
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
+				3731108C256F641F00350D55 /* POIService.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
 				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
+				37311088256F641400350D55 /* MockPOIService.swift in Sources */,
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
 
 				192D34BA256E36A200861703 /* BoundingBox.swift in Sources */,
 				192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
+				37279B03256EBC5200EA689A /* KMeansTests.swift in Sources */,
 				FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */,
 				3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */,
 			);
