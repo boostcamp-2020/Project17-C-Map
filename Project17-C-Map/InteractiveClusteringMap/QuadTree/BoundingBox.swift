@@ -27,6 +27,7 @@ struct BoundingBox {
     func contains(coordinate: Coordinate) -> Bool {
         let containsX: Bool = (bottomLeft.x <= coordinate.x) && (coordinate.x <= topRight.x)
         let containsY: Bool = (bottomLeft.y <= coordinate.y) && (coordinate.y <= topRight.y)
+        
         return (containsX && containsY)
     }
     
@@ -38,17 +39,10 @@ struct BoundingBox {
 
 extension BoundingBox: Equatable {}
 
-struct Coordinate: Equatable {
+struct Coordinate {
     
     let x: Double
     let y: Double
-    
-    func center(other: Coordinate) -> Coordinate {
-        let centerX: Double = (self.x + other.x) / 2.0
-        let centerY: Double = (self.y + other.y) / 2.0
-        
-        return Coordinate(x: centerX, y: centerY)
-    }
     
     func distanceTo(_ other: Coordinate) -> Double {
         let powX = pow(self.x - other.x, 2.0)
@@ -57,37 +51,51 @@ struct Coordinate: Equatable {
         return sqrt(powX + powY)
     }
     
+    func center(other: Coordinate) -> Coordinate {
+        let centerX: Double = (self.x + other.x) / 2.0
+        let centerY: Double = (self.y + other.y) / 2.0
+        
+        return Coordinate(x: centerX, y: centerY)
+    }
+    
 }
 
 extension Coordinate: Hashable {
     
     static let zero = Coordinate(x: 0, y: 0)
     
+    static func + (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x + right.x
+        let y = left.y + right.y
+        
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func - (left: Coordinate, right: Coordinate) -> Coordinate {
+        let x = left.x - right.x
+        let y = left.y - right.y
+        
+        return Coordinate(x: x, y: y)
+    }
+    
+    static func / (left: Coordinate, right: Double) -> Coordinate {
+        let x = left.x / right
+        let y = left.y / right
+        
+        return Coordinate(x: x, y: y)
+    }
+    
     static func <= (left: Coordinate, right: Coordinate) -> Bool {
         left.x <= right.x && left.y <= right.y
-    }
-    
-    static func + (lhs: Coordinate, rhs: Coordinate) -> Coordinate {
-        return Coordinate(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-    }
-    
-    static func / (lhs: Coordinate, rhs: Double) -> Coordinate {
-        return Coordinate(x: lhs.x / rhs, y: lhs.y / rhs)
     }
     
 }
 
 struct Cluster {
-    
     var coordinates: [Coordinate]
     var center: Coordinate {
         coordinates.reduce(.zero, +) / Double(coordinates.count)
     }
-    
-    init(coordinates: [Coordinate]) {
-        self.coordinates = coordinates
-    }
-    
 }
 
 extension Cluster: Hashable {
