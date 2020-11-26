@@ -30,6 +30,7 @@
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
+		376E43BA256F9811002D3EE9 /* MockPOIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37311087256F641400350D55 /* MockPOIService.swift */; };
 		379DC4C6256E1EC60044DA6C /* KMeansClustering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeansClustering.swift */; };
 		37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
@@ -496,6 +497,7 @@
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				376E43BA256F9811002D3EE9 /* MockPOIService.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,

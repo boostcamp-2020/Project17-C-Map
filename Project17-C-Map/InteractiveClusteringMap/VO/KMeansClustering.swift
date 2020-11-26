@@ -9,7 +9,6 @@ import Foundation
 
 class KMeansClustering {
     
-    private var clusters: [Cluster] = []
     private let k: Int
     
     init(k: Int) {
@@ -70,20 +69,19 @@ class KMeansClustering {
         return clusters
     }
     
+    /// 각 points에 대해 가장 가까운 center로 points를 분류하여 cluster 객체를 반환합니다.
+    ///
     /// - Parameters:
     ///   - points: 분류할 모든 좌표
     ///   - centers: 현재 중심인 센터
     /// - Returns: 분류한 points를 가지는 clusters를 리턴한다. (Cluster)
-    func classify(_ points: [Coordinate], from centers: [Coordinate]) -> [Cluster] {
-        var clusters: [Cluster] = []
+    private func classify(_ points: [Coordinate], from centers: [Coordinate]) -> [Cluster] {
+        var clusters = [Cluster](repeating: Cluster(coordinates: []), count: centers.count)
         
-        for _ in 0..<centers.count {
-            clusters.append(Cluster(coordinates: []))
-        }
-        
-        points.forEach {
-            let classIndex = indexOfNearestCenter($0, centers: centers)
-            clusters[classIndex].coordinates.append($0)
+        points.forEach { point in
+            let centerIndex = indexOfNearestCenter(point, centers: centers)
+            
+            clusters[centerIndex].coordinates.append(point)
         }
         
         return clusters
