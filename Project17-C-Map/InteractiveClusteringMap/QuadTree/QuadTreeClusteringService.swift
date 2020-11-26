@@ -9,26 +9,25 @@ import Foundation
 
 protocol ClusteringServicing {
     
-    func execute(successHandler: (([Cluster]) -> Void)?, failureHandler: ((NSError) -> Void)?)
+    func execute(successHandler: @escaping (([Cluster]) -> Void), failureHandler: ((NSError) -> Void)?)
     func cancel()
     
 }
 
 class QuadTreeClusteringService {
     
+    // 외부에서 카메라 위치 바뀌면 어떻게 할지 생각
     private var coordinates: [Coordinate]
     private let quadTree: QuadTree
     private let boundingBox: BoundingBox
+    private let queue = DispatchQueue(label: "clustering", qos: .userInitiated)
     private let nodeCapacity: Int = 25
+    private var workingClusteringWorkItem: DispatchWorkItem?
     
     private lazy var insertWorkItem = DispatchWorkItem { [weak self] in
         self?.coordinates.forEach {
             self?.quadTree.insert(coordinate: $0)
         }
-    }
-    
-    private lazy var clusteringWorkItem = DispatchWorkItem { [weak self] in
-        self?.clustering()
     }
     
     init(coordinates: [Coordinate], boundingBox: BoundingBox) {
@@ -51,11 +50,10 @@ class QuadTreeClusteringService {
                                    bottomLeft: minMaxCoordinates.bottomLeft)
     }
     
-    private func configureWorkItems() {
-        insertWorkItem = DispatchWorkItem { [weak self] in
-            self?.coordinates.forEach {
-                self?.quadTree.insert(coordinate: $0)
-            }
+    private func clusteringWorkItem(successHandler: @escaping ([Cluster]) -> Void) -> DispatchWorkItem {
+        DispatchWorkItem { [weak self] in
+            let clusters = self?.clustering()
+            successHandler(clusters ?? [])
         }
     }
     
@@ -75,32 +73,52 @@ class QuadTreeClusteringService {
     }
     
     private func insertCoordinates() {
-        DispatchQueue.global(qos: .userInitiated).async(execute: insertWorkItem)
+        queue.async(execute: insertWorkItem)
     }
     
-    private func clustering() {
+    // 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
+    private func clustering() -> [Cluster] {
+        var result = [Cluster]()
         
+        let mockupCount: Double = 4
+        let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / mockupCount
+        let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / mockupCount
+        
+        var x = boundingBox.bottomLeft.x
+        var y = boundingBox.bottomLeft.y
+        
+        while x < boundingBox.topRight.x {
+            while y < boundingBox.topRight.y {
+                let topRight = Coordinate(x: x + clusterRegionWidth, y: y + clusterRegionHeight)
+                let bottomLeft = Coordinate(x: x, y: y)
+                let region = BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
+                
+                let foundCoordinates = quadTree.findCoordinates(region: region)
+                result.append(Cluster(coordinates: foundCoordinates))
+                y += clusterRegionHeight
+            }
+            x += clusterRegionWidth
+            y = boundingBox.bottomLeft.y
+        }
+        return result
     }
-    
+
 }
 
 extension QuadTreeClusteringService: ClusteringServicing {
     
-    func execute(successHandler: (([Cluster]) -> Void)?, failureHandler: ((NSError) -> Void)?) {
-        DispatchQueue.global(qos: .userInitiated).async(execute: clusteringWorkItem)
+    func execute(
+        successHandler: @escaping (([Cluster]) -> Void),
+        failureHandler: ((NSError) -> Void)?) {
+        queue.async { [weak self] in
+            self?.workingClusteringWorkItem = self?.clusteringWorkItem(successHandler: successHandler)
+            self?.workingClusteringWorkItem?.perform()
+        }
     }
     
     func cancel() {
         insertWorkItem.cancel()
-        clusteringWorkItem.cancel()
+        workingClusteringWorkItem?.cancel()
     }
     
-}
-
-private extension QuadTreeClusteringService {
-    
-    enum Size {
-        static let markerWidth: Double = 50
-        static let markerHeight: Double = 60
-    }
 }
