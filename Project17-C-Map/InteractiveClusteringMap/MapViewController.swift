@@ -27,12 +27,8 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestLocationPermission()
+        locationManager.requestWhenInUseAuthorization()
         configureMapController()
-    }
-    
-    private func requestLocationPermission() {
-        locationManger.requestWhenInUseAuthorization()
     }
     
     private func configureMapController() {
