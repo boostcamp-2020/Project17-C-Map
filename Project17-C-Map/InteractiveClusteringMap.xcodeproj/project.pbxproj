@@ -40,6 +40,7 @@
 		46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B444572568F095001B79D4 /* InteractiveMapView.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
+		FA84D560256F796700ECDD44 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
@@ -500,6 +501,7 @@
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
+				FA84D560256F796700ECDD44 /* BoundingBox.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */,

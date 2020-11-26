@@ -38,6 +38,8 @@ struct BoundingBox {
 
 struct Coordinate: Equatable {
     
+    static let zero = Coordinate(x: 0, y: 0)
+    
     let x: Double
     let y: Double
     
@@ -78,7 +80,12 @@ struct Coordinate: Equatable {
     
 }
 
-struct Cluster: Equatable {
-    let center: Coordinate
-    let coordinates: [Coordinate]
+struct Cluster {
+    var coordinates: [Coordinate]
+    var center: Coordinate {
+        coordinates.reduce(.zero, +) / Double(coordinates.count)
+    }
+    init(coordinates: [Coordinate]) {
+        self.coordinates = coordinates
+    }
 }

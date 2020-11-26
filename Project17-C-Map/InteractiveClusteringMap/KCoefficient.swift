@@ -12,6 +12,7 @@ func KwithRuleOfThumb(numberOfData: Int) -> Int {
     return Int(sqrt(Double(numberOfData/2)))
 }
 
+// AverageSilhouetteMethod
 class AverageSilhouetteCalculator {
     
     let clusters: [Cluster]
@@ -20,7 +21,6 @@ class AverageSilhouetteCalculator {
         self.clusters = clusters
     }
     
-    // AverageSilhouetteMethod
     func findAverageSilhouette(cluster: Cluster) -> Double {
         var silhouettes  = [Double]()
         cluster.coordinates.forEach { coordinate in
@@ -38,6 +38,7 @@ class AverageSilhouetteCalculator {
         return (separation - cohesion) / max(cohesion, separation)
     }
 
+    // 점과 현재 포함된 클러스터의 응집도 계산
     func findCohesion(in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistance = 0.0
         cluster.coordinates.forEach {
@@ -46,6 +47,7 @@ class AverageSilhouetteCalculator {
         return totalDistance / Double(cluster.coordinates.count)
     }
 
+    // 점과 포함되지 않은 클러스터 간의 분리도 계산
     func findSeparation(in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistances: [Double] = [Double]()
         let otherClusters = clusters.filter { $0 != cluster }
