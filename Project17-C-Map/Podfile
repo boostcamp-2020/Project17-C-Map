@@ -6,6 +6,6 @@ target 'InteractiveClusteringMap' do
   use_frameworks!
 
   pod 'SwiftLint'
-  pod 'NMapsMap'
+  pod 'NMapsMap', '3.10.1'
 
 end
