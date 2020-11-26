@@ -1,5 +1,5 @@
 //
-//  KMeansClustering.swift
+//  KMeans.swift
 //  InteractiveClusteringMap
 //
 //  Created by Oh Donggeon on 2020/11/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class KMeansClustering {
+class KMeans {
     
     private let k: Int
     
