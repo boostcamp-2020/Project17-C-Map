@@ -11,6 +11,9 @@ class KDefineTests: XCTestCase {
     
     let accuracy = 0.001
     private var avc: AverageSilhouetteCalculator?
+    
+    /// cluster1: A(1,1), B(2,2)
+    /// cluster2: C(-2,1), D(-3,-2), D(0, -2)
     private let cluster1 = Cluster(coordinates: [Coordinate(x: 1, y: 1), Coordinate(x: 2, y: 2)])
     private var cluster2 = Cluster(coordinates: [Coordinate(x: -2, y: 1), Coordinate(x: -3, y: -2), Coordinate(x: 0, y: -2)])
     
