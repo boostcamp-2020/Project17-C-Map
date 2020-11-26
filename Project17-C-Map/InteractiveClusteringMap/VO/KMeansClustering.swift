@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NMapsMap.NMapsGeometry
 
 class KMeansClustering {
     
