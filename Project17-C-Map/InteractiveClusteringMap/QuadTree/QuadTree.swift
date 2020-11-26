@@ -83,7 +83,11 @@ class QuadTree {
             topRight: topRightCoordinate,
             bottomLeft: bottomLeftCoordinate
         )
-        updateBoundingBoxOfSubTree()
+        
+        topRight?.updateBoundingBox()
+        topLeft?.updateBoundingBox()
+        bottomRight?.updateBoundingBox()
+        bottomLeft?.updateBoundingBox()
     }
     
     func findCoordinates(region: BoundingBox) -> [Coordinate] {
@@ -127,21 +131,6 @@ class QuadTree {
                               nodeCapacity: nodeCapacity)
         bottomRight = QuadTree(boundingBox: bottomRightBoundingBox,
                                nodeCapacity: nodeCapacity)
-    }
-    
-    private func updateBoundingBoxOfSubTree() {
-        guard let topRight = topRight,
-              let topLeft = topLeft,
-              let bottomRight = bottomRight,
-              let bottomLeft = bottomLeft
-        else {
-            return
-        }
-        
-        topRight.updateBoundingBox()
-        topLeft.updateBoundingBox()
-        bottomRight.updateBoundingBox()
-        bottomLeft.updateBoundingBox()
     }
     
 }
