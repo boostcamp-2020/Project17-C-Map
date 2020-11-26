@@ -38,16 +38,16 @@ class KDefineTests: XCTestCase {
         XCTAssertEqual(KwithRuleOfThumb(numberOfData: numberOfData), expected)
     }
     
-    func test_find_find_cohesion() throws {
-        guard let result = avc?.findCohesion(in: cluster1, target: cluster1.coordinates[0]) else {
+    func test_calculate_cohesion() throws {
+        guard let result = avc?.calculateCohesion(in: cluster1, target: cluster1.coordinates[0]) else {
             return
         }
         let expected = sqrt(2)
         XCTAssertEqual(expected, result, accuracy: accuracy)
     }
     
-    func test_find_separation() throws {
-        guard let result = avc?.findSeparation(in: cluster1, target: cluster1.coordinates[0]) else {
+    func test_calculate_separation() throws {
+        guard let result = avc?.calculateSeparation(in: cluster1, target: cluster1.coordinates[0]) else {
             return
         }
         
@@ -55,8 +55,8 @@ class KDefineTests: XCTestCase {
         XCTAssertEqual(expected, result, accuracy: accuracy)
     }
     
-    func test_find_silhouette_A() throws {
-        guard let result = avc?.findSilhouette(with: cluster1, target: cluster1.coordinates[0]) else {
+    func test_calculate_silhouette_A() throws {
+        guard let result = avc?.calculateSilhouette(with: cluster1, target: cluster1.coordinates[0]) else {
             return
         }
         
@@ -64,8 +64,8 @@ class KDefineTests: XCTestCase {
         XCTAssertEqual(expected, result, accuracy: accuracy)
     }
     
-    func test_find_silhouette_B() throws {
-        guard let result = avc?.findSilhouette(with: cluster1, target: cluster1.coordinates[1]) else {
+    func test_calculate_silhouette_B() throws {
+        guard let result = avc?.calculateSilhouette(with: cluster1, target: cluster1.coordinates[1]) else {
             return
         }
         
@@ -73,8 +73,8 @@ class KDefineTests: XCTestCase {
         XCTAssertEqual(expected, result, accuracy: accuracy)
     }
     
-    func test_find_average_silhouette_cluster1() throws {
-        guard let result = avc?.findAverageSilhouette(cluster: cluster1) else {
+    func test_calculate_average_silhouette_cluster1() throws {
+        guard let result = avc?.calculateAverageSilhouette(cluster: cluster1) else {
             return
         }
         

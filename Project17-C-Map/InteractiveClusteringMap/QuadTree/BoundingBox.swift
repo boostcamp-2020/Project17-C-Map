@@ -27,6 +27,7 @@ struct BoundingBox {
     func contains(coordinate: Coordinate) -> Bool {
         let containsX: Bool = (bottomLeft.x <= coordinate.x) && (coordinate.x <= topRight.x)
         let containsY: Bool = (bottomLeft.y <= coordinate.y) && (coordinate.y <= topRight.y)
+        
         return (containsX && containsY)
     }
     
@@ -55,18 +56,21 @@ struct Coordinate: Equatable {
     static func + (left: Coordinate, right: Coordinate) -> Coordinate {
         let x = left.x + right.x
         let y = left.y + right.y
+        
         return Coordinate(x: x, y: y)
     }
     
     static func - (left: Coordinate, right: Coordinate) -> Coordinate {
         let x = left.x - right.x
         let y = left.y - right.y
+        
         return Coordinate(x: x, y: y)
     }
     
     static func / (left: Coordinate, right: Double) -> Coordinate {
         let x = left.x / right
         let y = left.y / right
+        
         return Coordinate(x: x, y: y)
     }
     
@@ -77,6 +81,7 @@ struct Coordinate: Equatable {
     func center(other: Coordinate) -> Coordinate {
         let centerX: Double = (self.x + other.x) / 2.0
         let centerY: Double = (self.y + other.y) / 2.0
+        
         return Coordinate(x: centerX, y: centerY)
     }
     
