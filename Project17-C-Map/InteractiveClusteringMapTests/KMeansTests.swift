@@ -66,7 +66,7 @@ class KMeansTests: XCTestCase {
     }
     
     func test_kmeans_clustering() throws {
-        let kmeans = KMeansClustering(k: 4)
+        let kmeans = KMeans(k: 4)
         let clusters = kmeans.trainCenters(points, initialCentroids: coordinates)
         let expectPoints: [[Coordinate]] = [[Coordinate(x: 1, y: 1), Coordinate(x: 2, y: 2)],
                                                      [Coordinate(x: 8, y: 2), Coordinate(x: 9, y: 1)],
