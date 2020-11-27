@@ -7,7 +7,7 @@
 
 import Foundation
 
-class KMeans {
+final class KMeans {
     
     private let k: Int
     
@@ -15,20 +15,19 @@ class KMeans {
         self.k = k
     }
     
-    func randomCentroids(rangeOfLat lats: ClosedRange<Double>,
+    // create D_init
+    func initializeRandomCentroids(rangeOfLat lats: ClosedRange<Double>,
                          rangeOfLng lngs: ClosedRange<Double>) -> [Coordinate] {
         var centroids: [Coordinate] = []
         for _ in 0..<k {
-            let lat = Double.random(in: lats)
-            let lng = Double.random(in: lngs)
-            let cluster = Coordinate(x: lng, y: lat)
+            let cluster = Coordinate.randomGenerate(rangeOfLat: lats, rangeOfLng: lngs)
             centroids.append(cluster)
         }
         
         return centroids
     }
     
-    func screenCentroids(topLeft: Coordinate, bottomRight: Coordinate) -> [Coordinate] {
+    func initializeScreenCentroids(topLeft: Coordinate, bottomRight: Coordinate) -> [Coordinate] {
         let center = (topLeft + bottomRight) / 2.0
         let boundary = Coordinate(x: bottomRight.x - center.x, y: topLeft.y - center.y)
         let pivot = center.findTheta(vertex: Coordinate(x: bottomRight.x, y: topLeft.y))
@@ -50,7 +49,7 @@ class KMeans {
                 let radian = theta * .pi / Degree.straight
                 var x: Double
                 var y: Double
-
+                
                 if theta > pivot {
                     y = boundary.y
                     x = y / tan(radian)
