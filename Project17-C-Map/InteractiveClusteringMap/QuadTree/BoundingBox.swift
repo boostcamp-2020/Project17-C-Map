@@ -12,6 +12,10 @@ struct BoundingBox {
     let topRight: Coordinate
     let bottomLeft: Coordinate
     
+    var ratio: Double {
+        (topRight.x - bottomLeft.x) / (topRight.y - bottomLeft.y)
+    }
+    
     func splittedQuadBoundingBoxes() -> [BoundingBox] {
         let center = topRight.center(other: bottomLeft)
         return [

@@ -190,8 +190,8 @@
 				FA81D66E2568FEC50023E123 /* CoreData */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
-				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
+				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				46153145256BDDD700BAE674 /* QuadTree */,
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
@@ -226,8 +226,8 @@
 		46153145256BDDD700BAE674 /* QuadTree */ = {
 			isa = PBXGroup;
 			children = (
-				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				192D34AC256E355500861703 /* QuadTree.swift */,
+				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */,
 			);
 			path = QuadTree;
