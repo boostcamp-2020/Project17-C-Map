@@ -15,7 +15,69 @@ final class KMeans {
         self.k = k
     }
     
-    // create D_init
+    func initializeBallCutCentroids(k: Int,
+                                     coverage: Double,
+                                     coordinates: [Coordinate]) -> [Coordinate] {
+        var coordinates = coordinates
+        var centroids: [Coordinate] = []
+        let container = createContainer(k: k, coordinates: coordinates)
+        centroids += pickCentroids(k: k, distance: coverage, container: container)
+        
+        if centroids.count != k {
+            for coordinate in container {
+                guard let index = coordinates.firstIndex(of: coordinate) else {
+                    return []
+                }
+                coordinates.remove(at: index)
+            }
+            
+            centroids += initializeBallCutCentroids(k: k - centroids.count + 1, coverage: coverage, coordinates: coordinates)
+        }
+        
+        return centroids
+    }
+    
+    private func createContainer(k: Int, coordinates: [Coordinate], mutiplier: Int = 5) -> [Coordinate] {
+        var coordinates = coordinates
+        var container: [Coordinate] = []
+        let count = k * mutiplier
+        for _ in 0..<count {
+            guard let coordinate = coordinates.randomElement(),
+                  let index = coordinates.firstIndex(of: coordinate)
+            else {
+                return []
+            }
+            container.append(coordinate)
+            coordinates.remove(at: index)
+        }
+        
+        return container
+    }
+    
+    private func pickCentroids(k: Int, distance: Double, container: [Coordinate]) -> [Coordinate] {
+        var centroids: [Coordinate] = []
+        var container = container
+        
+        for _ in 0..<k {
+            guard let centroid = container.randomElement() else {
+                return centroids
+            }
+            
+            var remove: [Coordinate] = []
+            
+            container.forEach { coordinate in
+                if centroid.distanceTo(coordinate) <= distance {
+                    remove.append(coordinate)
+                }
+            }
+            
+            container = container.filter { !remove.contains($0) }
+            centroids.append(centroid)
+        }
+        
+        return centroids
+    }
+    
     func initializeRandomCentroids(rangeOfLat lats: ClosedRange<Double>,
                          rangeOfLng lngs: ClosedRange<Double>) -> [Coordinate] {
         var centroids: [Coordinate] = []
