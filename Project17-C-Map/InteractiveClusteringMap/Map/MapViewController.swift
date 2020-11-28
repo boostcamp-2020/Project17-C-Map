@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
+    private var mapInteractor: MapInteractor?
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -28,19 +29,14 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
-        configureMapController()
+    
     }
     
-    private func requestLocationPermission() {
-        locationManager.requestWhenInUseAuthorization()
+    private func configureMapInteractor() {
+//        let poiService = POIService()
+//        let clusteringService = QuadTreeClusteringService()
+//
+//        mapInteractor = MapInteractor()
     }
     
-    private func configureMapController() {
-        guard let dataManager = dataManager else { return }
-    
-        let service = POIService(dataManager: dataManager)
-        mapController = MapController(mapView: interactiveMapView, poiServicing: service)
-        mapController?.loadMarkers()
-    }
-     
 }
