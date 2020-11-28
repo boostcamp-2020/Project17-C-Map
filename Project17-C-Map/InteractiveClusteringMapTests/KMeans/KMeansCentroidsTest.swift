@@ -77,7 +77,7 @@ class KMeansCentroidsTest: XCTestCase {
         let distance = maxX - minX
         let coverage = distance / 3
         
-        let result = kmm.initializeDistanceCentroids(k: 13, coverage: coverage, coordinates: centroids)
+        let result = kmm.initializeBallCutCentroids(k: 13, coverage: coverage, coordinates: centroids)
         print(result)
     }
     
@@ -100,13 +100,13 @@ class KMeansCentroidsTest: XCTestCase {
         let kmm = KMeans(k: number)
         let topLeft = Coordinate(x: 124.0, y: 43.0)
         let bottomRight = Coordinate(x: 132.0, y: 33.0)
-        return kmm.screenCentroids(topLeft: topLeft, bottomRight: bottomRight)
+        return kmm.initializeScreenCentroids(topLeft: topLeft, bottomRight: bottomRight)
     }
     
     private func mockCentoidsByRandom(number: Int) -> [Coordinate] {
         let kmm = KMeans(k: number)
         
-        return kmm.randomCentroids(rangeOfLat: 33.0...43.0, rangeOfLng: 123.0...132.0)
+        return kmm.initializeRandomCentroids(rangeOfLat: 33.0...43.0, rangeOfLng: 123.0...132.0)
     }
 
 }
