@@ -12,6 +12,7 @@ final class BallCutCentroidGenerator: CentroidCreatable {
     private let coverage: Double
     private let k: Int
     private let points: [Coordinate]
+    private let mutiplier: Int = 5
     
     init(k: Int, coverage: Double, coordinates: [Coordinate]) {
         self.k = k
@@ -20,36 +21,32 @@ final class BallCutCentroidGenerator: CentroidCreatable {
     }
     
     func centroids() -> [Coordinate] {
-        let result: [Coordinate] = recursiveClassify(k: k, coordinates: points)
-        
-        return result
+        return  recursiveClassify(k: k, coordinates: points)
     }
     
     private func recursiveClassify(k: Int, coordinates: [Coordinate]) -> [Coordinate] {
         var coordinates = coordinates
-        var centroids: [Coordinate] = []
         let container = createContainer(k: k, coordinates: coordinates)
-        centroids += pickCentroids(k: k, distance: coverage, container: container)
+        var centroids: [Coordinate] = pickCentroids(k: k, distance: coverage, container: container)
         
-        if centroids.count != k {
-            for coordinate in container {
-                guard let index = coordinates.firstIndex(of: coordinate) else {
-                    return []
-                }
-                coordinates.remove(at: index)
+        guard centroids.count == k else { return centroids }
+        
+        for coordinate in container {
+            guard let index = coordinates.firstIndex(of: coordinate) else {
+                return []
             }
-            
-            centroids += recursiveClassify(k: k - centroids.count + 1, coordinates: coordinates)
+            coordinates.remove(at: index)
         }
         
+        centroids += recursiveClassify(k: k - centroids.count + 1, coordinates: coordinates)
         return centroids
     }
     
     private func createContainer(k: Int, coordinates: [Coordinate]) -> [Coordinate] {
         var coordinates = coordinates
         var container: [Coordinate] = []
-        let mutiplier: Int = 5
         let count = k * mutiplier
+        
         for _ in 0..<count {
             guard let coordinate = coordinates.randomElement(),
                   let index = coordinates.firstIndex(of: coordinate)
@@ -72,15 +69,7 @@ final class BallCutCentroidGenerator: CentroidCreatable {
                 return centroids
             }
             
-            var removeCoordinates: [Coordinate] = []
-            
-            container.forEach { coordinate in
-                if centroid.distanceTo(coordinate) <= distance {
-                    removeCoordinates.append(coordinate)
-                }
-            }
-            
-            container = container.filter { !removeCoordinates.contains($0) }
+            container = container.filter { centroid.distanceTo($0) >= distance }
             centroids.append(centroid)
         }
         
