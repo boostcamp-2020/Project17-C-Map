@@ -7,24 +7,13 @@
 
 import Foundation
 
-protocol ClusteringServicing {
-    
-    func execute(completionHandler: @escaping (([Cluster]) -> Void))
-    func cancel()
-    
-}
 
 final class QuadTreeClusteringService {
     
     private let coordinates: [Coordinate]
     private let quadTree: QuadTree
     private let queue = DispatchQueue(label: Name.quadTreeClusteringQueue, qos: .userInitiated)
-    private var boundingBox: BoundingBox
     private var workingClusteringWorkItem: DispatchWorkItem?
-    private var zoomLevel: Double
-    private var clusterWidthCount: Int {
-        Int(min((zoomLevel / 3), 4))
-    }
     
     private lazy var insertWorkItem = DispatchWorkItem { [weak self] in
         guard let self = self else { return }
@@ -35,17 +24,10 @@ final class QuadTreeClusteringService {
         self.updateQuadTreeBoundingBox()
     }
     
-    init(coordinates: [Coordinate], boundingBox: BoundingBox, zoomLevel: Double) {
+    init(coordinates: [Coordinate], boundingBox: BoundingBox) {
         self.coordinates = coordinates
-        self.boundingBox = boundingBox
-        self.zoomLevel = zoomLevel
         quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
         insertCoordinatesAsync()
-    }
-
-    func update(boundingBox: BoundingBox, zoomLevel: Double) {
-        self.boundingBox = boundingBox
-        self.zoomLevel = zoomLevel
     }
     
     private func insertCoordinatesAsync() {
@@ -53,11 +35,13 @@ final class QuadTreeClusteringService {
     }
     
     private func clusteringWorkItem(
+        boundingBox: BoundingBox,
+        zoomLevel: Double,
         completionHandler: @escaping ([Cluster]) -> Void) -> DispatchWorkItem {
         DispatchWorkItem { [weak self] in
             guard let self = self else { return }
-            let clusters = self.clustering()
-            completionHandler(clusters ?? [])
+            let clusters = self.clustering(boundingBox: boundingBox, zoomLevel: zoomLevel)
+            completionHandler(clusters)
         }
     }
     
@@ -67,11 +51,12 @@ final class QuadTreeClusteringService {
     
     // TODO: 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
     // 한 클러스터 영역 크기를 정해, 전체 BoundingBox(클러스터 해야되는 범위 전체)를 순서대로 순회하면서 Clustering한다.
-    private func clustering() -> [Cluster] {
+    private func clustering(boundingBox: BoundingBox,
+                            zoomLevel: Double) -> [Cluster] {
         var result = [Cluster]()
         
-        let widthCount: Int = clusterWidthCount
-        let heightCount: Int = Int(Double(widthCount) / boundingBox.topRight.ratio(other: boundingBox.bottomLeft))
+        let widthCount = clusterWidthCount(zoomLevel: zoomLevel)
+        let heightCount = Int(Double(widthCount) / boundingBox.topRight.ratio(other: boundingBox.bottomLeft))
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
@@ -96,17 +81,26 @@ final class QuadTreeClusteringService {
         }
         return result
     }
+    
+    private func clusterWidthCount(zoomLevel: Double) -> Int {
+        Int(min((zoomLevel / 3), 4))
+    }
 
 }
 
 extension QuadTreeClusteringService: ClusteringServicing {
     
-    func execute(completionHandler: @escaping (([Cluster]) -> Void)) {
+    func execute(coordinates: [Coordinate]?,
+                 boundingBox: BoundingBox,
+                 zoomLevel: Double,
+                 completionHandler: @escaping (([Cluster]) -> Void)) {
         
         queue.async { [weak self] in
             guard let self = self else { return }
             self.workingClusteringWorkItem?.cancel()
-            self.workingClusteringWorkItem = self.clusteringWorkItem(completionHandler: completionHandler)
+            self.workingClusteringWorkItem = self.clusteringWorkItem(boundingBox: boundingBox,
+                                                                     zoomLevel: zoomLevel,
+                                                                     completionHandler: completionHandler)
             self.workingClusteringWorkItem?.perform()
         }
     }
