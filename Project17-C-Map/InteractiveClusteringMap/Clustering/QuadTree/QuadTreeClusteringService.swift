@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 final class QuadTreeClusteringService {
     
     private let coordinates: [Coordinate]

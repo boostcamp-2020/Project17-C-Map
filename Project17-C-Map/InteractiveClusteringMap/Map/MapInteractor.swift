@@ -22,12 +22,15 @@ protocol Interactable: class {
 class MapInteractor: Interactable {
     
     private let poiService: POIServicing
-    private let clusteringServicing: ClusteringServicing
+//    private let clusteringServicing: ClusteringServicing
+    private var clusteringServicing: QuadTreeClusteringService?
     weak var delegate: ClusterCompleteDelegate?
-    
-    init(poiService: POIServicing, clusteringServicing: ClusteringServicing) {
+
+    init(poiService: POIServicing
+//         clusteringServicing: ClusteringServicing
+    ) {
         self.poiService = poiService
-        self.clusteringServicing = clusteringServicing
+//        self.clusteringServicing = clusteringServicing
     }
     
     func fetch(boundingBox: BoundingBox, zoomLevel: Double) {
@@ -46,7 +49,8 @@ class MapInteractor: Interactable {
     private func clustering(coordinates: [Coordinate],
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
-        clusteringServicing.execute(coordinates: coordinates,
+        clusteringServicing = QuadTreeClusteringService(coordinates: coordinates, boundingBox: boundingBox)
+        clusteringServicing?.execute(coordinates: coordinates,
                                     boundingBox: boundingBox,
                                     zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }

@@ -28,13 +28,15 @@ final class MapController {
     
     private func createMarkers(clusters: [Cluster]) {
         clusters.forEach { cluster in
-            let location = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
-            let marker = NMFMarker()
-            marker.position = location
-            marker.iconTintColor = .green
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                marker.mapView = self.interactiveMapView?.mapView
+            DispatchQueue.global(qos: .userInitiated).async {
+                let location = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
+                let marker = NMFMarker()
+                marker.position = location
+                marker.iconTintColor = .green
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    marker.mapView = self.interactiveMapView?.mapView
+                }
             }
         }
     }
