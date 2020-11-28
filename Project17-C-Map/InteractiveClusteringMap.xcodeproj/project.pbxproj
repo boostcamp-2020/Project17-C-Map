@@ -36,6 +36,7 @@
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
 		461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
+		466F1838257219C500F95AA4 /* Mockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F1837257219C500F95AA4 /* Mockup.swift */; };
 		46A12E1B256CD099007BDF3E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
 		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
@@ -97,6 +98,7 @@
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
 		461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeClusteringService.swift; sourceTree = "<group>"; };
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		466F1837257219C500F95AA4 /* Mockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mockup.swift; sourceTree = "<group>"; };
 		46A12E1A256CD099007BDF3E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */,
 				192D34B1256E368D00861703 /* QuadTreeTests.swift */,
 				46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */,
+				466F1837257219C500F95AA4 /* Mockup.swift */,
 			);
 			path = QuadTreeTests;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
 				46DCB47D256FC90B00DE0B4C /* QuadTreeServiceTests.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
+				466F1838257219C500F95AA4 /* Mockup.swift in Sources */,
 				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
