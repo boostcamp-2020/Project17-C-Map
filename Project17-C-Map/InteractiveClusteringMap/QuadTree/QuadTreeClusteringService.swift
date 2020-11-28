@@ -60,24 +60,7 @@ final class QuadTreeClusteringService {
     }
     
     private func updateQuadTreeBoundingBox() {
-        let minMaxCoordinates = minMaxOfCoordinates()
-        quadTree.updateBoundingBox(topRight: minMaxCoordinates.topRight,
-                                   bottomLeft: minMaxCoordinates.bottomLeft)
-    }
-    
-    private func minMaxOfCoordinates() -> (topRight: Coordinate, bottomLeft: Coordinate) {
-        var maxX: Double = boundingBox.bottomLeft.x
-        var minX: Double = boundingBox.topRight.x
-        var maxY: Double = boundingBox.bottomLeft.y
-        var minY: Double = boundingBox.topRight.y
-        
-        coordinates.forEach { coordinate in
-            maxX = max(coordinate.x, maxX)
-            minX = min(coordinate.x, minX)
-            maxY = max(coordinate.y, maxY)
-            minY = min(coordinate.y, minY)
-        }
-        return (topRight: Coordinate(x: maxX, y: maxY), bottomLeft: Coordinate(x: minX, y: minY))
+        quadTree.updateBoundingBox()
     }
     
     // TODO: 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
