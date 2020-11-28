@@ -11,14 +11,35 @@ protocol CentroidCreatable: AnyObject {
     func centroids() -> [Coordinate]
 }
 
-final class KMeans {
+final class KMeans: ClusteringServicing {
 
-    let k: Int
-    let centroidable: CentroidCreatable
+    private let k: Int
+    private let centroidable: CentroidCreatable
+    private let option: CompleteOption
+    private let coverage: Double = 1.0
 
-    init(k: Int, centroidable: CentroidCreatable) {
+    init(k: Int, centroidable: CentroidCreatable, option: CompleteOption) {
         self.k = k
         self.centroidable = centroidable
+        self.option = option
+    }
+    
+    func execute(coordinates: [Coordinate]?,
+                 boundingBox: BoundingBox,
+                 zoomLevel: Double,
+                 completionHandler: @escaping (([Cluster]) -> Void)) {
+        let centroids = centroidable.centroids()
+        
+        switch option {
+        case .distance:
+            completionHandler(trainCenters(centroids, convergeDistance: coverage))
+        case .state:
+            completionHandler(trainCenters(centroids))
+        }
+    }
+    
+    func cancel() {
+        
     }
 
     /// points에 대한 centroid를 계속 계산하여 centroid가 이동한 총 거리가
@@ -29,7 +50,7 @@ final class KMeans {
     ///   - initialCentroids: 초기 중심 값
     ///   - convergeDistance: 바뀐 Clusters가 움직인 총 거리가 convergeDistance 보다 작을경우 Cluster 반환
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
-    func trainCenters(_ points: [Coordinate], convergeDistance: Double) -> [Cluster] {
+    private func trainCenters(_ points: [Coordinate], convergeDistance: Double) -> [Cluster] {
         let initialCentroids = centroidable.centroids()
         var clusters: [Cluster]
         var beforeCenters = initialCentroids
@@ -57,7 +78,7 @@ final class KMeans {
     ///   - points: 모든 좌표 값
     ///   - initialCentroids: 초기 중심 값
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
-    func trainCenters(_ points: [Coordinate]) -> [Cluster] {
+    private func trainCenters(_ points: [Coordinate]) -> [Cluster] {
         let initialCentroids: [Coordinate] = centroidable.centroids()
         // 초기화 한 센터에 대한 points를 classification 해준다.
         var clusters = classify(points, from: initialCentroids)
@@ -117,4 +138,12 @@ final class KMeans {
         return minIndex
     }
 
+}
+
+extension KMeans {
+    
+    enum CompleteOption {
+        case distance, state
+    }
+    
 }
