@@ -15,6 +15,8 @@
 		199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
 		199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
+		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
+		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
 		3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */; };
 		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
@@ -92,6 +94,8 @@
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
+		19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
@@ -166,6 +170,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19B15C6B2572ABB4008CDEE5 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
+				4623BD1225694A1400940B12 /* MapController.swift */,
+				37EB732C2562592700AC44D6 /* MapViewController.swift */,
+				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		372216CB256943C800231245 /* VO */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +235,7 @@
 		37EB73272562592700AC44D6 /* InteractiveClusteringMap */ = {
 			isa = PBXGroup;
 			children = (
+				19B15C6B2572ABB4008CDEE5 /* Map */,
 				FCE422AD257018E30017416F /* Clustering */,
 				37352CD925695E4D00CAFDFD /* Util */,
 				37352CCF25695AA500CAFDFD /* Resource */,
@@ -227,10 +243,6 @@
 				FA81D66E2568FEC50023E123 /* CoreData */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
-				4623BD1225694A1400940B12 /* MapController.swift */,
-				37EB732C2562592700AC44D6 /* MapViewController.swift */,
-				46153145256BDDD700BAE674 /* QuadTree */,
-				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
@@ -350,6 +362,8 @@
 		FCE422AD257018E30017416F /* Clustering */ = {
 			isa = PBXGroup;
 			children = (
+				19B15C6025727915008CDEE5 /* ClusteringServicing.swift */,
+				46153145256BDDD700BAE674 /* QuadTree */,
 				FCE422AE257018EA0017416F /* KMeans */,
 			);
 			path = Clustering;
@@ -566,6 +580,7 @@
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
+				19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */,
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
@@ -575,6 +590,7 @@
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
+				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
