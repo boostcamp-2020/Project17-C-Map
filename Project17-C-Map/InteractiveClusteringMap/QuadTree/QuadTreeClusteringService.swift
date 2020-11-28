@@ -14,16 +14,14 @@ protocol ClusteringServicing {
     
 }
 
-class QuadTreeClusteringService {
+final class QuadTreeClusteringService {
     
-    // 외부에서 카메라 위치 바뀌면 어떻게 할지 생각
     private let coordinates: [Coordinate]
     private let quadTree: QuadTree
     private var boundingBox: BoundingBox
     private let queue = DispatchQueue(label: Name.quadTreeClusteringQueue, qos: .userInitiated)
     private var workingClusteringWorkItem: DispatchWorkItem?
     private var zoomLevel: Double
-    let group = DispatchGroup()
     private var clusterWidthCount: Int {
         Int(min((zoomLevel / 3), 4))
     }
@@ -32,6 +30,8 @@ class QuadTreeClusteringService {
         self?.coordinates.forEach {
             self?.quadTree.insert(coordinate: $0)
         }
+//        QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
+        self?.updateQuadTreeBoundingBox()
     }
     
     init(coordinates: [Coordinate], boundingBox: BoundingBox, zoomLevel: Double) {
@@ -39,8 +39,6 @@ class QuadTreeClusteringService {
         self.boundingBox = boundingBox
         self.zoomLevel = zoomLevel
         quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
-        // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
-        // updateQuadTreeBoundingBox()
         insertCoordinates()
     }
 
@@ -49,21 +47,25 @@ class QuadTreeClusteringService {
         self.zoomLevel = zoomLevel
     }
     
-    private func updateQuadTreeBoundingBox() {
-        let minMaxCoordinates = coordinatesMinMaxCoordinates()
-        quadTree.updateBoundingBox(topRight: minMaxCoordinates.topRight,
-                                   bottomLeft: minMaxCoordinates.bottomLeft)
+    private func insertCoordinates() {
+        queue.async(execute: insertWorkItem)
     }
     
     private func clusteringWorkItem(
         completionHandler: @escaping ([Cluster]) -> Void) -> DispatchWorkItem {
         DispatchWorkItem { [weak self] in
             let clusters = self?.clustering()
-                    completionHandler(clusters ?? [])
+            completionHandler(clusters ?? [])
         }
     }
     
-    private func coordinatesMinMaxCoordinates() -> (topRight: Coordinate, bottomLeft: Coordinate) {
+    private func updateQuadTreeBoundingBox() {
+        let minMaxCoordinates = minMaxOfCoordinates()
+        quadTree.updateBoundingBox(topRight: minMaxCoordinates.topRight,
+                                   bottomLeft: minMaxCoordinates.bottomLeft)
+    }
+    
+    private func minMaxOfCoordinates() -> (topRight: Coordinate, bottomLeft: Coordinate) {
         var maxX: Double = boundingBox.bottomLeft.x
         var minX: Double = boundingBox.topRight.x
         var maxY: Double = boundingBox.bottomLeft.y
@@ -78,11 +80,8 @@ class QuadTreeClusteringService {
         return (topRight: Coordinate(x: maxX, y: maxY), bottomLeft: Coordinate(x: minX, y: minY))
     }
     
-    private func insertCoordinates() {
-        queue.async(execute: insertWorkItem)
-    }
-    
-    // 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
+    // TODO: 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
+    // 한 클러스터 영역 크기를 정해, 전체 BoundingBox(클러스터 해야되는 범위 전체)를 순서대로 순회하면서 Clustering한다.
     private func clustering() -> [Cluster] {
         var result = [Cluster]()
         
@@ -118,8 +117,7 @@ class QuadTreeClusteringService {
 
 extension QuadTreeClusteringService: ClusteringServicing {
     
-    func execute(
-        completionHandler: @escaping (([Cluster]) -> Void)) {
+    func execute(completionHandler: @escaping (([Cluster]) -> Void)) {
         
         queue.async { [weak self] in
             self?.workingClusteringWorkItem?.cancel()
@@ -128,9 +126,11 @@ extension QuadTreeClusteringService: ClusteringServicing {
         }
     }
     
+    // cancel시 진행중인 workItem은 취소가 안된다고 함..
+    // 어떻게 할지 공부 더 필요
     func cancel() {
-        insertWorkItem.cancel()
-        workingClusteringWorkItem?.cancel()
+//        insertWorkItem.cancel()
+//        workingClusteringWorkItem?.cancel()
     }
     
 }
