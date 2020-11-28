@@ -63,15 +63,15 @@ final class KMeans {
                 return centroids
             }
             
-            var remove: [Coordinate] = []
+            var removeCoordinates: [Coordinate] = []
             
             container.forEach { coordinate in
                 if centroid.distanceTo(coordinate) <= distance {
-                    remove.append(coordinate)
+                    removeCoordinates.append(coordinate)
                 }
             }
             
-            container = container.filter { !remove.contains($0) }
+            container = container.filter { !removeCoordinates.contains($0) }
             centroids.append(centroid)
         }
         
