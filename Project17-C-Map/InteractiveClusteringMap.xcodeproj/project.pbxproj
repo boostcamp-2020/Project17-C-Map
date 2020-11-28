@@ -166,6 +166,7 @@
 				37352CDF25695EE000CAFDFD /* Place.swift */,
 				372216CC256943D300231245 /* POI.swift */,
 				FCE422AF2570194B0017416F /* Coordinate.swift */,
+				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				FCE422B7257019650017416F /* Cluster.swift */,
 			);
 			path = VO;
@@ -260,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				192D34AC256E355500861703 /* QuadTree.swift */,
-				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */,
 			);
 			path = QuadTree;

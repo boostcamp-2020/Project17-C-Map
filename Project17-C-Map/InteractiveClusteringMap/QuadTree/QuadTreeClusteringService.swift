@@ -18,8 +18,8 @@ final class QuadTreeClusteringService {
     
     private let coordinates: [Coordinate]
     private let quadTree: QuadTree
-    private var boundingBox: BoundingBox
     private let queue = DispatchQueue(label: Name.quadTreeClusteringQueue, qos: .userInitiated)
+    private var boundingBox: BoundingBox
     private var workingClusteringWorkItem: DispatchWorkItem?
     private var zoomLevel: Double
     private var clusterWidthCount: Int {
@@ -27,11 +27,12 @@ final class QuadTreeClusteringService {
     }
     
     private lazy var insertWorkItem = DispatchWorkItem { [weak self] in
-        self?.coordinates.forEach {
-            self?.quadTree.insert(coordinate: $0)
+        guard let self = self else { return }
+        self.coordinates.forEach {
+            self.quadTree.insert(coordinate: $0)
         }
         // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
-        self?.updateQuadTreeBoundingBox()
+        self.updateQuadTreeBoundingBox()
     }
     
     init(coordinates: [Coordinate], boundingBox: BoundingBox, zoomLevel: Double) {
@@ -39,7 +40,7 @@ final class QuadTreeClusteringService {
         self.boundingBox = boundingBox
         self.zoomLevel = zoomLevel
         quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
-        insertCoordinates()
+        insertCoordinatesAsync()
     }
 
     func update(boundingBox: BoundingBox, zoomLevel: Double) {
@@ -47,14 +48,15 @@ final class QuadTreeClusteringService {
         self.zoomLevel = zoomLevel
     }
     
-    private func insertCoordinates() {
+    private func insertCoordinatesAsync() {
         queue.async(execute: insertWorkItem)
     }
     
     private func clusteringWorkItem(
         completionHandler: @escaping ([Cluster]) -> Void) -> DispatchWorkItem {
         DispatchWorkItem { [weak self] in
-            let clusters = self?.clustering()
+            guard let self = self else { return }
+            let clusters = self.clustering()
             completionHandler(clusters ?? [])
         }
     }
@@ -69,12 +71,11 @@ final class QuadTreeClusteringService {
         var result = [Cluster]()
         
         let widthCount: Int = clusterWidthCount
-        let heightCount: Int = Int(Double(widthCount) / boundingBox.ratio)
+        let heightCount: Int = Int(Double(widthCount) / boundingBox.topRight.ratio(other: boundingBox.bottomLeft))
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
-        var bottomLeftX = boundingBox.bottomLeft.x
-        var bottomLeftY = boundingBox.bottomLeft.y
+        var (bottomLeftX, bottomLeftY) = (boundingBox.bottomLeft.x, boundingBox.bottomLeft.y)
 
         while bottomLeftY < boundingBox.topRight.y {
             while bottomLeftX < boundingBox.topRight.x {
@@ -103,9 +104,10 @@ extension QuadTreeClusteringService: ClusteringServicing {
     func execute(completionHandler: @escaping (([Cluster]) -> Void)) {
         
         queue.async { [weak self] in
-            self?.workingClusteringWorkItem?.cancel()
-            self?.workingClusteringWorkItem = self?.clusteringWorkItem(completionHandler: completionHandler)
-            self?.workingClusteringWorkItem?.perform()
+            guard let self = self else { return }
+            self.workingClusteringWorkItem?.cancel()
+            self.workingClusteringWorkItem = self.clusteringWorkItem(completionHandler: completionHandler)
+            self.workingClusteringWorkItem?.perform()
         }
     }
     
