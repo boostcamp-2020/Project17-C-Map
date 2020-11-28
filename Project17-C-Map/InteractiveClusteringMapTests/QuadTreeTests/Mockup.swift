@@ -24,29 +24,29 @@ class Mockup {
         let subtreeBoundingBox = boundingBox.splittedQuadBoundingBoxes()
         
         // 1.
-        let topLeft = QuadTree(boundingBox: subtreeBoundingBox[0], nodeCapacity: nodeCapacity)
+        let topLeft = QuadTree(boundingBox: subtreeBoundingBox[2], nodeCapacity: nodeCapacity)
         
-        // 2.
-        let topRight = QuadTree(boundingBox: subtreeBoundingBox[1], nodeCapacity: nodeCapacity)
+        // 2.6,
+        let topRight = QuadTree(boundingBox: subtreeBoundingBox[3], nodeCapacity: nodeCapacity)
         topRight.insert(coordinate: Coordinate(x: 6, y: 6))
 
-        let bottomLeftSubtreeBoundingBox = subtreeBoundingBox[2].splittedQuadBoundingBoxes()
+        let bottomLeftSubtreeBoundingBox = subtreeBoundingBox[0].splittedQuadBoundingBoxes()
         // 3-1.
-        let bottomLeftTopLeft = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[0], nodeCapacity: nodeCapacity)
+        let bottomLeftTopLeft = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[2], nodeCapacity: nodeCapacity)
         // 3-2.
-        let bottomLeftTopRight = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[1], nodeCapacity: nodeCapacity)
+        let bottomLeftTopRight = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[3], nodeCapacity: nodeCapacity)
         bottomLeftTopRight.insert(coordinate: Coordinate(x: 3, y: 3))
         // 3-3.
-        let bottomLeftBottomLeft = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[2], nodeCapacity: nodeCapacity)
+        let bottomLeftBottomLeft = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[0], nodeCapacity: nodeCapacity)
         // 3-4.
-        let bottomLeftBottomRight = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[3], nodeCapacity: nodeCapacity)
+        let bottomLeftBottomRight = QuadTree(boundingBox: bottomLeftSubtreeBoundingBox[1], nodeCapacity: nodeCapacity)
 
         // 3.
-        let bottomLeft = QuadTree(boundingBox: subtreeBoundingBox[2], nodeCapacity: nodeCapacity, topLeft: bottomLeftTopLeft, topRight: bottomLeftTopRight, bottomLeft: bottomLeftBottomLeft, bottomRight: bottomLeftBottomRight)
+        let bottomLeft = QuadTree(boundingBox: subtreeBoundingBox[0], nodeCapacity: nodeCapacity, topLeft: bottomLeftTopLeft, topRight: bottomLeftTopRight, bottomLeft: bottomLeftBottomLeft, bottomRight: bottomLeftBottomRight)
         bottomLeft.insert(coordinate: Coordinate(x: 2, y: 2))
         
         // 4.
-        let bottomRight = QuadTree(boundingBox: subtreeBoundingBox[3], nodeCapacity: nodeCapacity)
+        let bottomRight = QuadTree(boundingBox: subtreeBoundingBox[1], nodeCapacity: nodeCapacity)
 
         // 5.
         let newQuadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: nodeCapacity, topLeft: topLeft, topRight: topRight, bottomLeft: bottomLeft, bottomRight: bottomRight)

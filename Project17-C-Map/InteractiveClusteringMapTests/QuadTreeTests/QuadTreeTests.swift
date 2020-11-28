@@ -19,7 +19,7 @@ class QuadTreeTests: XCTestCase {
         Coordinate(x: 2, y: 2),
         Coordinate(x: 3, y: 3),
         Coordinate(x: 6, y: 6)
-        ]
+    ]
     
     override func setUpWithError() throws {
         quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: nodeCapacity)
