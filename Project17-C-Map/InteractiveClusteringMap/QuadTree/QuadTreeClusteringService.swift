@@ -24,8 +24,8 @@ class QuadTreeClusteringService {
     private var workingClusteringWorkItem: DispatchWorkItem?
     private var zoomLevel: Double
     let group = DispatchGroup()
-    private var clusterWidthCount: Double {
-        min((zoomLevel / 3), 4)
+    private var clusterWidthCount: Int {
+        Int(min((zoomLevel / 3), 4))
     }
     
     private lazy var insertWorkItem = DispatchWorkItem { [weak self] in
@@ -86,10 +86,10 @@ class QuadTreeClusteringService {
     private func clustering() -> [Cluster] {
         var result = [Cluster]()
         
-        let widthCount: Double = clusterWidthCount
-        let heightCount: Double = widthCount / boundingBox.ratio
-        let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / widthCount
-        let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / heightCount
+        let widthCount: Int = clusterWidthCount
+        let heightCount: Int = Int(Double(widthCount) / boundingBox.ratio)
+        let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
+        let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
         var x = boundingBox.bottomLeft.x
         var y = boundingBox.bottomLeft.y
