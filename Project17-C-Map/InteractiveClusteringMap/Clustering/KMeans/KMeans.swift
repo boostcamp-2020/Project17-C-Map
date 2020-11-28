@@ -19,9 +19,8 @@ final class KMeans {
                                      coverage: Double,
                                      coordinates: [Coordinate]) -> [Coordinate] {
         var coordinates = coordinates
-        var centroids: [Coordinate] = []
         let container = createContainer(k: k, coordinates: coordinates)
-        centroids += pickCentroids(k: k, distance: coverage, container: container)
+        var centroids += pickCentroids(k: k, distance: coverage, container: container)
         
         if centroids.count != k {
             for coordinate in container {
