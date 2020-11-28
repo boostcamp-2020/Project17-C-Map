@@ -30,7 +30,7 @@ final class QuadTreeClusteringService {
         self?.coordinates.forEach {
             self?.quadTree.insert(coordinate: $0)
         }
-//        QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
+        // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
         self?.updateQuadTreeBoundingBox()
     }
     
@@ -73,16 +73,16 @@ final class QuadTreeClusteringService {
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
-        var x = boundingBox.bottomLeft.x
-        var y = boundingBox.bottomLeft.y
+        var bottomLeftX = boundingBox.bottomLeft.x
+        var bottomLeftY = boundingBox.bottomLeft.y
 
-        while y < boundingBox.topRight.y {
-            while x < boundingBox.topRight.x {
+        while bottomLeftY < boundingBox.topRight.y {
+            while bottomLeftX < boundingBox.topRight.x {
                 defer {
-                    x += clusterRegionWidth
+                    bottomLeftX += clusterRegionWidth
                 }
-                let topRight = Coordinate(x: x + clusterRegionWidth, y: y + clusterRegionHeight)
-                let bottomLeft = Coordinate(x: x, y: y)
+                let topRight = Coordinate(x: bottomLeftX + clusterRegionWidth, y: bottomLeftY + clusterRegionHeight)
+                let bottomLeft = Coordinate(x: bottomLeftX, y: bottomLeftY)
                 let region = BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
                 
                 let foundCoordinates = quadTree.findCoordinates(region: region)
@@ -90,8 +90,8 @@ final class QuadTreeClusteringService {
                 result.append(Cluster(coordinates: foundCoordinates))
             }
             
-            y += clusterRegionHeight
-            x = boundingBox.bottomLeft.x
+            bottomLeftY += clusterRegionHeight
+            bottomLeftX = boundingBox.bottomLeft.x
         }
         return result
     }
