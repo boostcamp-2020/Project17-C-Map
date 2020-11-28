@@ -56,6 +56,9 @@
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
+		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
+		FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
+		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
 		FCE422B8257019650017416F /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422B7257019650017416F /* Cluster.swift */; };
 		FCE422BD25701A200017416F /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422BC25701A200017416F /* Quadrant.swift */; };
@@ -127,6 +130,9 @@
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDefineTests.swift; sourceTree = "<group>"; };
+		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
+		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
+		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
 		FCE422BC25701A200017416F /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
@@ -237,13 +243,11 @@
 		37EB73412562592900AC44D6 /* InteractiveClusteringMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC9F5C30257094710029A53B /* KMeans */,
 				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
-				37279B02256EBC5200EA689A /* KMeansTests.swift */,
 				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
-				FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
-				FCE422C625701B8A0017416F /* KMeansCentroidsTest.swift */,
 			);
 			path = InteractiveClusteringMapTests;
 			sourceTree = "<group>";
@@ -314,6 +318,35 @@
 			path = POI;
 			sourceTree = "<group>";
 		};
+		FC2A9D5E25721F5C00D524B0 /* Metrics */ = {
+			isa = PBXGroup;
+			children = (
+				FCE422BC25701A200017416F /* Quadrant.swift */,
+				FCE422C125701A390017416F /* Degree.swift */,
+			);
+			path = Metrics;
+			sourceTree = "<group>";
+		};
+		FC2A9D682572371C00D524B0 /* Centroids */ = {
+			isa = PBXGroup;
+			children = (
+				FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */,
+				FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */,
+				FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */,
+			);
+			path = Centroids;
+			sourceTree = "<group>";
+		};
+		FC9F5C30257094710029A53B /* KMeans */ = {
+			isa = PBXGroup;
+			children = (
+				FCE422C625701B8A0017416F /* KMeansCentroidsTest.swift */,
+				FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */,
+				37279B02256EBC5200EA689A /* KMeansTests.swift */,
+			);
+			path = KMeans;
+			sourceTree = "<group>";
+		};
 		FCE422AD257018E30017416F /* Clustering */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,10 +358,10 @@
 		FCE422AE257018EA0017416F /* KMeans */ = {
 			isa = PBXGroup;
 			children = (
+				FC2A9D5E25721F5C00D524B0 /* Metrics */,
+				FC2A9D682572371C00D524B0 /* Centroids */,
 				FAC9FD04256E2107009FBB41 /* KCoefficient.swift */,
 				379DC4C5256E1EC60044DA6C /* KMeans.swift */,
-				FCE422BC25701A200017416F /* Quadrant.swift */,
-				FCE422C125701A390017416F /* Degree.swift */,
 			);
 			path = KMeans;
 			sourceTree = "<group>";
@@ -538,10 +571,12 @@
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
+				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
+				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
 				46A12E1B256CD099007BDF3E /* Extension.swift in Sources */,
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
@@ -552,6 +587,7 @@
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
+				FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

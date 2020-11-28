@@ -7,67 +7,20 @@
 
 import Foundation
 
-class KMeans {
-    
-    private let k: Int
-    
-    init(k: Int) {
-        self.k = k
-    }
-    
-    func randomCentroids(rangeOfLat lats: ClosedRange<Double>,
-                         rangeOfLng lngs: ClosedRange<Double>) -> [Coordinate] {
-        var centroids: [Coordinate] = []
-        for _ in 0..<k {
-            let lat = Double.random(in: lats)
-            let lng = Double.random(in: lngs)
-            let cluster = Coordinate(x: lng, y: lat)
-            centroids.append(cluster)
-        }
-        
-        return centroids
-    }
-    
-    func screenCentroids(topLeft: Coordinate, bottomRight: Coordinate) -> [Coordinate] {
-        let center = (topLeft + bottomRight) / 2.0
-        let boundary = Coordinate(x: bottomRight.x - center.x, y: topLeft.y - center.y)
-        let pivot = center.findTheta(vertex: Coordinate(x: bottomRight.x, y: topLeft.y))
-        
-        let increase = Degree.turn / Double(k)
-        var angle = increase
-        var coords: [Coordinate] = []
-        
-        for _ in 0..<k {
-            let quadrant = Quadrant.findQuadrant(angle: angle)
-            let modulus = angle.truncatingRemainder(dividingBy: Degree.right)
-            
-            if modulus == 0 {
-                let distance = boundary / 2
-                let coord =  quadrant.degree(center: center, boundary: distance)
-                coords.append(coord)
-            } else {
-                let theta = quadrant.theta(angle: modulus)
-                let radian = theta * .pi / Degree.straight
-                var x: Double
-                var y: Double
+protocol CentroidCreatable: AnyObject {
+    func centroids() -> [Coordinate]
+}
 
-                if theta > pivot {
-                    y = boundary.y
-                    x = y / tan(radian)
-                } else {
-                    x = boundary.x
-                    y = tan(radian) * x
-                }
-                let distance = Coordinate(x: x, y: y) / 2
-                let coord = quadrant.convertToCoordinate(center: center, distance: distance)
-                coords.append(coord)
-            }
-            angle += increase
-        }
-        
-        return coords
+final class KMeans {
+
+    let k: Int
+    let centroidable: CentroidCreatable
+
+    init(k: Int, centroidable: CentroidCreatable) {
+        self.k = k
+        self.centroidable = centroidable
     }
-    
+
     /// points에 대한 centroid를 계속 계산하여 centroid가 이동한 총 거리가
     /// convergeDistance 이하로 움직일 경우 cluster를 반환합니다.
     ///
@@ -76,52 +29,54 @@ class KMeans {
     ///   - initialCentroids: 초기 중심 값
     ///   - convergeDistance: 바뀐 Clusters가 움직인 총 거리가 convergeDistance 보다 작을경우 Cluster 반환
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
-    func trainCenters(_ points: [Coordinate], initialCentroids: [Coordinate], convergeDistance: Double) -> [Cluster] {
+    func trainCenters(_ points: [Coordinate], convergeDistance: Double) -> [Cluster] {
+        let initialCentroids = centroidable.centroids()
         var clusters: [Cluster]
         var beforeCenters = initialCentroids
         var totalMoveDist = Double.zero
-        
+
         repeat {
             clusters = classify(points, from: beforeCenters)
             totalMoveDist = Double.zero
-            
+
             let movedCenters = clusters.map { $0.center }
-            
+
             for (index, center) in beforeCenters.enumerated() {
                 totalMoveDist += center.distanceTo(movedCenters[index])
             }
             beforeCenters = movedCenters
-            
+
         } while totalMoveDist < convergeDistance
-        
+
         return clusters
     }
-    
+
     /// points에 대한 centroid를 계속 계산하여 points의 classification에 변화가 없을 시 cluster를 반환합니다.
     ///
     /// - Parameters:
     ///   - points: 모든 좌표 값
     ///   - initialCentroids: 초기 중심 값
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
-    func trainCenters(_ points: [Coordinate], initialCentroids: [Coordinate]) -> [Cluster] {
+    func trainCenters(_ points: [Coordinate]) -> [Cluster] {
+        let initialCentroids: [Coordinate] = centroidable.centroids()
         // 초기화 한 센터에 대한 points를 classification 해준다.
         var clusters = classify(points, from: initialCentroids)
         var isChanged = true
-        
+
         repeat {
             let centers = clusters.map { $0.center }
             let movedClusters = classify(points, from: centers)
-            
+
             if clusters.hashValue == movedClusters.hashValue {
                 isChanged = false
             }
             clusters = movedClusters
-            
+
         } while isChanged
-        
+
         return clusters
     }
-    
+
     /// 각 points에 대해 가장 가까운 center로 points를 분류하여 cluster 객체를 반환합니다.
     ///
     /// - Parameters:
@@ -130,16 +85,16 @@ class KMeans {
     /// - Returns: 분류한 points를 가지는 clusters를 리턴한다. (Cluster)
     private func classify(_ points: [Coordinate], from centers: [Coordinate]) -> [Cluster] {
         var clusters = [Cluster](repeating: Cluster(coordinates: []), count: centers.count)
-        
+
         points.forEach { point in
             let centerIndex = indexOfNearestCenter(point, centers: centers)
-            
+
             clusters[centerIndex].coordinates.append(point)
         }
-        
+
         return clusters
     }
-    
+
     /// point 와 센터들 중 가장 가까운 센터의 index를 반환합니다.
     ///
     /// - Parameters:
@@ -149,7 +104,7 @@ class KMeans {
     private func indexOfNearestCenter(_ point: Coordinate, centers: [Coordinate]) -> Int {
         var nearestDist = Double.greatestFiniteMagnitude
         var minIndex = 0
-        
+
         for (idx, center) in centers.enumerated() {
             let dist = point.distanceTo(center)
             guard dist < nearestDist else {
@@ -158,8 +113,8 @@ class KMeans {
             minIndex = idx
             nearestDist = dist
         }
-        
+
         return minIndex
     }
-    
+
 }

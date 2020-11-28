@@ -38,6 +38,18 @@ struct Coordinate {
     
 }
 
+extension Coordinate {
+    
+    static func randomGenerate(rangeOfLat lats: ClosedRange<Double>,
+                               rangeOfLng lngs: ClosedRange<Double>) -> Coordinate {
+        let lat = Double.random(in: lats)
+        let lng = Double.random(in: lngs)
+        
+        return Coordinate(x: lng, y: lat)
+    }
+    
+}
+
 extension Coordinate: Hashable {
     
     static let zero = Coordinate(x: 0, y: 0)
