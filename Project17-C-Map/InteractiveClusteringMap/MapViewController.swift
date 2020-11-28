@@ -31,6 +31,10 @@ class MapViewController: UIViewController {
         configureMapController()
     }
     
+    private func requestLocationPermission() {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
     private func configureMapController() {
         guard let dataManager = dataManager else { return }
     

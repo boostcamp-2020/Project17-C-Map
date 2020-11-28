@@ -17,5 +17,5 @@ class InteractiveClusteringMapTests: XCTestCase {
     override func tearDownWithError() throws {
         
     }
-
+    
 }
