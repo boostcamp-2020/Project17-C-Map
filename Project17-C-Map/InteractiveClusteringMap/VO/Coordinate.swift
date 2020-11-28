@@ -37,7 +37,7 @@ struct Coordinate {
 extension Coordinate {
     
     static func randomGenerate(rangeOfLat lats: ClosedRange<Double>,
-                        rangeOfLng lngs: ClosedRange<Double>) -> Coordinate {
+                               rangeOfLng lngs: ClosedRange<Double>) -> Coordinate {
         let lat = Double.random(in: lats)
         let lng = Double.random(in: lngs)
         
