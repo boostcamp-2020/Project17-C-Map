@@ -31,4 +31,9 @@ class MeanShiftTests: XCTestCase {
         XCTAssertEqual(expected1, expected2, accuracy: 0.001)
     }
     
+    func test_data_density() throws {
+        let datas = [170.1, 165.6, 169.9, 171.3, 164.5, 150.5, 151.6, 158.2, 149.5, 152.2]
+        let expected = MeanShift().kernalDensityEstimation(datas: datas, x: 158.0)
+        print(expected)
+    }
 }
