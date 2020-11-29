@@ -8,37 +8,54 @@
 import Foundation
 import NMapsMap
 
-final class MapController {
+final class MapController: NSObject {
     
-    private var clusters = [Cluster]() {
-        didSet {
-            createMarkers(clusters: clusters)
-        }
-    }
-    
+    private var tileCoverHelper: NMFTileCoverHelper?
+    private var interactor: ClusterBusinessLogic?
     private weak var interactiveMapView: InteractiveMapView?
     
-    init(mapView: InteractiveMapView) {
+    init(mapView: InteractiveMapView, interactor: ClusterBusinessLogic) {
         self.interactiveMapView = mapView
+        self.interactor = interactor
+        super.init()
+        configureTileCoverHelper()
     }
     
-    func update(clusters: [Cluster]) {
-        self.clusters = clusters
+    private func configureTileCoverHelper() {
+        guard let interactiveMapView = interactiveMapView else { return }
+        
+        tileCoverHelper = NMFTileCoverHelper(interactiveMapView.mapView)
+        tileCoverHelper?.delegate = self
     }
     
-    private func createMarkers(clusters: [Cluster]) {
-        clusters.forEach { cluster in
-            DispatchQueue.global(qos: .userInitiated).async {
-                let location = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
-                let marker = NMFMarker()
-                marker.position = location
-                marker.iconTintColor = .green
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    marker.mapView = self.interactiveMapView?.mapView
-                }
-            }
+}
+
+extension MapController: NMFTileCoverHelperDelegate {
+    
+    func onTileChanged(_ addedTileIds: [NSNumber]?, removedTileIds: [NSNumber]?) {
+        guard let addedTiles = addedTileIds as? [CLong] else { return }
+        
+        let bounds = addedTiles.map { tileId -> BoundingBox in
+            let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
+            let BL = bounds.boundsLatLngs[Index.BL]
+            let TR = bounds.boundsLatLngs[Index.TR]
+            
+            let bottomLeft = Coordinate(x: BL.lng, y: BL.lat)
+            let topRight = Coordinate(x: TR.lng, y: TR.lat)
+        
+            return BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
         }
+        guard let interactiveMapView = interactiveMapView else { return }
+        interactor?.fetch(boundingBoxes: bounds, zoomLevel: interactiveMapView.zoomLevel)
+    }
+    
+}
+
+private extension MapController {
+    
+    enum Index {
+        static let BL: Int = 0
+        static let TR: Int = 1
     }
     
 }
