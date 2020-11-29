@@ -23,6 +23,9 @@
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		37279B03256EBC5200EA689A /* KMeansTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37279B02256EBC5200EA689A /* KMeansTests.swift */; };
 		37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
+		372FE7572573D1700086C66B /* MeanShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FE7562573D1700086C66B /* MeanShift.swift */; };
+		372FE7602573D2F50086C66B /* MeanShiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FE75F2573D2F50086C66B /* MeanShiftTests.swift */; };
+		372FE7672573D2FC0086C66B /* MeanShift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372FE7562573D1700086C66B /* MeanShift.swift */; };
 		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
@@ -89,6 +92,8 @@
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
 		37279B02256EBC5200EA689A /* KMeansTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeansTests.swift; sourceTree = "<group>"; };
+		372FE7562573D1700086C66B /* MeanShift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanShift.swift; sourceTree = "<group>"; };
+		372FE75F2573D2F50086C66B /* MeanShiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeanShiftTests.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -164,6 +169,22 @@
 			path = VO;
 			sourceTree = "<group>";
 		};
+		372FE7552573D15F0086C66B /* MeanShift */ = {
+			isa = PBXGroup;
+			children = (
+				372FE7562573D1700086C66B /* MeanShift.swift */,
+			);
+			path = MeanShift;
+			sourceTree = "<group>";
+		};
+		372FE75E2573D2E00086C66B /* MeanShiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				372FE75F2573D2F50086C66B /* MeanShiftTests.swift */,
+			);
+			path = MeanShiftTests;
+			sourceTree = "<group>";
+		};
 		37352CCF25695AA500CAFDFD /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +250,7 @@
 		37EB73412562592900AC44D6 /* InteractiveClusteringMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				372FE75E2573D2E00086C66B /* MeanShiftTests */,
 				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
 				37279B02256EBC5200EA689A /* KMeansTests.swift */,
@@ -307,6 +329,7 @@
 		FCE422AD257018E30017416F /* Clustering */ = {
 			isa = PBXGroup;
 			children = (
+				372FE7552573D15F0086C66B /* MeanShift */,
 				FCE422AE257018EA0017416F /* KMeans */,
 			);
 			path = Clustering;
@@ -538,6 +561,7 @@
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				372FE7572573D1700086C66B /* MeanShift.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
@@ -568,8 +592,10 @@
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
 				192D34BA256E36A200861703 /* BoundingBox.swift in Sources */,
 				192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */,
+				372FE7602573D2F50086C66B /* MeanShiftTests.swift in Sources */,
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				FCE422C725701B8A0017416F /* KMeansCentroidsTest.swift in Sources */,
+				372FE7672573D2FC0086C66B /* MeanShift.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				37279B03256EBC5200EA689A /* KMeansTests.swift in Sources */,
 				FAC9FD0A256E23B1009FBB41 /* KDefineTests.swift in Sources */,
