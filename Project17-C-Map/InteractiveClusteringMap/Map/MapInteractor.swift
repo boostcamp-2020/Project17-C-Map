@@ -7,55 +7,56 @@
 
 import Foundation
 
-protocol ClusterCompleteDelegate: class {
+protocol ClusterBusinessLogic: class {
     
-    func didComplete(clusters: [Cluster])
-    
-}
-
-protocol Interactable: class {
-    
-    func fetch(boundingBox: BoundingBox, zoomLevel: Double)
+    func fetch(boundingBoxes: [BoundingBox], zoomLevel: Double)
     
 }
 
-class MapInteractor: Interactable {
+final class MapInteractor: ClusterBusinessLogic {
     
     private let poiService: POIServicing
+    private let presenter: ClusterPresentationLogic
 //    private let clusteringServicing: ClusteringServicing
     private var clusteringServicing: QuadTreeClusteringService?
-    weak var delegate: ClusterCompleteDelegate?
 
-    init(poiService: POIServicing
+    init(poiService: POIServicing,
+         presenter: ClusterPresentationLogic
 //         clusteringServicing: ClusteringServicing
     ) {
         self.poiService = poiService
+        self.presenter = presenter
 //        self.clusteringServicing = clusteringServicing
     }
     
-    func fetch(boundingBox: BoundingBox, zoomLevel: Double) {
-        poiService.fetch { [weak self] pois in
-            guard let self = self else { return }
-            
-            let coordinates = pois.map {
-                Coordinate(x: $0.x, y: $0.y)
+    func fetch(boundingBoxes: [BoundingBox], zoomLevel: Double) {
+        boundingBoxes.forEach { boundingBox in
+            poiService.fetch { [weak self] pois in
+                guard let self = self else { return }
+                
+                let coordinates = pois.map {
+                    Coordinate(x: $0.x, y: $0.y)
+                }
+                self.clustering(coordinates: coordinates,
+                                boundingBox: boundingBox,
+                                zoomLevel: zoomLevel)
             }
-            self.clustering(coordinates: coordinates,
-                            boundingBox: boundingBox,
-                            zoomLevel: zoomLevel)
         }
     }
     
     private func clustering(coordinates: [Coordinate],
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
-        clusteringServicing = QuadTreeClusteringService(coordinates: coordinates, boundingBox: boundingBox)
+        if clusteringServicing == nil {
+            clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
+                                                            boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
+                                                                                     bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
+        }
         clusteringServicing?.execute(coordinates: coordinates,
                                     boundingBox: boundingBox,
                                     zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-            
-            self.delegate?.didComplete(clusters: clusters)
+            self.presenter.clustersToMarkers(clusters: clusters)
         }
     }
     

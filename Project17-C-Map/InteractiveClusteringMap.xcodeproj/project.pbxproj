@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190CAB3425738FB800234F23 /* MapPresenter.swift */; };
+		190CAB3A257390B000234F23 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190CAB39257390B000234F23 /* InteractiveMarker.swift */; };
 		192D34AD256E355500861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
@@ -90,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190CAB3425738FB800234F23 /* MapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
+		190CAB39257390B000234F23 /* InteractiveMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
+				190CAB3425738FB800234F23 /* MapPresenter.swift */,
+				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -573,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				190CAB3A257390B000234F23 /* InteractiveMarker.swift in Sources */,
 				199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */,
@@ -587,6 +594,7 @@
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
+				190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
