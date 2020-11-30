@@ -32,7 +32,7 @@ final class MapViewController: UIViewController {
         configureMap()
     }
 
-    private func configureMapInteractor() {
+    private func dependencyInject() {
         guard let dataManager = dataManager else { return }
         
         let poiService = POIService(dataManager: dataManager)
