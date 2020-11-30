@@ -25,7 +25,7 @@ class AverageSilhouetteCalculator {
         return allSilhouette / Double(clusters.count)
     }
     
-    private static func calculateAverageSilhouette(clusters:[Cluster], cluster: Cluster) -> Double {
+    private static func calculateAverageSilhouette(clusters: [Cluster], cluster: Cluster) -> Double {
         var silhouettes = [Double]()
         cluster.coordinates.forEach { coordinate in
             silhouettes.append(calculateSilhouette(clusters: clusters, with: cluster, target: coordinate))
@@ -37,6 +37,7 @@ class AverageSilhouetteCalculator {
         guard !cluster.coordinates.isEmpty else {
             return 0.0
         }
+        
         let cohesion = calculateCohesion(in: cluster, target: target)
         let separation = calculateSeparation(clusters: clusters, in: cluster, target: target)
         return (separation - cohesion) / max(cohesion, separation)
