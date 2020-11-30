@@ -36,7 +36,7 @@ class KMeansValidateService: ClusteringServicing {
     }
     
     private func validateKMeans(coordinates: [Coordinate]) {
-        (2...10).forEach { k in
+        (2...60).forEach { k in
             self.startKMeans(k: k, coordinates: coordinates)
         }
     }
