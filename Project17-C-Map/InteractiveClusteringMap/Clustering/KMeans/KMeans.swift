@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol CentroidGeneratable: AnyObject {
-    func centroids() -> [Coordinate]
+protocol CentroidGeneratable {
+    func centroids(k: Int) -> [Coordinate]
 }
 
 struct KMeans {
@@ -42,7 +42,7 @@ struct KMeans {
     ///   - convergeDistance: 바뀐 Clusters가 움직인 총 거리가 convergeDistance 보다 작을경우 Cluster 반환
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
     private func trainCenters(_ points: [Coordinate], convergeDistance: Double) -> [Cluster] {
-        let initialCentroids = centroidable.centroids()
+        let initialCentroids = centroidable.centroids(k: k)
         var clusters: [Cluster]
         var beforeCenters = initialCentroids
         var totalMoveDist = Double.zero
@@ -70,7 +70,7 @@ struct KMeans {
     ///   - initialCentroids: 초기 중심 값
     /// - Returns: 중심이 되는 클러스터를 반환합니다.
     private func trainCenters(_ points: [Coordinate]) -> [Cluster] {
-        let initialCentroids: [Coordinate] = centroidable.centroids()
+        let initialCentroids: [Coordinate] = centroidable.centroids(k: k)
         var clusters = classify(points, from: initialCentroids)
         var isChanged = true
         
