@@ -7,19 +7,17 @@
 
 import Foundation
 
-final class ScreenCentroidGenerator: CentroidGeneratable {
+struct ScreenCentroidGenerator: CentroidGeneratable {
     
     private let topLeft: Coordinate
     private let bottomRight: Coordinate
-    private let k: Int
     
-    init(k: Int, topLeft: Coordinate, bottomRight: Coordinate) {
-        self.k = k
+    init(topLeft: Coordinate, bottomRight: Coordinate) {
         self.topLeft = topLeft
         self.bottomRight = bottomRight
     }
     
-    func centroids() -> [Coordinate] {
+    func centroids(k: Int) -> [Coordinate] {
         let center = (topLeft + bottomRight) / 2.0
         let boundary = Coordinate(x: bottomRight.x - center.x, y: topLeft.y - center.y)
         let pivot = center.findTheta(vertex: Coordinate(x: bottomRight.x, y: topLeft.y))

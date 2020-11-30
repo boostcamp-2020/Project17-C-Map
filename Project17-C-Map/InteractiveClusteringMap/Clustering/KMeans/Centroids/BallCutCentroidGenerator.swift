@@ -7,20 +7,18 @@
 
 import Foundation
 
-final class BallCutCentroidGenerator: CentroidGeneratable {
-    
+struct BallCutCentroidGenerator: CentroidGeneratable {
+
     private let coverage: Double
-    private let k: Int
     private let points: [Coordinate]
     private let mutiplier: Int = 5
     
-    init(k: Int, coverage: Double, coordinates: [Coordinate]) {
-        self.k = k
+    init(coverage: Double, coordinates: [Coordinate]) {
         self.coverage = coverage
         self.points = coordinates
     }
     
-    func centroids() -> [Coordinate] {
+    func centroids(k: Int) -> [Coordinate] {
         return recursiveClassify(number: k, coordinates: points)
     }
     
