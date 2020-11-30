@@ -10,7 +10,9 @@ import Foundation
 class KMeansValidateService: ClusteringServicing {
     
     private let dispatchGroup = DispatchGroup()
-    private let concurrentQueue = DispatchQueue.init(label: concurrentQueueName, attributes: .concurrent)
+    private let concurrentQueue = DispatchQueue.init(label: concurrentQueueName,
+                                                     qos: .userInitiated,
+                                                     attributes: .concurrent)
     private let serialQueue = DispatchQueue.init(label: serialQueueName)
     private var bestCluster = Clusters(items: [])
     
