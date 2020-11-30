@@ -42,10 +42,8 @@ final class MapInteractor: ClusterBusinessLogic {
                                     tileId: tileId,
                                     boundingBox: boundingBox,
                                     zoomLevel: zoomLevel)
-                    
                 }
             }
-            
         }
     }
     
