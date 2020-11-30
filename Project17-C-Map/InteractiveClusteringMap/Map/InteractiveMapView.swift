@@ -10,6 +10,10 @@ import NMapsMap
 
 final class InteractiveMapView: NMFNaverMapView {
     
+    var zoomLevel: Double {
+        mapView.zoomLevel
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -57,7 +61,7 @@ private extension InteractiveMapView {
     
     enum ZoomLevel {
         static let min: Double = 5
-        static let max: Double = 19
+        static let max: Double = 20
     }
     
 }
