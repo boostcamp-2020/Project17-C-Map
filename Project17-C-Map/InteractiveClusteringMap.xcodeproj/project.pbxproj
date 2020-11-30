@@ -11,7 +11,7 @@
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
-		192D34BE256E36B900861703 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
+		192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
 		199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
 		199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
@@ -48,7 +48,7 @@
 		461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
 		466F1838257219C500F95AA4 /* Mockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F1837257219C500F95AA4 /* Mockup.swift */; };
-		46A12E1B256CD099007BDF3E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Extension.swift */; };
+		46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
 		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
 		46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
@@ -68,6 +68,8 @@
 		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
 		FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
+		FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
+		FC9145F1257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
 		FCE422B8257019650017416F /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422B7257019650017416F /* Cluster.swift */; };
 		FCE422BD25701A200017416F /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422BC25701A200017416F /* Quadrant.swift */; };
@@ -132,7 +134,7 @@
 		461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeClusteringService.swift; sourceTree = "<group>"; };
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		466F1837257219C500F95AA4 /* Mockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mockup.swift; sourceTree = "<group>"; };
-		46A12E1A256CD099007BDF3E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		46A12E1A256CD099007BDF3E /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
 		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
 		46B444572568F095001B79D4 /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
+		FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
 		FCE422BC25701A200017416F /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
@@ -215,7 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
-				46A12E1A256CD099007BDF3E /* Extension.swift */,
+				46A12E1A256CD099007BDF3E /* Array+Subscript.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				FC2A9D5E25721F5C00D524B0 /* Metrics */,
 				FC2A9D682572371C00D524B0 /* Centroids */,
 				FAC9FD04256E2107009FBB41 /* KCoefficient.swift */,
+				FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */,
 				379DC4C5256E1EC60044DA6C /* KMeans.swift */,
 			);
 			path = KMeans;
@@ -598,6 +602,7 @@
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
+				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
@@ -607,7 +612,7 @@
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
-				46A12E1B256CD099007BDF3E /* Extension.swift in Sources */,
+				46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */,
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
@@ -629,7 +634,7 @@
 				FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */,
 				378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */,
 				FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
-				192D34BE256E36B900861703 /* Extension.swift in Sources */,
+				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */,
@@ -643,6 +648,7 @@
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
 				466F1838257219C500F95AA4 /* Mockup.swift in Sources */,
 				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
+				FC9145F1257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				378E83482574F04500E25A9F /* Clusters.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
