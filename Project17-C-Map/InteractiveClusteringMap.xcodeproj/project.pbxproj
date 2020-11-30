@@ -46,7 +46,6 @@
 		37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37EB73362562592800AC44D6 /* LaunchScreen.storyboard */; };
 		37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */; };
 		37EB734E2562592900AC44D6 /* InteractiveClusteringMapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */; };
-		37FC446925752E2700578543 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC446825752E2700578543 /* KMeansValidateService.swift */; };
 		37FC447F2575324900578543 /* KMeansCentroidsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447B2575324900578543 /* KMeansCentroidsTest.swift */; };
 		37FC44802575324900578543 /* KDefineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447C2575324900578543 /* KDefineTests.swift */; };
 		37FC44812575324900578543 /* KMeansTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447D2575324900578543 /* KMeansTests.swift */; };
@@ -136,7 +135,6 @@
 		37EB73492562592900AC44D6 /* InteractiveClusteringMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InteractiveClusteringMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EB734D2562592900AC44D6 /* InteractiveClusteringMapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveClusteringMapUITests.swift; sourceTree = "<group>"; };
 		37EB734F2562592900AC44D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		37FC446825752E2700578543 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
 		37FC447B2575324900578543 /* KMeansCentroidsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansCentroidsTest.swift; sourceTree = "<group>"; };
 		37FC447C2575324900578543 /* KDefineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDefineTests.swift; sourceTree = "<group>"; };
 		37FC447D2575324900578543 /* KMeansTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansTests.swift; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 				FAC9FD04256E2107009FBB41 /* KCoefficient.swift */,
 				FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */,
 				379DC4C5256E1EC60044DA6C /* KMeans.swift */,
-				37FC446825752E2700578543 /* KMeansValidateService.swift */,
 			);
 			path = KMeans;
 			sourceTree = "<group>";
@@ -625,7 +622,6 @@
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
-				37FC446925752E2700578543 /* KMeansValidateService.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
 				190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
@@ -660,7 +656,7 @@
 				FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
 				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
 				37FC44802575324900578543 /* KDefineTests.swift in Sources */,
-				192D34BE256E36B900861703 /* Extension.swift in Sources */,
+				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */,

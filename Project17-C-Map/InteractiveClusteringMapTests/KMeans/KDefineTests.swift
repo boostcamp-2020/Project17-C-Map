@@ -39,7 +39,7 @@ class KDefineTests: XCTestCase {
     func test_calculate_silhouette() throws {
         let clusters = Clusters(items: [cluster1, cluster2])
         let expected = 0.441
-        XCTAssertEqual(expected, clusters.silhouette, accuracy: accuracy)
+        XCTAssertEqual(expected, clusters.silhouette(), accuracy: accuracy)
     }
     
 }

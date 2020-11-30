@@ -89,13 +89,13 @@ class KMeansCentroidsTest: XCTestCase {
     private func mockCentoidsByScreen(number: Int) -> [Coordinate] {
         let topLeft = Coordinate(x: 124.0, y: 43.0)
         let bottomRight = Coordinate(x: 132.0, y: 33.0)
-        let centroids = ScreenCentroidGenerator(k: number, topLeft: topLeft, bottomRight: bottomRight)
-        return centroids.centroids()
+        let generator = ScreenCentroidGenerator(topLeft: topLeft, bottomRight: bottomRight)
+        return generator.centroids(k: number)
     }
     
     private func mockCentoidsByRandom(number: Int) -> [Coordinate] {
-        let centroids = RandomCentroidGenerator(k: number, rangeOfLat: rangeOfLat, rangeOfLng: rangeOfLng)
-        return centroids.centroids()
+        let generator = RandomCentroidGenerator(rangeOfLat: rangeOfLat, rangeOfLng: rangeOfLng)
+        return generator.centroids(k: number)
     }
 
 }

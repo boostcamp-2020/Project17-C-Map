@@ -28,8 +28,7 @@ class KMeansPerformanceTests: XCTestCase {
     
     func test_performance_measure_kmeans() throws {
         measure {
-            let generator = ScreenCentroidGenerator(k: 22,
-                                                    topLeft: Coordinate(x: Mock.minX, y: Mock.maxY),
+            let generator = ScreenCentroidGenerator(topLeft: Coordinate(x: Mock.minX, y: Mock.maxY),
                                                     bottomRight: Coordinate(x: Mock.maxX, y: Mock.minY))
             let kmm = KMeans(k: 22, centroidable: generator, option: .state)
             kmm.start(coordinate: coords) { _ in }
@@ -38,7 +37,7 @@ class KMeansPerformanceTests: XCTestCase {
     
     func test_performance_measure_kmeans_by_random() throws {
         measure {
-            let generator = RandomCentroidGenerator(k: 22, rangeOfLat: Mock.minY...Mock.maxY, rangeOfLng: Mock.minX...Mock.maxX)
+            let generator = RandomCentroidGenerator(rangeOfLat: Mock.minY...Mock.maxY, rangeOfLng: Mock.minX...Mock.maxX)
             let kmm = KMeans(k: 22, centroidable: generator, option: .state)
             kmm.start(coordinate: coords) { _ in }
         }

@@ -15,18 +15,13 @@ class KMeansValidateService: ClusteringServicing {
                                                      attributes: .concurrent)
     private let serialQueue = DispatchQueue.init(label: serialQueueName)
     private var optimalCluster = Clusters(items: [])
-    var centroidsGenerator: CentroidGeneratable
-
-    init(centroidsGenerator: CentroidGeneratable) {
-        self.centroidsGenerator = centroidsGenerator
-    }
-
+    
     var generator: CentroidGeneratable
 
     init(generator: CentroidGeneratable) {
         self.generator = generator
     }
-
+    
     func execute(coordinates: [Coordinate]?,
                  boundingBox: BoundingBox,
                  zoomLevel: Double,
