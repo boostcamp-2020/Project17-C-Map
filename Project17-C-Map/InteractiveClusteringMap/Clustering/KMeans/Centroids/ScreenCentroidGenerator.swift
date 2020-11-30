@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ScreenCentroidGenerator: CentroidCreatable {
+final class ScreenCentroidGenerator: CentroidGeneratable {
     
     private let topLeft: Coordinate
     private let bottomRight: Coordinate

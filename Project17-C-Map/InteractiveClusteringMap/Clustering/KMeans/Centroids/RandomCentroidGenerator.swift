@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RandomCentroidGenerator: CentroidCreatable {
+final class RandomCentroidGenerator: CentroidGeneratable {
     
     private let k: Int
     private let lats: ClosedRange<Double>

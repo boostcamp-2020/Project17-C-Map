@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class BallCutCentroidGenerator: CentroidCreatable {
+final class BallCutCentroidGenerator: CentroidGeneratable {
     
     private let coverage: Double
     private let k: Int
