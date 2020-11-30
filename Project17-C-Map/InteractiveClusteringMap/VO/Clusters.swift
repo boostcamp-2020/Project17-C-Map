@@ -9,20 +9,16 @@ import Foundation
 
 struct Clusters {
     let items: [Cluster]
-    var silhouette: Double = 0.0
     
     init(items: [Cluster]) {
         self.items = items
-        self.silhouette = calculateSilhouette()
     }
     
     subscript(index: Int) -> Cluster? {
-        if index > (items.count - 1) { return nil }
-        
-        return items[index]
+        return items[safe: index]
     }
     
-    private func calculateSilhouette() -> Double {
+    func silhouette() -> Double {
         guard items.count != 0 else {
             return 0
         }
