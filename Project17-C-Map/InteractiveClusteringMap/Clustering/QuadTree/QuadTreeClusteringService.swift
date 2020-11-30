@@ -82,7 +82,7 @@ final class QuadTreeClusteringService {
     }
     
     private func clusterWidthCount(zoomLevel: Double) -> Int {
-        Int(min((zoomLevel / 3), 4))
+        Int(min((zoomLevel / 2.5), 8))
     }
 
 }
