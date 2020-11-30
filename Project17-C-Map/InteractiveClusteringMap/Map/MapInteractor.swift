@@ -7,55 +7,61 @@
 
 import Foundation
 
-protocol ClusterCompleteDelegate: class {
+protocol ClusterBusinessLogic: class {
     
-    func didComplete(clusters: [Cluster])
-    
+    func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
+    func remove(tileIds: [CLong])
 }
 
-protocol Interactable: class {
-    
-    func fetch(boundingBox: BoundingBox, zoomLevel: Double)
-    
-}
-
-class MapInteractor: Interactable {
+final class MapInteractor: ClusterBusinessLogic {
     
     private let poiService: POIServicing
-//    private let clusteringServicing: ClusteringServicing
+    private let presenter: ClusterPresentationLogic
     private var clusteringServicing: QuadTreeClusteringService?
-    weak var delegate: ClusterCompleteDelegate?
-
-    init(poiService: POIServicing
-//         clusteringServicing: ClusteringServicing
-    ) {
+    
+    init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
         self.poiService = poiService
-//        self.clusteringServicing = clusteringServicing
+        self.presenter = presenter
     }
     
-    func fetch(boundingBox: BoundingBox, zoomLevel: Double) {
-        poiService.fetch { [weak self] pois in
-            guard let self = self else { return }
-            
-            let coordinates = pois.map {
-                Coordinate(x: $0.x, y: $0.y)
+    func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
+        boundingBoxes.forEach { tileId, boundingBox in
+            self.poiService.fetch { [weak self] pois in
+                guard let self = self else { return }
+
+                let coordinates = pois.map {
+                    Coordinate(x: $0.x, y: $0.y)
+                }
+                if self.clusteringServicing == nil {
+                    self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
+                                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
+                                                                                             bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
+                }
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.clustering(coordinates: coordinates,
+                                    tileId: tileId,
+                                    boundingBox: boundingBox,
+                                    zoomLevel: zoomLevel)
+                }
             }
-            self.clustering(coordinates: coordinates,
-                            boundingBox: boundingBox,
-                            zoomLevel: zoomLevel)
         }
     }
     
+    func remove(tileIds: [CLong]) {
+        presenter.removePresentMarkers(tileIds: tileIds)
+    }
+    
     private func clustering(coordinates: [Coordinate],
+                            tileId: CLong,
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
-        clusteringServicing = QuadTreeClusteringService(coordinates: coordinates, boundingBox: boundingBox)
+        
         clusteringServicing?.execute(coordinates: coordinates,
-                                    boundingBox: boundingBox,
-                                    zoomLevel: zoomLevel) { [weak self] clusters in
+                                     boundingBox: boundingBox,
+                                     zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-            
-            self.delegate?.didComplete(clusters: clusters)
+                                                            
+            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
     

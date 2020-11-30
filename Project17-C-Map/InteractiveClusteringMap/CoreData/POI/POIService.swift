@@ -26,9 +26,8 @@ final class POIService: POIServicing {
             guard let self = self else { return }
             
             let poiEntities = self.dataManager.fetch()
-            
             var pois: [POI] = []
-            
+        
             poiEntities.forEach {
                 pois.append(POI(x: $0.x,
                                 y: $0.y,
