@@ -14,7 +14,12 @@ class KMeansValidateService: ClusteringServicing {
                                                      qos: .userInitiated,
                                                      attributes: .concurrent)
     private let serialQueue = DispatchQueue.init(label: serialQueueName)
-    private var bestCluster = Clusters(items: [])
+    private var optimalCluster = Clusters(items: [])
+    var centroidsGenerator: CentroidGeneratable
+    
+    init(centroidsGenerator: CentroidGeneratable) {
+        self.centroidsGenerator = centroidsGenerator
+    }
     
     func execute(coordinates: [Coordinate]?,
                  boundingBox: BoundingBox,
@@ -28,7 +33,7 @@ class KMeansValidateService: ClusteringServicing {
         dispatchGroup.notify(queue: serialQueue) { [weak self] in
             guard let self = self else { return }
 
-            completionHandler(self.bestCluster.items)
+            completionHandler(self.optimalCluster.items)
         }
         
     }
@@ -38,17 +43,17 @@ class KMeansValidateService: ClusteringServicing {
     }
     
     private func validateKMeans(coordinates: [Coordinate]) {
-        (2...60).forEach { k in
+        (2...10).forEach { k in
             self.startKMeans(k: k, coordinates: coordinates)
         }
     }
     
     private func startKMeans(k: Int, coordinates: [Coordinate]) {
         concurrentQueue.async(group: dispatchGroup) {
-            let centroidGenerator = BallCutCentroidGenerator(k: k,
-                                                             coverage: 0.001,
-                                                             coordinates: coordinates)
-            let kmeans = KMeans(k: k, centroidable: centroidGenerator, option: .state)
+//            let centroidGenerator = BallCutCentroidGenerator(k: k,
+//                                                             coverage: 0.001,
+//                                                             coordinates: coordinates)
+            let kmeans = KMeans(k: k, centroidable: self.centroidsGenerator, option: .state)
             kmeans.start(coordinate: coordinates) { result in
                 self.compareSilhouette(cluster: result)
             }
@@ -59,7 +64,7 @@ class KMeansValidateService: ClusteringServicing {
         let cluster = Clusters(items: cluster)
         
         serialQueue.async {
-            self.bestCluster = self.bestCluster.silhouette > cluster.silhouette ? self.bestCluster : cluster
+            self.optimalCluster = self.optimalCluster.silhouette() > cluster.silhouette() ? self.optimalCluster : cluster
         }
     }
     
