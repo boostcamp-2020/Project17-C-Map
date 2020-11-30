@@ -28,7 +28,7 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
-        configureMapInteractor()
+        dependencyInject()
         configureMap()
     }
 

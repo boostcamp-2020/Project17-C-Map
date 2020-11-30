@@ -7,19 +7,17 @@
 
 import Foundation
 
-final class RandomCentroidGenerator: CentroidCreatable {
+struct RandomCentroidGenerator: CentroidGeneratable {
     
-    private let k: Int
     private let lats: ClosedRange<Double>
     private let lngs: ClosedRange<Double>
     
-    init(k: Int, rangeOfLat: ClosedRange<Double>, rangeOfLng: ClosedRange<Double>) {
-        self.k = k
+    init(rangeOfLat: ClosedRange<Double>, rangeOfLng: ClosedRange<Double>) {
         self.lats = rangeOfLat
         self.lngs = rangeOfLng
     }
     
-    func centroids() -> [Coordinate] {
+    func centroids(k: Int) -> [Coordinate] {
         var centroids: [Coordinate] = []
         for _ in 0..<k {
             let cluster = Coordinate.randomGenerate(rangeOfLat: lats, rangeOfLng: lngs)

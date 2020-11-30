@@ -15,7 +15,9 @@ fileprivate struct Mock {
 }
 
 class KMeansPerformanceTests: XCTestCase {
+    
     let group = DispatchGroup()
+    
     lazy var coords: [Coordinate] = { () -> [Coordinate] in
         var points: [Coordinate] = []
         for _ in 0..<10000 {
@@ -26,19 +28,18 @@ class KMeansPerformanceTests: XCTestCase {
     
     func test_performance_measure_kmeans() throws {
         measure {
-            kmeansByScreen(k: 22, coords: coords)
+            let generator = ScreenCentroidGenerator(topLeft: Coordinate(x: Mock.minX, y: Mock.maxY),
+                                                    bottomRight: Coordinate(x: Mock.maxX, y: Mock.minY))
+            let kmm = KMeans(k: 22, centroidable: generator, option: .state)
+            kmm.start(coordinate: coords) { _ in }
         }
     }
     
     func test_performance_measure_kmeans_by_random() throws {
         measure {
-            kmeansByRandom(k: 22, coords: coords)
-        }
-    }
-    
-    private func asyncNotify(coords: [Coordinate], compltion handler: @escaping ([Coordinate]) -> Void) {
-        group.notify(queue: DispatchQueue.main) {
-            handler(coords)
+            let generator = RandomCentroidGenerator(rangeOfLat: Mock.minY...Mock.maxY, rangeOfLng: Mock.minX...Mock.maxX)
+            let kmm = KMeans(k: 22, centroidable: generator, option: .state)
+            kmm.start(coordinate: coords) { _ in }
         }
     }
     
@@ -49,40 +50,4 @@ class KMeansPerformanceTests: XCTestCase {
         return Coordinate(x: lng, y: lat)
     }
     
-    @discardableResult
-    private func kmeansByScreen(k: Int, coords: [Coordinate]) -> [Cluster] {
-        let kmm = KMeans(k: 22)
-        
-        let topLeft = Coordinate(x: Mock.minX, y: Mock.maxY)
-        let bottomRight = Coordinate(x: Mock.maxX, y: Mock.minY)
-        let centroids = kmm.screenCentroids(topLeft: topLeft, bottomRight: bottomRight)
-        var clusters: [Cluster] = []
-        
-        clusters = kmm.trainCenters(coords, initialCentroids: centroids)
-        
-        return clusters
-    }
-    
-    @discardableResult
-    private func kmeansByRandom(k: Int, coords: [Coordinate]) -> [Cluster] {
-        let kmm = KMeans(k: 22)
-        let centroids = kmm.randomCentroids(rangeOfLat: Mock.minY...Mock.maxY,
-                                            rangeOfLng: Mock.minX...Mock.maxX)
-        var clusters: [Cluster] = []
-        
-        clusters = kmm.trainCenters(coords, initialCentroids: centroids)
-        
-        return clusters
-    }
-    
-    private func timeout(_ timeout: TimeInterval, completion: (XCTestExpectation) throws -> Void) rethrows {
-        let exp = expectation(description: "Timeout: \(timeout) seconds")
-        
-        try completion(exp)
-        
-        waitForExpectations(timeout: timeout) { error in
-            guard let error = error else { return }
-            XCTFail("Timeout error: \(error)")
-        }
-    }
 }
