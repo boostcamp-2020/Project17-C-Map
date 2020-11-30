@@ -66,6 +66,8 @@
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
 		FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
+		FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
+		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
 		FCE422B8257019650017416F /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422B7257019650017416F /* Cluster.swift */; };
 		FCE422BD25701A200017416F /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422BC25701A200017416F /* Quadrant.swift */; };
@@ -143,6 +145,7 @@
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
+		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
 		FCE422BC25701A200017416F /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
@@ -362,6 +365,7 @@
 				FCE422C625701B8A0017416F /* KMeansCentroidsTest.swift */,
 				FAC9FD09256E23B1009FBB41 /* KDefineTests.swift */,
 				37279B02256EBC5200EA689A /* KMeansTests.swift */,
+				FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */,
 			);
 			path = KMeans;
 			sourceTree = "<group>";
@@ -598,6 +602,7 @@
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
+				FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
 				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
@@ -623,6 +628,7 @@
 				FCE422D225701C790017416F /* Cluster.swift in Sources */,
 				FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */,
 				378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */,
+				FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
 				192D34BE256E36B900861703 /* Extension.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
