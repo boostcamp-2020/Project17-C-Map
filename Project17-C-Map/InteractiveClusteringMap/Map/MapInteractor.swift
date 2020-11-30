@@ -60,6 +60,7 @@ final class MapInteractor: ClusterBusinessLogic {
                                      boundingBox: boundingBox,
                                      zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
+                                                            
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
