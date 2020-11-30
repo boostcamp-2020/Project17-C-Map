@@ -15,31 +15,27 @@ func KwithRuleOfThumb(numberOfData: Int) -> Int {
 // AverageSilhouetteMethod
 class AverageSilhouetteCalculator {
     
-    private let clusters: [Cluster]
-    
-    init(clusters: [Cluster]) {
-        self.clusters = clusters
     }
     
-    func calculateAverageSilhouette(cluster: Cluster) -> Double {
+    private static func calculateAverageSilhouette(clusters:[Cluster], cluster: Cluster) -> Double {
         var silhouettes = [Double]()
         cluster.coordinates.forEach { coordinate in
-            silhouettes.append(calculateSilhouette(with: cluster, target: coordinate))
+            silhouettes.append(calculateSilhouette(clusters: clusters, with: cluster, target: coordinate))
         }
         return silhouettes.reduce(.zero, +) / Double(silhouettes.count)
     }
 
-    func calculateSilhouette(with cluster: Cluster, target: Coordinate) -> Double {
+    private static func calculateSilhouette(clusters: [Cluster], with cluster: Cluster, target: Coordinate) -> Double {
         guard !cluster.coordinates.isEmpty else {
             return 0.0
         }
         let cohesion = calculateCohesion(in: cluster, target: target)
-        let separation = calculateSeparation(in: cluster, target: target)
+        let separation = calculateSeparation(clusters: clusters, in: cluster, target: target)
         return (separation - cohesion) / max(cohesion, separation)
     }
 
     // 점과 현재 포함된 클러스터의 응집도 계산
-    func calculateCohesion(in cluster: Cluster, target: Coordinate) -> Double {
+    private static func calculateCohesion(in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistance = 0.0
         let coordinates = cluster.coordinates.filter { $0 != target }
         coordinates.forEach {
@@ -49,7 +45,7 @@ class AverageSilhouetteCalculator {
     }
 
     // 점과 포함되지 않은 클러스터 간의 분리도 계산
-    func calculateSeparation(in cluster: Cluster, target: Coordinate) -> Double {
+    private static func calculateSeparation(clusters: [Cluster], in cluster: Cluster, target: Coordinate) -> Double {
         var totalDistances: [Double] = [Double]()
         let otherClusters = clusters.filter { $0.coordinates != cluster.coordinates }
         otherClusters.forEach {
