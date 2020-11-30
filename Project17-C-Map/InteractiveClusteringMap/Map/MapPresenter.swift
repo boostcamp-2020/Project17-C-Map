@@ -9,23 +9,34 @@ import Foundation
 
 protocol ClusterPresentationLogic {
     
-    func clustersToMarkers(clusters: [Cluster])
+    func clustersToMarkers(tileId: CLong, clusters: [Cluster])
+    func removePresentMarkers(tileIds: [CLong])
     
 }
 
 class MapPresnter: ClusterPresentationLogic {
     
-    private let markerHandler: ([InteractiveMarker]) -> Void
+    private let createMarkerHandler: ([InteractiveMarker]) -> Void
+    private let removeMarkerHandler: ([InteractiveMarker]) -> Void
+    private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
     
-    init(markerHandler: @escaping ([InteractiveMarker]) -> Void) {
-        self.markerHandler = markerHandler
+    init(createMarkerHandler: @escaping ([InteractiveMarker]) -> Void,
+         removeMarkerHandler: @escaping ([InteractiveMarker]) -> Void) {
+        self.createMarkerHandler = createMarkerHandler
+        self.removeMarkerHandler = removeMarkerHandler
     }
     
-    func clustersToMarkers(clusters: [Cluster]) {
+    func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
         let markers = clusters.map {
             InteractiveMarker(cluster: $0)
         }
-        markerHandler(markers)
+        presentMarkers[tileId] = markers
+        createMarkerHandler(markers)
     }
-
+    
+    func removePresentMarkers(tileIds: [CLong]) {
+        let markers = presentMarkers.filter { tileIds.contains($0.key) }.flatMap { $0.value }
+        removeMarkerHandler(markers)
+    }
+    
 }

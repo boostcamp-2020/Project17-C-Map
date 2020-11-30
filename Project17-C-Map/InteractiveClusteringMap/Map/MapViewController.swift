@@ -34,8 +34,9 @@ final class MapViewController: UIViewController {
 
     private func configureMapInteractor() {
         guard let dataManager = dataManager else { return }
+        
         let poiService = POIService(dataManager: dataManager)
-        let presenter: ClusterPresentationLogic = MapPresnter(markerHandler: createMarkers)
+        let presenter: ClusterPresentationLogic = MapPresnter(createMarkerHandler: createMarkers, removeMarkerHandler: removeMarkers)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(poiService: poiService, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
@@ -63,6 +64,14 @@ final class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 interactiveMarker.mapView = self.interactiveMapView?.mapView
+            }
+        }
+    }
+    
+    private func removeMarkers(interactiveMarkers: [InteractiveMarker]) {
+        interactiveMarkers.forEach { interactiveMarker in
+            DispatchQueue.main.async {
+                interactiveMarker.mapView = nil
             }
         }
     }

@@ -33,20 +33,25 @@ final class MapController: NSObject {
 extension MapController: NMFTileCoverHelperDelegate {
     
     func onTileChanged(_ addedTileIds: [NSNumber]?, removedTileIds: [NSNumber]?) {
-        guard let addedTiles = addedTileIds as? [CLong] else { return }
+        guard let addedTiles = addedTileIds as? [CLong],
+              let removedTiles = removedTileIds as? [CLong] else { return }
         
-        let bounds = addedTiles.map { tileId -> BoundingBox in
+        interactor?.remove(tileIds: removedTiles)
+        
+        var boundsWithTileId = [CLong: BoundingBox]()
+        addedTiles.forEach { tileId in
             let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
             let BL = bounds.boundsLatLngs[Index.BL]
             let TR = bounds.boundsLatLngs[Index.TR]
             
             let bottomLeft = Coordinate(x: BL.lng, y: BL.lat)
             let topRight = Coordinate(x: TR.lng, y: TR.lat)
-        
-            return BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
+            
+            boundsWithTileId[tileId] = BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
         }
+        
         guard let interactiveMapView = interactiveMapView else { return }
-        interactor?.fetch(boundingBoxes: bounds, zoomLevel: interactiveMapView.zoomLevel)
+        interactor?.fetch(boundingBoxes: boundsWithTileId, zoomLevel: interactiveMapView.zoomLevel)
     }
     
 }
