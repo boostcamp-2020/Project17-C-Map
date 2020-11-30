@@ -53,6 +53,7 @@
 		46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */; };
 		46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B444572568F095001B79D4 /* InteractiveMapView.swift */; };
+		46B5178B2574C32B0037AA8C /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		46DCB47D256FC90B00DE0B4C /* QuadTreeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */; };
 		46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
@@ -635,6 +636,7 @@
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
 				466F1838257219C500F95AA4 /* Mockup.swift in Sources */,
 				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
+				46B5178B2574C32B0037AA8C /* ClusteringServicing.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,

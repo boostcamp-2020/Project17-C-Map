@@ -26,20 +26,26 @@ final class MapInteractor: ClusterBusinessLogic {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self.poiService.fetch { [weak self] pois in
                 guard let self = self else { return }
-                
-                self.poiService.fetch { pois in
-                    
-                    let coordinates = pois.map {
-                        Coordinate(x: $0.x, y: $0.y)
-                    }
+
+                let coordinates = pois.map {
+                    Coordinate(x: $0.x, y: $0.y)
+                }
+                if self.clusteringServicing == nil {
+                    self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
+                                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
+                                                                                             bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
+                }
+                DispatchQueue.global(qos: .userInitiated).async {
                     self.clustering(coordinates: coordinates,
                                     tileId: tileId,
                                     boundingBox: boundingBox,
                                     zoomLevel: zoomLevel)
+                    
                 }
             }
+            
         }
     }
     
@@ -51,11 +57,7 @@ final class MapInteractor: ClusterBusinessLogic {
                             tileId: CLong,
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
-        if clusteringServicing == nil {
-            clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
-                                                            boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
-                                                                                     bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
-        }
+        
         clusteringServicing?.execute(coordinates: coordinates,
                                      boundingBox: boundingBox,
                                      zoomLevel: zoomLevel) { [weak self] clusters in
