@@ -14,7 +14,7 @@ class KMeansValidateService: ClusteringServicing {
                                                      qos: .userInitiated,
                                                      attributes: .concurrent)
     private let serialQueue = DispatchQueue.init(label: serialQueueName)
-    private var optimalCluster = Clusters(items: [])
+    private var optimalClusters = Clusters(items: [])
     
     var generator: CentroidGeneratable
 
@@ -34,7 +34,7 @@ class KMeansValidateService: ClusteringServicing {
         dispatchGroup.notify(queue: serialQueue) { [weak self] in
             guard let self = self else { return }
 
-            completionHandler(self.optimalCluster.items)
+            completionHandler(self.optimalClusters.items)
         }
 
     }
@@ -63,7 +63,7 @@ class KMeansValidateService: ClusteringServicing {
         let cluster = Clusters(items: cluster)
 
         serialQueue.async {
-            self.optimalCluster = self.optimalCluster.silhouette() > cluster.silhouette() ? self.optimalCluster : cluster
+            self.optimalClusters = self.optimalClusters.silhouette() > cluster.silhouette() ? self.optimalClusters : cluster
         }
     }
 

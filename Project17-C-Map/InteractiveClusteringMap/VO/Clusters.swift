@@ -7,6 +7,10 @@
 
 import Foundation
 
+protocol SilhouetteCalculatable {
+    func silhouette() -> Double
+}
+
 struct Clusters {
     let items: [Cluster]
     
@@ -17,11 +21,14 @@ struct Clusters {
     subscript(index: Int) -> Cluster? {
         return items[safe: index]
     }
-    
+}
+
+extension Clusters: SilhouetteCalculatable {
     func silhouette() -> Double {
         guard items.count != 0 else {
             return 0
         }
-        return AverageSilhouetteCalculator.caculateAverageClusters(clusters: items)
+        
+        return AverageSilhouetteCalculator.calculateAverageClusters(clusters: items)
     }
 }

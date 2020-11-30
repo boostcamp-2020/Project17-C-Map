@@ -15,13 +15,13 @@ func KwithRuleOfThumb(numberOfData: Int) -> Int {
 // AverageSilhouetteMethod
 class AverageSilhouetteCalculator {
     
-    static func caculateAverageClusters(clusters: [Cluster]) -> Double {
+    static func calculateAverageClusters(clusters: [Cluster]) -> Double {
         var allSilhouette: Double = 0.0
-        
+
         clusters.forEach { cluster in
             allSilhouette += calculateAverageSilhouette(clusters: clusters, cluster: cluster)
         }
-        
+
         return allSilhouette / Double(clusters.count)
     }
     
