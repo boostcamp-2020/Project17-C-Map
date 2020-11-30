@@ -21,15 +21,15 @@ final class BallCutCentroidGenerator: CentroidGeneratable {
     }
     
     func centroids() -> [Coordinate] {
-        return  recursiveClassify(k: k, coordinates: points)
+        return recursiveClassify(number: k, coordinates: points)
     }
     
-    private func recursiveClassify(k: Int, coordinates: [Coordinate]) -> [Coordinate] {
+    private func recursiveClassify(number: Int, coordinates: [Coordinate]) -> [Coordinate] {
         var coordinates = coordinates
-        let container = createContainer(k: k, coordinates: coordinates)
-        var centroids: [Coordinate] = pickCentroids(k: k, distance: coverage, container: container)
+        let container = createContainer(k: number, coordinates: coordinates)
+        var centroids: [Coordinate] = pickCentroids(k: number, distance: coverage, container: container)
         
-        guard centroids.count == k else { return centroids }
+        guard centroids.count - 1 == number else { return centroids }
         
         for coordinate in container {
             guard let index = coordinates.firstIndex(of: coordinate) else {
@@ -38,7 +38,7 @@ final class BallCutCentroidGenerator: CentroidGeneratable {
             coordinates.remove(at: index)
         }
         
-        centroids += recursiveClassify(k: k - centroids.count + 1, coordinates: coordinates)
+        centroids += recursiveClassify(number: number - centroids.count + 1, coordinates: coordinates)
         return centroids
     }
     
