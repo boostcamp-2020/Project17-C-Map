@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="POIEntity" representedClassName="POIEntity" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String"/>
+    <entity name="POI" representedClassName="POI" syncable="YES">
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="coordinate" maxCount="1" deletionRule="Cascade" destinationEntity="POICoordinate"/>
+        <relationship name="info" maxCount="1" deletionRule="Cascade" destinationEntity="POIInfo"/>
+    </entity>
+    <entity name="POICoordinate" representedClassName="POICoordinate" syncable="YES">
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lat" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="lng" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="POIInfo" representedClassName="POIInfo" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="imageUrl" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="x" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="y" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="POIEntity" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="POI" positionX="-5941.096557617187" positionY="980.6396179199221" width="128" height="88"/>
+        <element name="POICoordinate" positionX="-6181.820678710938" positionY="1008.434020996094" width="128" height="88"/>
+        <element name="POIInfo" positionX="-5683.358154296875" positionY="1185.117370605469" width="104.4691162109375" height="88"/>
     </elements>
 </model>
