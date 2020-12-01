@@ -66,22 +66,31 @@ class KMeansTests: XCTestCase {
     }
     
     func test_kmeans_clustering() throws {
-        let kmeans = KMeans(k: 4)
-        let clusters = kmeans.trainCenters(points, initialCentroids: coordinates)
+        let centroids = ScreenCentroidGenerator(topLeft: Coordinate(x: 0, y: 10), bottomRight: Coordinate(x: 10, y: 0))
+        let kmeans = KMeans(k: 4, centroidable: centroids, option: .state)
         let expectPoints: [[Coordinate]] = [[Coordinate(x: 1, y: 1), Coordinate(x: 2, y: 2)],
-                                                     [Coordinate(x: 8, y: 2), Coordinate(x: 9, y: 1)],
-                                                     [Coordinate(x: 9, y: 9), Coordinate(x: 8, y: 8)],
-                                                     [Coordinate(x: 2, y: 8), Coordinate(x: 1, y: 9)]]
-        var points: [[Coordinate]] = []
-        clusters.forEach {
-            points.append($0.coordinates)
+                                            [Coordinate(x: 8, y: 2), Coordinate(x: 9, y: 1)],
+                                            [Coordinate(x: 9, y: 9), Coordinate(x: 8, y: 8)],
+                                            [Coordinate(x: 2, y: 8), Coordinate(x: 1, y: 9)]]
+        let expectation: XCTestExpectation = self.expectation(description: "KMeansClustering")
+        var actualPoints: [[Coordinate]] = []
+        
+        kmeans.start(coordinate: self.points) {
+            $0.forEach {
+                actualPoints.append($0.coordinates)
+            }
+            
+            let expected = expectPoints.contains { expectPoint in
+                actualPoints.contains { $0 == expectPoint }
+            }
+            XCTAssertTrue(expected)
+            expectation.fulfill()
         }
         
-        let expected = expectPoints.contains { expectPoint in
-            points.contains { $0 == expectPoint }
+        waitForExpectations(timeout: 10) { error in
+            guard let error = error else { return }
+            XCTFail("timeout error: \(error)")
         }
-        
-        XCTAssertTrue(expected)
     }
     
 }

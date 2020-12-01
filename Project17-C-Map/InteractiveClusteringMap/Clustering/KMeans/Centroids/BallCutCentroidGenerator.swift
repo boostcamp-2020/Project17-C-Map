@@ -7,29 +7,27 @@
 
 import Foundation
 
-final class BallCutCentroidGenerator: CentroidCreatable {
-    
+struct BallCutCentroidGenerator: CentroidGeneratable {
+
     private let coverage: Double
-    private let k: Int
     private let points: [Coordinate]
     private let mutiplier: Int = 5
     
-    init(k: Int, coverage: Double, coordinates: [Coordinate]) {
-        self.k = k
+    init(coverage: Double, coordinates: [Coordinate]) {
         self.coverage = coverage
         self.points = coordinates
     }
     
-    func centroids() -> [Coordinate] {
-        return  recursiveClassify(k: k, coordinates: points)
+    func centroids(k: Int) -> [Coordinate] {
+        return recursiveClassify(number: k, coordinates: points)
     }
     
-    private func recursiveClassify(k: Int, coordinates: [Coordinate]) -> [Coordinate] {
+    private func recursiveClassify(number: Int, coordinates: [Coordinate]) -> [Coordinate] {
         var coordinates = coordinates
-        let container = createContainer(k: k, coordinates: coordinates)
-        var centroids: [Coordinate] = pickCentroids(k: k, distance: coverage, container: container)
+        let container = createContainer(k: number, coordinates: coordinates)
+        var centroids: [Coordinate] = pickCentroids(k: number, distance: coverage, container: container)
         
-        guard centroids.count == k else { return centroids }
+        guard centroids.count - 1 == number else { return centroids }
         
         for coordinate in container {
             guard let index = coordinates.firstIndex(of: coordinate) else {
@@ -38,7 +36,7 @@ final class BallCutCentroidGenerator: CentroidCreatable {
             coordinates.remove(at: index)
         }
         
-        centroids += recursiveClassify(k: k - centroids.count + 1, coordinates: coordinates)
+        centroids += recursiveClassify(number: number - centroids.count + 1, coordinates: coordinates)
         return centroids
     }
     

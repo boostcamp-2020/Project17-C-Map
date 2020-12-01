@@ -7,7 +7,7 @@
 
 import Foundation
 
-class QuadTree {
+final class QuadTree {
     
     private var coordinates = [Coordinate]()
     
