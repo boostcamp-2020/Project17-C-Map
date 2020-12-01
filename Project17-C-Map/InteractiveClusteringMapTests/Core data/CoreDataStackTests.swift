@@ -21,5 +21,10 @@ class CoreDataStackTests: XCTestCase {
         let actual = CoreDataStack.shared.fetch()
         XCTAssertEqual(actual, [])
     }
+    
+    func test_fetch_poi_entity_predicate() throws {
+        let actual = CoreDataStack.shared.fetch(topLeft: Coordinate(x: 0, y: 0), bottomRight: Coordinate(x: 200, y: 200))
+        XCTAssertEqual(actual, [])
+    }
 
 }

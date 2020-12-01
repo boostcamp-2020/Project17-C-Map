@@ -46,6 +46,19 @@ final class CoreDataStack: DataManagable {
         return entities
     }
     
+    func fetch(topLeft: Coordinate, bottomRight: Coordinate) -> [POICoordinateMO] {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POICoordinateMO.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "lng >= %@ AND lng <= %@ AND lat >= %@ AND lat <= %@",
+                                             topLeft.x, bottomRight.x, bottomRight.y, topLeft.y)
+        guard let context = context,
+              let entities = try? context.fetch(fetchRequest) as? [POICoordinateMO]
+        else {
+            return []
+        }
+        
+        return entities
+    }
+    
     func setValue(_ poi: POI) {
         guard let context = context else { return }
         
@@ -65,7 +78,7 @@ final class CoreDataStack: DataManagable {
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
         guard let context = context else { return }
-
+        
         if context.hasChanges {
             do {
                 try context.save()
