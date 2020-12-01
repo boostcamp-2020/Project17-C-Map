@@ -33,9 +33,9 @@ final class MapInteractor: ClusterBusinessLogic {
                     Coordinate(x: $0.x, y: $0.y)
                 }
                 if self.clusteringServicing == nil {
+                    let boundingBox = BoundingBox.korea
                     self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
-                                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
-                                                                                             bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
+                                                                         boundingBox: boundingBox)
                 }
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.clustering(coordinates: coordinates,

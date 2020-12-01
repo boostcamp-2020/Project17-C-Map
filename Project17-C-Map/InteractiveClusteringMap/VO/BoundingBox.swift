@@ -8,7 +8,9 @@
 import Foundation
 
 struct BoundingBox {
-    
+
+    static let korea = BoundingBox(topRight: Coordinate(x: KoreaCoordinate.maxLng, y: KoreaCoordinate.maxLat),
+                                   bottomLeft: Coordinate(x: KoreaCoordinate.minLng, y: KoreaCoordinate.minLat))
     let topRight: Coordinate
     let bottomLeft: Coordinate
     
@@ -40,3 +42,13 @@ struct BoundingBox {
 }
 
 extension BoundingBox: Equatable {}
+
+private extension BoundingBox {
+    
+    enum KoreaCoordinate {
+        static let minLat: Double = 37.5600365
+        static let maxLat: Double = 37.5764792
+        static let minLng: Double = 126.9903617
+        static let maxLng: Double = 126.9956437
+    }
+}

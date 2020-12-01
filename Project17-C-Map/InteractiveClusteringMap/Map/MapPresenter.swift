@@ -14,7 +14,7 @@ protocol ClusterPresentationLogic {
     
 }
 
-class MapPresnter: ClusterPresentationLogic {
+class MapPresenter: ClusterPresentationLogic {
     
     private let createMarkerHandler: ([InteractiveMarker]) -> Void
     private let removeMarkerHandler: ([InteractiveMarker]) -> Void

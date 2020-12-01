@@ -36,14 +36,13 @@ final class MapViewController: UIViewController {
         guard let dataManager = dataManager else { return }
         
         let poiService = POIService(dataManager: dataManager)
-        let presenter: ClusterPresentationLogic = MapPresnter(createMarkerHandler: createMarkers, removeMarkerHandler: removeMarkers)
+        let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: createMarkers, removeMarkerHandler: removeMarkers)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(poiService: poiService, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
     
     private func configureMap() {
         
-        //        [126.9956437, 37.5764792, 126.9903617, 37.5600365]
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
 
         let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
