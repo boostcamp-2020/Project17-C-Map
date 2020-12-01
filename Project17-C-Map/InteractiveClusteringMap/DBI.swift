@@ -7,24 +7,21 @@
 
 import Foundation
 
-class DBI {
+struct DBI {
     
-    let clusters: [Cluster]
-    
-    init(clusters: [Cluster]) {
-        self.clusters = clusters
-    }
-    
-    func sum() -> Double {
+    func sum(clusters: [Cluster]) -> Double {
         var sum = 0.0
         clusters.forEach { cluster in
-            let searchs = clusters.filter { $0 != cluster }
-            var arr = [Double]()
-            searchs.forEach { search in
-                let distance = cluster.center.distanceTo(search.center)
-                arr.append(sigma(cluster: cluster) + sigma(cluster: search) / distance)
+            var maximumSigma = Double.zero
+            
+            clusters.forEach { otherCluster in
+                if cluster != otherCluster {
+                    let distance = cluster.center.distanceTo(otherCluster.center)
+                    let sigma = (self.sigma(cluster: cluster) + self.sigma(cluster: otherCluster)) / distance
+                    maximumSigma = max(maximumSigma, sigma)
+                }
+                sum += maximumSigma
             }
-            sum += arr.max() ?? 0
         }
         return sum
     }
@@ -38,13 +35,12 @@ class DBI {
         return sum / Double(cluster.coordinates.count)
     }
     
-    func calculateDBI() -> Double {
-        let sum1 = sum()
-        print("count: \(clusters.count)")
-        if sum1 == 0 || clusters.count == 0 {
+    func calculateDBI(clusters: [Cluster]) -> Double {
+        let sum = self.sum(clusters: clusters)
+        if sum == 0 || clusters.count == 0 {
             return Double.infinity
         }
-        return sum1 / Double(clusters.count)
+        return sum / Double(clusters.count)
     }
     
 }
