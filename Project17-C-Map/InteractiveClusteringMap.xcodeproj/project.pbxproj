@@ -65,6 +65,7 @@
 		46DCB47D256FC90B00DE0B4C /* QuadTreeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */; };
 		46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
+		FA194F642576035C003B07D9 /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
@@ -150,6 +151,7 @@
 		46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeServiceTests.swift; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA194F632576035C003B07D9 /* DBI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
+				FA194F632576035C003B07D9 /* DBI.swift */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
 				37EB73392562592800AC44D6 /* Info.plist */,
@@ -619,6 +622,7 @@
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
+				FA194F642576035C003B07D9 /* DBI.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
