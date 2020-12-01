@@ -46,9 +46,9 @@ extension BoundingBox: Equatable {}
 private extension BoundingBox {
     
     enum KoreaCoordinate {
-        static let minLat: Double = 37.5600365
-        static let maxLat: Double = 37.5764792
-        static let minLng: Double = 126.9903617
-        static let maxLng: Double = 126.9956437
+        static let minLat: Double = 33
+        static let maxLat: Double = 43
+        static let minLng: Double = 124
+        static let maxLng: Double = 132
     }
 }
