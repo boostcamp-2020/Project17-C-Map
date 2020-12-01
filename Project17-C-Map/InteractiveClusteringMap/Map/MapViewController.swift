@@ -42,7 +42,6 @@ final class MapViewController: UIViewController {
     }
     
     private func configureMap() {
-        
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
 
         let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
