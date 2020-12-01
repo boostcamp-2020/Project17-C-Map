@@ -34,8 +34,7 @@ final class MapInteractor: ClusterBusinessLogic {
                 }
                 if self.clusteringServicing == nil {
                     self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
-                                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
-                                                                                             bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
+                                                                         boundingBox: BoundingBox.korea)
                 }
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.clustering(coordinates: coordinates,
