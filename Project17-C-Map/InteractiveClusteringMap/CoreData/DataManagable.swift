@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
 protocol DataManagable {
     
-    func fetch() -> [POIEntity]
+    func fetch() -> [POICoordinateMO]
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)?)
     func setValue(_ poi: POI)
     

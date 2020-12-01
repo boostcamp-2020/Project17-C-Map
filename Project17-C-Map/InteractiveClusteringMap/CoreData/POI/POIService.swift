@@ -9,7 +9,7 @@ import Foundation
 
 protocol POIServicing {
     
-    func fetch(completion: @escaping ([POI]) -> Void)
+    func fetch(completion: @escaping ([Coordinate]) -> Void)
     func save()
 }
 
@@ -21,22 +21,17 @@ final class POIService: POIServicing {
         self.dataManager = dataManager
     }
     
-    func fetch(completion: @escaping ([POI]) -> Void) {
+    func fetch(completion: @escaping ([Coordinate]) -> Void) {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             
             let poiEntities = self.dataManager.fetch()
-            var pois: [POI] = []
-        
+            var coords: [Coordinate] = []
+            
             poiEntities.forEach {
-                pois.append(POI(x: $0.x,
-                                y: $0.y,
-                                id: $0.id,
-                                name: $0.name,
-                                imageUrl: $0.imageUrl,
-                                category: $0.category))
+                coords.append(Coordinate(x: $0.lng, y: $0.lat))
             }
-            completion(pois)
+            completion(coords)
         }
     }
     

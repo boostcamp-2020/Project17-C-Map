@@ -8,7 +8,7 @@
 import XCTest
 
 class CoreDataStackTests: XCTestCase {
-
+    
     override func setUpWithError() throws {
         
     }
@@ -17,8 +17,7 @@ class CoreDataStackTests: XCTestCase {
         
     }
     
-    func testFetchPOIEntity() throws {
-//        CoreDataStack.shared.setValue(POI(x: 0, y: 0, id: 0, name: "", imageUrl: "", category: ""))
+    func test_fetch_poi_entity() throws {
         let actual = CoreDataStack.shared.fetch()
         XCTAssertEqual(actual, [])
     }

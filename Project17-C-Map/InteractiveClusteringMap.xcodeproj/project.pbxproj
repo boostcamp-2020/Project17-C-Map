@@ -14,8 +14,6 @@
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
-		199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
-		199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
@@ -31,12 +29,25 @@
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
+		376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376A56532576A7B900D1AE5A /* POIInfo.swift */; };
 		378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		378E833F2574E9AB00E25A9F /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
 		378E83442574F00D00E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E83482574F04500E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E834C2574F19200E25A9F /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
+		37EA424A2576A075006C7FED /* POIMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42482576A075006C7FED /* POIMO+CoreDataProperties.swift */; };
+		37EA424B2576A075006C7FED /* POIMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42482576A075006C7FED /* POIMO+CoreDataProperties.swift */; };
+		37EA424C2576A075006C7FED /* POICoordinateMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42452576A075006C7FED /* POICoordinateMO+CoreDataClass.swift */; };
+		37EA424D2576A075006C7FED /* POICoordinateMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42452576A075006C7FED /* POICoordinateMO+CoreDataClass.swift */; };
+		37EA424E2576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42472576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift */; };
+		37EA424F2576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42472576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift */; };
+		37EA42502576A075006C7FED /* POIInfoMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42442576A075006C7FED /* POIInfoMO+CoreDataClass.swift */; };
+		37EA42512576A075006C7FED /* POIInfoMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42442576A075006C7FED /* POIInfoMO+CoreDataClass.swift */; };
+		37EA42522576A075006C7FED /* POIMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42492576A075006C7FED /* POIMO+CoreDataClass.swift */; };
+		37EA42532576A075006C7FED /* POIMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42492576A075006C7FED /* POIMO+CoreDataClass.swift */; };
+		37EA42542576A075006C7FED /* POIInfoMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42462576A075006C7FED /* POIInfoMO+CoreDataProperties.swift */; };
+		37EA42552576A075006C7FED /* POIInfoMO+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EA42462576A075006C7FED /* POIInfoMO+CoreDataProperties.swift */; };
 		37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732A2562592700AC44D6 /* SceneDelegate.swift */; };
 		37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB732C2562592700AC44D6 /* MapViewController.swift */; };
@@ -55,8 +66,6 @@
 		466F1838257219C500F95AA4 /* Mockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F1837257219C500F95AA4 /* Mockup.swift */; };
 		46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
 		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
-		46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */; };
-		46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */; };
 		46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */; };
@@ -107,8 +116,6 @@
 		190CAB39257390B000234F23 /* InteractiveMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
-		199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
 		19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
 		3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStackTests.swift; sourceTree = "<group>"; };
@@ -118,8 +125,15 @@
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
+		376A56532576A7B900D1AE5A /* POIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIInfo.swift; sourceTree = "<group>"; };
 		378E83432574F00C00E25A9F /* Clusters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clusters.swift; sourceTree = "<group>"; };
 		379DC4C5256E1EC60044DA6C /* KMeans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeans.swift; sourceTree = "<group>"; };
+		37EA42442576A075006C7FED /* POIInfoMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIInfoMO+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIInfoMO+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		37EA42452576A075006C7FED /* POICoordinateMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POICoordinateMO+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POICoordinateMO+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		37EA42462576A075006C7FED /* POIInfoMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIInfoMO+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIInfoMO+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		37EA42472576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POICoordinateMO+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POICoordinateMO+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		37EA42482576A075006C7FED /* POIMO+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIMO+CoreDataProperties.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIMO+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		37EA42492576A075006C7FED /* POIMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "POIMO+CoreDataClass.swift"; path = "/Users/ohdonggeon/Sources/InteractiveClusteringMap/Project17-C-Map/InteractiveClusteringMap/CoreData/POI/POIMO+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		37EB73252562592700AC44D6 /* InteractiveClusteringMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InteractiveClusteringMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37EB73282562592700AC44D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37EB732A2562592700AC44D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,6 +221,7 @@
 			children = (
 				37352CDF25695EE000CAFDFD /* Place.swift */,
 				372216CC256943D300231245 /* POI.swift */,
+				376A56532576A7B900D1AE5A /* POIInfo.swift */,
 				FCE422AF2570194B0017416F /* Coordinate.swift */,
 				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				FCE422B7257019650017416F /* Cluster.swift */,
@@ -230,6 +245,14 @@
 				46A12E1A256CD099007BDF3E /* Array+Subscript.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		37EA422825769DA3006C7FED /* Core data */ = {
+			isa = PBXGroup;
+			children = (
+				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
+			);
+			path = "Core data";
 			sourceTree = "<group>";
 		};
 		37EB731C2562592700AC44D6 = {
@@ -279,9 +302,9 @@
 			isa = PBXGroup;
 			children = (
 				37FC447A2575324900578543 /* KMeans */,
+				37EA422825769DA3006C7FED /* Core data */,
 				46A12E3E256CEDD3007BDF3E /* QuadTreeTests */,
 				37EB73422562592900AC44D6 /* InteractiveClusteringMapTests.swift */,
-				3713D3DB25694C3E00E703EC /* CoreDataStackTests.swift */,
 				37EB73442562592900AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMapTests;
@@ -365,8 +388,12 @@
 		FAB1FC7F2568F1F0009E7535 /* POI */ = {
 			isa = PBXGroup;
 			children = (
-				199DDFEF256B8B3A0065B94E /* POIEntity+CoreDataClass.swift */,
-				199DDFF0256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift */,
+				37EA42492576A075006C7FED /* POIMO+CoreDataClass.swift */,
+				37EA42482576A075006C7FED /* POIMO+CoreDataProperties.swift */,
+				37EA42452576A075006C7FED /* POICoordinateMO+CoreDataClass.swift */,
+				37EA42472576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift */,
+				37EA42442576A075006C7FED /* POIInfoMO+CoreDataClass.swift */,
+				37EA42462576A075006C7FED /* POIInfoMO+CoreDataProperties.swift */,
 				3753DCEF256B4C5B006D26A9 /* POIService.swift */,
 			);
 			path = POI;
@@ -607,23 +634,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				190CAB3A257390B000234F23 /* InteractiveMarker.swift in Sources */,
-				199DDFF2256B8B3B0065B94E /* POIEntity+CoreDataProperties.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
-				199DDFF1256B8B3B0065B94E /* POIEntity+CoreDataClass.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
 				19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */,
+				37EA424C2576A075006C7FED /* POICoordinateMO+CoreDataClass.swift in Sources */,
+				37EA424E2576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift in Sources */,
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
+				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
 				190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */,
+				37EA424A2576A075006C7FED /* POIMO+CoreDataProperties.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
@@ -632,6 +661,8 @@
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
+				37EA42502576A075006C7FED /* POIInfoMO+CoreDataClass.swift in Sources */,
+				37EA42542576A075006C7FED /* POIInfoMO+CoreDataProperties.swift in Sources */,
 				46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */,
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
@@ -640,6 +671,7 @@
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
+				37EA42522576A075006C7FED /* POIMO+CoreDataClass.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
 				FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */,
 				37EB732B2562592700AC44D6 /* SceneDelegate.swift in Sources */,
@@ -658,7 +690,8 @@
 				37FC44802575324900578543 /* KDefineTests.swift in Sources */,
 				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
-				46A12E2B256CED1B007BDF3E /* POIEntity+CoreDataProperties.swift in Sources */,
+				37EA424D2576A075006C7FED /* POICoordinateMO+CoreDataClass.swift in Sources */,
+				37EA424F2576A075006C7FED /* POICoordinateMO+CoreDataProperties.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */,
 				FCE422DA25701CC00017416F /* Degree.swift in Sources */,
 				FCE422CE25701C760017416F /* Coordinate.swift in Sources */,
@@ -668,6 +701,7 @@
 				3731108C256F641F00350D55 /* POIService.swift in Sources */,
 				FCE422D625701CBD0017416F /* Quadrant.swift in Sources */,
 				37FC44812575324900578543 /* KMeansTests.swift in Sources */,
+				37EA424B2576A075006C7FED /* POIMO+CoreDataProperties.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
 				37FC44822575324900578543 /* KMeansPerformanceTests.swift in Sources */,
 				466F1838257219C500F95AA4 /* Mockup.swift in Sources */,
@@ -676,7 +710,8 @@
 				46B5178B2574C32B0037AA8C /* ClusteringServicing.swift in Sources */,
 				46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */,
 				378E83482574F04500E25A9F /* Clusters.swift in Sources */,
-				46A12E27256CED18007BDF3E /* POIEntity+CoreDataClass.swift in Sources */,
+				37EA42512576A075006C7FED /* POIInfoMO+CoreDataClass.swift in Sources */,
+				37EA42552576A075006C7FED /* POIInfoMO+CoreDataProperties.swift in Sources */,
 				37EB73432562592900AC44D6 /* InteractiveClusteringMapTests.swift in Sources */,
 				46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */,
 				192D34BA256E36A200861703 /* BoundingBox.swift in Sources */,
@@ -684,6 +719,7 @@
 				199DDFF6256B9C8E0065B94E /* Place.swift in Sources */,
 				3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */,
 				46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */,
+				37EA42532576A075006C7FED /* POIMO+CoreDataClass.swift in Sources */,
 				378E834C2574F19200E25A9F /* ClusteringServicing.swift in Sources */,
 				37FC447F2575324900578543 /* KMeansCentroidsTest.swift in Sources */,
 				3713D3DC25694C3E00E703EC /* CoreDataStackTests.swift in Sources */,

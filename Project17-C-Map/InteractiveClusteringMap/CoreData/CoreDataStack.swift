@@ -28,7 +28,7 @@ final class CoreDataStack: DataManagable {
     func deleteAll() {
         guard let container = container else { return }
         
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: POIEntity.name)
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POIMO.fetchRequest()
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
             try container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
@@ -37,29 +37,30 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch() -> [POIEntity] {
+    func fetch() -> [POICoordinateMO] {
         guard let context = context,
-              let entities = try? context.fetch(POIEntity.fetchRequest()) as? [POIEntity]
+              let entities = try? context.fetch(POICoordinateMO.fetchRequest()) as? [POICoordinateMO]
         else {
             return []
         }
-        
         return entities
     }
     
     func setValue(_ poi: POI) {
         guard let context = context else { return }
         
-        let entity = NSEntityDescription.entity(forEntityName: POIEntity.name, in: context)
-        if let entity = entity {
-            let value = NSManagedObject(entity: entity, insertInto: context)
-            value.setValue(poi.x, forKey: POI.Name.x)
-            value.setValue(poi.y, forKey: POI.Name.y)
-            value.setValue(poi.id, forKey: POI.Name.id)
-            value.setValue(poi.name, forKey: POI.Name.name)
-            value.setValue(poi.imageUrl, forKey: POI.Name.imageUrl)
-            value.setValue(poi.category, forKey: POI.Name.category)
-        }
+        let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context)
+        let coordMO = NSEntityDescription.insertNewObject(forEntityName: POICoordinateMO.name, into: context)
+        let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context)
+        
+        poiMO.setValue(poi.id, forKey: POIMO.Name.id)
+        poiMO.setValue(coordMO, forKey: POIMO.Name.coordinate)
+        poiMO.setValue(infoMO, forKey: POIMO.Name.info)
+        coordMO.setValue(poi.x, forKey: POICoordinateMO.Name.lng)
+        coordMO.setValue(poi.y, forKey: POICoordinateMO.Name.lat)
+        infoMO.setValue(poi.name, forKey: POIInfoMO.Name.name)
+        infoMO.setValue(poi.imageUrl, forKey: POIInfoMO.Name.imageUrl)
+        infoMO.setValue(poi.category, forKey: POIInfoMO.Name.category)
     }
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
