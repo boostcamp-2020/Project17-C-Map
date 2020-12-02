@@ -204,8 +204,8 @@
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
-				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
+				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";

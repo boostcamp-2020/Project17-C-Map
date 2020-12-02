@@ -16,19 +16,23 @@ protocol ClusterPresentationLogic {
 
 class MapPresenter: ClusterPresentationLogic {
     
-    private let createMarkerHandler: ([InteractiveMarker]) -> Void
-    private let removeMarkerHandler: ([InteractiveMarker]) -> Void
-    private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
+    private let createMarkerHandler: ([Markerable]) -> Void
+    private let removeMarkerHandler: ([Markerable]) -> Void
+    private var presentMarkers: [CLong: [Markerable]] = [:]
     
-    init(createMarkerHandler: @escaping ([InteractiveMarker]) -> Void,
-         removeMarkerHandler: @escaping ([InteractiveMarker]) -> Void) {
+    init(createMarkerHandler: @escaping ([Markerable]) -> Void,
+         removeMarkerHandler: @escaping ([Markerable]) -> Void) {
         self.createMarkerHandler = createMarkerHandler
         self.removeMarkerHandler = removeMarkerHandler
     }
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
-        let markers = clusters.map {
-            InteractiveMarker(cluster: $0)
+        let markers: [Markerable] = clusters.map {
+            if $0.coordinates.count == 0 {
+                return InteractiveMarker(cluster: $0)
+            } else {
+                return ClusteringMarkerLayer(cluster: $0)
+            }
         }
         presentMarkers[tileId] = markers
         createMarkerHandler(markers)

@@ -11,5 +11,4 @@ import NMapsMap
 
 class AnimationLayerController {
     
-    
 }

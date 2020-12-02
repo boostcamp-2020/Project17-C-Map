@@ -61,19 +61,19 @@ final class MapViewController: UIViewController {
         polygonOverlay?.mapView = interactiveMapView.mapView
     }
     
-    private func createMarkers(interactiveMarkers: [InteractiveMarker]) {
+    private func createMarkers(interactiveMarkers: [Markerable]) {
         interactiveMarkers.forEach { interactiveMarker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                interactiveMarker.mapView = self.interactiveMapView?.mapView
+                //interactiveMarker.mapView = self.interactiveMapView?.mapView
             }
         }
     }
     
-    private func removeMarkers(interactiveMarkers: [InteractiveMarker]) {
+    private func removeMarkers(interactiveMarkers: [Markerable]) {
         interactiveMarkers.forEach { interactiveMarker in
             DispatchQueue.main.async {
-                interactiveMarker.mapView = nil
+                //interactiveMarker.mapView = nil
             }
         }
     }

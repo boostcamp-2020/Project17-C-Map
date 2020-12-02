@@ -9,12 +9,18 @@ import Foundation
 import NMapsMap
 import UIKit
 
-class ClusteringMarkerLayer: CALayer {
+protocol Markerable {
+    
+    init(cluster: Cluster)
+    
+}
+
+class ClusteringMarkerLayer: CALayer, Markerable {
     
     var center: Coordinate?
     var coordinatesCount: Int?
     
-    init(cluster: Cluster) {
+    required init(cluster: Cluster) {
         super.init()
         commonInit(cluster: cluster)
     }
