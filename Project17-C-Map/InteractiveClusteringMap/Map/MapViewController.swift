@@ -68,7 +68,11 @@ final class MapViewController: UIViewController {
                 
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     clusteringMarkerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
-                    print(markers.filter { (marker as? ClusteringMarkerLayer)?.center == ($0 as? ClusteringMarkerLayer)?.center }.count)
+                    let animation = CABasicAnimation(keyPath: "opacity")
+                    animation.fromValue = 0
+                    animation.toValue = 1
+                    animation.duration = 1
+                    clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = self.interactiveMapView.mapView
@@ -81,6 +85,12 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
+                    let animation = CABasicAnimation(keyPath: "opacity")
+                    animation.fromValue = 1
+                    animation.toValue = 0
+                    animation.duration = 1
+                    clusteringMarkerLayer.add(animation, forKey: "fadeOut")
+                    
                     clusteringMarkerLayer.removeFromSuperlayer()
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = nil
