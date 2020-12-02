@@ -83,7 +83,7 @@ final class MapViewController: UIViewController {
     
     private func removeMarkers(markers: [Markerable]) {
         markers.forEach { marker in
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     let animation = CABasicAnimation(keyPath: "opacity")
                     animation.fromValue = 1
