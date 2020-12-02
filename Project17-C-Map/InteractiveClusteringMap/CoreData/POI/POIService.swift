@@ -29,12 +29,7 @@ final class POIService: POIServicing {
             guard let self = self else { return }
             
             let poiEntities = self.dataManager.fetch()
-            var coords: [Coordinate] = []
-            
-            poiEntities.forEach {
-                coords.append(Coordinate(x: $0.lng, y: $0.lat))
-            }
-            completion(coords)
+            completion(poiEntities.map { $0.coordinate })
         }
     }
     
@@ -42,23 +37,18 @@ final class POIService: POIServicing {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             
-            self.dataManager.fetchAsync { poiCoordMOs in
-                var coords: [Coordinate] = []
-                
-                poiCoordMOs.forEach {
-                    coords.append(Coordinate(x: $0.lng, y: $0.lat))
-                }
-                completion(coords)
+            self.dataManager.fetchAsync {
+                completion($0.map { $0.coordinate })
             }
         }
     }
     
     func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
         DispatchQueue.global().async { [weak self] in
-            guard let self = self { return }
+            guard let self = self else { return }
             
             self.dataManager.fetchAsync(topLeft: topLeft, bottomRight: bottomRight) {
-                completion($0)
+                completion($0.map { $0.coordinate })
             }
         }
     }
