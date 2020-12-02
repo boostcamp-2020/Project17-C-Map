@@ -10,7 +10,7 @@ import CoreLocation
 import NMapsMap
 
 final class MapViewController: UIViewController {
-
+    
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -35,7 +35,7 @@ final class MapViewController: UIViewController {
         transparentLayer = TransparentLayer(bounds: view.bounds)
         interactiveMapView.mapView.layer.addSublayer(transparentLayer!)
     }
-
+    
     private func dependencyInject() {
         guard let dataManager = dataManager else { return }
         
@@ -47,7 +47,7 @@ final class MapViewController: UIViewController {
     
     private func configureMap() {
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
-
+        
         let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
                        NMGLatLng(lat: 37.5600365, lng: 126.9956437),
                        NMGLatLng(lat: 37.5600365, lng: 126.9903617),
@@ -61,11 +61,17 @@ final class MapViewController: UIViewController {
         polygonOverlay?.mapView = interactiveMapView.mapView
     }
     
-    private func createMarkers(interactiveMarkers: [Markerable]) {
-        interactiveMarkers.forEach { interactiveMarker in
+    private func createMarkers(markers: [Markerable]) {
+        markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                //interactiveMarker.mapView = self.interactiveMapView?.mapView
+                
+                if let clusteringMakerLayer = marker as? ClusteringMarkerLayer {
+                    clusteringMakerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                    self.transparentLayer?.addSublayer(clusteringMakerLayer)
+                } else if let interactiveMaker = marker as? InteractiveMarker {
+                    interactiveMaker.mapView = self.interactiveMapView.mapView
+                }
             }
         }
     }
@@ -82,19 +88,19 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-      
+        
     }
     
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-//        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         print("ended")
-//        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-//        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
     }
 }

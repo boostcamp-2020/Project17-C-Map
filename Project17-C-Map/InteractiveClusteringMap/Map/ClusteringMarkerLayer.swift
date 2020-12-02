@@ -39,11 +39,12 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         guard let coordinatesCount = coordinatesCount else { return }
         
         var r: CGFloat = 20
-                
+        
         r += CGFloat(coordinatesCount / 1000)
         
         bounds = CGRect(x: 0, y: 0, width: 2 * r, height: 2 * r)
         cornerRadius = r
+        backgroundColor = UIColor.green.cgColor
     }
     
     func setScreenPosition(mapView: NMFMapView) {
