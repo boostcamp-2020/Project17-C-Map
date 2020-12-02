@@ -66,9 +66,9 @@ final class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                if let clusteringMakerLayer = marker as? ClusteringMarkerLayer {
-                    clusteringMakerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
-                    self.transparentLayer?.addSublayer(clusteringMakerLayer)
+                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
+                    clusteringMarkerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = self.interactiveMapView.mapView
                 }
@@ -76,10 +76,15 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func removeMarkers(interactiveMarkers: [Markerable]) {
-        interactiveMarkers.forEach { interactiveMarker in
-            DispatchQueue.main.async {
-                //interactiveMarker.mapView = nil
+    private func removeMarkers(markers: [Markerable]) {
+        markers.forEach { marker in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
+                    clusteringMarkerLayer.removeFromSuperlayer()
+                } else if let interactiveMaker = marker as? InteractiveMarker {
+                    interactiveMaker.mapView = nil
+                }
             }
         }
     }

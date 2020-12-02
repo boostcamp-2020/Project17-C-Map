@@ -40,7 +40,7 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         
         var r: CGFloat = 20
         
-        r += CGFloat(coordinatesCount / 1000)
+        r += CGFloat(coordinatesCount / 10)
         
         bounds = CGRect(x: 0, y: 0, width: 2 * r, height: 2 * r)
         cornerRadius = r
