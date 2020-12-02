@@ -25,6 +25,10 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         commonInit(cluster: cluster)
     }
     
+    override init(layer: Any) {
+        super.init(layer: layer)
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -44,7 +48,14 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         
         bounds = CGRect(x: 0, y: 0, width: 2 * r, height: 2 * r)
         cornerRadius = r
-        backgroundColor = UIColor.green.cgColor
+        backgroundColor = UIColor(red: 0.23, green: 0.43, blue: 0.2, alpha: 0.8).cgColor
+    
+    }
+    
+    private func textLayer() -> CATextLayer {
+        let textLayer = CATextLayer()
+        textLayer.bounds = CGRect(x: 0, y: 0, width: 100, height: 20)
+        return textLayer
     }
     
     func setScreenPosition(mapView: NMFMapView) {

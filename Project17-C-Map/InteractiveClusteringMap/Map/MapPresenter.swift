@@ -28,7 +28,7 @@ class MapPresenter: ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
         let markers: [Markerable] = clusters.map {
-            if $0.coordinates.count == 0 {
+            if $0.coordinates.count == 1 {
                 return InteractiveMarker(cluster: $0)
             } else {
                 return ClusteringMarkerLayer(cluster: $0)

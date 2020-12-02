@@ -68,6 +68,7 @@ final class MapViewController: UIViewController {
                 
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     clusteringMarkerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                    print(markers.filter { (marker as? ClusteringMarkerLayer)?.center == ($0 as? ClusteringMarkerLayer)?.center }.count)
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = self.interactiveMapView.mapView
@@ -79,7 +80,6 @@ final class MapViewController: UIViewController {
     private func removeMarkers(markers: [Markerable]) {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     clusteringMarkerLayer.removeFromSuperlayer()
                 } else if let interactiveMaker = marker as? InteractiveMarker {
@@ -93,19 +93,43 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-        
+        DispatchQueue.main.async {
+            self.transparentLayer?.sublayers?.forEach { subLayer in
+                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
+                
+                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+            }
+        }
     }
     
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        DispatchQueue.main.async {
+            self.transparentLayer?.sublayers?.forEach { subLayer in
+                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
+                
+                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+            }
+        }
     }
-    
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        print("ended")
-        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        DispatchQueue.main.async {
+            self.transparentLayer?.sublayers?.forEach { subLayer in
+                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
+                
+                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+            }
+        }
+        
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        //        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+        DispatchQueue.main.async {
+            self.transparentLayer?.sublayers?.forEach { subLayer in
+                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
+                
+                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+            }
+        }
     }
 }
+

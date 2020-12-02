@@ -16,13 +16,14 @@ class TransparentLayer: CALayer {
     }
     
     required init?(coder: NSCoder) {
-        super.init()
+        super.init(coder: coder)
     }
     
     func configure(bounds: CGRect) {
         self.bounds = bounds
         self.backgroundColor = UIColor.clear.cgColor
         self.position = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+        
     }
     
 }
