@@ -76,7 +76,6 @@ final class CoreDataStack: DataManagable {
         else {
             return []
         }
-        
         return entities
     }
     
@@ -108,9 +107,9 @@ final class CoreDataStack: DataManagable {
               let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
             return
         }
-        poiMO.setValues(id: poi.id, coordinate: coordMO, info: infoMO)
         coordMO.setValues(Coordinate(x: poi.x, y: poi.y))
         infoMO.setValues(POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
+        poiMO.setValues(id: poi.id, coordinate: coordMO, info: infoMO)
     }
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {

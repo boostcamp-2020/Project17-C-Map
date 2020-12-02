@@ -12,4 +12,10 @@ import CoreData
 @objc(POIMO)
 public class POIMO: NSManagedObject {
     
+    func setValues(id: Int64, coordinate: POICoordinateMO, info: POIInfoMO) {
+        setValue(id, forKey: Name.id)
+        setValue(coordinate, forKey: Name.coordinate)
+        setValue(info, forKey: Name.info)
+    }
+    
 }
