@@ -15,7 +15,6 @@ class DBITests: XCTestCase {
         let clusters1 = [Cluster(coordinates: [Coordinate(x: 1, y: 1), Coordinate(x: 5, y: 1)]),
                          Cluster(coordinates: [Coordinate(x: 1, y: 3), Coordinate(x: 5, y: 3)])]
         let expected = 2.0
-        print(dbi.sum(clusters: clusters1))
         XCTAssertEqual(expected, dbi.calculateDBI(clusters: clusters1))
     }
     

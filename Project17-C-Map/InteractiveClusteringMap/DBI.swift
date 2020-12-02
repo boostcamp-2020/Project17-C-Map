@@ -10,30 +10,29 @@ import Foundation
 struct DBI {
     
     private func sum(clusters: [Cluster]) -> Double {
-        var sum = 0.0
+        var sum = Double.zero
         
         clusters.forEach { cluster in
             var maximumSigma = Double.zero
             
             clusters.forEach { otherCluster in
-                if cluster != otherCluster {
-                    let distance = cluster.center.distanceTo(otherCluster.center)
-                    let sigma = (self.sigma(cluster: cluster) + self.sigma(cluster: otherCluster)) / distance
-                    
-                    maximumSigma = max(maximumSigma, sigma)
-                    sum += maximumSigma
-                }
+                guard cluster != otherCluster else { return }
+                
+                let distance = cluster.center.distanceTo(otherCluster.center)
+                let sigma = (self.sigma(cluster: cluster) + self.sigma(cluster: otherCluster)) / distance
+                
+                maximumSigma = max(maximumSigma, sigma)
+                sum += maximumSigma
+                
             }
         }
         return sum
     }
     
     private func sigma(cluster: Cluster) -> Double {
-        var sum = 0.0
         let center = cluster.center
-        cluster.coordinates.forEach {
-            sum += center.distanceTo($0)
-        }
+        let sum = cluster.coordinates.reduce(0.0) { $0 + center.distanceTo($1)}
+        
         return sum / Double(cluster.coordinates.count)
     }
     
