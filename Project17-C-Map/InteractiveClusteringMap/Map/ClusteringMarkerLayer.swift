@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NMapsMap
 import UIKit
 import Darwin
 
@@ -18,7 +17,7 @@ protocol Markerable {
 
 class ClusteringMarkerLayer: CALayer, Markerable {
     
-    var center: Coordinate?
+    var center: Coordinate = Coordinate(x: 0, y: 0)
     var coordinatesCount: Int?
     
     required init(cluster: Cluster) {
@@ -76,10 +75,8 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         
     }
     
-    func setScreenPosition(mapView: NMFMapView) {
-        guard let center = center else { return }
-        
-        position = mapView.projection.point(from: NMGLatLng(lat: center.y, lng: center.x))
+    func setScreenPosition(position: CGPoint) {
+        self.position = position
     }
     
 }

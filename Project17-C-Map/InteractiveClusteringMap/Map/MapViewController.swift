@@ -31,9 +31,6 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
-        interactiveMapView.mapView.addCameraDelegate(delegate: self)
-        transparentLayer = TransparentLayer(bounds: view.bounds)
-        interactiveMapView.mapView.layer.addSublayer(transparentLayer!)
     }
     
     private func dependencyInject() {
@@ -59,6 +56,20 @@ final class MapViewController: UIViewController {
         polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
         polygonOverlay?.outlineWidth = 3
         polygonOverlay?.mapView = interactiveMapView.mapView
+        
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
+        
+        transparentLayer = TransparentLayer(bounds: view.bounds)
+        guard let transparentLayer = transparentLayer else { return }
+        
+        interactiveMapView.mapView.layer.addSublayer(transparentLayer)
+    }
+    
+    private func setMarkerPosition(marker: CALayer) {
+        guard let marker = marker as? ClusteringMarkerLayer else { return }
+        
+        let latLng = NMGLatLng(lat: marker.center.y, lng: marker.center.x)
+        marker.setScreenPosition(position: self.interactiveMapView.mapView.projection.point(from: latLng))
     }
     
     private func createMarkers(markers: [Markerable]) {
@@ -67,12 +78,11 @@ final class MapViewController: UIViewController {
                 guard let self = self else { return }
                 
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    clusteringMarkerLayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
-                    let animation = CABasicAnimation(keyPath: "opacity")
-                    animation.fromValue = 0
-                    animation.toValue = 1
-                    animation.duration = 0.5
+                    self.setMarkerPosition(marker: clusteringMarkerLayer)
+                    
+                    let animation = AnimationController.fadeInOut(inOut: true)
                     clusteringMarkerLayer.add(animation, forKey: "fadeIn")
+                    
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = self.interactiveMapView.mapView
@@ -85,10 +95,8 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    let animation = CABasicAnimation(keyPath: "opacity")
-                    animation.fromValue = 1
-                    animation.toValue = 0
-                    animation.duration = 0.7
+                    let animation = AnimationController.fadeInOut(inOut: false)
+                    
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
                         clusteringMarkerLayer.removeFromSuperlayer()
@@ -104,41 +112,41 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             self.transparentLayer?.sublayers?.forEach { subLayer in
-                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
-                
-                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                self.setMarkerPosition(marker: subLayer)
             }
         }
     }
     
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             self.transparentLayer?.sublayers?.forEach { subLayer in
-                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
-                
-                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                self.setMarkerPosition(marker: subLayer)
             }
         }
     }
+    
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             self.transparentLayer?.sublayers?.forEach { subLayer in
-                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
-                
-                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                self.setMarkerPosition(marker: subLayer)
             }
         }
-        
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             self.transparentLayer?.sublayers?.forEach { subLayer in
-                guard let sublayer = subLayer as? ClusteringMarkerLayer else { return }
-                
-                sublayer.setScreenPosition(mapView: self.interactiveMapView.mapView)
+                self.setMarkerPosition(marker: subLayer)
             }
         }
     }

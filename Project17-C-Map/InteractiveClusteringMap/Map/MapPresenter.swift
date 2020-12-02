@@ -11,7 +11,6 @@ protocol ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster])
     func removePresentMarkers(tileIds: [CLong])
-    func updateTileID(removedTileIDs: [CLong], addedTileIDs: [CLong])
     
 }
 
@@ -45,11 +44,5 @@ class MapPresenter: ClusterPresentationLogic {
         let markers = presentMarkers.filter { tileIds.contains($0.key) }.flatMap { $0.value }
         removeMarkerHandler(markers)
     }
-    
-    func updateTileID(removedTileIDs: [CLong], addedTileIDs: [CLong]) {
-        self.removedTileIDs = removedTileIDs
-        self.addedTileIDs = addedTileIDs
-    }
-    
     
 }

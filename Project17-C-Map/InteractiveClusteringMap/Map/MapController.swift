@@ -53,7 +53,6 @@ extension MapController: NMFTileCoverHelperDelegate {
         guard let interactiveMapView = interactiveMapView else { return }
         
         interactor?.fetch(boundingBoxes: boundsWithTileId, zoomLevel: interactiveMapView.zoomLevel)
-        interactor?.updateTileID(removedTileIDs: removedTiles, addedTileIDs: addedTiles)
     }
     
 }
