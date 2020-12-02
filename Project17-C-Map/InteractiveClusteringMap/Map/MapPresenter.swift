@@ -19,6 +19,7 @@ class MapPresenter: ClusterPresentationLogic {
     private let createMarkerHandler: ([InteractiveMarker]) -> Void
     private let removeMarkerHandler: ([InteractiveMarker]) -> Void
     private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
+    private var undeletedTileIds: [CLong] = []
     
     init(createMarkerHandler: @escaping ([InteractiveMarker]) -> Void,
          removeMarkerHandler: @escaping ([InteractiveMarker]) -> Void) {
@@ -27,15 +28,25 @@ class MapPresenter: ClusterPresentationLogic {
     }
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
+        guard !undeletedTileIds.contains(tileId) else {
+            return undeletedTileIds.removeAll { $0 == tileId }
+        }
+        
         let markers = clusters.map {
             InteractiveMarker(cluster: $0)
         }
-        presentMarkers[tileId] = markers
+        presentMarkers[tileId] = (presentMarkers[tileId] ?? []) + markers
         createMarkerHandler(markers)
     }
     
     func removePresentMarkers(tileIds: [CLong]) {
-        let markers = presentMarkers.filter { tileIds.contains($0.key) }.flatMap { $0.value }
+        let targetIds = presentMarkers.filter { tileIds.contains($0.key) }
+        undeletedTileIds += tileIds.filter { !targetIds.keys.contains($0) }
+        
+        let markers = targetIds.flatMap { $0.value }
+        tileIds.forEach {
+            presentMarkers[$0] = nil
+        }
         removeMarkerHandler(markers)
     }
     
