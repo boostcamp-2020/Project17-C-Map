@@ -15,6 +15,7 @@ final class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
+    private var animationController: AnimationController?
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -30,6 +31,8 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
+        animationController = AnimationController(frame: view.bounds, mapView: interactiveMapView.mapView)
     }
 
     private func dependencyInject() {
@@ -74,4 +77,23 @@ final class MapViewController: UIViewController {
         }
     }
     
+}
+
+extension MapViewController: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+    }
+    
+    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
+        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+    }
+    
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        print("ended")
+        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+    }
+    
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        animationController?.subLayer.position = interactiveMapView.mapView.projection.point(from: NMGLatLng(lat: 37.45219245759162, lng: 126.65371209878728))
+    }
 }
