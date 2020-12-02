@@ -16,6 +16,8 @@ final class CoreDataStack: DataManagable {
     private lazy var container: NSPersistentContainer? = appDelegate?.container
     private lazy var context: NSManagedObjectContext? = container?.viewContext
     
+    private let queue: DispatchQueue = .init(label: "CoreDataStackQueue", qos: .background, attributes: .concurrent)
+    
     private let fileName: String = "restuarant-list-for-test"
     
     private init() {
@@ -27,9 +29,8 @@ final class CoreDataStack: DataManagable {
     
     func deleteAll() {
         guard let container = container else { return }
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: POIMO.fetchRequest())
         
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POIMO.fetchRequest()
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         do {
             try container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
         } catch let error as NSError {
@@ -46,6 +47,23 @@ final class CoreDataStack: DataManagable {
         return entities
     }
     
+    func fetchAsync(handler: @escaping ([POICoordinateMO]) -> Void) {
+        queue.async { [weak self] in
+            guard let self = self,
+                  let context = self.context,
+                  let entities = try? context.fetch(POICoordinateMO.fetchRequest()) as? [POICoordinateMO]
+            else {
+                DispatchQueue.main.async {
+                    handler([])
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                handler(entities)
+            }
+        }
+    }
+    
     func fetch(topLeft: Coordinate, bottomRight: Coordinate) -> [POICoordinateMO] {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POICoordinateMO.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "lng >= %@ AND lng <= %@ AND lat >= %@ AND lat <= %@",
@@ -57,6 +75,26 @@ final class CoreDataStack: DataManagable {
         }
         
         return entities
+    }
+    
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, handler: @escaping ([POICoordinateMO]) -> Void) {
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POICoordinateMO.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "lng >= %@ AND lng <= %@ AND lat >= %@ AND lat <= %@",
+                                                 topLeft.x, bottomRight.x, bottomRight.y, topLeft.y)
+            guard let context = self.context,
+                  let entities = try? context.fetch(fetchRequest) as? [POICoordinateMO]
+            else {
+                DispatchQueue.main.async {
+                    handler([])
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                handler(entities)
+            }
+        }
     }
     
     func setValue(_ poi: POI) {
@@ -78,6 +116,7 @@ final class CoreDataStack: DataManagable {
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
         guard let context = context else { return }
+        try? context.save()
         
         if context.hasChanges {
             do {

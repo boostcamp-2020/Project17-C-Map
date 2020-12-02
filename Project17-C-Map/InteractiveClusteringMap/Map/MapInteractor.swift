@@ -11,6 +11,7 @@ protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
     func remove(tileIds: [CLong])
+    
 }
 
 final class MapInteractor: ClusterBusinessLogic {
@@ -26,7 +27,7 @@ final class MapInteractor: ClusterBusinessLogic {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.poiService.fetch { [weak self] pois in
+            self.poiService.fetchAsync { [weak self] pois in
                 guard let self = self else { return }
 
                 let coordinates = pois.map {

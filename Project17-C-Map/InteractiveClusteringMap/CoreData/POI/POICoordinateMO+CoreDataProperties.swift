@@ -21,8 +21,12 @@ extension POICoordinateMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<POICoordinateMO> {
         return NSFetchRequest<POICoordinateMO>(entityName: name)
     }
-
+    
     @NSManaged public var lat: Double
     @NSManaged public var lng: Double
+    
+    var coordinate: Coordinate {
+        return Coordinate(x: self.lng, y: self.lat)
+    }
 
 }

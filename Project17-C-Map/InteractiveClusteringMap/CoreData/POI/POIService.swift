@@ -10,7 +10,10 @@ import Foundation
 protocol POIServicing {
     
     func fetch(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func save()
+    
 }
 
 final class POIService: POIServicing {
@@ -32,6 +35,31 @@ final class POIService: POIServicing {
                 coords.append(Coordinate(x: $0.lng, y: $0.lat))
             }
             completion(coords)
+        }
+    }
+    
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void) {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            
+            self.dataManager.fetchAsync { poiCoordMOs in
+                var coords: [Coordinate] = []
+                
+                poiCoordMOs.forEach {
+                    coords.append(Coordinate(x: $0.lng, y: $0.lat))
+                }
+                completion(coords)
+            }
+        }
+    }
+    
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self { return }
+            
+            self.dataManager.fetchAsync(topLeft: topLeft, bottomRight: bottomRight) {
+                completion($0)
+            }
         }
     }
     

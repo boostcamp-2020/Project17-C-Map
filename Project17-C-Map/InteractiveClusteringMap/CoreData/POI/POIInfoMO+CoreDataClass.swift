@@ -11,5 +11,5 @@ import CoreData
 
 @objc(POIInfoMO)
 public class POIInfoMO: NSManagedObject {
-
+    
 }
