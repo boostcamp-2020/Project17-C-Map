@@ -15,6 +15,7 @@ final class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
+    private var deletedinteractiveMarkers: [InteractiveMarker] = []
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -58,6 +59,12 @@ final class MapViewController: UIViewController {
     }
     
     private func createMarkers(interactiveMarkers: [InteractiveMarker]) {
+        deletedinteractiveMarkers.forEach { interactiveMarker in
+            DispatchQueue.main.async {
+                interactiveMarker.mapView = nil
+                self.deletedinteractiveMarkers.removeAll { $0 == interactiveMarker }
+            }
+        }
         interactiveMarkers.forEach { interactiveMarker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -67,11 +74,7 @@ final class MapViewController: UIViewController {
     }
     
     private func removeMarkers(interactiveMarkers: [InteractiveMarker]) {
-        interactiveMarkers.forEach { interactiveMarker in
-            DispatchQueue.main.async {
-                interactiveMarker.mapView = nil
-            }
-        }
+        deletedinteractiveMarkers += interactiveMarkers
     }
     
 }
