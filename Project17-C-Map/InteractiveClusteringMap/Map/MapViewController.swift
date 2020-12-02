@@ -71,7 +71,7 @@ final class MapViewController: UIViewController {
                     let animation = CABasicAnimation(keyPath: "opacity")
                     animation.fromValue = 0
                     animation.toValue = 1
-                    animation.duration = 1
+                    animation.duration = 0.5
                     clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMaker = marker as? InteractiveMarker {
@@ -88,10 +88,11 @@ final class MapViewController: UIViewController {
                     let animation = CABasicAnimation(keyPath: "opacity")
                     animation.fromValue = 1
                     animation.toValue = 0
-                    animation.duration = 1
+                    animation.duration = 0.7
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
-                    
-                    clusteringMarkerLayer.removeFromSuperlayer()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
+                        clusteringMarkerLayer.removeFromSuperlayer()
+                    }
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = nil
                 }
@@ -142,4 +143,3 @@ extension MapViewController: NMFMapViewCameraDelegate {
         }
     }
 }
-

@@ -11,6 +11,7 @@ protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
     func remove(tileIds: [CLong])
+    func updateTileID(removedTileIDs: [CLong], addedTileIDs: [CLong])
 }
 
 final class MapInteractor: ClusterBusinessLogic {
@@ -46,10 +47,6 @@ final class MapInteractor: ClusterBusinessLogic {
         }
     }
     
-    func remove(tileIds: [CLong]) {
-        presenter.removePresentMarkers(tileIds: tileIds)
-    }
-    
     private func clustering(coordinates: [Coordinate],
                             tileId: CLong,
                             boundingBox: BoundingBox,
@@ -62,6 +59,14 @@ final class MapInteractor: ClusterBusinessLogic {
                                                             
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
+    }
+    
+    func remove(tileIds: [CLong]) {
+        presenter.removePresentMarkers(tileIds: tileIds)
+    }
+    
+    func updateTileID(removedTileIDs: [CLong], addedTileIDs: [CLong]) {
+        presenter.updateTileID(removedTileIDs: removedTileIDs, addedTileIDs: addedTileIDs)
     }
     
 }
