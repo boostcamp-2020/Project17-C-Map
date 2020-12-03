@@ -9,8 +9,15 @@ import Foundation
 
 struct Coordinate {
     
+    let id: Int64
     let x: Double
     let y: Double
+    
+    init(x: Double, y: Double, id: Int64 = -1) {
+        self.x = x
+        self.y = y
+        self.id = id
+    }
     
     func ratio(other: Coordinate) -> Double {
         return (self.x - other.x) / (self.y - other.y)

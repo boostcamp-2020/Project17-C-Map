@@ -27,7 +27,7 @@ final class MapInteractor: ClusterBusinessLogic {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.poiService.fetch(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { [weak self] pois in
+            self.poiService.fetch { [weak self] pois in
                 guard let self = self else { return }
                 
                 let coordinates = pois.map {

@@ -39,9 +39,40 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch(handler: @escaping ([POICoordinateMO]) -> Void) {
+    func delete(coordinate: Coordinate) {
+        let request = POIMO.fetchRequest(coordinate: coordinate)
+        guard let objects = try? context.fetch(request) else {
+            return
+        }
+        objects.forEach {
+            context.delete($0)
+        }
+    }
+    
+    func add(coordinate: Coordinate) {
+        setValue(POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+    }
+    
+    func update(coordinate: Coordinate, info: POIInfo) {
+        let request = POIMO.fetchRequest(coordinate: coordinate)
+        guard let objects = try? context.fetch(request) else {
+            return
+        }
+        objects.first?.update(coordinate: coordinate, info: info)
+    }
+    
+    func fetch() -> [POIMO] {
+        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+        guard let entities = try? context.fetch(request)
+        else {
+            return []
+        }
+        return entities
+    }
+    
+    func fetch(handler: @escaping ([POIMO]) -> Void) {
         context.perform { [weak self] in
-            let request: NSFetchRequest<POICoordinateMO> = POICoordinateMO.fetchRequest()
+            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
             guard let self = self,
                   let entities = try? self.context.fetch(request) else {
                 DispatchQueue.main.async {
@@ -55,9 +86,18 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch(bottomLeft: Coordinate, topRight: Coordinate, handler: @escaping ([POICoordinateMO]) -> Void) {
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate) -> [POIMO] {
+        let fetchRequest = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
+        guard let entities = try? context.fetch(fetchRequest)
+        else {
+            return []
+        }
+        return entities
+    }
+    
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate, handler: @escaping ([POIMO]) -> Void) {
         context.perform { [weak self] in
-            let request = POICoordinateMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
+            let request = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
             guard let self = self,
                   let entities = try? self.context.fetch(request) else {
                 DispatchQueue.main.async {
@@ -73,26 +113,25 @@ final class CoreDataStack: DataManagable {
     
     func setValue(_ poi: POI) {
         guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
-              let coordMO = NSEntityDescription.insertNewObject(forEntityName: POICoordinateMO.name, into: context) as? POICoordinateMO,
               let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
             return
         }
-        coordMO.setValues(Coordinate(x: poi.x, y: poi.y))
         infoMO.setValues(POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
-        poiMO.setValues(id: poi.id, coordinate: coordMO, info: infoMO)
+        poiMO.setValues(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id), info: infoMO)
     }
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
         context.performAndWait {
-            if context.hasChanges {
-                do {
-                    try context.save()
-                    try container?.viewContext.save()
-                    successHandler?()
-                } catch {
-                    let nsError = error as NSError
-                    failureHandler?(nsError)
-                }
+            guard !context.hasChanges else {
+                return
+            }
+            do {
+                try context.save()
+                try container?.viewContext.save()
+                successHandler?()
+            } catch {
+                let nsError = error as NSError
+                failureHandler?(nsError)
             }
         }
     }
