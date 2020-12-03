@@ -22,6 +22,16 @@ extension POICoordinateMO {
         return NSFetchRequest<POICoordinateMO>(entityName: name)
     }
     
+    @nonobjc class func fetchRequest(bottomLeft: Coordinate, topRight: Coordinate) -> NSFetchRequest<POICoordinateMO> {
+        let request: NSFetchRequest<POICoordinateMO> = fetchRequest()
+        let lngPredicate = NSPredicate(format: "%lf <= lng && lng <= %lf", bottomLeft.x, topRight.x)
+        let latPredicate = NSPredicate(format: "%lf <= lat && lat <= %lf", bottomLeft.y, topRight.y)
+        
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [lngPredicate, latPredicate])
+        
+        return request
+    }
+    
     @NSManaged public var lat: Double
     @NSManaged public var lng: Double
     

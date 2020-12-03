@@ -10,8 +10,7 @@ import Foundation
 protocol POIServicing {
     
     func fetch(completion: @escaping ([Coordinate]) -> Void)
-    func fetchAsync(completion: @escaping ([Coordinate]) -> Void)
-    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func save()
     
 }
@@ -25,18 +24,13 @@ final class POIService: POIServicing {
     }
     
     func fetch(completion: @escaping ([Coordinate]) -> Void) {
-        let poiEntities = self.dataManager.fetch()
-        completion(poiEntities.map { $0.coordinate })
-    }
-    
-    func fetchAsync(completion: @escaping ([Coordinate]) -> Void) {
-        self.dataManager.fetchAsync {
+        self.dataManager.fetch {
             completion($0.map { $0.coordinate })
         }
     }
     
-    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
-        self.dataManager.fetchAsync(topLeft: topLeft, bottomRight: bottomRight) {
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
+        self.dataManager.fetch(bottomLeft: bottomLeft, topRight: topRight) {
             completion($0.map { $0.coordinate })
         }
     }
