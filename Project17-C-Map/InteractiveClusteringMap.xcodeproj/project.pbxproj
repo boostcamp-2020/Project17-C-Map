@@ -74,6 +74,7 @@
 		FA194F642576035C003B07D9 /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA3389302576D294008C74AA /* DBITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33892F2576D293008C74AA /* DBITests.swift */; };
 		FA3389342576D2A5008C74AA /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
+		FA4DCF4D2578C840007748AC /* MarkerTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
@@ -169,6 +170,7 @@
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA194F632576035C003B07D9 /* DBI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		FA33892F2576D293008C74AA /* DBITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBITests.swift; sourceTree = "<group>"; };
+		FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTextLayer.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -214,12 +216,11 @@
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
+				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
-				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
-				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
-				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
+				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -352,6 +353,8 @@
 			isa = PBXGroup;
 			children = (
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
+				FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */,
+				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
+				FA4DCF4D2578C840007748AC /* MarkerTextLayer.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				46EDEA43257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
