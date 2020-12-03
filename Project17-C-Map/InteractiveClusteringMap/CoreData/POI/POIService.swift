@@ -9,8 +9,11 @@ import Foundation
 
 protocol POIServicing {
     
-    func fetch(completion: @escaping ([POI]) -> Void)
+    func fetch(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func save()
+    
 }
 
 final class POIService: POIServicing {
@@ -21,22 +24,20 @@ final class POIService: POIServicing {
         self.dataManager = dataManager
     }
     
-    func fetch(completion: @escaping ([POI]) -> Void) {
-        DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
-            
-            let poiEntities = self.dataManager.fetch()
-            var pois: [POI] = []
-        
-            poiEntities.forEach {
-                pois.append(POI(x: $0.x,
-                                y: $0.y,
-                                id: $0.id,
-                                name: $0.name,
-                                imageUrl: $0.imageUrl,
-                                category: $0.category))
-            }
-            completion(pois)
+    func fetch(completion: @escaping ([Coordinate]) -> Void) {
+        let poiEntities = self.dataManager.fetch()
+        completion(poiEntities.map { $0.coordinate })
+    }
+    
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void) {
+        self.dataManager.fetchAsync {
+            completion($0.map { $0.coordinate })
+        }
+    }
+    
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
+        self.dataManager.fetchAsync(topLeft: topLeft, bottomRight: bottomRight) {
+            completion($0.map { $0.coordinate })
         }
     }
     
