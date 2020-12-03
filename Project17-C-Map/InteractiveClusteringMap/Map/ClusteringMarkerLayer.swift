@@ -12,39 +12,40 @@ import Darwin
 protocol Markerable {
     
     init(cluster: Cluster)
+    func remove()
     
 }
 
 class ClusteringMarkerLayer: CALayer, Markerable {
     
-    var center: Coordinate = Coordinate(x: 0, y: 0)
-    var coordinatesCount: Int?
+    let center: Coordinate
+    private let coordinatesCount: Int
     
     required init(cluster: Cluster) {
+        
+        self.center = cluster.center
+        self.coordinatesCount = cluster.coordinates.count
         super.init()
-        commonInit(cluster: cluster)
+
+        configure()
     }
     
     override init(layer: Any) {
+        self.center = Coordinate(x: 0, y: 0)
+        self.coordinatesCount = 0
         super.init(layer: layer)
     }
     
     required init?(coder: NSCoder) {
+        self.center = Coordinate(x: 0, y: 0)
+        self.coordinatesCount = 0
         super.init(coder: coder)
     }
     
-    private func commonInit(cluster: Cluster) {
-        self.center = cluster.center
-        self.coordinatesCount = cluster.coordinates.count
-        configure()
-    }
-    
     private func configure() {
-        guard let coordinatesCount = coordinatesCount else { return }
+       // guard let coordinatesCount = coordinatesCount else { return }
         
-        var r: CGFloat = 20
-        
-        r += CGFloat(2 * log2(Double(coordinatesCount)))
+        let r: CGFloat = 15 + CGFloat(2 * log2(Double(coordinatesCount)))
         
         bounds = CGRect(x: 0, y: 0, width: 2 * r, height: 2 * r)
         cornerRadius = r
@@ -78,5 +79,8 @@ class ClusteringMarkerLayer: CALayer, Markerable {
     func setScreenPosition(position: CGPoint) {
         self.position = position
     }
-    
+        
+    func remove() {
+        removeFromSuperlayer()
+    }
 }

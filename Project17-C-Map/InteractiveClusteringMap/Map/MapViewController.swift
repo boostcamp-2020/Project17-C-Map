@@ -37,7 +37,7 @@ final class MapViewController: UIViewController {
         guard let dataManager = dataManager else { return }
         
         let poiService = POIService(dataManager: dataManager)
-        let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: createMarkers, removeMarkerHandler: removeMarkers)
+        let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(poiService: poiService, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
@@ -72,8 +72,8 @@ final class MapViewController: UIViewController {
         marker.setScreenPosition(position: self.interactiveMapView.mapView.projection.point(from: latLng))
     }
     
-    private func createMarkers(markers: [Markerable]) {
-        removeMarker1(markers: deletedinteractiveMarkers)
+    private func create(markers: [Markerable]) {
+        remove(markers: deletedinteractiveMarkers)
         
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
@@ -93,10 +93,11 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func removeMarkers(interactiveMarkers: [Markerable]) {
-        deletedinteractiveMarkers += interactiveMarkers
+    private func addToDelete(markers: [Markerable]) {
+        deletedinteractiveMarkers += markers
     }
-    private func removeMarker1(markers: [Markerable]) {
+    
+    private func remove(markers: [Markerable]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
@@ -104,14 +105,14 @@ final class MapViewController: UIViewController {
                     
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
-                        clusteringMarkerLayer.removeFromSuperlayer()
+                        clusteringMarkerLayer.remove()
                         self.deletedinteractiveMarkers.removeAll { deletedMarker in
                             guard let deletedMarker = deletedMarker as? ClusteringMarkerLayer else { return false }
                                 return deletedMarker == clusteringMarkerLayer
                         }
                     }
                 } else if let interactiveMaker = marker as? InteractiveMarker {
-                    interactiveMaker.mapView = nil
+                    interactiveMaker.remove()
                     self.deletedinteractiveMarkers.removeAll { deletedMarker in
                         guard let deletedMarker = deletedMarker as? InteractiveMarker else { return false }
                             return deletedMarker == interactiveMaker
@@ -122,4 +123,3 @@ final class MapViewController: UIViewController {
     }
     
 }
-

@@ -16,4 +16,8 @@ final class InteractiveMarker: NMFMarker, Markerable {
         iconTintColor = .green
     }
     
+    func remove() {
+        mapView = nil
+    }
+    
 }
