@@ -14,15 +14,6 @@ final class QuadTreeClusteringService {
     private let queue = DispatchQueue(label: Name.quadTreeClusteringQueue, qos: .userInitiated)
     private var workingClusteringWorkItem: DispatchWorkItem?
     
-    private lazy var insertWorkItem = DispatchWorkItem { [weak self] in
-        guard let self = self else { return }
-        self.coordinates.forEach {
-            self.quadTree.insert(coordinate: $0)
-        }
-        // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
-        self.updateQuadTreeBoundingBox()
-    }
-    
     init(coordinates: [Coordinate], boundingBox: BoundingBox) {
         self.coordinates = coordinates
         quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
@@ -30,17 +21,13 @@ final class QuadTreeClusteringService {
     }
     
     private func insertCoordinatesAsync() {
-        queue.async(execute: insertWorkItem)
-    }
-    
-    private func clusteringWorkItem(
-        boundingBox: BoundingBox,
-        zoomLevel: Double,
-        completionHandler: @escaping ([Cluster]) -> Void) -> DispatchWorkItem {
-        DispatchWorkItem { [weak self] in
+        queue.async { [weak self] in
             guard let self = self else { return }
-            let clusters = self.clustering(boundingBox: boundingBox, zoomLevel: zoomLevel)
-            completionHandler(clusters)
+            self.coordinates.forEach {
+                self.quadTree.insert(coordinate: $0)
+            }
+            // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
+            // self.updateQuadTreeBoundingBox()
         }
     }
     
@@ -96,20 +83,15 @@ extension QuadTreeClusteringService: ClusteringServicing {
         
         queue.async { [weak self] in
             guard let self = self else { return }
-            self.workingClusteringWorkItem?.cancel()
-            self.workingClusteringWorkItem = self.clusteringWorkItem(boundingBox: boundingBox,
-                                                                     zoomLevel: zoomLevel,
-                                                                     completionHandler: completionHandler)
-            self.workingClusteringWorkItem?.perform()
+            let clusters = self.clustering(boundingBox: boundingBox, zoomLevel: zoomLevel)
+            
+            completionHandler(clusters)
         }
     }
     
     // cancel시 진행중인 workItem은 취소가 안된다고 함..
     // 어떻게 할지 공부 더 필요
-    func cancel() {
-//        insertWorkItem.cancel()
-//        workingClusteringWorkItem?.cancel()
-    }
+    func cancel() {}
     
 }
 
