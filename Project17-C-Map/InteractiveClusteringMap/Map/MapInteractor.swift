@@ -45,10 +45,6 @@ final class MapInteractor: ClusterBusinessLogic {
         }
     }
     
-    func remove(tileIds: [CLong]) {
-        presenter.removePresentMarkers(tileIds: tileIds)
-    }
-    
     private func clustering(coordinates: [Coordinate],
                             tileId: CLong,
                             boundingBox: BoundingBox,
@@ -61,6 +57,10 @@ final class MapInteractor: ClusterBusinessLogic {
                                       
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
+    }
+    
+    func remove(tileIds: [CLong]) {
+        presenter.removePresentMarkers(tileIds: tileIds)
     }
     
 }

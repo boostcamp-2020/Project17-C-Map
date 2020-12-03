@@ -48,6 +48,10 @@ final class InteractiveMapView: NMFNaverMapView {
         mapView.extent = extent
     }
     
+    func projectPoint(from: NMGLatLng) -> CGPoint {
+        return mapView.projection.point(from: from)
+    }
+    
 }
 
 private extension InteractiveMapView {

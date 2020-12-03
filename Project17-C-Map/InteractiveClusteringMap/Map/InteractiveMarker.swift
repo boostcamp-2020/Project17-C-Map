@@ -8,12 +8,16 @@
 import Foundation
 import NMapsMap
 
-final class InteractiveMarker: NMFMarker {
+final class InteractiveMarker: NMFMarker, Markerable {
     
-    init(cluster: Cluster) {
+    required init(cluster: Cluster) {
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         iconTintColor = .green
+    }
+    
+    func remove() {
+        mapView = nil
     }
     
 }
