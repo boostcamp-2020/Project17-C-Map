@@ -10,12 +10,12 @@ import CoreLocation
 import NMapsMap
 
 final class MapViewController: UIViewController {
-    
-    @IBOutlet weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
     private var transparentLayer: TransparentLayer?
+    private var deletedinteractiveMarkers: [Markerable] = []
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -91,7 +91,10 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func removeMarkers(markers: [Markerable]) {
+    private func removeMarkers(interactiveMarkers: [Markerable]) {
+        deletedinteractiveMarkers += interactiveMarkers
+    }
+    private func removeMarker1(markers: [Markerable]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {

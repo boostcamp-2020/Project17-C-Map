@@ -16,11 +16,10 @@ protocol ClusterPresentationLogic {
 
 class MapPresenter: ClusterPresentationLogic {
     
-    private let createMarkerHandler: ([Markerable]) -> Void
-    private let removeMarkerHandler: ([Markerable]) -> Void
-    private var presentMarkers: [CLong: [Markerable]] = [:]
-    private var removedTileIDs = [CLong]()
-    private var addedTileIDs = [CLong]()
+    private let createMarkerHandler: ([InteractiveMarker]) -> Void
+    private let removeMarkerHandler: ([InteractiveMarker]) -> Void
+    private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
+    private var undeletedTileIds: [CLong] = []
     
     init(createMarkerHandler: @escaping ([Markerable]) -> Void,
          removeMarkerHandler: @escaping ([Markerable]) -> Void) {
@@ -29,6 +28,10 @@ class MapPresenter: ClusterPresentationLogic {
     }
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
+        guard !undeletedTileIds.contains(tileId) else {
+            return undeletedTileIds.removeAll { $0 == tileId }
+        }
+        
         let markers: [Markerable] = clusters.map {
             if $0.coordinates.count == 1 {
                 return InteractiveMarker(cluster: $0)
@@ -36,12 +39,18 @@ class MapPresenter: ClusterPresentationLogic {
                 return ClusteringMarkerLayer(cluster: $0)
             }
         }
-        presentMarkers[tileId] = markers
+        presentMarkers[tileId] = (presentMarkers[tileId] ?? []) + markers
         createMarkerHandler(markers)
     }
     
     func removePresentMarkers(tileIds: [CLong]) {
-        let markers = presentMarkers.filter { tileIds.contains($0.key) }.flatMap { $0.value }
+        let targetIds = presentMarkers.filter { tileIds.contains($0.key) }
+        undeletedTileIds += tileIds.filter { !targetIds.keys.contains($0) }
+        
+        let markers = targetIds.flatMap { $0.value }
+        tileIds.forEach {
+            presentMarkers[$0] = nil
+        }
         removeMarkerHandler(markers)
     }
     

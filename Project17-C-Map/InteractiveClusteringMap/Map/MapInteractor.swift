@@ -18,7 +18,7 @@ final class MapInteractor: ClusterBusinessLogic {
     
     private let poiService: POIServicing
     private let presenter: ClusterPresentationLogic
-    private var clusteringServicing: QuadTreeClusteringService?
+    private var clusteringService: ClusteringServicing?
     
     init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
         self.poiService = poiService
@@ -27,22 +27,20 @@ final class MapInteractor: ClusterBusinessLogic {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.poiService.fetch { [weak self] pois in
+            self.poiService.fetchAsync { [weak self] pois in
                 guard let self = self else { return }
 
                 let coordinates = pois.map {
                     Coordinate(x: $0.x, y: $0.y)
                 }
-                if self.clusteringServicing == nil {
-                    self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
+                if self.clusteringService == nil {
+                    self.clusteringService = QuadTreeClusteringService(coordinates: coordinates,
                                                                          boundingBox: BoundingBox.korea)
                 }
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.clustering(coordinates: coordinates,
-                                    tileId: tileId,
-                                    boundingBox: boundingBox,
-                                    zoomLevel: zoomLevel)
-                }
+                self.clustering(coordinates: coordinates,
+                                tileId: tileId,
+                                boundingBox: boundingBox,
+                                zoomLevel: zoomLevel)
             }
         }
     }
@@ -52,11 +50,11 @@ final class MapInteractor: ClusterBusinessLogic {
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
         
-        clusteringServicing?.execute(coordinates: coordinates,
+        clusteringService?.execute(coordinates: coordinates,
                                      boundingBox: boundingBox,
                                      zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-                                                            
+                                      
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
