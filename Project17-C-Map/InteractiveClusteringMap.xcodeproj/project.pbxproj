@@ -219,7 +219,6 @@
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
-				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
 			);
 			path = Map;
@@ -354,6 +353,7 @@
 			children = (
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
 				FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */,
+				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
 			);
 			path = Animation;
