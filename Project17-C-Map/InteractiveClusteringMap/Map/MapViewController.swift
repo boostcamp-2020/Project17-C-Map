@@ -14,7 +14,7 @@ final class MapViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
-    private var transparentLayer: TransparentLayer?
+    internal var transparentLayer: TransparentLayer?
     private var deletedinteractiveMarkers: [Markerable] = []
     
     init?(coder: NSCoder, dataManager: DataManagable) {
@@ -65,7 +65,7 @@ final class MapViewController: UIViewController {
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
     }
     
-    private func setMarkerPosition(marker: CALayer) {
+    internal func setMarkerPosition(marker: CALayer) {
         guard let marker = marker as? ClusteringMarkerLayer else { return }
         
         let latLng = NMGLatLng(lat: marker.center.y, lng: marker.center.x)
@@ -73,6 +73,8 @@ final class MapViewController: UIViewController {
     }
     
     private func createMarkers(markers: [Markerable]) {
+        removeMarker1(markers: deletedinteractiveMarkers)
+        
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -103,16 +105,22 @@ final class MapViewController: UIViewController {
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
                         clusteringMarkerLayer.removeFromSuperlayer()
+                        self.deletedinteractiveMarkers.removeAll { deletedMarker in
+                            guard let deletedMarker = deletedMarker as? ClusteringMarkerLayer else { return false }
+                                return deletedMarker == clusteringMarkerLayer
+                        }
                     }
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.mapView = nil
+                    self.deletedinteractiveMarkers.removeAll { deletedMarker in
+                        guard let deletedMarker = deletedMarker as? InteractiveMarker else { return false }
+                            return deletedMarker == interactiveMaker
+                    }
                 }
             }
         }
     }
     
-}
-
 extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
         DispatchQueue.main.async { [weak self] in

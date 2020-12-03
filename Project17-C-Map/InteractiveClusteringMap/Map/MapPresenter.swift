@@ -16,9 +16,9 @@ protocol ClusterPresentationLogic {
 
 class MapPresenter: ClusterPresentationLogic {
     
-    private let createMarkerHandler: ([InteractiveMarker]) -> Void
-    private let removeMarkerHandler: ([InteractiveMarker]) -> Void
-    private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
+    private let createMarkerHandler: ([Markerable]) -> Void
+    private let removeMarkerHandler: ([Markerable]) -> Void
+    private var presentMarkers: [CLong: [Markerable]] = [:]
     private var undeletedTileIds: [CLong] = []
     
     init(createMarkerHandler: @escaping ([Markerable]) -> Void,
