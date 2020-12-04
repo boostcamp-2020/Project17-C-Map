@@ -46,8 +46,16 @@ final class MapViewController: UIViewController {
     }
     
     private func configureInfoWindow() {
-        self.dataSource.title = "삭제"
-        self.infoWindow.dataSource = dataSource
+        interactiveMapView?.mapView.touchDelegate = self
+        dataSource.title = "삭제"
+        infoWindow.dataSource = dataSource
+        
+        infoWindow.touchHandler = { [weak self] (_) -> Bool in
+            self?.infoWindow.close()
+            let alert = MapAlertController(alertType: .delete) { action in }
+            self?.present(alert.createAlertController(), animated: true)
+            return true
+        }
     }
     
     private func configureMap() {
@@ -71,8 +79,7 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
-        
-        interactiveMapView.mapView.touchDelegate = self
+    
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -97,7 +104,7 @@ final class MapViewController: UIViewController {
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
-                    interactiveMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                    interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindow.open(with: interactiveMarker)
                         return true
                     }
