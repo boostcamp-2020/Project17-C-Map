@@ -100,8 +100,8 @@ final class QuadTreeClusteringService {
         
         var (bottomLeftX, bottomLeftY) = (boundingBox.bottomLeft.x, boundingBox.bottomLeft.y)
         
-        while bottomLeftY < boundingBox.topRight.y {
-            while bottomLeftX < boundingBox.topRight.x {
+        (0..<heightCount).forEach { _ in
+            (0..<widthCount).forEach { _ in
                 defer {
                     bottomLeftX += clusterRegionWidth
                 }
@@ -112,7 +112,7 @@ final class QuadTreeClusteringService {
                 let foundCoordinates = quadTrees.flatMap {
                     $0.findCoordinates(region: region)
                 }
-                guard !foundCoordinates.isEmpty else { continue }
+                guard !foundCoordinates.isEmpty else { return }
                 result.append(Cluster(coordinates: foundCoordinates))
             }
             
