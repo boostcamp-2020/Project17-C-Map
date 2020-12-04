@@ -17,12 +17,6 @@ final class InteractiveMarker: NMFMarker, Markerable, UIGestureRecognizerDelegat
         
         let tapGesture = UILongPressGestureRecognizer()
         tapGesture.delegate = self
-        
-        touchHandler = { (_) -> Bool in
-            print("마커 터치")
-            return true
-        }
-        
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

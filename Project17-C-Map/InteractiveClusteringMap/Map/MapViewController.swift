@@ -16,6 +16,8 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var deletedinteractiveMarkers: [Markerable] = []
+    private let infoWindow = NMFInfoWindow()
+    private let dataSource = NMFInfoWindowDefaultTextSource.data()
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -31,6 +33,7 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
+        configureInfoWindow()
     }
     
     private func dependencyInject() {
@@ -40,6 +43,11 @@ final class MapViewController: UIViewController {
         let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(poiService: poiService, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
+    }
+    
+    private func configureInfoWindow() {
+        self.dataSource.title = "삭제"
+        self.infoWindow.dataSource = dataSource
     }
     
     private func configureMap() {
@@ -86,8 +94,14 @@ final class MapViewController: UIViewController {
                     clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
-                } else if let interactiveMaker = marker as? InteractiveMarker {
-                    interactiveMaker.mapView = self.interactiveMapView.mapView
+                } else if let interactiveMarker = marker as? InteractiveMarker {
+                    
+                    
+                    interactiveMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                        self?.infoWindow.open(with: interactiveMarker)
+                        return true
+                    }
+                    interactiveMarker.mapView = self.interactiveMapView.mapView
                 }
             }
         }
