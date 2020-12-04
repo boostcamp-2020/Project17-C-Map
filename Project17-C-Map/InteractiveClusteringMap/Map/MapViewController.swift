@@ -18,10 +18,9 @@ final class MapViewController: UIViewController {
     private var deletedinteractiveMarkers: [Markerable] = []
     private let deleteInfoWindow = NMFInfoWindow()
     private let deleteDataSource = NMFInfoWindowDefaultTextSource.data()
-    private let addInfoWindow = NMFInfoWindow()
+    internal let addInfoWindow = NMFInfoWindow()
     private let addDataSource = NMFInfoWindowDefaultTextSource.data()
 
-    
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
         super.init(coder: coder)
@@ -60,6 +59,12 @@ final class MapViewController: UIViewController {
             let alert = MapAlertController(alertType: .delete) { _ in
                 
             }
+            self?.present(alert.createAlertController(), animated: true)
+            return true
+        }
+        
+        addInfoWindow.touchHandler = { [weak self] (_) -> Bool in
+            let alert = MapAlertController(alertType: .add, okHandler: nil)
             self?.present(alert.createAlertController(), animated: true)
             return true
         }
@@ -112,6 +117,7 @@ final class MapViewController: UIViewController {
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
+                        self?.addInfoWindow.close()
                         self?.deleteInfoWindow.open(with: interactiveMarker)
                         return true
                     }
