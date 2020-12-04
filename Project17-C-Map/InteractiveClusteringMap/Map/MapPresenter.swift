@@ -16,13 +16,13 @@ protocol ClusterPresentationLogic {
 
 class MapPresenter: ClusterPresentationLogic {
     
-    private let createMarkerHandler: ([InteractiveMarker]) -> Void
-    private let removeMarkerHandler: ([InteractiveMarker]) -> Void
-    private var presentMarkers: [CLong: [InteractiveMarker]] = [:]
+    private let createMarkerHandler: ([Markerable]) -> Void
+    private let removeMarkerHandler: ([Markerable]) -> Void
+    private var presentMarkers: [CLong: [Markerable]] = [:]
     private var undeletedTileIds: [CLong] = []
     
-    init(createMarkerHandler: @escaping ([InteractiveMarker]) -> Void,
-         removeMarkerHandler: @escaping ([InteractiveMarker]) -> Void) {
+    init(createMarkerHandler: @escaping ([Markerable]) -> Void,
+         removeMarkerHandler: @escaping ([Markerable]) -> Void) {
         self.createMarkerHandler = createMarkerHandler
         self.removeMarkerHandler = removeMarkerHandler
     }
@@ -32,8 +32,12 @@ class MapPresenter: ClusterPresentationLogic {
             return undeletedTileIds.removeAll { $0 == tileId }
         }
         
-        let markers = clusters.map {
-            InteractiveMarker(cluster: $0)
+        let markers: [Markerable] = clusters.map {
+            if $0.coordinates.count == 1 {
+                return InteractiveMarker(cluster: $0)
+            } else {
+                return ClusteringMarkerLayer(cluster: $0)
+            }
         }
         presentMarkers[tileId] = (presentMarkers[tileId] ?? []) + markers
         createMarkerHandler(markers)
