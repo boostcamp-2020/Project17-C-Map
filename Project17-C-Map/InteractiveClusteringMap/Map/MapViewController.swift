@@ -71,6 +71,8 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
+        
+        interactiveMapView.mapView.touchDelegate = self
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -95,8 +97,6 @@ final class MapViewController: UIViewController {
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
-                    
-                    
                     interactiveMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
                         self?.infoWindow.open(with: interactiveMarker)
                         return true
@@ -136,4 +136,10 @@ final class MapViewController: UIViewController {
         }
     }
     
+}
+
+extension MapViewController: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        infoWindow.close()
+    }
 }
