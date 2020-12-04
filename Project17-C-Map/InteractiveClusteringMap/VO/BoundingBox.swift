@@ -41,7 +41,12 @@ struct BoundingBox {
     
 }
 
-extension BoundingBox: Equatable {}
+extension BoundingBox: Hashable {
+    static func == (lhs: BoundingBox, rhs: BoundingBox) -> Bool {
+        return lhs.topRight == rhs.topRight &&
+            lhs.bottomLeft == rhs.bottomLeft
+    }
+}
 
 private extension BoundingBox {
     
