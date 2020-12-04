@@ -25,14 +25,14 @@ class BoundingBoxTests: XCTestCase {
     
     func test_균일하게_4개로_나누는지_테스트() {
         guard let boundingBoxes = boundingBox?.splittedQuadBoundingBoxes() else { return }
-        XCTAssertEqual(boundingBoxes[safe: 0]?.bottomLeft, Coordinate(x: 0, y: 50))
-        XCTAssertEqual(boundingBoxes[safe: 0]?.topRight, Coordinate(x: 50, y: 100))
-        XCTAssertEqual(boundingBoxes[safe: 1]?.bottomLeft, Coordinate(x: 50, y: 50))
-        XCTAssertEqual(boundingBoxes[safe: 1]?.topRight, Coordinate(x: 100, y: 100))
-        XCTAssertEqual(boundingBoxes[safe: 2]?.bottomLeft, Coordinate(x: 0, y: 0))
-        XCTAssertEqual(boundingBoxes[safe: 2]?.topRight, Coordinate(x: 50, y: 50))
-        XCTAssertEqual(boundingBoxes[safe: 3]?.bottomLeft, Coordinate(x: 50, y: 0))
-        XCTAssertEqual(boundingBoxes[safe: 3]?.topRight, Coordinate(x: 100, y: 50))
+        XCTAssertEqual(boundingBoxes[safe: 2]?.bottomLeft, Coordinate(x: 0, y: 50))
+        XCTAssertEqual(boundingBoxes[safe: 2]?.topRight, Coordinate(x: 50, y: 100))
+        XCTAssertEqual(boundingBoxes[safe: 3]?.bottomLeft, Coordinate(x: 50, y: 50))
+        XCTAssertEqual(boundingBoxes[safe: 3]?.topRight, Coordinate(x: 100, y: 100))
+        XCTAssertEqual(boundingBoxes[safe: 0]?.bottomLeft, Coordinate(x: 0, y: 0))
+        XCTAssertEqual(boundingBoxes[safe: 0]?.topRight, Coordinate(x: 50, y: 50))
+        XCTAssertEqual(boundingBoxes[safe: 1]?.bottomLeft, Coordinate(x: 50, y: 0))
+        XCTAssertEqual(boundingBoxes[safe: 1]?.topRight, Coordinate(x: 100, y: 50))
     }
     
     func test_BoundingBox_경계값_Coordinate_넣었을_때_contains_테스트() {

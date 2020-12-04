@@ -8,6 +8,9 @@
 import XCTest
 
 class KMeansCentroidsTest: XCTestCase {
+    
+    private let rangeOfLat: ClosedRange = 33.0...43.0
+    private let rangeOfLng: ClosedRange = 123.0...132.0
 
     func test_2split_coordinates_by_screen() throws {
         let centroids = mockCentoidsByScreen(number: 2)
@@ -61,10 +64,10 @@ class KMeansCentroidsTest: XCTestCase {
     }
     
     func test_coordinates_by_random() throws {
-        let cendroids = mockCentoidsByRandom(number: 1000)
+        let centroids = mockCentoidsByRandom(number: 1000)
         
-        cendroids.forEach { cendroid in
-            validateCendtoid(cendroid: cendroid)
+        centroids.forEach { cendroid in
+            validateCentroids(cendroid: cendroid)
         }
     }
     
@@ -78,22 +81,21 @@ class KMeansCentroidsTest: XCTestCase {
         }
     }
     
-    private func validateCendtoid(cendroid: Coordinate) {
+    private func validateCentroids(cendroid: Coordinate) {
         XCTAssert((33.0...43.0).contains(cendroid.y))
         XCTAssert((123.0...132.0).contains(cendroid.x))
     }
     
     private func mockCentoidsByScreen(number: Int) -> [Coordinate] {
-        let kmm = KMeans(k: number)
         let topLeft = Coordinate(x: 124.0, y: 43.0)
         let bottomRight = Coordinate(x: 132.0, y: 33.0)
-        return kmm.screenCentroids(topLeft: topLeft, bottomRight: bottomRight)
+        let generator = ScreenCentroidGenerator(topLeft: topLeft, bottomRight: bottomRight)
+        return generator.centroids(k: number)
     }
     
     private func mockCentoidsByRandom(number: Int) -> [Coordinate] {
-        let kmm = KMeans(k: number)
-        
-        return kmm.randomCentroids(rangeOfLat: 33.0...43.0, rangeOfLng: 123.0...132.0)
+        let generator = RandomCentroidGenerator(rangeOfLat: rangeOfLat, rangeOfLng: rangeOfLng)
+        return generator.centroids(k: number)
     }
 
 }

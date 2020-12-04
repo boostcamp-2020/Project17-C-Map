@@ -36,16 +36,3 @@ struct POI: Codable {
     }
 
 }
-
-extension POI {
-    
-    enum Name {
-        static let x = "x"
-        static let y = "y"
-        static let id = "id"
-        static let name = "name"
-        static let imageUrl = "imageUrl"
-        static let category = "category"
-    }
-    
-}

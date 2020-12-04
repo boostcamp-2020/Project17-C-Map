@@ -12,6 +12,10 @@ struct Coordinate {
     let x: Double
     let y: Double
     
+    func ratio(other: Coordinate) -> Double {
+        return (self.x - other.x) / (self.y - other.y)
+    }
+    
     func distanceTo(_ other: Coordinate) -> Double {
         let powX = pow(self.x - other.x, 2.0)
         let powY = pow(self.y - other.y, 2.0)
@@ -30,6 +34,18 @@ struct Coordinate {
         let gradient = (vertex.y - self.y) / (vertex.x - self.x)
         
         return atan(gradient) * 180 / .pi
+    }
+    
+}
+
+extension Coordinate {
+    
+    static func randomGenerate(rangeOfLat lats: ClosedRange<Double>,
+                               rangeOfLng lngs: ClosedRange<Double>) -> Coordinate {
+        let lat = Double.random(in: lats)
+        let lng = Double.random(in: lngs)
+        
+        return Coordinate(x: lng, y: lat)
     }
     
 }

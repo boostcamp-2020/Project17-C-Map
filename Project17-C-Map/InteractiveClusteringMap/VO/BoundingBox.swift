@@ -8,19 +8,23 @@
 import Foundation
 
 struct BoundingBox {
-    
+
+    static let korea = BoundingBox(topRight: Coordinate(x: KoreaCoordinate.maxLng, y: KoreaCoordinate.maxLat),
+                                   bottomLeft: Coordinate(x: KoreaCoordinate.minLng, y: KoreaCoordinate.minLat))
     let topRight: Coordinate
     let bottomLeft: Coordinate
     
     func splittedQuadBoundingBoxes() -> [BoundingBox] {
         let center = topRight.center(other: bottomLeft)
         return [
+            BoundingBox(topRight: center,
+                        bottomLeft: bottomLeft),
+            BoundingBox(topRight: Coordinate(x: topRight.x, y: center.y),
+                        bottomLeft: Coordinate(x: center.x, y: bottomLeft.y)),
             BoundingBox(topRight: Coordinate(x: center.x, y: topRight.y),
                         bottomLeft: Coordinate(x: bottomLeft.x, y: center.y)),
-            BoundingBox(topRight: topRight, bottomLeft: center),
-            BoundingBox(topRight: center, bottomLeft: bottomLeft),
-            BoundingBox(topRight: Coordinate(x: topRight.x, y: center.y),
-                        bottomLeft: Coordinate(x: center.x, y: bottomLeft.y))
+            BoundingBox(topRight: topRight,
+                        bottomLeft: center)
         ]
     }
     
@@ -32,10 +36,19 @@ struct BoundingBox {
     }
     
     func isOverlapped(with other: BoundingBox) -> Bool {
-        return (self.bottomLeft <= other.topRight && other.bottomLeft <= self.topRight)
+        self.bottomLeft <= other.topRight && other.bottomLeft <= self.topRight
     }
     
 }
 
 extension BoundingBox: Equatable {}
 
+private extension BoundingBox {
+    
+    enum KoreaCoordinate {
+        static let minLat: Double = 33
+        static let maxLat: Double = 43
+        static let minLng: Double = 124
+        static let maxLng: Double = 132
+    }
+}

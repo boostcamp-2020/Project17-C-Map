@@ -9,42 +9,40 @@ import Foundation
 
 protocol POIServicing {
     
-    func fetch(completion: @escaping ([POI]) -> Void)
+    func fetch(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void)
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func save()
+    
 }
 
 final class POIService: POIServicing {
     
     private let dataManager: DataManagable
-    private var pois: [POI]
     
     init(dataManager: DataManagable) {
         self.dataManager = dataManager
-        pois = []
-        pois = load()
     }
     
-    func fetch(completion: @escaping ([POI]) -> Void) {
-        completion(pois)
+    func fetch(completion: @escaping ([Coordinate]) -> Void) {
+        let poiEntities = self.dataManager.fetch()
+        completion(poiEntities.map { $0.coordinate })
+    }
+    
+    func fetchAsync(completion: @escaping ([Coordinate]) -> Void) {
+        self.dataManager.fetchAsync {
+            completion($0.map { $0.coordinate })
+        }
+    }
+    
+    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
+        self.dataManager.fetchAsync(topLeft: topLeft, bottomRight: bottomRight) {
+            completion($0.map { $0.coordinate })
+        }
     }
     
     func save() {
         dataManager.save(successHandler: nil, failureHandler: nil)
-    }
-    
-    private func load() -> [POI] {
-        let poiEntities = dataManager.fetch()
-        var pois: [POI] = []
-        
-        poiEntities.forEach {
-            pois.append(POI(x: $0.x,
-                            y: $0.y,
-                            id: $0.id,
-                            name: $0.name,
-                            imageUrl: $0.imageUrl,
-                            category: $0.category))
-        }
-        return pois
     }
     
 }
