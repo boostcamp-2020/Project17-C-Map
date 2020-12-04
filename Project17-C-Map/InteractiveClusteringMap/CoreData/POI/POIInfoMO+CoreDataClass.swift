@@ -12,6 +12,12 @@ import CoreData
 @objc(POIInfoMO)
 public class POIInfoMO: NSManagedObject {
     
+    func update(name: String?, category: String?, imageUrl: String?) {
+        self.name = name
+        self.category = category
+        self.imageUrl = imageUrl
+    }
+    
     func update(info: POIInfo) {
         name = info.name
         category = info.category
