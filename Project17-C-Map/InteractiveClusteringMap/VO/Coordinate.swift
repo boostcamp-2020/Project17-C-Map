@@ -9,9 +9,9 @@ import Foundation
 
 struct Coordinate {
     
-    let id: Int64
     let x: Double
     let y: Double
+    let id: Int64
     
     init(x: Double, y: Double, id: Int64 = -1) {
         self.x = x

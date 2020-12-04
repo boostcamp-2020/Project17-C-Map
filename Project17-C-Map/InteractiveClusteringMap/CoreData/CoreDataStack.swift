@@ -63,8 +63,7 @@ final class CoreDataStack: DataManagable {
     
     func fetch() -> [POIMO] {
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-        guard let entities = try? context.fetch(request)
-        else {
+        guard let entities = try? context.fetch(request) else {
             return []
         }
         return entities
