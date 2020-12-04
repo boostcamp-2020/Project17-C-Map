@@ -52,7 +52,9 @@ final class MapViewController: UIViewController {
         
         infoWindow.touchHandler = { [weak self] (_) -> Bool in
             self?.infoWindow.close()
-            let alert = MapAlertController(alertType: .delete) { action in }
+            let alert = MapAlertController(alertType: .delete) { _ in
+                
+            }
             self?.present(alert.createAlertController(), animated: true)
             return true
         }
@@ -148,5 +150,7 @@ final class MapViewController: UIViewController {
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         infoWindow.close()
+        infoWindow.position = latlng
+        infoWindow.open(with: mapView)
     }
 }
