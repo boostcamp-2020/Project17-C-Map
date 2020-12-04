@@ -16,8 +16,11 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var deletedinteractiveMarkers: [Markerable] = []
-    private let infoWindow = NMFInfoWindow()
-    private let dataSource = NMFInfoWindowDefaultTextSource.data()
+    private let deleteInfoWindow = NMFInfoWindow()
+    private let deleteDataSource = NMFInfoWindowDefaultTextSource.data()
+    private let addInfoWindow = NMFInfoWindow()
+    private let addDataSource = NMFInfoWindowDefaultTextSource.data()
+
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
@@ -47,11 +50,13 @@ final class MapViewController: UIViewController {
     
     private func configureInfoWindow() {
         interactiveMapView?.mapView.touchDelegate = self
-        dataSource.title = "삭제"
-        infoWindow.dataSource = dataSource
+        deleteDataSource.title = "삭제"
+        deleteInfoWindow.dataSource = deleteDataSource
+        addDataSource.title = "추가"
+        addInfoWindow.dataSource = addDataSource
         
-        infoWindow.touchHandler = { [weak self] (_) -> Bool in
-            self?.infoWindow.close()
+        deleteInfoWindow.touchHandler = { [weak self] (_) -> Bool in
+            self?.deleteInfoWindow.close()
             let alert = MapAlertController(alertType: .delete) { _ in
                 
             }
@@ -107,7 +112,7 @@ final class MapViewController: UIViewController {
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
-                        self?.infoWindow.open(with: interactiveMarker)
+                        self?.deleteInfoWindow.open(with: interactiveMarker)
                         return true
                     }
                     interactiveMarker.mapView = self.interactiveMapView.mapView
@@ -149,8 +154,9 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        infoWindow.close()
-        infoWindow.position = latlng
-        infoWindow.open(with: mapView)
+        addInfoWindow.close()
+        deleteInfoWindow.close()
+        addInfoWindow.position = latlng
+        addInfoWindow.open(with: mapView)
     }
 }
