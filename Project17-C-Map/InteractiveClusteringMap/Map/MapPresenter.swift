@@ -36,7 +36,7 @@ class MapPresenter: ClusterPresentationLogic {
             if $0.coordinates.count == 1 {
                 return InteractiveMarker(cluster: $0)
             } else {
-                return ClusteringMarkerLayer(cluster: $0)
+                return InteractiveMarker(cluster: $0)
             }
         }
         presentMarkers[tileId] = (presentMarkers[tileId] ?? []) + markers

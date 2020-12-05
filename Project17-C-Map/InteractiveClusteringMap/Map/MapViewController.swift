@@ -97,7 +97,7 @@ final class MapViewController: UIViewController {
     internal func setMarkerPosition(marker: CALayer) {
         guard let marker = marker as? ClusteringMarkerLayer else { return }
         
-        let latLng = NMGLatLng(lat: marker.center.y, lng: marker.center.x)
+        let latLng = NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x)
         marker.updatePosition(position: interactiveMapView.projectPoint(from: latLng))
     }
     
