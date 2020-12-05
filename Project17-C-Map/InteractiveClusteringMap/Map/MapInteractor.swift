@@ -26,10 +26,14 @@ final class MapInteractor: ClusterBusinessLogic {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.clustering(
-                tileId: tileId,
-                boundingBox: boundingBox,
-                zoomLevel: zoomLevel)
+            DispatchQueue.global().async { [weak self] in
+                guard let self = self else { return }
+                
+                self.clustering(
+                    tileId: tileId,
+                    boundingBox: boundingBox,
+                    zoomLevel: zoomLevel)
+            }
         }
     }
     
