@@ -101,16 +101,12 @@ final class MapViewController: UIViewController {
     }
     
     private func create(markers: [Markerable]) {
-        
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     self.setMarkerPosition(marker: clusteringMarkerLayer)
-                    
-                    let animation = AnimationController.shared.fadeInOut(option: .fadeIn)
-                    clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
@@ -120,6 +116,20 @@ final class MapViewController: UIViewController {
                         return true
                     }
                     interactiveMarker.mapView = self.interactiveMapView.mapView
+                    interactiveMarker.hidden = true
+                    let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
+                    
+                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
+                    clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
+                    
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock {
+                        interactiveMarker.hidden = false
+                        clusteringMarkerLayer.remove()
+                    }
+                    let markerAnimation = AnimationController.shared.transformScale(option: .increase)
+                    clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
+                    CATransaction.commit()
                 }
             }
         }
@@ -127,6 +137,7 @@ final class MapViewController: UIViewController {
     
     private func remove(markers: [Markerable]) {
         markers.forEach { marker in
+            marker.remove()
             DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     let animation = AnimationController.shared.fadeInOut(option: .fadeOut)
