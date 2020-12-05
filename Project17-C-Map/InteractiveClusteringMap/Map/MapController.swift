@@ -16,11 +16,10 @@ final class MapController: NSObject {
     private let serialQueue = DispatchQueue(label: QueueName.serial)
     
     init(mapView: InteractiveMapView, interactor: ClusterBusinessLogic) {
+        super.init()
         self.interactiveMapView = mapView
         self.interactor = interactor
-        super.init()
         configureTileCoverHelper()
-        
     }
     
     private func configureTileCoverHelper() {

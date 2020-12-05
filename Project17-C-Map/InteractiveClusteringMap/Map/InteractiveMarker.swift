@@ -8,25 +8,16 @@
 import Foundation
 import NMapsMap
 
-final class InteractiveMarker: NMFMarker, Markerable, UIGestureRecognizerDelegate {
-    
+final class InteractiveMarker: NMFMarker {
     required init(cluster: Cluster) {
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         iconTintColor = .green
-        
-        let tapGesture = UILongPressGestureRecognizer()
-        tapGesture.delegate = self
     }
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("꾹")
-        return true
-    }
+}
+
+extension InteractiveMarker: Markerable {
     func remove() {
         mapView = nil
     }
-    
-    
-    
 }
