@@ -109,7 +109,7 @@ final class MapViewController: UIViewController {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
                     self.setMarkerPosition(marker: clusteringMarkerLayer)
                     
-                    let animation = AnimationController.fadeInOut(option: .fadeIn)
+                    let animation = AnimationController.shared.fadeInOut(option: .fadeIn)
                     clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
@@ -129,7 +129,7 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async {
                 if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    let animation = AnimationController.fadeInOut(option: .fadeOut)
+                    let animation = AnimationController.shared.fadeInOut(option: .fadeOut)
                     
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
