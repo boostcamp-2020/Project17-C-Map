@@ -16,7 +16,11 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var deletedinteractiveMarkers: [Markerable] = []
-    
+    private let deleteInfoWindow = NMFInfoWindow()
+    private let deleteDataSource = NMFInfoWindowDefaultTextSource.data()
+    internal let addInfoWindow = NMFInfoWindow()
+    private let addDataSource = NMFInfoWindowDefaultTextSource.data()
+
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
         super.init(coder: coder)
@@ -31,6 +35,7 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
+        configureInfoWindow()
     }
     
     private func dependencyInject() {
@@ -40,6 +45,29 @@ final class MapViewController: UIViewController {
         let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(poiService: poiService, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
+    }
+    
+    private func configureInfoWindow() {
+        interactiveMapView?.mapView.touchDelegate = self
+        deleteDataSource.title = "삭제"
+        deleteInfoWindow.dataSource = deleteDataSource
+        addDataSource.title = "추가"
+        addInfoWindow.dataSource = addDataSource
+        
+        deleteInfoWindow.touchHandler = { [weak self] (_) -> Bool in
+            self?.deleteInfoWindow.close()
+            let alert = MapAlertController(alertType: .delete) { _ in
+                
+            }
+            self?.present(alert.createAlertController(), animated: true)
+            return true
+        }
+        
+        addInfoWindow.touchHandler = { [weak self] (_) -> Bool in
+            let alert = MapAlertController(alertType: .add, okHandler: nil)
+            self?.present(alert.createAlertController(), animated: true)
+            return true
+        }
     }
     
     private func configureMap() {
@@ -63,6 +91,7 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
+    
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -86,8 +115,13 @@ final class MapViewController: UIViewController {
                     clusteringMarkerLayer.add(animation, forKey: "fadeIn")
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
-                } else if let interactiveMaker = marker as? InteractiveMarker {
-                    interactiveMaker.mapView = self.interactiveMapView.mapView
+                } else if let interactiveMarker = marker as? InteractiveMarker {
+                    interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
+                        self?.addInfoWindow.close()
+                        self?.deleteInfoWindow.open(with: interactiveMarker)
+                        return true
+                    }
+                    interactiveMarker.mapView = self.interactiveMapView.mapView
                 }
             }
         }
@@ -122,4 +156,13 @@ final class MapViewController: UIViewController {
         }
     }
     
+}
+
+extension MapViewController: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        addInfoWindow.close()
+        deleteInfoWindow.close()
+        addInfoWindow.position = latlng
+        addInfoWindow.open(with: mapView)
+    }
 }
