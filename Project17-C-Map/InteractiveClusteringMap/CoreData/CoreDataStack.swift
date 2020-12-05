@@ -103,14 +103,15 @@ final class CoreDataStack: DataManagable {
                 }
                 return
             }
-            handler(entities)
+            DispatchQueue.main.async {
+                handler(entities)
+            }
         }
     }
     
     func fetch(bottomLeft: Coordinate, topRight: Coordinate) -> [POIMO] {
         let fetchRequest = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
-        guard let entities = try? context.fetch(fetchRequest)
-        else {
+        guard let entities = try? context.fetch(fetchRequest) else {
             return []
         }
         return entities
