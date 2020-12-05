@@ -12,10 +12,10 @@ import CoreData
 @objc(POIMO)
 public class POIMO: NSManagedObject {
     
-    func update(coordinate: Coordinate, info: POIInfo) {
-        self.lng = coordinate.x
-        self.lat = coordinate.y
-        self.info?.update(info: info)
+    func update(_ poi: POI) {
+        self.lng = poi.x
+        self.lat = poi.y
+        self.info?.update(info: POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
     }
     
     func setValues(coordinate: Coordinate, info: POIInfoMO) {
