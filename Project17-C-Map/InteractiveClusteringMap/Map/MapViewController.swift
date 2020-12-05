@@ -15,12 +15,11 @@ final class MapViewController: UIViewController {
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
-    private var deletedinteractiveMarkers: [Markerable] = []
     private let infoWindowForDelete = NMFInfoWindow()
     private let dataSourceForDelete = NMFInfoWindowDefaultTextSource.data()
     internal let infoWindowForAdd = NMFInfoWindow()
     private let dataSourceForAdd = NMFInfoWindowDefaultTextSource.data()
-
+    
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
         self.dataManager = dataManager
@@ -91,7 +90,7 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
-    
+        
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -102,7 +101,6 @@ final class MapViewController: UIViewController {
     }
     
     private func create(markers: [Markerable]) {
-        remove(markers: deletedinteractiveMarkers)
         
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
@@ -127,10 +125,6 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func addToDelete(markers: [Markerable]) {
-        deletedinteractiveMarkers += markers
-    }
-    
     private func remove(markers: [Markerable]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
@@ -140,17 +134,11 @@ final class MapViewController: UIViewController {
                     clusteringMarkerLayer.add(animation, forKey: "fadeOut")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
                         clusteringMarkerLayer.remove()
-                        self.deletedinteractiveMarkers.removeAll { deletedMarker in
-                            guard let deletedMarker = deletedMarker as? ClusteringMarkerLayer else { return false }
-                                return deletedMarker == clusteringMarkerLayer
-                        }
                     }
+                    
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.remove()
-                    self.deletedinteractiveMarkers.removeAll { deletedMarker in
-                        guard let deletedMarker = deletedMarker as? InteractiveMarker else { return false }
-                            return deletedMarker == interactiveMaker
-                    }
+                    
                 }
             }
         }

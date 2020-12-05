@@ -14,7 +14,6 @@ final class InteractiveMapView: NMFNaverMapView {
         mapView.zoomLevel
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
