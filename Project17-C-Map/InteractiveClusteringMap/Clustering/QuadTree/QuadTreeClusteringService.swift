@@ -4,41 +4,93 @@
 //
 //  Created by eunjeong lee on 2020/11/25.
 //
+// 처음 보여줘야할 영역 (한반도 기준 // 데이터 갯수) 33 ~ 43, 124 ~ 132
+// 그 영역을 몇개로 분할할 것인가 // 10:8 = 0.5:0.4 // 20 * 20
+//
+
 
 import Foundation
 
 final class QuadTreeClusteringService {
     
-    private let coordinates: [Coordinate]
-    private let quadTree: QuadTree
-    private let queue = DispatchQueue(label: Name.quadTreeClusteringQueue, qos: .userInitiated)
-    private var workingClusteringWorkItem: DispatchWorkItem?
+    private let poiService: POIServicing
+    private var quadTreeWithBoundary: [BoundingBox: QuadTree] = [: ]
     
-    init(coordinates: [Coordinate], boundingBox: BoundingBox) {
-        self.coordinates = coordinates
-        quadTree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
-        insertCoordinatesAsync()
+    init(poiService: POIServicing) {
+        self.poiService = poiService
+        setupTrees()
     }
     
-    private func insertCoordinatesAsync() {
-        queue.async { [weak self] in
+    // 클러스터링 Task를 WorkItem으로 반환
+    private func clusteringWorkItem(target: BoundingBox,
+                                    zoomLevel: Double,
+                                    completion: @escaping (([Cluster]) -> Void)) -> DispatchWorkItem {
+        DispatchWorkItem { [weak self] in
             guard let self = self else { return }
-            self.coordinates.forEach {
-                self.quadTree.insert(coordinate: $0)
-            }
-            // QuadTree boundingbox를 카메라 boundingbox로 했을 때와, minmax를 구해서 했을 때 비교하려고 만듬
-            // self.updateQuadTreeBoundingBox()
+            let clusters = self.clustering(target: target, zoomLevel: zoomLevel)
+            completion(clusters)
         }
     }
     
-    private func updateQuadTreeBoundingBox() {
-        quadTree.updateBoundingBox()
+    //한반도 기준 트리를 나눠서 관리 20 x 20 = 400개
+    private func setupTrees() {
+        let width = BoundingBox.korea.topRight.x - BoundingBox.korea.bottomLeft.x
+        let height = BoundingBox.korea.topRight.y - BoundingBox.korea.bottomLeft.y
+
+        for row in 1...Count.split {
+            for column in 1...Count.split {
+                DispatchQueue.global().async { [weak self] in
+                    guard let self = self else { return }
+                    let left = BoundingBox.korea.bottomLeft.x + (width / Double(Count.split) * Double(row - 1))
+                    let right = BoundingBox.korea.bottomLeft.x + (width / Double(Count.split)) * Double(row)
+                    let top = BoundingBox.korea.bottomLeft.y + (height / Double(Count.split) * Double(column))
+                    let bottom = BoundingBox.korea.bottomLeft.y + (height / Double(Count.split) * Double(column - 1))
+                    
+                    let boundingBox = BoundingBox(topRight: Coordinate(x: right, y: top), bottomLeft: Coordinate(x: left, y: bottom))
+                    
+                    self.makeQuadTree(boundingBox: boundingBox)
+                }
+            }
+        }
+    }
+    
+    // POIServicing으로 부터 해당 영역의 POI 데이터를 불러온다.
+    // 해당 영역의 데이터들로 quadTree를 생성한다.
+    private func makeQuadTree(boundingBox: BoundingBox) {
+        poiService.fetch(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { coordinates in
+            guard !coordinates.isEmpty else { return }
+            
+            let tree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
+            self.quadTreeWithBoundary[boundingBox] = tree
+            self.insertCoordinatesAsync(quadTree: tree, coordinates: coordinates)
+        }
+    }
+        
+    private func insertCoordinatesAsync(quadTree: QuadTree, coordinates: [Coordinate]) {
+        DispatchQueue.global().async {
+            coordinates.forEach {
+                quadTree.insert(coordinate: $0)
+            }
+        }
+    }
+    
+    //target에 속한 쿼드트리를 찾아서 반환한다.
+    private func quadTrees(target: BoundingBox) -> [QuadTree] {
+        let filtered = quadTreeWithBoundary.filter { $0.key.isOverlapped(with: target) }
+        return filtered.map { $0.value }
+    }
+    
+    //cluster 결과값을 반환한다.
+    private func clustering(target: BoundingBox, zoomLevel: Double) -> [Cluster] {
+        let quadTrees = self.quadTrees(target: target)
+        return excuteClustering(quadTrees: quadTrees, boundingBox: target, zoomLevel: zoomLevel)
     }
     
     // TODO: 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
     // 한 클러스터 영역 크기를 정해, 전체 BoundingBox(클러스터 해야되는 범위 전체)를 순서대로 순회하면서 Clustering한다.
-    private func clustering(boundingBox: BoundingBox,
-                            zoomLevel: Double) -> [Cluster] {
+    private func excuteClustering(quadTrees: [QuadTree],
+                                  boundingBox: BoundingBox,
+                                  zoomLevel: Double) -> [Cluster] {
         var result = [Cluster]()
         
         let widthCount = clusterWidthCount(zoomLevel: zoomLevel)
@@ -47,9 +99,9 @@ final class QuadTreeClusteringService {
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
         var (bottomLeftX, bottomLeftY) = (boundingBox.bottomLeft.x, boundingBox.bottomLeft.y)
-
-        while bottomLeftY < boundingBox.topRight.y {
-            while bottomLeftX < boundingBox.topRight.x {
+        
+        (0..<heightCount).forEach { _ in
+            (0..<widthCount).forEach { _ in
                 defer {
                     bottomLeftX += clusterRegionWidth
                 }
@@ -57,8 +109,10 @@ final class QuadTreeClusteringService {
                 let bottomLeft = Coordinate(x: bottomLeftX, y: bottomLeftY)
                 let region = BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
                 
-                let foundCoordinates = quadTree.findCoordinates(region: region)
-                guard !foundCoordinates.isEmpty else { continue }
+                let foundCoordinates = quadTrees.flatMap {
+                    $0.findCoordinates(region: region)
+                }
+                guard !foundCoordinates.isEmpty else { return }
                 result.append(Cluster(coordinates: foundCoordinates))
             }
             
@@ -71,7 +125,7 @@ final class QuadTreeClusteringService {
     private func clusterWidthCount(zoomLevel: Double) -> Int {
         Int(min((zoomLevel / 2.5), 8))
     }
-
+    
 }
 
 extension QuadTreeClusteringService: ClusteringServicing {
@@ -81,12 +135,8 @@ extension QuadTreeClusteringService: ClusteringServicing {
                  zoomLevel: Double,
                  completionHandler: @escaping (([Cluster]) -> Void)) {
         
-        queue.async { [weak self] in
-            guard let self = self else { return }
-            let clusters = self.clustering(boundingBox: boundingBox, zoomLevel: zoomLevel)
-            
-            completionHandler(clusters)
-        }
+        let workItem = clusteringWorkItem(target: boundingBox, zoomLevel: zoomLevel, completion: completionHandler)
+        DispatchQueue.global().async(execute: workItem)
     }
     
     // cancel시 진행중인 workItem은 취소가 안된다고 함..
@@ -103,6 +153,10 @@ private extension QuadTreeClusteringService {
     
     enum Name {
         static let quadTreeClusteringQueue: String = "quadTreeClusteringQueue"
+    }
+    
+    enum Count {
+        static let split = 20
     }
     
 }

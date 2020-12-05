@@ -16,51 +16,43 @@ protocol ClusterBusinessLogic: class {
 
 final class MapInteractor: ClusterBusinessLogic {
     
-    private let poiService: POIServicing
     private let presenter: ClusterPresentationLogic
-    private var clusteringService: ClusteringServicing?
+    private let quadTreeClusteringService: ClusteringServicing
     
     init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
-        self.poiService = poiService
         self.presenter = presenter
+        self.quadTreeClusteringService = QuadTreeClusteringService(poiService: poiService)
     }
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.poiService.fetch { [weak self] pois in
-                guard let self = self else { return }
-                
-                let coordinates = pois.map {
-                    Coordinate(x: $0.x, y: $0.y)
-                }
-                if self.clusteringService == nil {
-                    self.clusteringService = QuadTreeClusteringService(coordinates: coordinates,
-                                                                         boundingBox: BoundingBox.korea)
-                }
-                self.clustering(coordinates: coordinates,
-                                tileId: tileId,
-                                boundingBox: boundingBox,
-                                zoomLevel: zoomLevel)
-            }
-        }
-    }
-    
-    private func clustering(coordinates: [Coordinate],
-                            tileId: CLong,
-                            boundingBox: BoundingBox,
-                            zoomLevel: Double) {
-        
-        clusteringService?.execute(coordinates: coordinates,
-                                     boundingBox: boundingBox,
-                                     zoomLevel: zoomLevel) { [weak self] clusters in
-            guard let self = self else { return }
-                                      
-            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
+            self.clustering(
+                tileId: tileId,
+                boundingBox: boundingBox,
+                zoomLevel: zoomLevel)
         }
     }
     
     func remove(tileIds: [CLong]) {
-        presenter.removePresentMarkers(tileIds: tileIds)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.presenter.removePresentMarkers(tileIds: tileIds)
+        }
+    }
+    
+    private func clustering(tileId: CLong,
+                            boundingBox: BoundingBox,
+                            zoomLevel: Double) {
+        
+        quadTreeClusteringService.execute(coordinates: nil,
+                                   boundingBox: boundingBox,
+                                   zoomLevel: zoomLevel) { [weak self] clusters in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
+            }
+        }
     }
     
 }
