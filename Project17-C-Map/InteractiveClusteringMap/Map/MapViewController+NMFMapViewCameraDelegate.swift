@@ -18,7 +18,6 @@ extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
-            addInfoWindow.close()
         }
     }
     

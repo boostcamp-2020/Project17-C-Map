@@ -20,7 +20,6 @@ final class MapController: NSObject {
         self.interactor = interactor
         super.init()
         configureTileCoverHelper()
-        
     }
     
     private func configureTileCoverHelper() {
