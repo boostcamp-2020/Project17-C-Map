@@ -105,8 +105,10 @@ final class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                if let LeafNodeMarker = marker as? LeafNodeMarker {
-                    LeafNodeMarker.mapView = self.interactiveMapView.mapView
+                if let leafNodeMarker = marker as? LeafNodeMarker {
+                    leafNodeMarker.mapView = self.interactiveMapView.mapView
+                    self.animate(marker: leafNodeMarker, option: .transformScale)
+                    
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
@@ -114,20 +116,7 @@ final class MapViewController: UIViewController {
                         return true
                     }
                     interactiveMarker.mapView = self.interactiveMapView.mapView
-                    interactiveMarker.hidden = true
-                    let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
-                    
-                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
-                    clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
-                    
-                    CATransaction.begin()
-                    CATransaction.setCompletionBlock {
-                        interactiveMarker.hidden = false
-                        clusteringMarkerLayer.remove()
-                    }
-                    let markerAnimation = AnimationController.transformScale(option: .increase)
-                    clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
-                    CATransaction.commit()
+                    self.animate(marker: interactiveMarker, option: .transformScale)
                 }
             }
         }
@@ -139,6 +128,47 @@ final class MapViewController: UIViewController {
                 marker.remove()
             }
         }
+    }
+    
+    private func animate(marker: Markerable, option: AnimationType) {
+        if let leafNodeMarker = marker as? LeafNodeMarker {
+            leafNodeMarker.hidden = true
+            let leafNodeMarkerLayer = CALayer()
+            leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0, width: leafNodeMarker.iconImage.imageWidth, height: leafNodeMarker.iconImage.imageHeight)
+            
+            leafNodeMarkerLayer.contents = NMF_MARKER_IMAGE_GREEN.image.cgImage
+            leafNodeMarkerLayer.contentsGravity = CALayerContentsGravity.resize
+            
+            leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y, lng: leafNodeMarker.coordinate.x))
+            self.transparentLayer?.addSublayer(leafNodeMarkerLayer)
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                leafNodeMarker.hidden = false
+                leafNodeMarkerLayer.removeFromSuperlayer()
+            }
+            let markerAnimation = AnimationController.transformScale(option: .increase)
+
+            leafNodeMarkerLayer.add(markerAnimation, forKey: "position")
+            CATransaction.commit()
+        
+        } else if let interactiveMarker = marker as? InteractiveMarker {
+            interactiveMarker.hidden = true
+            let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
+            
+            self.transparentLayer?.addSublayer(clusteringMarkerLayer)
+            clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
+            
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                interactiveMarker.hidden = false
+                clusteringMarkerLayer.remove()
+            }
+            let markerAnimation = AnimationController.transformScale(option: .increase)
+            clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
+            CATransaction.commit()
+        }
+        
     }
     
 }

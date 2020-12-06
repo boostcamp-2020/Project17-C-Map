@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import NMapsMap
 
+enum AnimationType {
+    case fadeInOut, transformScale, movePosition, movePostionWithPath
+}
+
 enum FadeOption {
     case fadeIn, fadeOut
 }
@@ -79,7 +83,7 @@ final class AnimationController {
     
     static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
         let bezierPath = UIBezierPath()
-        let centerX = Double((start.x + start.y) / 2)
+        let centerX = Double((start.x + end.x) / 2)
         let centerY = Double((start.y + end.y) / 2)
         let newEnd = CGPoint(x: Double(end.x) - centerX, y: Double(end.y) - centerY)
         var direction: Double = -1
