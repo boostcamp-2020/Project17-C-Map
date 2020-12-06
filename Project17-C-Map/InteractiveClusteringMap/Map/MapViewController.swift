@@ -136,10 +136,12 @@ final class MapViewController: UIViewController {
         
         if let leafNodeMarker = marker as? LeafNodeMarker {
             markerLayer = leafNodeMarker.markerLayer
+            guard let markerLayer = markerLayer else { return }
+            
             let position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
                                                                         lng: leafNodeMarker.coordinate.x))
-            markerLayer?.position = CGPoint(x: position.x, y: position.y - ((markerLayer?.bounds.height ?? 0) / 2))
-            markerAnimation = AnimationController.transformScale(option: .increase)
+            markerLayer.position = CGPoint(x: position.x, y: position.y - (markerLayer.bounds.height / 2))
+            markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
         
         } else if let interactiveMarker = marker as? InteractiveMarker {
             markerLayer = interactiveMarker.markerLayer

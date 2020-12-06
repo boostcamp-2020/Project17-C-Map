@@ -58,7 +58,8 @@ final class AnimationController {
         let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = start
         animation.toValue = end
-        animation.duration = 0.5
+        animation.duration = 0.2
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
         
         return animation
     }
@@ -77,31 +78,49 @@ final class AnimationController {
         return animation
     }
     
+    /// bezierPath 추후 구현
     static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
         let bezierPath = UIBezierPath()
-        let centerX = Double((start.x + end.x) / 2)
-        let centerY = Double((start.y + end.y) / 2)
-        let newEnd = CGPoint(x: Double(end.x) - centerX, y: Double(end.y) - centerY)
-        var direction: Double = -1
-        switch (start.x - end.x, start.y - end.y) {
-        case let (x, y) where x > 0 && y >= 0:
-            direction = 1
-        case let (x, y) where x >= 0 && y < 0:
-            direction = 1
-        case let (x, y) where x < 0 && y <= 0:
-            direction = -1
-        default:
-            direction = -1
-        }
-        let sinus = sin(90 * Double.pi * direction / 180)
-        let cosinus = cos(90 * Double.pi * direction / 180)
-        let rotatedX = cosinus * Double(newEnd.x) - sinus * Double(newEnd.y)
-        let rotatedY = sinus * Double(newEnd.x) + cosinus * Double(newEnd.y)
-        let controlPoint = CGPoint(x: rotatedX + centerX, y: rotatedY + centerY)
-        
+
         bezierPath.move(to: start)
-        bezierPath.addQuadCurve(to: end, controlPoint: controlPoint)
         return bezierPath
+    }
+    
+    static func shake() -> CAAnimationGroup {
+        let shakeAnimation = CAAnimationGroup()
+        let shakeValues: [Double] = [-5, 5, -5, 5, -3, 3, -2, 2, 0]
+        
+        let translation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        translation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        translation.values = shakeValues
+        
+        let rotation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+        rotation.values = shakeValues.map { (Double.pi * $0) / 180 }
+        
+        shakeAnimation.animations = [translation, rotation]
+        shakeAnimation.duration = 0.5
+        
+        return shakeAnimation
+    }
+    
+    static func leafNodeAnimation(position: CGPoint) -> CAAnimationGroup {
+        let resultAnimation = CAAnimationGroup()
+        let moveBig = movePosition(start: position, end: CGPoint(x: position.x, y: position.y - 50))
+        moveBig.autoreverses = true
+        moveBig.repeatCount = 1
+        
+        let moveSmall = movePosition(start: position, end: CGPoint(x: position.x, y: position.y - 30))
+        moveSmall.autoreverses = true
+        moveSmall.beginTime = 0.4
+        
+        let expandScale = transformScale(option: .increase)
+        let shakes = shake()
+        shakes.beginTime = 0.8
+        
+        resultAnimation.animations = [moveBig, moveSmall, expandScale]
+        resultAnimation.duration = 0.8
+        
+        return resultAnimation
     }
     
 }
