@@ -121,9 +121,8 @@ final class MapViewController: UIViewController {
                 presentedLeafNodeMarkers.forEach { marker in
                     marker.hidden = true
                     let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
-                    interactiveMapView.mapView.layer.addSublayer(leafNodeMarkerLayer)
+                    transparentLayer!.addSublayer(leafNodeMarkerLayer)
                     leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
-                    marker.mapView = nil
                 }
             }
             
@@ -186,6 +185,15 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        print("터치터치 ")
+        
+        self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer()
+        }
+        
+        presentedLeafNodeMarkers.forEach {
+            $0.hidden = false
+        }
+        
         infoWindowForAdd.close()
         infoWindowForDelete.close()
         infoWindowForAdd.position = latlng

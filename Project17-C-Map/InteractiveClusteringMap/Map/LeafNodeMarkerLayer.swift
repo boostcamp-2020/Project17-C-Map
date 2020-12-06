@@ -29,8 +29,6 @@ class LeafNodeMarkerLayer: CALayer {
         contents = marker.iconImage.image.cgImage
         contentsGravity = CALayerContentsGravity.resize
         anchorPoint = CGPoint(x: 0.5, y: 1)
-        
-//        position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y, lng: leafNodeMarker.coordinate.x))
     }
     
 }
