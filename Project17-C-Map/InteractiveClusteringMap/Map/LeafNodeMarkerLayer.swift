@@ -10,20 +10,27 @@ import UIKit
 
 class LeafNodeMarkerLayer: CALayer {
     
-    private let markerID: Int64
+    private let marker: LeafNodeMarker
     
-    init(markerID: Int64) {
-        self.markerID = markerID
+    init(marker: LeafNodeMarker) {
+        self.marker = marker
         super.init()
+        configure()
     }
     
     required init?(coder: NSCoder) {
-        self.markerID = -1
+        self.marker = LeafNodeMarker(coordinate: Coordinate(x: 0, y: 0))
         super.init()
+        configure()
     }
     
     private func configure() {
+        bounds = CGRect(x: 0, y: 0, width: marker.iconImage.imageWidth, height: marker.iconImage.imageHeight)
+        contents = marker.iconImage.image.cgImage
+        contentsGravity = CALayerContentsGravity.resize
+        anchorPoint = CGPoint(x: 0.5, y: 1)
         
+//        position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y, lng: leafNodeMarker.coordinate.x))
     }
     
 }

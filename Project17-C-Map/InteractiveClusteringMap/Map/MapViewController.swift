@@ -97,36 +97,37 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-            if gesture.state == .began {
-                var touchedMarker = false
-                for marker in presentedLeafNodeMarkers {
-                    let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
-                    let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
-                    let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
-                    let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
-                    let markerMaxY = markerScreenCoordinate.y
-                    
-                    let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
-                    let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
-                    if containX && containY {
-                        // 마커 삭제 모드 진입
-                        let generator = UIImpactFeedbackGenerator(style: .heavy)
-                        generator.impactOccurred()
-                        touchedMarker = true
-                        break
-                    }
+        if gesture.state == .began {
+            var touchedMarker = false
+            for marker in presentedLeafNodeMarkers {
+                let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
+                let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
+                let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
+                let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
+                let markerMaxY = markerScreenCoordinate.y
+                
+                let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
+                let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
+                if containX && containY {
+                    // 마커 삭제 모드 진입
+                    let generator = UIImpactFeedbackGenerator(style: .heavy)
+                    generator.impactOccurred()
+                    touchedMarker = true
+                    break
                 }
-                
-                if touchedMarker {
-                    presentedLeafNodeMarkers.forEach { marker in
-                        marker.hidden = true
-//                        let deleteIconImage = UIImageView(image: UIImage(named: "minus.circle.fill"))
-                        
-                    }
-                }
-                
-                
             }
+            
+            if touchedMarker {
+                presentedLeafNodeMarkers.forEach { marker in
+                    marker.hidden = true
+                    let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
+                    interactiveMapView.mapView.layer.addSublayer(leafNodeMarkerLayer)
+                    leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
+                    marker.mapView = nil
+                }
+            }
+            
+        }
     }
     
     internal func setMarkerPosition(marker: CALayer) {
