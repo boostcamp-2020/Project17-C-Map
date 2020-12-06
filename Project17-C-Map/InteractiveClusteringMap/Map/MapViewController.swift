@@ -100,7 +100,7 @@ final class MapViewController: UIViewController {
         marker.updatePosition(position: interactiveMapView.projectPoint(from: latLng))
     }
     
-    private func create(markers: [Markerable]) {
+    private func create(markers: [NMFMarker]) {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -122,15 +122,15 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func remove(markers: [Markerable]) {
+    private func remove(markers: [NMFMarker]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
-                marker.remove()
+                marker.mapView = nil
             }
         }
     }
     
-    private func animate(marker: Markerable, option: AnimationType) {
+    private func animate(marker: NMFMarker, option: AnimationType) {
         if let leafNodeMarker = marker as? LeafNodeMarker {
             leafNodeMarker.hidden = true
             let leafNodeMarkerLayer = CALayer()

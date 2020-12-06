@@ -58,6 +58,7 @@
 		467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F953B2576A20400CD5A3E /* AnimationController.swift */; };
 		468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */; };
 		468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */; };
+		468FFB97257CD6760020DFF5 /* NMFMarker+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468FFB96257CD6760020DFF5 /* NMFMarker+.swift */; };
 		46A048E9257765DA00A99BE6 /* ClusteringMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */; };
 		46A048EE257768BE00A99BE6 /* TranparentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048ED257768BE00A99BE6 /* TranparentLayer.swift */; };
 		46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
@@ -158,6 +159,7 @@
 		467F953B2576A20400CD5A3E /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTextLayer.swift; sourceTree = "<group>"; };
 		468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarker.swift; sourceTree = "<group>"; };
+		468FFB96257CD6760020DFF5 /* NMFMarker+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMarker+.swift"; sourceTree = "<group>"; };
 		46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringMarkerLayer.swift; sourceTree = "<group>"; };
 		46A048ED257768BE00A99BE6 /* TranparentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranparentLayer.swift; sourceTree = "<group>"; };
 		46A12E1A256CD099007BDF3E /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
 				468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */,
 				468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */,
+				468FFB96257CD6760020DFF5 /* NMFMarker+.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
+				468FFB97257CD6760020DFF5 /* NMFMarker+.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,

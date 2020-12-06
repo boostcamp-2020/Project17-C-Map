@@ -8,7 +8,7 @@
 import Foundation
 import NMapsMap
 
-final class LeafNodeMarker: NMFMarker, Markerable {
+final class LeafNodeMarker: NMFMarker {
     
     let coordinate: Coordinate
     
@@ -24,8 +24,4 @@ final class LeafNodeMarker: NMFMarker, Markerable {
         iconImage = NMF_MARKER_IMAGE_GREEN
     }
 
-    func remove() {
-        mapView = nil
-    }
-    
 }

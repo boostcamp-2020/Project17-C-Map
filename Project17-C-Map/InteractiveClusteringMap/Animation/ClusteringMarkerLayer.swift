@@ -9,14 +9,7 @@ import Foundation
 import UIKit
 import Darwin
 
-protocol Markerable {
-    
-    var coordinate: Coordinate { get }
-    func remove()
-    
-}
-
-class ClusteringMarkerLayer: CALayer, Markerable {
+class ClusteringMarkerLayer: CALayer {
     
     let coordinate: Coordinate
     private let coordinatesCount: Int

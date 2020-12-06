@@ -8,7 +8,7 @@
 import Foundation
 import NMapsMap
 
-final class InteractiveMarker: NMFMarker, Markerable {
+final class InteractiveMarker: NMFMarker {
     
     let coordinate: Coordinate
     private let coordinatesCount: Int
@@ -32,10 +32,6 @@ final class InteractiveMarker: NMFMarker, Markerable {
         alpha = 0.8
     }
 
-    func remove() {
-        mapView = nil
-    }
-    
     func imageFromLayer(layer: CALayer) -> UIImage {
         let originalColor = layer.backgroundColor
         
