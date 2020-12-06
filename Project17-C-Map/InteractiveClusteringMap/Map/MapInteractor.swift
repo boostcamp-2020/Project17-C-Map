@@ -11,6 +11,8 @@ protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
     func remove(tileIds: [CLong])
+    func add(coordinate: Coordinate)
+    func delete(coordinate: Coordinate)
     
 }
 
@@ -30,12 +32,10 @@ final class MapInteractor: ClusterBusinessLogic {
             self.poiService.fetch { [weak self] pois in
                 guard let self = self else { return }
                 
-                let coordinates = pois.map {
-                    Coordinate(x: $0.x, y: $0.y)
-                }
+                let coordinates = pois.map { $0 }
                 if self.clusteringService == nil {
                     self.clusteringService = QuadTreeClusteringService(coordinates: coordinates,
-                                                                         boundingBox: BoundingBox.korea)
+                                                                       boundingBox: BoundingBox.korea)
                 }
                 self.clustering(coordinates: coordinates,
                                 tileId: tileId,
@@ -51,16 +51,24 @@ final class MapInteractor: ClusterBusinessLogic {
                             zoomLevel: Double) {
         
         clusteringService?.execute(coordinates: coordinates,
-                                     boundingBox: boundingBox,
-                                     zoomLevel: zoomLevel) { [weak self] clusters in
+                                   boundingBox: boundingBox,
+                                   zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-                                      
+            
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
     
     func remove(tileIds: [CLong]) {
         presenter.removePresentMarkers(tileIds: tileIds)
+    }
+    
+    func add(coordinate: Coordinate) {
+        poiService.add(poi: POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+    }
+    
+    func delete(coordinate: Coordinate) {
+        poiService.delete(coordinate: coordinate)
     }
     
 }

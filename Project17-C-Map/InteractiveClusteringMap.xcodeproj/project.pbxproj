@@ -211,14 +211,14 @@
 		19B15C6B2572ABB4008CDEE5 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
-				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
-				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
+				4623BD1225694A1400940B12 /* MapController.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
+				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
+				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";

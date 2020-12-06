@@ -11,33 +11,34 @@ import Darwin
 
 protocol Markerable {
     
-    init(cluster: Cluster)
+    var coordinate: Coordinate { get }
+    
     func remove()
     
 }
 
 class ClusteringMarkerLayer: CALayer, Markerable {
     
-    let center: Coordinate
+    private(set) var coordinate: Coordinate
+    
     private let coordinatesCount: Int
     
-    required init(cluster: Cluster) {
-        
-        self.center = cluster.center
+    init(cluster: Cluster) {
+        coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
         super.init()
-
+        
         configure()
     }
     
     override init(layer: Any) {
-        self.center = Coordinate(x: 0, y: 0)
+        coordinate = Coordinate(x: 0, y: 0)
         self.coordinatesCount = 0
         super.init(layer: layer)
     }
     
     required init?(coder: NSCoder) {
-        self.center = Coordinate(x: 0, y: 0)
+        coordinate = Coordinate(x: 0, y: 0)
         self.coordinatesCount = 0
         super.init(coder: coder)
     }
@@ -58,11 +59,10 @@ class ClusteringMarkerLayer: CALayer, Markerable {
         
     }
     
-    
     func updatePosition(position: CGPoint) {
         self.position = position
     }
-        
+    
     func remove() {
         removeFromSuperlayer()
     }

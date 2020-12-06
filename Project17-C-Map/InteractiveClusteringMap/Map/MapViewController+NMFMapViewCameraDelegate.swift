@@ -9,6 +9,7 @@ import Foundation
 import NMapsMap
 
 extension MapViewController: NMFMapViewCameraDelegate {
+    
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
@@ -19,6 +20,7 @@ extension MapViewController: NMFMapViewCameraDelegate {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
             addInfoWindow.close()
+            deleteInfoWindow.close()
         }
     }
     
@@ -33,4 +35,5 @@ extension MapViewController: NMFMapViewCameraDelegate {
             self.setMarkerPosition(marker: subLayer)
         }
     }
+    
 }

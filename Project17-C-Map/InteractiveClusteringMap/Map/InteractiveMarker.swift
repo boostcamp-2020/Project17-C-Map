@@ -10,9 +10,13 @@ import NMapsMap
 
 final class InteractiveMarker: NMFMarker, Markerable, UIGestureRecognizerDelegate {
     
-    required init(cluster: Cluster) {
+    private(set) var coordinate: Coordinate
+    
+    init(coordinate: Coordinate) {
+        self.coordinate = coordinate
         super.init()
-        position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
+        
+        position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconTintColor = .green
         
         let tapGesture = UILongPressGestureRecognizer()
@@ -23,10 +27,9 @@ final class InteractiveMarker: NMFMarker, Markerable, UIGestureRecognizerDelegat
         print("꾹")
         return true
     }
+    
     func remove() {
         mapView = nil
     }
-    
-    
     
 }

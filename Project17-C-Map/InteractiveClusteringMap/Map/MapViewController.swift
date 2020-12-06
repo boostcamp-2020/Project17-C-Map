@@ -10,17 +10,19 @@ import CoreLocation
 import NMapsMap
 
 final class MapViewController: UIViewController {
+    
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var deletedinteractiveMarkers: [Markerable] = []
-    private let deleteInfoWindow = NMFInfoWindow()
+    internal let deleteInfoWindow = NMFInfoWindow()
     private let deleteDataSource = NMFInfoWindowDefaultTextSource.data()
     internal let addInfoWindow = NMFInfoWindow()
     private let addDataSource = NMFInfoWindowDefaultTextSource.data()
-
+    
     init?(coder: NSCoder, dataManager: DataManagable) {
         self.dataManager = dataManager
         super.init(coder: coder)
@@ -47,29 +49,6 @@ final class MapViewController: UIViewController {
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
     
-    private func configureInfoWindow() {
-        interactiveMapView?.mapView.touchDelegate = self
-        deleteDataSource.title = "삭제"
-        deleteInfoWindow.dataSource = deleteDataSource
-        addDataSource.title = "추가"
-        addInfoWindow.dataSource = addDataSource
-        
-        deleteInfoWindow.touchHandler = { [weak self] (_) -> Bool in
-            self?.deleteInfoWindow.close()
-            let alert = MapAlertController(alertType: .delete) { _ in
-                
-            }
-            self?.present(alert.createAlertController(), animated: true)
-            return true
-        }
-        
-        addInfoWindow.touchHandler = { [weak self] (_) -> Bool in
-            let alert = MapAlertController(alertType: .add, okHandler: nil)
-            self?.present(alert.createAlertController(), animated: true)
-            return true
-        }
-    }
-    
     private func configureMap() {
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         
@@ -91,13 +70,54 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
+    }
     
+    private func configureInfoWindow() {
+        interactiveMapView?.mapView.touchDelegate = self
+        deleteDataSource.title = "삭제"
+        deleteInfoWindow.dataSource = deleteDataSource
+        addDataSource.title = "추가"
+        addInfoWindow.dataSource = addDataSource
+        
+        deleteInfoWindow.touchHandler = { [weak self] _ in
+            guard let self = self else { return false }
+            
+            let alert = MapAlertController(alertType: .delete) { [weak self] _ in
+                guard let self = self,
+                      let deletedMarker = self.deleteInfoWindow.marker as? InteractiveMarker else { return }
+                print(deletedMarker.coordinate)
+                self.mapController?.delete(coordinate: deletedMarker.coordinate)
+                deletedMarker.mapView = nil
+                
+                self.deleteInfoWindow.close()
+            }
+            self.present(alert.createAlertController(), animated: true)
+            return true
+        }
+        
+        addInfoWindow.touchHandler = { [weak self] _ in
+            guard let self = self else { return false }
+            
+            let alert = MapAlertController(alertType: .add) { [weak self] _ in
+                guard let self = self else { return }
+                let coord = Coordinate(x: self.addInfoWindow.position.lng, y: self.addInfoWindow.position.lat, id: -100)
+                let marker = InteractiveMarker(coordinate: coord)
+                
+                marker.touchHandler = self.deleteMarkerTouchHandler
+                marker.mapView = self.interactiveMapView.mapView
+                
+                self.mapController?.add(coordinate: coord)
+                self.addInfoWindow.close()
+            }
+            self.present(alert.createAlertController(), animated: true)
+            return true
+        }
     }
     
     internal func setMarkerPosition(marker: CALayer) {
         guard let marker = marker as? ClusteringMarkerLayer else { return }
         
-        let latLng = NMGLatLng(lat: marker.center.y, lng: marker.center.x)
+        let latLng = NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x)
         marker.updatePosition(position: interactiveMapView.projectPoint(from: latLng))
     }
     
@@ -116,11 +136,7 @@ final class MapViewController: UIViewController {
                     
                     self.transparentLayer?.addSublayer(clusteringMarkerLayer)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
-                    interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
-                        self?.addInfoWindow.close()
-                        self?.deleteInfoWindow.open(with: interactiveMarker)
-                        return true
-                    }
+                    interactiveMarker.touchHandler = self.deleteMarkerTouchHandler
                     interactiveMarker.mapView = self.interactiveMapView.mapView
                 }
             }
@@ -142,18 +158,38 @@ final class MapViewController: UIViewController {
                         clusteringMarkerLayer.remove()
                         self.deletedinteractiveMarkers.removeAll { deletedMarker in
                             guard let deletedMarker = deletedMarker as? ClusteringMarkerLayer else { return false }
-                                return deletedMarker == clusteringMarkerLayer
+                            return deletedMarker == clusteringMarkerLayer
                         }
                     }
                 } else if let interactiveMaker = marker as? InteractiveMarker {
                     interactiveMaker.remove()
                     self.deletedinteractiveMarkers.removeAll { deletedMarker in
                         guard let deletedMarker = deletedMarker as? InteractiveMarker else { return false }
-                            return deletedMarker == interactiveMaker
+                        return deletedMarker == interactiveMaker
                     }
                 }
             }
         }
+    }
+    
+    private func addMarkerTouchHandler(overlay: NMFOverlay) -> Bool {
+        guard let mapView = overlay.mapView else {
+            return false
+        }
+        addInfoWindow.close()
+        deleteInfoWindow.open(with: mapView)
+        
+        return true
+    }
+    
+    private func deleteMarkerTouchHandler(overlay: NMFOverlay) -> Bool {
+        guard let marker = overlay as? InteractiveMarker else {
+            print("InteractiveMarker 아님")
+            return true
+        }
+        deleteInfoWindow.open(with: marker)
+        print(marker.coordinate)
+        return true
     }
     
 }
