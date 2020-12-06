@@ -19,6 +19,7 @@ final class MapViewController: UIViewController {
     private let dataSourceForDelete = NMFInfoWindowDefaultTextSource.data()
     internal let infoWindowForAdd = NMFInfoWindow()
     private let dataSourceForAdd = NMFInfoWindowDefaultTextSource.data()
+    private var presentedLeafNodeMarkers: [LeafNodeMarker] = []
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -67,6 +68,8 @@ final class MapViewController: UIViewController {
             self?.present(alert.createAlertController(), animated: true)
             return true
         }
+        
+        interactiveMapView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress)))
     }
     
     private func configureMap() {
@@ -93,6 +96,29 @@ final class MapViewController: UIViewController {
         
     }
     
+    @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+            if gesture.state == .began {
+                
+                presentedLeafNodeMarkers.forEach {
+                    let markerScreenCoordinate = interactiveMapView.projectPoint(from: $0.position)
+                    let markerMinX = markerScreenCoordinate.x - ($0.iconImage.imageWidth / 2) - 5
+                    let markerMaxX = markerScreenCoordinate.x + ($0.iconImage.imageWidth / 2) + 5
+                    let markerMinY = markerScreenCoordinate.y - ($0.iconImage.imageHeight / 2) - 30
+                    let markerMaxY = markerScreenCoordinate.y
+                    
+                    let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
+                    let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
+                    if containX && containY {
+                        // 마커 삭제 모드 진입
+                       // print("마커당")
+                    }
+                }
+                
+            }
+    }
+    
     internal func setMarkerPosition(marker: CALayer) {
         guard let marker = marker as? ClusteringMarkerLayer else { return }
         
@@ -105,8 +131,9 @@ final class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                if let LeafNodeMarker = marker as? LeafNodeMarker {
-                    LeafNodeMarker.mapView = self.interactiveMapView.mapView
+                if let leafNodeMarker = marker as? LeafNodeMarker {
+                    self.presentedLeafNodeMarkers.append(leafNodeMarker)
+                    leafNodeMarker.mapView = self.interactiveMapView.mapView
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
@@ -137,6 +164,9 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async {
                 marker.remove()
+            }
+            if let leafNodeMarker = marker as? LeafNodeMarker {
+                self.presentedLeafNodeMarkers.removeAll { $0 == leafNodeMarker }
             }
         }
     }
