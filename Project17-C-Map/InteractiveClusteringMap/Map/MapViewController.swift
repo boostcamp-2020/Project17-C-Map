@@ -105,10 +105,8 @@ final class MapViewController: UIViewController {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    self.setMarkerPosition(marker: clusteringMarkerLayer)
-                    
-                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
+                if let LeafNodeMarker = marker as? LeafNodeMarker {
+                    LeafNodeMarker.mapView = self.interactiveMapView.mapView
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
@@ -137,20 +135,8 @@ final class MapViewController: UIViewController {
     
     private func remove(markers: [Markerable]) {
         markers.forEach { marker in
-            marker.remove()
             DispatchQueue.main.async {
-                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    let animation = AnimationController.shared.fadeInOut(option: .fadeOut)
-                    
-                    clusteringMarkerLayer.add(animation, forKey: "fadeOut")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
-                        clusteringMarkerLayer.remove()
-                    }
-                    
-                } else if let interactiveMaker = marker as? InteractiveMarker {
-                    interactiveMaker.remove()
-                    
-                }
+                marker.remove()
             }
         }
     }
