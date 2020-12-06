@@ -138,9 +138,9 @@ final class MapViewController: UIViewController {
             markerLayer = leafNodeMarker.markerLayer
             guard let markerLayer = markerLayer else { return }
             
-            let position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
-                                                                        lng: leafNodeMarker.coordinate.x))
-            markerLayer.position = CGPoint(x: position.x, y: position.y - (markerLayer.bounds.height / 2))
+            markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
+            markerLayer.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+                                                                                    lng: leafNodeMarker.coordinate.x))
             markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
         
         } else if let interactiveMarker = marker as? InteractiveMarker {
@@ -153,7 +153,9 @@ final class MapViewController: UIViewController {
         guard let animation = markerAnimation else { return }
         
         transparentLayer?.addSublayer(layer)
+
         CATransaction.begin()
+        CATransaction.setDisableActions(true)
         CATransaction.setCompletionBlock {
             markerLayer?.removeFromSuperlayer()
             marker.hidden = false

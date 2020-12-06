@@ -59,7 +59,7 @@ final class AnimationController {
         animation.fromValue = start
         animation.toValue = end
         animation.duration = 0.2
-        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
         
         return animation
     }
@@ -114,8 +114,6 @@ final class AnimationController {
         moveSmall.beginTime = 0.4
         
         let expandScale = transformScale(option: .increase)
-        let shakes = shake()
-        shakes.beginTime = 0.8
         
         resultAnimation.animations = [moveBig, moveSmall, expandScale]
         resultAnimation.duration = 0.8
