@@ -98,23 +98,33 @@ final class MapViewController: UIViewController {
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
             if gesture.state == .began {
-                
-                presentedLeafNodeMarkers.forEach {
-                    let markerScreenCoordinate = interactiveMapView.projectPoint(from: $0.position)
-                    let markerMinX = markerScreenCoordinate.x - ($0.iconImage.imageWidth / 2) - 5
-                    let markerMaxX = markerScreenCoordinate.x + ($0.iconImage.imageWidth / 2) + 5
-                    let markerMinY = markerScreenCoordinate.y - ($0.iconImage.imageHeight / 2) - 30
+                var touchedMarker = false
+                for marker in presentedLeafNodeMarkers {
+                    let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
+                    let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
+                    let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
+                    let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
                     let markerMaxY = markerScreenCoordinate.y
                     
                     let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
                     let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
                     if containX && containY {
+                        // 마커 삭제 모드 진입
                         let generator = UIImpactFeedbackGenerator(style: .heavy)
                         generator.impactOccurred()
-                        // 마커 삭제 모드 진입
-                       // print("마커당")
+                        touchedMarker = true
+                        break
                     }
                 }
+                
+                if touchedMarker {
+                    presentedLeafNodeMarkers.forEach { marker in
+                        marker.hidden = true
+//                        let deleteIconImage = UIImageView(image: UIImage(named: "minus.circle.fill"))
+                        
+                    }
+                }
+                
                 
             }
     }
