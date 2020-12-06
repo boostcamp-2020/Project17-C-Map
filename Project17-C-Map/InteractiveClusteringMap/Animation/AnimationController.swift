@@ -19,11 +19,10 @@ enum ScaleOption {
 
 final class AnimationController {
     
-    static let shared = AnimationController()
-    
     /// Fade In/Out animation
+    ///
     /// - Parameter inOut: true: fade in, false: fade out
-    func fadeInOut(option: FadeOption) -> CABasicAnimation {
+    static func fadeInOut(option: FadeOption) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "opacity")
         if option == .fadeIn {
             animation.fromValue = 0
@@ -38,7 +37,7 @@ final class AnimationController {
         return animation
     }
     
-    func transformScale(option: ScaleOption) -> CABasicAnimation {
+    static func transformScale(option: ScaleOption) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale")
         
         if option == .increase {
@@ -55,7 +54,7 @@ final class AnimationController {
         return animation
     }
     
-    func movePosition(start: CGPoint, end: CGPoint) -> CABasicAnimation {
+    static func movePosition(start: CGPoint, end: CGPoint) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = start
         animation.toValue = end
@@ -65,11 +64,12 @@ final class AnimationController {
     }
     
     /// bezierPath를 통한 위치변경 애니메이션
+    ///
     /// - Parameters:
     ///   - start: start position
     ///   - end: end position
     /// - Returns: CAKeyframeAnimation
-    func movePositionWithPath(start: CGPoint, end: CGPoint) -> CAKeyframeAnimation {
+    static func movePositionWithPath(start: CGPoint, end: CGPoint) -> CAKeyframeAnimation {
         let animation = CAKeyframeAnimation(keyPath: "position")
         animation.path = bezierPath(start: start, end: end).cgPath
         animation.duration = 1
@@ -77,7 +77,7 @@ final class AnimationController {
         return animation
     }
     
-    private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
+    static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
         let bezierPath = UIBezierPath()
         let centerX = Double((start.x + start.y) / 2)
         let centerY = Double((start.y + end.y) / 2)

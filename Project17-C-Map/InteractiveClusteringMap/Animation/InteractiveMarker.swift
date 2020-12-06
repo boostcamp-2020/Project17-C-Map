@@ -10,9 +10,9 @@ import NMapsMap
 
 final class InteractiveMarker: NMFMarker, Markerable {
     
-    private(set) var coordinate: Coordinate
+    let coordinate: Coordinate
     private let coordinatesCount: Int
-    let clusteringMarkerLayer: ClusteringMarkerLayer
+    private(set) var clusteringMarkerLayer: ClusteringMarkerLayer
     
     required init(cluster: Cluster) {
         self.coordinate = cluster.center

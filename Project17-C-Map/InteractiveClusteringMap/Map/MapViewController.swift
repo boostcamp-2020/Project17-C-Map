@@ -125,7 +125,7 @@ final class MapViewController: UIViewController {
                         interactiveMarker.hidden = false
                         clusteringMarkerLayer.remove()
                     }
-                    let markerAnimation = AnimationController.shared.transformScale(option: .increase)
+                    let markerAnimation = AnimationController.transformScale(option: .increase)
                     clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
                     CATransaction.commit()
                 }

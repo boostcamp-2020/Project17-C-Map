@@ -34,7 +34,7 @@ class MapPresenter: ClusterPresentationLogic {
         
         let markers: [Markerable] = clusters.map {
             if $0.coordinates.count == 1 {
-                return LeafNodeMarker(coordinate: $0.center)
+                return LeafNodeMarker(coordinate: $0.coordinates.first ?? Coordinate(x: 0, y: 0))
             } else {
                 return InteractiveMarker(cluster: $0)
             }

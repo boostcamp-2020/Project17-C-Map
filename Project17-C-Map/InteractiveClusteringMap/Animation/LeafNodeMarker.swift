@@ -10,19 +10,18 @@ import NMapsMap
 
 final class LeafNodeMarker: NMFMarker, Markerable {
     
-    private(set) var coordinate: Coordinate
+    let coordinate: Coordinate
     
     required init(coordinate: Coordinate) {
         self.coordinate = coordinate
         super.init()
-        position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         
         configure()
     }
     
     func configure() {
+        position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconImage = NMF_MARKER_IMAGE_GREEN
-        
     }
 
     func remove() {

@@ -18,9 +18,9 @@ protocol Markerable {
 
 class ClusteringMarkerLayer: CALayer, Markerable {
     
-    private(set) var coordinate: Coordinate
+    let coordinate: Coordinate
     private let coordinatesCount: Int
-    var textLayer: MarkerTextLayer
+    private var textLayer: MarkerTextLayer
     
     required init(cluster: Cluster) {
         
