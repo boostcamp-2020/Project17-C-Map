@@ -104,10 +104,11 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                marker.mapView = self.interactiveMapView.mapView
+                marker.hidden = true
                 
                 if let leafNodeMarker = marker as? LeafNodeMarker {
-                    leafNodeMarker.mapView = self.interactiveMapView.mapView
-                    self.animate(marker: leafNodeMarker, option: .transformScale)
+                    self.animate(marker: leafNodeMarker)
                     
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
@@ -115,8 +116,7 @@ final class MapViewController: UIViewController {
                         self?.infoWindowForDelete.open(with: interactiveMarker)
                         return true
                     }
-                    interactiveMarker.mapView = self.interactiveMapView.mapView
-                    self.animate(marker: interactiveMarker, option: .transformScale)
+                    self.animate(marker: interactiveMarker)
                 }
             }
         }
@@ -130,45 +130,34 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func animate(marker: NMFMarker, option: AnimationType) {
+    private func animate(marker: NMFMarker) {
+        var markerLayer: CALayer?
+        var markerAnimation: CAAnimation?
+        
         if let leafNodeMarker = marker as? LeafNodeMarker {
-            leafNodeMarker.hidden = true
-            let leafNodeMarkerLayer = CALayer()
-            leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0, width: leafNodeMarker.iconImage.imageWidth, height: leafNodeMarker.iconImage.imageHeight)
-            
-            leafNodeMarkerLayer.contents = NMF_MARKER_IMAGE_GREEN.image.cgImage
-            leafNodeMarkerLayer.contentsGravity = CALayerContentsGravity.resize
-            
-            leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y, lng: leafNodeMarker.coordinate.x))
-            self.transparentLayer?.addSublayer(leafNodeMarkerLayer)
-            
-            CATransaction.begin()
-            CATransaction.setCompletionBlock {
-                leafNodeMarker.hidden = false
-                leafNodeMarkerLayer.removeFromSuperlayer()
-            }
-            let markerAnimation = AnimationController.transformScale(option: .increase)
-
-            leafNodeMarkerLayer.add(markerAnimation, forKey: "position")
-            CATransaction.commit()
+            markerLayer = leafNodeMarker.markerLayer
+            let position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+                                                                        lng: leafNodeMarker.coordinate.x))
+            markerLayer?.position = CGPoint(x: position.x, y: position.y - ((markerLayer?.bounds.height ?? 0) / 2))
+            markerAnimation = AnimationController.transformScale(option: .increase)
         
         } else if let interactiveMarker = marker as? InteractiveMarker {
-            interactiveMarker.hidden = true
-            let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
-            
-            self.transparentLayer?.addSublayer(clusteringMarkerLayer)
-            clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
-            
-            CATransaction.begin()
-            CATransaction.setCompletionBlock {
-                interactiveMarker.hidden = false
-                clusteringMarkerLayer.remove()
-            }
-            let markerAnimation = AnimationController.transformScale(option: .increase)
-            clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
-            CATransaction.commit()
+            markerLayer = interactiveMarker.markerLayer
+            markerLayer?.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y,
+                                                                                lng: interactiveMarker.coordinate.x))
+            markerAnimation = AnimationController.transformScale(option: .increase)
         }
+        guard let layer = markerLayer else { return }
+        guard let animation = markerAnimation else { return }
         
+        transparentLayer?.addSublayer(layer)
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            markerLayer?.removeFromSuperlayer()
+            marker.hidden = false
+        }
+        markerLayer?.add(animation, forKey: "markerAnimation")
+        CATransaction.commit()
     }
     
 }

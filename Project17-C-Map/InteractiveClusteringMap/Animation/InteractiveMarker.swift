@@ -12,16 +12,16 @@ final class InteractiveMarker: NMFMarker {
     
     let coordinate: Coordinate
     private let coordinatesCount: Int
-    private(set) var clusteringMarkerLayer: ClusteringMarkerLayer
+    private(set) var markerLayer: ClusteringMarkerLayer
     
     required init(cluster: Cluster) {
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
-        self.clusteringMarkerLayer = ClusteringMarkerLayer(cluster: cluster)
+        self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         
-        let uiImage = imageFromLayer(layer: clusteringMarkerLayer)
+        let uiImage = imageFromLayer(layer: markerLayer)
         configure(image: uiImage)
     }
     

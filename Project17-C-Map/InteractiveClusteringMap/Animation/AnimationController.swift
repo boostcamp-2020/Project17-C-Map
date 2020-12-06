@@ -9,10 +9,6 @@ import Foundation
 import UIKit
 import NMapsMap
 
-enum AnimationType {
-    case fadeInOut, transformScale, movePosition, movePostionWithPath
-}
-
 enum FadeOption {
     case fadeIn, fadeOut
 }
