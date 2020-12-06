@@ -38,7 +38,6 @@ final class InteractiveMarker: NMFMarker {
             iconTintColor = ClusteringColor.hundredThousand.value
         }
         
-        //iconTintColor = UIColor(red: 0.1, green: 0.23, blue: 0.5, alpha: 0.8)
         anchor = CGPoint(x: 0.5, y: 0.5)
         alpha = 0.8
     }
@@ -78,7 +77,6 @@ extension InteractiveMarker: NMFOverlayImageDataSource {
                                                    y: 0,
                                                    width: marker.iconImage.imageWidth,
                                                    height: marker.iconImage.imageHeight))
-//        markerView.image = imageFromLayer(layer: clusteringMarkerLayer)
         return markerView
     }
 }
