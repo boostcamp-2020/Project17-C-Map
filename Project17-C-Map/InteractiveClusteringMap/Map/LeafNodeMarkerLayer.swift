@@ -11,15 +11,18 @@ import UIKit
 class LeafNodeMarkerLayer: CALayer {
     
     private let marker: LeafNodeMarker
+    let editLayer: CALayer
     
     init(marker: LeafNodeMarker) {
         self.marker = marker
+        self.editLayer = CALayer()
         super.init()
         configure()
     }
     
     required init?(coder: NSCoder) {
         self.marker = LeafNodeMarker(coordinate: Coordinate(x: 0, y: 0))
+        self.editLayer = CALayer()
         super.init()
         configure()
     }
@@ -30,12 +33,10 @@ class LeafNodeMarkerLayer: CALayer {
         contentsGravity = CALayerContentsGravity.resize
         anchorPoint = CGPoint(x: 0.5, y: 1)
         
-        let editLayer = CALayer()
-        let editImage = UIImage(named: "minus.circle.fill")?.cgImage
+        let editImage = UIImage(systemName: "minus.circle.fill")?.cgImage
         editLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         editLayer.contents = editImage
-        editLayer.position = anchorPoint
-        editLayer.contentsGravity = CALayerContentsGravity.resize
+       // editLayer.contentsGravity = CALayerContentsGravity.resize
         addSublayer(editLayer)
     }
     

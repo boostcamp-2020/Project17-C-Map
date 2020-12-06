@@ -48,7 +48,7 @@ final class MapViewController: UIViewController {
     }
     
     private func configureInfoWindow() {
-        interactiveMapView?.mapView.touchDelegate = self
+        
         dataSourceForDelete.title = "삭제"
         infoWindowForDelete.dataSource = dataSourceForDelete
         dataSourceForAdd.title = "추가"
@@ -71,6 +71,8 @@ final class MapViewController: UIViewController {
     }
     
     private func configureMap() {
+        interactiveMapView?.mapView.touchDelegate = self
+        
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         
         let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
@@ -124,6 +126,7 @@ final class MapViewController: UIViewController {
                     let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
                     transparentLayer!.addSublayer(leafNodeMarkerLayer)
                     leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
+                    leafNodeMarkerLayer.editLayer.position = CGPoint(x: 8, y: 8)
                 }
             }
         }
@@ -186,6 +189,7 @@ final class MapViewController: UIViewController {
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         interactiveMapView.mapView.isScrollGestureEnabled = true
+        print("터치터치")
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer()
         }
         
