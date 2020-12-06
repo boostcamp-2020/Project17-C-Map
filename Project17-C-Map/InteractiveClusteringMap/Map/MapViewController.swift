@@ -35,7 +35,7 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
-        configureInfoWindow()
+//        configureInfoWindow()
     }
     
     private func dependencyInject() {
@@ -118,6 +118,7 @@ final class MapViewController: UIViewController {
             }
             
             if touchedMarker {
+                interactiveMapView.mapView.isScrollGestureEnabled = false
                 presentedLeafNodeMarkers.forEach { marker in
                     marker.hidden = true
                     let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
@@ -125,7 +126,6 @@ final class MapViewController: UIViewController {
                     leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
                 }
             }
-            
         }
     }
     
@@ -185,18 +185,17 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        print("터치터치 ")
-        
+        interactiveMapView.mapView.isScrollGestureEnabled = true
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer()
         }
         
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false
         }
-        
-        infoWindowForAdd.close()
-        infoWindowForDelete.close()
-        infoWindowForAdd.position = latlng
-        infoWindowForAdd.open(with: mapView)
+//
+//        infoWindowForAdd.close()
+//        infoWindowForDelete.close()
+//        infoWindowForAdd.position = latlng
+//        infoWindowForAdd.open(with: mapView)
     }
 }
