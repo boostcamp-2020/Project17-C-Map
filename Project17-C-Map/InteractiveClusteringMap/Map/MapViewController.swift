@@ -15,12 +15,11 @@ final class MapViewController: UIViewController {
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
-    private var deletedinteractiveMarkers: [Markerable] = []
     private let infoWindowForDelete = NMFInfoWindow()
     private let dataSourceForDelete = NMFInfoWindowDefaultTextSource.data()
     internal let infoWindowForAdd = NMFInfoWindow()
     private let dataSourceForAdd = NMFInfoWindowDefaultTextSource.data()
-
+    
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
         self.dataManager = dataManager
@@ -91,30 +90,23 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
-    
+        
     }
     
     internal func setMarkerPosition(marker: CALayer) {
         guard let marker = marker as? ClusteringMarkerLayer else { return }
         
-        let latLng = NMGLatLng(lat: marker.center.y, lng: marker.center.x)
+        let latLng = NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x)
         marker.updatePosition(position: interactiveMapView.projectPoint(from: latLng))
     }
     
     private func create(markers: [Markerable]) {
-        remove(markers: deletedinteractiveMarkers)
-        
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
-                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    self.setMarkerPosition(marker: clusteringMarkerLayer)
-                    
-                    let animation = AnimationController.fadeInOut(option: .fadeIn)
-                    clusteringMarkerLayer.add(animation, forKey: "fadeIn")
-                    
-                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
+                if let LeafNodeMarker = marker as? LeafNodeMarker {
+                    LeafNodeMarker.mapView = self.interactiveMapView.mapView
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
@@ -122,36 +114,29 @@ final class MapViewController: UIViewController {
                         return true
                     }
                     interactiveMarker.mapView = self.interactiveMapView.mapView
+                    interactiveMarker.hidden = true
+                    let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
+                    
+                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
+                    clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
+                    
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock {
+                        interactiveMarker.hidden = false
+                        clusteringMarkerLayer.remove()
+                    }
+                    let markerAnimation = AnimationController.transformScale(option: .increase)
+                    clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
+                    CATransaction.commit()
                 }
             }
         }
     }
     
-    private func addToDelete(markers: [Markerable]) {
-        deletedinteractiveMarkers += markers
-    }
-    
     private func remove(markers: [Markerable]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
-                if let clusteringMarkerLayer = marker as? ClusteringMarkerLayer {
-                    let animation = AnimationController.fadeInOut(option: .fadeOut)
-                    
-                    clusteringMarkerLayer.add(animation, forKey: "fadeOut")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + animation.duration - 0.4) {
-                        clusteringMarkerLayer.remove()
-                        self.deletedinteractiveMarkers.removeAll { deletedMarker in
-                            guard let deletedMarker = deletedMarker as? ClusteringMarkerLayer else { return false }
-                                return deletedMarker == clusteringMarkerLayer
-                        }
-                    }
-                } else if let interactiveMaker = marker as? InteractiveMarker {
-                    interactiveMaker.remove()
-                    self.deletedinteractiveMarkers.removeAll { deletedMarker in
-                        guard let deletedMarker = deletedMarker as? InteractiveMarker else { return false }
-                            return deletedMarker == interactiveMaker
-                    }
-                }
+                marker.remove()
             }
         }
     }
