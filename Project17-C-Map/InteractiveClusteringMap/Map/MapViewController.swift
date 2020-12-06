@@ -68,8 +68,6 @@ final class MapViewController: UIViewController {
             self?.present(alert.createAlertController(), animated: true)
             return true
         }
-        
-        interactiveMapView.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress)))
     }
     
     private func configureMap() {
@@ -93,12 +91,12 @@ final class MapViewController: UIViewController {
         guard let transparentLayer = transparentLayer else { return }
         
         interactiveMapView.mapView.layer.addSublayer(transparentLayer)
-        
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        gestureRecognizer.minimumPressDuration = 0.7
+        interactiveMapView.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-            let generator = UIImpactFeedbackGenerator(style: .medium)
-            generator.impactOccurred()
             if gesture.state == .began {
                 
                 presentedLeafNodeMarkers.forEach {
@@ -111,6 +109,8 @@ final class MapViewController: UIViewController {
                     let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
                     let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
                     if containX && containY {
+                        let generator = UIImpactFeedbackGenerator(style: .heavy)
+                        generator.impactOccurred()
                         // 마커 삭제 모드 진입
                        // print("마커당")
                     }
