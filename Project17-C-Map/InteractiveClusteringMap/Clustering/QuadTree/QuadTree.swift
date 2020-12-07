@@ -16,7 +16,7 @@ final class QuadTree {
     private var bottomLeft: QuadTree?
     private var bottomRight: QuadTree?
     
-    private var boundingBox: BoundingBox
+    private(set) var boundingBox: BoundingBox
     private let nodeCapacity: Int
     
     private lazy var minX: Double = boundingBox.topRight.x
