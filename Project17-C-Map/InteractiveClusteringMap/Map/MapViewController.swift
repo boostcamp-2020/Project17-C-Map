@@ -97,6 +97,7 @@ final class MapViewController: UIViewController {
                     
                     print("취소")
                 })
+                
                 present(alert.createAlertController(), animated: true)
             }
         }
@@ -147,6 +148,7 @@ final class MapViewController: UIViewController {
             transparentLayer?.addSublayer(leafNodeMarkerLayer)
             leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
             leafNodeMarkerLayer.editButtonLayer.position = CGPoint(x: 8, y: 8)
+            leafNodeMarkerLayer.animate()
         }
     }
     

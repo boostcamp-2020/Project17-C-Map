@@ -98,7 +98,7 @@ final class AnimationController {
         rotation.values = shakeValues.map { (Double.pi * $0) / 180 }
         
         shakeAnimation.animations = [translation, rotation]
-        shakeAnimation.duration = 0.5
+        shakeAnimation.duration = 2
         
         return shakeAnimation
     }

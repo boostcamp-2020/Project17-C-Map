@@ -59,6 +59,9 @@ class MapPresenter: ClusterPresentationLogic {
     func delete(coordinate: Coordinate) {
         presentMarkers.values.forEach { markers in
             markers.forEach {
+//                markers.enumerated().forEach { 
+//                    
+//                }
                 guard let leafMarker = $0 as? LeafNodeMarker else {
                     return
                 }

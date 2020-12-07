@@ -29,6 +29,16 @@ class LeafNodeMarkerLayer: CALayer {
         configure()
     }
     
+    func animate() {
+        let animation = AnimationController.shake()
+        animation.repeatCount = .infinity
+        add(animation, forKey: "editMode")
+    }
+    
+    func stopAnimate() {
+        removeAllAnimations()
+    }
+    
     func addEditButtonLayer() {
         let editImage = UIImage(systemName: systemCircleImageName)
         
