@@ -20,6 +20,7 @@ final class MapViewController: UIViewController {
     internal let infoWindowForAdd = NMFInfoWindow()
     private let dataSourceForAdd = NMFInfoWindowDefaultTextSource.data()
     private var presentedLeafNodeMarkers: [LeafNodeMarker] = []
+    private var touchedDeleteLayer: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -95,6 +96,26 @@ final class MapViewController: UIViewController {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         gestureRecognizer.minimumPressDuration = 0.7
         interactiveMapView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        let point = touch!.location(in: interactiveMapView.mapView)
+        for marker in presentedLeafNodeMarkers {
+            print("point: \(point)")
+            let editButtonRange = interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
+            print("edit! \(editButtonRange)")
+            let x = editButtonRange.x - marker.iconImage.imageWidth / 2
+            let y = editButtonRange.y - marker.iconImage.imageHeight
+            print("x: \(x), y: \(y)")
+            let containX = (x..<x + 36).contains(point.x)
+            let containY = (y..<y + 36).contains(point.y)
+            if containX && containY {
+                touchedDeleteLayer = true
+                print("tap EditButton!")
+            }
+        }
+        print("탭탭")
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -223,7 +244,7 @@ final class MapViewController: UIViewController {
         interactiveMapView.mapView.allowsRotating = true
         interactiveMapView.mapView.allowsZooming = true
         interactiveMapView.showZoomControls = true
-        
+        interactiveMapView.showLocationButton = true
     }
     
     private func unableGestures() {
@@ -231,23 +252,27 @@ final class MapViewController: UIViewController {
         interactiveMapView.mapView.allowsRotating = false
         interactiveMapView.mapView.allowsZooming = false
         interactiveMapView.showZoomControls = false
+        interactiveMapView.showLocationButton = false
     }
     
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        print("맵!")
+        guard !touchedDeleteLayer else { return }
+        
         enableGestures()
-        
+
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
-        
+
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false
         }
-//  머지 후 삭제 예정
-//        infoWindowForAdd.close()
-//        infoWindowForDelete.close()
-//        infoWindowForAdd.position = latlng
-//        infoWindowForAdd.open(with: mapView)
+////  머지 후 삭제 예정
+////        infoWindowForAdd.close()
+////        infoWindowForDelete.close()
+////        infoWindowForAdd.position = latlng
+////        infoWindowForAdd.open(with: mapView)
     }
 }
