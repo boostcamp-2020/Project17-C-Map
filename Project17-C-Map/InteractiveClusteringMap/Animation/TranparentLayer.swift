@@ -23,7 +23,6 @@ class TransparentLayer: CALayer {
         self.bounds = bounds
         self.backgroundColor = UIColor.clear.cgColor
         self.position = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-        
     }
     
 }
