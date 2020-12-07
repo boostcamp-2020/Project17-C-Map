@@ -32,6 +32,8 @@ class LeafNodeMarkerLayer: CALayer {
     func animate() {
         let animation = AnimationController.shake()
         animation.repeatCount = .infinity
+        animation.autoreverses = true
+        
         add(animation, forKey: "editMode")
     }
     
