@@ -12,10 +12,12 @@ class MapAlertController {
     
     private let alertType: AlertType
     private let okHandler: ((UIAlertAction) -> Void)?
+    private let cancelHandler: ((UIAlertAction) -> Void)?
     
-    init(alertType: AlertType, okHandler: ((UIAlertAction) -> Void)?) {
+    init(alertType: AlertType, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
         self.alertType = alertType
         self.okHandler = okHandler
+        self.cancelHandler = cancelHandler
     }
     
     func createAlertController() -> UIAlertController {
@@ -30,7 +32,7 @@ class MapAlertController {
     private func createAlertController(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .destructive, handler: okHandler)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelHandler)
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)

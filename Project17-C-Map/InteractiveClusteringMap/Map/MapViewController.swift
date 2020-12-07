@@ -21,6 +21,7 @@ final class MapViewController: UIViewController {
     private let dataSourceForAdd = NMFInfoWindowDefaultTextSource.data()
     private var presentedLeafNodeMarkers: [LeafNodeMarker] = []
     private var touchedDeleteLayer: Bool = false
+    private var isEditMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -49,25 +50,25 @@ final class MapViewController: UIViewController {
     
     private func configureInfoWindow() {
         
-        dataSourceForDelete.title = "삭제"
-        infoWindowForDelete.dataSource = dataSourceForDelete
-        dataSourceForAdd.title = "추가"
-        infoWindowForAdd.dataSource = dataSourceForAdd
-        
-        infoWindowForDelete.touchHandler = { [weak self] (_) -> Bool in
-            self?.infoWindowForDelete.close()
-            let alert = MapAlertController(alertType: .delete) { _ in
-                
-            }
-            self?.present(alert.createAlertController(), animated: true)
-            return true
-        }
-        
-        infoWindowForAdd.touchHandler = { [weak self] (_) -> Bool in
-            let alert = MapAlertController(alertType: .add, okHandler: nil)
-            self?.present(alert.createAlertController(), animated: true)
-            return true
-        }
+//        dataSourceForDelete.title = "삭제"
+//        infoWindowForDelete.dataSource = dataSourceForDelete
+//        dataSourceForAdd.title = "추가"
+//        infoWindowForAdd.dataSource = dataSourceForAdd
+//
+//        infoWindowForDelete.touchHandler = { [weak self] (_) -> Bool in
+//            self?.infoWindowForDelete.close()
+//            let alert = MapAlertController(alertType: .delete) { _ in
+//
+//            }
+//            self?.present(alert.createAlertController(), animated: true)
+//            return true
+//        }
+//
+//        infoWindowForAdd.touchHandler = { [weak self] (_) -> Bool in
+//            let alert = MapAlertController(alertType: .add, okHandler: nil)
+//            self?.present(alert.createAlertController(), animated: true)
+//            return true
+//        }
     }
     
     private func configureMap() {
@@ -99,20 +100,26 @@ final class MapViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard isEditMode else { return }
         let touch = touches.first
         let point = touch!.location(in: interactiveMapView.mapView)
         for marker in presentedLeafNodeMarkers {
-            print("point: \(point)")
             let editButtonRange = interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
-            print("edit! \(editButtonRange)")
             let x = editButtonRange.x - marker.iconImage.imageWidth / 2
             let y = editButtonRange.y - marker.iconImage.imageHeight
-            print("x: \(x), y: \(y)")
-            let containX = (x..<x + 36).contains(point.x)
-            let containY = (y..<y + 36).contains(point.y)
+            
+            let containX = (x..<x + 30).contains(point.x)
+            let containY = (y..<y + 30).contains(point.y)
             if containX && containY {
                 touchedDeleteLayer = true
-                print("tap EditButton!")
+                print("no")
+                let alert = MapAlertController(alertType: .add, okHandler: { (_) in
+                    // delete 버튼 눌렀을 시
+                }, cancelHandler: { [weak self] (_) in
+                    print("취소")
+                    self?.touchedDeleteLayer = false
+                })
+                present(alert.createAlertController(), animated: true)
             }
         }
         print("탭탭")
@@ -138,6 +145,7 @@ final class MapViewController: UIViewController {
             let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
             let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
             if containX && containY {
+                isEditMode = true
                 let generator = UIImpactFeedbackGenerator(style: .heavy)
                 generator.impactOccurred()
                 
@@ -262,6 +270,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         print("맵!")
         guard !touchedDeleteLayer else { return }
         
+        isEditMode = false
         enableGestures()
 
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
