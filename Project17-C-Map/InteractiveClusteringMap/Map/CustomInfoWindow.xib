@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomInfoWindow" customModule="InteractiveClusteringMap" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="453" height="105"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -76,6 +76,10 @@
                 <constraint firstItem="pGH-yI-kfA" firstAttribute="leading" secondItem="GMb-lm-Ykj" secondAttribute="trailing" constant="10" id="zXK-Tx-zMy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="categoryLabel" destination="pGH-yI-kfA" id="4B7-8c-XPr"/>
+                <outlet property="titleLabel" destination="GMb-lm-Ykj" id="OG9-NO-29K"/>
+            </connections>
             <point key="canvasLocation" x="87.681159420289859" y="61.272321428571423"/>
         </view>
     </objects>
