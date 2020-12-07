@@ -34,6 +34,8 @@ final class InteractiveMapView: NMFNaverMapView {
         showLocationButton = true
         showCompass = true
         showScaleBar = true
+        mapView.allowsTilting = false
+        
         configureExtent()
     }
     

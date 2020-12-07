@@ -15,9 +15,9 @@ final class MapController: NSObject {
     private weak var interactiveMapView: InteractiveMapView?
     
     init(mapView: InteractiveMapView, interactor: ClusterBusinessLogic) {
+        super.init()
         self.interactiveMapView = mapView
         self.interactor = interactor
-        super.init()
         configureTileCoverHelper()
     }
     

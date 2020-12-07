@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NMapsMap
 
 protocol ClusterPresentationLogic {
     
@@ -16,13 +17,13 @@ protocol ClusterPresentationLogic {
 
 class MapPresenter: ClusterPresentationLogic {
     
-    private let createMarkerHandler: ([Markerable]) -> Void
-    private let removeMarkerHandler: ([Markerable]) -> Void
-    private var presentMarkers: [CLong: [Markerable]] = [:]
+    private let createMarkerHandler: ([NMFMarker]) -> Void
+    private let removeMarkerHandler: ([NMFMarker]) -> Void
+    private var presentMarkers: [CLong: [NMFMarker]] = [:]
     private var undeletedTileIds: [CLong] = []
     
-    init(createMarkerHandler: @escaping ([Markerable]) -> Void,
-         removeMarkerHandler: @escaping ([Markerable]) -> Void) {
+    init(createMarkerHandler: @escaping ([NMFMarker]) -> Void,
+         removeMarkerHandler: @escaping ([NMFMarker]) -> Void) {
         self.createMarkerHandler = createMarkerHandler
         self.removeMarkerHandler = removeMarkerHandler
     }
@@ -32,11 +33,11 @@ class MapPresenter: ClusterPresentationLogic {
             return undeletedTileIds.removeAll { $0 == tileId }
         }
         
-        let markers: [Markerable] = clusters.map {
+        let markers: [NMFMarker] = clusters.map {
             if $0.coordinates.count == 1 {
-                return InteractiveMarker(cluster: $0)
+                return LeafNodeMarker(coordinate: $0.coordinates.first ?? Coordinate(x: 0, y: 0))
             } else {
-                return ClusteringMarkerLayer(cluster: $0)
+                return InteractiveMarker(cluster: $0)
             }
         }
         presentMarkers[tileId] = (presentMarkers[tileId] ?? []) + markers

@@ -57,6 +57,8 @@
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
 		466F1838257219C500F95AA4 /* Mockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F1837257219C500F95AA4 /* Mockup.swift */; };
 		467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F953B2576A20400CD5A3E /* AnimationController.swift */; };
+		468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */; };
+		468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */; };
 		46A048E9257765DA00A99BE6 /* ClusteringMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */; };
 		46A048EE257768BE00A99BE6 /* TranparentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048ED257768BE00A99BE6 /* TranparentLayer.swift */; };
 		46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
@@ -73,8 +75,9 @@
 		FA194F642576035C003B07D9 /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA3389302576D294008C74AA /* DBITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33892F2576D293008C74AA /* DBITests.swift */; };
 		FA3389342576D2A5008C74AA /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
-		FA4DCF4D2578C840007748AC /* MarkerTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
+		FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertController.swift */; };
+		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
@@ -156,6 +159,8 @@
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		466F1837257219C500F95AA4 /* Mockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mockup.swift; sourceTree = "<group>"; };
 		467F953B2576A20400CD5A3E /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
+		468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTextLayer.swift; sourceTree = "<group>"; };
+		468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarker.swift; sourceTree = "<group>"; };
 		46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringMarkerLayer.swift; sourceTree = "<group>"; };
 		46A048ED257768BE00A99BE6 /* TranparentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranparentLayer.swift; sourceTree = "<group>"; };
 		46A12E1A256CD099007BDF3E /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
@@ -168,8 +173,9 @@
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA194F632576035C003B07D9 /* DBI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		FA33892F2576D293008C74AA /* DBITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBITests.swift; sourceTree = "<group>"; };
-		FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTextLayer.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		FAA4B518257A96CA00F61D8B /* MapAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAlertController.swift; sourceTree = "<group>"; };
+		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -214,6 +220,8 @@
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
+				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
+				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
@@ -351,9 +359,11 @@
 			isa = PBXGroup;
 			children = (
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
-				FA4DCF4C2578C840007748AC /* MarkerTextLayer.swift */,
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
+				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
+				468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */,
+				468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -647,7 +657,6 @@
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
-				FA4DCF4D2578C840007748AC /* MarkerTextLayer.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				46EDEA43257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
@@ -656,10 +665,12 @@
 				467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */,
 				19D16871257BD5D0002888F4 /* TreeDataStore.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
+				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA194F642576035C003B07D9 /* DBI.swift in Sources */,
+				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
@@ -674,6 +685,7 @@
 				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
+				FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
 				37B73DE02577B50600C48E99 /* POIInfoMO+CoreDataProperties.swift in Sources */,
 				37B73DDD2577B50600C48E99 /* POIInfoMO+CoreDataClass.swift in Sources */,
@@ -683,6 +695,7 @@
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
