@@ -20,6 +20,11 @@ final class QuadTreeClusteringService {
         setupTrees()
     }
     
+    func delete(coordinate: Coordinate) {
+        poiService.delete(coordinate: coordinate)
+        // TODO: quad tree에서도 marker를 삭제하는 logic 구현 필요
+    }
+    
     // 클러스터링 Task를 WorkItem으로 반환
     private func clusteringWorkItem(target: BoundingBox,
                                     zoomLevel: Double,

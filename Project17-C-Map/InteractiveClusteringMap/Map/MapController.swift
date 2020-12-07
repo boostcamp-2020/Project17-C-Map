@@ -22,6 +22,14 @@ final class MapController: NSObject {
         configureTileCoverHelper()
     }
     
+    func add(coordinate: Coordinate) {
+//        interactor?.add(coordinate: coordinate)
+    }
+    
+    func delete(coordinate: Coordinate) {
+        interactor?.delete(coordinate: coordinate)
+    }
+    
     private func configureTileCoverHelper() {
         guard let interactiveMapView = interactiveMapView else { return }
         
@@ -36,7 +44,7 @@ extension MapController: NMFTileCoverHelperDelegate {
     func onTileChanged(_ addedTileIds: [NSNumber]?, removedTileIds: [NSNumber]?) {
         guard let addedTiles = addedTileIds as? [CLong],
               let removedTiles = removedTileIds as? [CLong] else { return }
-
+        
         serialQueue.async {
             self.interactor?.remove(tileIds: removedTiles)
             var boundsWithTileId = [CLong: BoundingBox]()

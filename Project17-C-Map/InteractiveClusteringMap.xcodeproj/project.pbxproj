@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190CAB3425738FB800234F23 /* MapPresenter.swift */; };
-		190CAB3A257390B000234F23 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190CAB39257390B000234F23 /* InteractiveMarker.swift */; };
 		192D34AD256E355500861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
@@ -34,6 +33,7 @@
 		378E83442574F00D00E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E83482574F04500E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E834C2574F19200E25A9F /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
+		37955722257E63F200681654 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37955721257E63F200681654 /* InteractiveMarker.swift */; };
 		379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
 		37B73DDC2577B50600C48E99 /* POIMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B73DD62577B50600C48E99 /* POIMO+CoreDataClass.swift */; };
 		37B73DDD2577B50600C48E99 /* POIInfoMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B73DD72577B50600C48E99 /* POIInfoMO+CoreDataClass.swift */; };
@@ -115,7 +115,6 @@
 
 /* Begin PBXFileReference section */
 		190CAB3425738FB800234F23 /* MapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
-		190CAB39257390B000234F23 /* InteractiveMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
@@ -128,6 +127,7 @@
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
 		376A56532576A7B900D1AE5A /* POIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIInfo.swift; sourceTree = "<group>"; };
 		378E83432574F00C00E25A9F /* Clusters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clusters.swift; sourceTree = "<group>"; };
+		37955721257E63F200681654 /* InteractiveMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		379DC4C5256E1EC60044DA6C /* KMeans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeans.swift; sourceTree = "<group>"; };
 		37B73DD62577B50600C48E99 /* POIMO+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37B73DD72577B50600C48E99 /* POIInfoMO+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIInfoMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -215,14 +215,14 @@
 		19B15C6B2572ABB4008CDEE5 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
-				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
-				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
+				4623BD1225694A1400940B12 /* MapController.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
+				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
+				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -357,9 +357,9 @@
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
-				190CAB39257390B000234F23 /* InteractiveMarker.swift */,
 				468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */,
 				468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */,
+				37955721257E63F200681654 /* InteractiveMarker.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -649,7 +649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				190CAB3A257390B000234F23 /* InteractiveMarker.swift in Sources */,
+				37955722257E63F200681654 /* InteractiveMarker.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
