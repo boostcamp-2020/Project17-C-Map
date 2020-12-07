@@ -12,12 +12,11 @@ import Foundation
 
 final class QuadTreeClusteringService {
     
-    private let poiService: POIServicing
+    private let treeDataStore: TreeDataStorable
     private var quadTreeWithBoundary: [BoundingBox: QuadTree] = [: ]
     
-    init(poiService: POIServicing) {
-        self.poiService = poiService
-        setupTrees()
+    init(treeDataStore: TreeDataStorable) {
+        self.treeDataStore = treeDataStore
     }
     
     // 클러스터링 Task를 WorkItem으로 반환
@@ -33,7 +32,7 @@ final class QuadTreeClusteringService {
     
     //cluster 결과값을 반환한다.
     private func clustering(target: BoundingBox, zoomLevel: Double) -> [Cluster] {
-        let quadTrees = self.quadTrees(target: target)
+        let quadTrees = treeDataStore.quadTrees(target: target)
         return excuteClustering(quadTrees: quadTrees, boundingBox: target, zoomLevel: zoomLevel)
     }
     
@@ -95,21 +94,5 @@ extension QuadTreeClusteringService: ClusteringServicing {
     // cancel시 진행중인 workItem은 취소가 안된다고 함..
     // 어떻게 할지 공부 더 필요
     func cancel() {}
-    
-}
-
-private extension QuadTreeClusteringService {
-    
-    enum Capacity {
-        static let node: Int = 25
-    }
-    
-    enum Name {
-        static let quadTreeClusteringQueue: String = "quadTreeClusteringQueue"
-    }
-    
-    enum Count {
-        static let split = 20
-    }
     
 }
