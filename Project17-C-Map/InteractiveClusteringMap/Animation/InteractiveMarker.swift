@@ -28,13 +28,14 @@ final class InteractiveMarker: NMFMarker {
     func configure(image: UIImage) {
         iconImage = NMFOverlayImage(image: image)
         
-        if coordinatesCount <= ClusteringColor.hundred.rawValue {
+        switch coordinatesCount {
+        case 1..<ClusteringColor.hundred.rawValue:
             iconTintColor = ClusteringColor.hundred.value
-        } else if coordinatesCount <= ClusteringColor.thousand.rawValue {
+        case ClusteringColor.hundred.rawValue..<ClusteringColor.thousand.rawValue:
             iconTintColor = ClusteringColor.thousand.value
-        } else if coordinatesCount <= ClusteringColor.tenThousand.rawValue {
+        case ClusteringColor.thousand.rawValue..<ClusteringColor.tenThousand.rawValue:
             iconTintColor = ClusteringColor.tenThousand.value
-        } else {
+        default:
             iconTintColor = ClusteringColor.hundredThousand.value
         }
         

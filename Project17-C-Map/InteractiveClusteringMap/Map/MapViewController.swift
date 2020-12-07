@@ -104,12 +104,12 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                
                 marker.mapView = self.interactiveMapView.mapView
                 marker.hidden = true
                 
                 if let leafNodeMarker = marker as? LeafNodeMarker {
                     self.animate(marker: leafNodeMarker)
-                    
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
@@ -149,8 +149,8 @@ final class MapViewController: UIViewController {
                                                                                 lng: interactiveMarker.coordinate.x))
             markerAnimation = AnimationController.transformScale(option: .increase)
         }
-        guard let layer = markerLayer else { return }
-        guard let animation = markerAnimation else { return }
+        guard let layer = markerLayer,
+              let animation = markerAnimation else { return }
         
         transparentLayer?.addSublayer(layer)
 
