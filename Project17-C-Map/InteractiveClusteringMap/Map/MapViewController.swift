@@ -131,10 +131,15 @@ final class MapViewController: UIViewController {
         
         presentedLeafNodeMarkers.forEach { marker in
             marker.hidden = true
-            let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
+            let leafNodeMarkerLayer = LeafNodeMarkerLayer(markerID: marker.coordinate.id)
+            leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0,
+                                        width: marker.iconImage.imageWidth,
+                                        height: marker.iconImage.imageHeight)
+            leafNodeMarkerLayer.contents = marker.iconImage.image.cgImage
+            leafNodeMarkerLayer.addEditButtonLayer()
             transparentLayer?.addSublayer(leafNodeMarkerLayer)
             leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
-            leafNodeMarkerLayer.editLayer.position = CGPoint(x: 8, y: 8)
+            leafNodeMarkerLayer.editButtonLayer.position = CGPoint(x: 8, y: 8)
         }
     }
     

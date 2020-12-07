@@ -9,39 +9,39 @@ import Foundation
 import UIKit
 
 class LeafNodeMarkerLayer: CALayer {
-    
-    private let marker: LeafNodeMarker
-    let editLayer: CALayer
+
+    let editButtonLayer: CALayer
+    let markerID: Int64
     
     private let systemCircleImageName: String = "minus.circle.fill"
     
-    init(marker: LeafNodeMarker) {
-        self.marker = marker
-        self.editLayer = CALayer()
+    init(markerID: Int64) {
+        self.editButtonLayer = CALayer()
+        self.markerID = markerID
         super.init()
         configure()
     }
     
     required init?(coder: NSCoder) {
-        self.marker = LeafNodeMarker(coordinate: Coordinate(x: 0, y: 0))
-        self.editLayer = CALayer()
+        self.editButtonLayer = CALayer()
+        self.markerID = -1
         super.init()
         configure()
     }
     
-    private func configure() {
-        bounds = CGRect(x: 0, y: 0, width: marker.iconImage.imageWidth, height: marker.iconImage.imageHeight)
-        contents = marker.iconImage.image.cgImage
-        contentsGravity = CALayerContentsGravity.resize
-        anchorPoint = CGPoint(x: 0.5, y: 1)
-        
+    func addEditButtonLayer() {
         let editImage = UIImage(systemName: systemCircleImageName)
         
         editImage?.withTintColor(.red)
-        editLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        editLayer.contents = editImage?.cgImage
-        
-        addSublayer(editLayer)
+        editButtonLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        editButtonLayer.contents = editImage?.cgImage
+        editButtonLayer.contentsGravity = .resize
+        addSublayer(editButtonLayer)
+    }
+    
+    private func configure() {
+        contentsGravity = CALayerContentsGravity.resize
+        anchorPoint = CGPoint(x: 0.5, y: 1)
     }
     
 }
