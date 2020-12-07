@@ -85,7 +85,6 @@ final class MapViewController: UIViewController {
             let alert = MapAlertController(alertType: .delete) { [weak self] _ in
                 guard let self = self,
                       let deletedMarker = self.deleteInfoWindow.marker as? InteractiveMarker else { return }
-                print(deletedMarker.coordinate)
                 self.mapController?.delete(coordinate: deletedMarker.coordinate)
                 deletedMarker.mapView = nil
                 
@@ -184,11 +183,10 @@ final class MapViewController: UIViewController {
     
     private func deleteMarkerTouchHandler(overlay: NMFOverlay) -> Bool {
         guard let marker = overlay as? InteractiveMarker else {
-            print("InteractiveMarker 아님")
             return true
         }
         deleteInfoWindow.open(with: marker)
-        print(marker.coordinate)
+        
         return true
     }
     

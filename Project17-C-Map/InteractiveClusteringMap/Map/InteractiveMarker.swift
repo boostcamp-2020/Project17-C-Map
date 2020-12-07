@@ -24,7 +24,6 @@ final class InteractiveMarker: NMFMarker, Markerable, UIGestureRecognizerDelegat
     }
     
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print("꾹")
         return true
     }
     
