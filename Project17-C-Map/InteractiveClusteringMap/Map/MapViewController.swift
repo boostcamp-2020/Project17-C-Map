@@ -20,7 +20,7 @@ final class MapViewController: UIViewController {
     private var presentedLeafNodeMarkers: [LeafNodeMarker] = []
     
     private var touchedDeleteLayer: Bool = false
-    private var isEditMode: Bool = false
+    internal var isEditMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
