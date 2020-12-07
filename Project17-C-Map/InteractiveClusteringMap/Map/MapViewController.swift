@@ -120,7 +120,11 @@ final class MapViewController: UIViewController {
             }
             
             if touchedMarker {
-                interactiveMapView.mapView.isScrollGestureEnabled = false
+                interactiveMapView.mapView.allowsScrolling = false
+                interactiveMapView.mapView.allowsRotating = false
+                interactiveMapView.mapView.allowsZooming = false
+                interactiveMapView.showZoomControls = false
+                
                 presentedLeafNodeMarkers.forEach { marker in
                     marker.hidden = true
                     let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
@@ -139,44 +143,33 @@ final class MapViewController: UIViewController {
         marker.updatePosition(position: interactiveMapView.projectPoint(from: latLng))
     }
     
-    private func create(markers: [Markerable]) {
+    private func create(markers: [NMFMarker]) {
         markers.forEach { marker in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 
+                marker.mapView = self.interactiveMapView.mapView
+                marker.hidden = true
+                
                 if let leafNodeMarker = marker as? LeafNodeMarker {
+                    self.animate(marker: leafNodeMarker)
                     self.presentedLeafNodeMarkers.append(leafNodeMarker)
-                    leafNodeMarker.mapView = self.interactiveMapView.mapView
                 } else if let interactiveMarker = marker as? InteractiveMarker {
                     interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
                         self?.infoWindowForAdd.close()
                         self?.infoWindowForDelete.open(with: interactiveMarker)
                         return true
                     }
-                    interactiveMarker.mapView = self.interactiveMapView.mapView
-                    interactiveMarker.hidden = true
-                    let clusteringMarkerLayer = interactiveMarker.clusteringMarkerLayer
-                    
-                    self.transparentLayer?.addSublayer(clusteringMarkerLayer)
-                    clusteringMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y, lng: interactiveMarker.coordinate.x))
-                    
-                    CATransaction.begin()
-                    CATransaction.setCompletionBlock {
-                        interactiveMarker.hidden = false
-                        clusteringMarkerLayer.remove()
-                    }
-                    let markerAnimation = AnimationController.transformScale(option: .increase)
-                    clusteringMarkerLayer.add(markerAnimation, forKey: "trasformScale")
-                    CATransaction.commit()
+                    self.animate(marker: interactiveMarker)
                 }
             }
         }
     }
     
-    private func remove(markers: [Markerable]) {
+    private func remove(markers: [NMFMarker]) {
         markers.forEach { marker in
             DispatchQueue.main.async {
-                marker.remove()
+                marker.mapView = nil
             }
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 self.presentedLeafNodeMarkers.removeAll { $0 == leafNodeMarker }
@@ -184,13 +177,50 @@ final class MapViewController: UIViewController {
         }
     }
     
+    private func animate(marker: NMFMarker) {
+        var markerLayer: CALayer?
+        var markerAnimation: CAAnimation?
+        
+        if let leafNodeMarker = marker as? LeafNodeMarker {
+            markerLayer = leafNodeMarker.markerLayer
+            guard let markerLayer = markerLayer else { return }
+            
+            markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
+            markerLayer.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+                                                                                    lng: leafNodeMarker.coordinate.x))
+            markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
+        
+        } else if let interactiveMarker = marker as? InteractiveMarker {
+            markerLayer = interactiveMarker.markerLayer
+            markerLayer?.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y,
+                                                                                lng: interactiveMarker.coordinate.x))
+            markerAnimation = AnimationController.transformScale(option: .increase)
+        }
+        guard let layer = markerLayer,
+              let animation = markerAnimation else { return }
+        
+        transparentLayer?.addSublayer(layer)
+
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        CATransaction.setCompletionBlock {
+            markerLayer?.removeFromSuperlayer()
+            marker.hidden = false
+        }
+        markerLayer?.add(animation, forKey: "markerAnimation")
+        CATransaction.commit()
+    }
+    
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        interactiveMapView.mapView.isScrollGestureEnabled = true
-        self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer()
-        }
+        interactiveMapView.mapView.allowsScrolling = true
+        interactiveMapView.mapView.allowsRotating = true
+        interactiveMapView.mapView.allowsZooming = true
+        interactiveMapView.showZoomControls = true
+        
+        self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false

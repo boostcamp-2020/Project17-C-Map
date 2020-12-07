@@ -33,9 +33,12 @@ class LeafNodeMarkerLayer: CALayer {
         contentsGravity = CALayerContentsGravity.resize
         anchorPoint = CGPoint(x: 0.5, y: 1)
         
-        let editImage = UIImage(systemName: "minus.circle.fill")?.cgImage
+        let editImage = UIImage(systemName: "minus.circle.fill")
+        
+        editImage?.withTintColor(.red)
         editLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        editLayer.contents = editImage
+        editLayer.contents = editImage?.cgImage
+        
         addSublayer(editLayer)
     }
     
