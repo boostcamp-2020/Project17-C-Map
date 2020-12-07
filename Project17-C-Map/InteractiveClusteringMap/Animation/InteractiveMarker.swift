@@ -13,11 +13,13 @@ final class InteractiveMarker: NMFMarker {
     let coordinate: Coordinate
     private let coordinatesCount: Int
     private(set) var markerLayer: ClusteringMarkerLayer
+    let boundingBox: BoundingBox
     
     required init(cluster: Cluster) {
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
         self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
+        self.boundingBox = cluster.boundingBox
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         

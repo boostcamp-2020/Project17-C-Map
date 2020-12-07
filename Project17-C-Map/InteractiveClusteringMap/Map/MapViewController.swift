@@ -171,11 +171,7 @@ final class MapViewController: UIViewController {
                 if let leafNodeMarker = marker as? LeafNodeMarker {
                     self.animate(marker: leafNodeMarker)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
-                    interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
-                        self?.infoWindowForAdd.close()
-                        self?.infoWindowForDelete.open(with: interactiveMarker)
-                        return true
-                    }
+                    self.setMarkersHandler(marker: interactiveMarker)
                     self.animate(marker: interactiveMarker)
                 }
             }
@@ -240,6 +236,22 @@ final class MapViewController: UIViewController {
         interactiveMapView.showZoomControls = false
     }
     
+    func setMarkersHandler(marker: InteractiveMarker) {
+        marker.touchHandler = { [weak self] _ in
+            guard let self = self else { return true }
+            
+            let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
+            let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
+            let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
+            print(bounds)
+            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
+            cameraUpdate.animation = .easeOut
+            cameraUpdate.animationDuration = 0.6
+            self.interactiveMapView.mapView.moveCamera(cameraUpdate)
+            
+            return true
+        }
+    }
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {

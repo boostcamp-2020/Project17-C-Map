@@ -62,7 +62,7 @@ final class QuadTreeClusteringService {
                     $0.findCoordinates(region: region)
                 }
                 guard !foundCoordinates.isEmpty else { return }
-                result.append(Cluster(coordinates: foundCoordinates))
+                result.append(Cluster(coordinates: foundCoordinates, boundingBox: region))
             }
             
             bottomLeftY += clusterRegionHeight
