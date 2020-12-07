@@ -9,15 +9,6 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-// 다음 PR에 Tree 객체 저장하고 불러오는 기능 프로토콜 추가 예정
-protocol TreeServicing {
-    
-}
-
-struct MockTreeService: TreeServicing {
-    
-}
-
 final class MapViewController: UIViewController {
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     private let locationManager = CLLocationManager()
@@ -50,9 +41,7 @@ final class MapViewController: UIViewController {
         guard let dataManager = dataManager else { return }
         
         let poiService = POIService(dataManager: dataManager)
-        let treeService = MockTreeService()
-        let treeDataStore = TreeDataStore(poiService: poiService, treeService: treeService)
-        
+        let treeDataStore = TreeDataStore(poiService: poiService)
         let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
         let mapInteractor: ClusterBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
