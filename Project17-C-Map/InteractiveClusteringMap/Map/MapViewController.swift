@@ -90,6 +90,7 @@ final class MapViewController: UIViewController {
                 touchedDeleteLayer = true
                 let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] (_) in
                     self?.mapController?.delete(coordinate: marker.coordinate)
+                    self?.touchedDeleteLayer = false
                     
                 }, cancelHandler: { [weak self] (_) in
                     guard let self = self else { return }

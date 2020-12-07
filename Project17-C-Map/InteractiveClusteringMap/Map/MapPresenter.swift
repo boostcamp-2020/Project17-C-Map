@@ -59,8 +59,6 @@ class MapPresenter: ClusterPresentationLogic {
     func delete(coordinate: Coordinate) {
         let targetID = coordinate.id
         
-        print("before: ", presentMarkers.reduce(0) { $0 + $1.value.count })
-        
         for (markersKey, markersValue) in presentMarkers {
             presentMarkers[markersKey] = markersValue.filter { marker in
                 guard let leafMarker = marker as? LeafNodeMarker else {
@@ -75,8 +73,6 @@ class MapPresenter: ClusterPresentationLogic {
                 return true
             }
         }
-        
-        print("after: ", presentMarkers.reduce(0) { $0 + $1.value.count })
     }
     
 }
