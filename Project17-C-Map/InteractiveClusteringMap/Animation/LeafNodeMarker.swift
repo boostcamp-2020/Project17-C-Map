@@ -8,9 +8,10 @@
 import Foundation
 import NMapsMap
 
-final class LeafNodeMarker: NMFMarker, Markerable {
+final class LeafNodeMarker: NMFMarker {
     
     let coordinate: Coordinate
+    private(set) var markerLayer = CALayer()
     
     required init(coordinate: Coordinate) {
         self.coordinate = coordinate
@@ -22,10 +23,12 @@ final class LeafNodeMarker: NMFMarker, Markerable {
     func configure() {
         position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconImage = NMF_MARKER_IMAGE_GREEN
+        markerLayer.bounds = CGRect(x: 0,
+                                    y: 0,
+                                    width: iconImage.imageWidth,
+                                    height: iconImage.imageHeight)
+        markerLayer.contents = iconImage.image.cgImage
+        markerLayer.contentsGravity = CALayerContentsGravity.resize
     }
 
-    func remove() {
-        mapView = nil
-    }
-    
 }

@@ -8,34 +8,41 @@
 import Foundation
 import NMapsMap
 
-final class InteractiveMarker: NMFMarker, Markerable {
+final class InteractiveMarker: NMFMarker {
     
     let coordinate: Coordinate
     private let coordinatesCount: Int
-    private(set) var clusteringMarkerLayer: ClusteringMarkerLayer
+    private(set) var markerLayer: ClusteringMarkerLayer
     
     required init(cluster: Cluster) {
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
-        self.clusteringMarkerLayer = ClusteringMarkerLayer(cluster: cluster)
+        self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         
-        let uiImage = imageFromLayer(layer: clusteringMarkerLayer)
+        let uiImage = imageFromLayer(layer: markerLayer)
         configure(image: uiImage)
     }
     
     func configure(image: UIImage) {
         iconImage = NMFOverlayImage(image: image)
-        iconTintColor = UIColor(red: 0.1, green: 0.23, blue: 0.5, alpha: 0.8)
+        
+        switch coordinatesCount {
+        case 1..<ClusteringColor.hundred.rawValue:
+            iconTintColor = ClusteringColor.hundred.value
+        case ClusteringColor.hundred.rawValue..<ClusteringColor.thousand.rawValue:
+            iconTintColor = ClusteringColor.thousand.value
+        case ClusteringColor.thousand.rawValue..<ClusteringColor.tenThousand.rawValue:
+            iconTintColor = ClusteringColor.tenThousand.value
+        default:
+            iconTintColor = ClusteringColor.hundredThousand.value
+        }
+        
         anchor = CGPoint(x: 0.5, y: 0.5)
         alpha = 0.8
     }
 
-    func remove() {
-        mapView = nil
-    }
-    
     func imageFromLayer(layer: CALayer) -> UIImage {
         let originalColor = layer.backgroundColor
         
@@ -71,7 +78,6 @@ extension InteractiveMarker: NMFOverlayImageDataSource {
                                                    y: 0,
                                                    width: marker.iconImage.imageWidth,
                                                    height: marker.iconImage.imageHeight))
-//        markerView.image = imageFromLayer(layer: clusteringMarkerLayer)
         return markerView
     }
 }

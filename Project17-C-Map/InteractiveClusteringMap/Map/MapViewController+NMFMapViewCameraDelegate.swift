@@ -19,6 +19,7 @@ extension MapViewController: NMFMapViewCameraDelegate {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
             infoWindowForAdd.close()
+            subLayer.removeAllAnimations()
         }
     }
     

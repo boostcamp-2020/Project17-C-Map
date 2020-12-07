@@ -8,7 +8,6 @@
 // 그 영역을 몇개로 분할할 것인가 // 10:8 = 0.5:0.4 // 20 * 20
 //
 
-
 import Foundation
 
 final class QuadTreeClusteringService {
