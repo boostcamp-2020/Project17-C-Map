@@ -35,7 +35,6 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
-//        configureInfoWindow()
     }
     
     private func dependencyInject() {
@@ -99,40 +98,43 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            var touchedMarker = false
-            for marker in presentedLeafNodeMarkers {
-                let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
-                let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
-                let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
-                let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
-                let markerMaxY = markerScreenCoordinate.y
-                
-                let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
-                let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
-                if containX && containY {
-                    let generator = UIImpactFeedbackGenerator(style: .heavy)
-                    generator.impactOccurred()
-                    
-                    touchedMarker = true
-                    break
-                }
-            }
+        guard gesture.state != .began else {
+            return
+        }
+        if isMarkerLongPressed(gesture: gesture) {
+            showMarkerEditMode()
+        }
+    }
+    
+    private func isMarkerLongPressed(gesture: UILongPressGestureRecognizer) -> Bool {
+        for marker in presentedLeafNodeMarkers {
+            let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
+            let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
+            let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
+            let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
+            let markerMaxY = markerScreenCoordinate.y
             
-            if touchedMarker {
-                interactiveMapView.mapView.allowsScrolling = false
-                interactiveMapView.mapView.allowsRotating = false
-                interactiveMapView.mapView.allowsZooming = false
-                interactiveMapView.showZoomControls = false
+            let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
+            let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
+            if containX && containY {
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
                 
-                presentedLeafNodeMarkers.forEach { marker in
-                    marker.hidden = true
-                    let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
-                    transparentLayer!.addSublayer(leafNodeMarkerLayer)
-                    leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
-                    leafNodeMarkerLayer.editLayer.position = CGPoint(x: 8, y: 8)
-                }
+                return true
             }
+        }
+        return false
+    }
+    
+    private func showMarkerEditMode() {
+        unableGestures()
+        
+        presentedLeafNodeMarkers.forEach { marker in
+            marker.hidden = true
+            let leafNodeMarkerLayer = LeafNodeMarkerLayer(marker: marker)
+            transparentLayer?.addSublayer(leafNodeMarkerLayer)
+            leafNodeMarkerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
+            leafNodeMarkerLayer.editLayer.position = CGPoint(x: 8, y: 8)
         }
     }
     
@@ -211,14 +213,26 @@ final class MapViewController: UIViewController {
         CATransaction.commit()
     }
     
-}
-
-extension MapViewController: NMFMapViewTouchDelegate {
-    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+    private func enableGestures() {
         interactiveMapView.mapView.allowsScrolling = true
         interactiveMapView.mapView.allowsRotating = true
         interactiveMapView.mapView.allowsZooming = true
         interactiveMapView.showZoomControls = true
+        
+    }
+    
+    private func unableGestures() {
+        interactiveMapView.mapView.allowsScrolling = false
+        interactiveMapView.mapView.allowsRotating = false
+        interactiveMapView.mapView.allowsZooming = false
+        interactiveMapView.showZoomControls = false
+    }
+    
+}
+
+extension MapViewController: NMFMapViewTouchDelegate {
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        enableGestures()
         
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
         

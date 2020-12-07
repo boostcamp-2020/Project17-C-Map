@@ -13,6 +13,8 @@ class LeafNodeMarkerLayer: CALayer {
     private let marker: LeafNodeMarker
     let editLayer: CALayer
     
+    private let systemCircleImageName: String = "minus.circle.fill"
+    
     init(marker: LeafNodeMarker) {
         self.marker = marker
         self.editLayer = CALayer()
@@ -33,7 +35,7 @@ class LeafNodeMarkerLayer: CALayer {
         contentsGravity = CALayerContentsGravity.resize
         anchorPoint = CGPoint(x: 0.5, y: 1)
         
-        let editImage = UIImage(systemName: "minus.circle.fill")
+        let editImage = UIImage(systemName: systemCircleImageName)
         
         editImage?.withTintColor(.red)
         editLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
