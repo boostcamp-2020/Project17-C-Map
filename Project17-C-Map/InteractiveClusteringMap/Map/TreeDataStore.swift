@@ -13,14 +13,12 @@ protocol TreeDataStorable {
 
 class TreeDataStore: TreeDataStorable {
     
-    private let concurrentQueue: DispatchQueue = DispatchQueue.init(label: "Clustering.ConcurrentQueue", attributes: .concurrent)
+    private let concurrentQueue: DispatchQueue = DispatchQueue.init(label: QueueName.concurrent, attributes: .concurrent)
     private let poiService: POIServicing
-    private let treeService: TreeServicing
     private var quadTreeWithBoundary: [BoundingBox: QuadTree] = [: ]
     
-    init(poiService: POIServicing, treeService: TreeServicing) {
+    init(poiService: POIServicing) {
         self.poiService = poiService
-        self.treeService = treeService
         self.makeQuadTrees()
     }
     
@@ -55,9 +53,9 @@ class TreeDataStore: TreeDataStorable {
         poiService.fetch(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { [weak self] coordinates in
             guard let self = self else { return }
             let tree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
+            self.quadTreeWithBoundary[boundingBox] = tree
             self.concurrentQueue.async {
                 self.insertCoordinatesAsync(quadTree: tree, coordinates: coordinates)
-                self.quadTreeWithBoundary[boundingBox] = tree
             }
         }
     }
@@ -71,6 +69,10 @@ class TreeDataStore: TreeDataStorable {
 }
 
 private extension TreeDataStore {
+    
+    enum QueueName {
+        static let concurrent = "Clustering.ConcurrentQueue"
+    }
     
     enum Capacity {
         static let node: Int = 35
