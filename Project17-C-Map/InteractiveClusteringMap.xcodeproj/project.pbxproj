@@ -76,6 +76,7 @@
 		FA3389342576D2A5008C74AA /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertController.swift */; };
+		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
@@ -172,6 +173,7 @@
 		FA33892F2576D293008C74AA /* DBITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBITests.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAA4B518257A96CA00F61D8B /* MapAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAlertController.swift; sourceTree = "<group>"; };
+		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
+				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
 				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
@@ -657,6 +660,7 @@
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
+				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,

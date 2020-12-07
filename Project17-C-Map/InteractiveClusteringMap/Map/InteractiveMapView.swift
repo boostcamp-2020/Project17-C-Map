@@ -35,8 +35,11 @@ final class InteractiveMapView: NMFNaverMapView {
         showCompass = true
         showScaleBar = true
         
+        mapView.allowsTilting = false
+        
         mapView.minZoomLevel = ZoomLevel.min
         mapView.maxZoomLevel = ZoomLevel.max
+        
         configureExtent()
     }
     
