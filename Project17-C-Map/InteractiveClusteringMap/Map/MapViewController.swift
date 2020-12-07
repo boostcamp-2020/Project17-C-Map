@@ -20,7 +20,7 @@ final class MapViewController: UIViewController {
     private var presentedLeafNodeMarkers: [LeafNodeMarker] = []
     
     private var touchedDeleteLayer: Bool = false
-    private var isEditMode: Bool = false
+    internal var isEditMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -267,14 +267,8 @@ extension MapViewController: NMFMapViewTouchDelegate {
         enableGestures()
         
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
-        
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false
         }
-        ////  머지 후 삭제 예정
-        ////        infoWindowForAdd.close()
-        ////        infoWindowForDelete.close()
-        ////        infoWindowForAdd.position = latlng
-        ////        infoWindowForAdd.open(with: mapView)
     }
 }

@@ -57,19 +57,26 @@ class MapPresenter: ClusterPresentationLogic {
     }
     
     func delete(coordinate: Coordinate) {
-        presentMarkers.values.forEach { markers in
-            markers.forEach {
-//                markers.enumerated().forEach { 
-//                    
-//                }
-                guard let leafMarker = $0 as? LeafNodeMarker else {
-                    return
+        let targetID = coordinate.id
+        
+        print("before: ", presentMarkers.reduce(0) { $0 + $1.value.count })
+        
+        for (markersKey, markersValue) in presentMarkers {
+            presentMarkers[markersKey] = markersValue.filter { marker in
+                guard let leafMarker = marker as? LeafNodeMarker else {
+                    return true
                 }
-                if leafMarker.coordinate == coordinate {
-                    
+                let leafMarkerID = leafMarker.coordinate.id
+                
+                guard targetID != leafMarkerID else {
+                    leafMarker.mapView = nil
+                    return false
                 }
+                return true
             }
         }
+        
+        print("after: ", presentMarkers.reduce(0) { $0 + $1.value.count })
     }
     
 }

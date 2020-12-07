@@ -19,6 +19,7 @@ extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
+            guard !isEditMode else { return }
             subLayer.removeAllAnimations()
         }
     }
@@ -26,6 +27,7 @@ extension MapViewController: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         self.transparentLayer?.sublayers?.forEach { subLayer in
             self.setMarkerPosition(marker: subLayer)
+            subLayer.removeAllAnimations()
         }
     }
     
