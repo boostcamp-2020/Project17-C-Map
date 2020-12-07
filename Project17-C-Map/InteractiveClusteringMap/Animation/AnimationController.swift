@@ -50,7 +50,7 @@ final class AnimationController {
         
         animation.duration = 0.5
         animation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-       
+        
         return animation
     }
     
@@ -81,18 +81,19 @@ final class AnimationController {
     /// bezierPath 추후 구현
     static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
         let bezierPath = UIBezierPath()
-
+        
         bezierPath.move(to: start)
         return bezierPath
     }
     
     static func shake() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
-        let shakeValues: [Double] = [-5, 5, -5, 5, -3, 3, -2, 2, 0]
+        let shakeValues: [Double] = [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0]
         
+        let randomIndex = [0, 2, 4, 6, 8].randomElement()
         let translation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         translation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        translation.values = shakeValues
+        translation.values = shakeValues.shifted(by: randomIndex!)
         
         let rotation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
         rotation.values = shakeValues.map { (Double.pi * $0) / 180 }
@@ -119,6 +120,28 @@ final class AnimationController {
         resultAnimation.duration = 0.8
         
         return resultAnimation
+    }
+    
+}
+
+extension Array {
+    
+    func shifted(by shiftAmount: Int) -> Array<Element> {
+        
+        // 1
+        guard self.count > 0, (shiftAmount % self.count) != 0 else { return self }
+        
+        // 2
+        let moduloShiftAmount = shiftAmount % self.count
+        let negativeShift = shiftAmount < 0
+        let effectiveShiftAmount = negativeShift ? moduloShiftAmount + self.count : moduloShiftAmount
+        
+        // 3
+        let shift: (Int) -> Int = { return $0 + effectiveShiftAmount >= self.count ? $0 + effectiveShiftAmount - self.count : $0 + effectiveShiftAmount }
+        
+        // 4
+        return self.enumerated().sorted(by: { shift($0.offset) < shift($1.offset) }).map { $0.element }
+        
     }
     
 }
