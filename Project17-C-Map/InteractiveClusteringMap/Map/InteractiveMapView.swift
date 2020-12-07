@@ -34,9 +34,6 @@ final class InteractiveMapView: NMFNaverMapView {
         showLocationButton = true
         showCompass = true
         showScaleBar = true
-        
-        mapView.minZoomLevel = ZoomLevel.min
-        mapView.maxZoomLevel = ZoomLevel.max
         configureExtent()
     }
     
@@ -61,11 +58,6 @@ private extension InteractiveMapView {
         static let southWestLng: Double = 124
         static let northEastLat: Double = 43
         static let northEastLng: Double = 132
-    }
-    
-    enum ZoomLevel {
-        static let min: Double = 5
-        static let max: Double = 20
     }
     
 }

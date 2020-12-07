@@ -8,7 +8,6 @@
 // 그 영역을 몇개로 분할할 것인가 // 10:8 = 0.5:0.4 // 20 * 20
 //
 
-
 import Foundation
 
 final class QuadTreeClusteringService {
@@ -32,54 +31,6 @@ final class QuadTreeClusteringService {
         }
     }
     
-    //한반도 기준 트리를 나눠서 관리 20 x 20 = 400개
-    private func setupTrees() {
-        let width = BoundingBox.korea.topRight.x - BoundingBox.korea.bottomLeft.x
-        let height = BoundingBox.korea.topRight.y - BoundingBox.korea.bottomLeft.y
-
-        for row in 1...Count.split {
-            for column in 1...Count.split {
-                DispatchQueue.global().async { [weak self] in
-                    guard let self = self else { return }
-                    let left = BoundingBox.korea.bottomLeft.x + (width / Double(Count.split) * Double(row - 1))
-                    let right = BoundingBox.korea.bottomLeft.x + (width / Double(Count.split)) * Double(row)
-                    let top = BoundingBox.korea.bottomLeft.y + (height / Double(Count.split) * Double(column))
-                    let bottom = BoundingBox.korea.bottomLeft.y + (height / Double(Count.split) * Double(column - 1))
-                    
-                    let boundingBox = BoundingBox(topRight: Coordinate(x: right, y: top), bottomLeft: Coordinate(x: left, y: bottom))
-                    
-                    self.makeQuadTree(boundingBox: boundingBox)
-                }
-            }
-        }
-    }
-    
-    // POIServicing으로 부터 해당 영역의 POI 데이터를 불러온다.
-    // 해당 영역의 데이터들로 quadTree를 생성한다.
-    private func makeQuadTree(boundingBox: BoundingBox) {
-        poiService.fetch(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { coordinates in
-            guard !coordinates.isEmpty else { return }
-            
-            let tree = QuadTree(boundingBox: boundingBox, nodeCapacity: Capacity.node)
-            self.quadTreeWithBoundary[boundingBox] = tree
-            self.insertCoordinatesAsync(quadTree: tree, coordinates: coordinates)
-        }
-    }
-        
-    private func insertCoordinatesAsync(quadTree: QuadTree, coordinates: [Coordinate]) {
-        DispatchQueue.global().async {
-            coordinates.forEach {
-                quadTree.insert(coordinate: $0)
-            }
-        }
-    }
-    
-    //target에 속한 쿼드트리를 찾아서 반환한다.
-    private func quadTrees(target: BoundingBox) -> [QuadTree] {
-        let filtered = quadTreeWithBoundary.filter { $0.key.isOverlapped(with: target) }
-        return filtered.map { $0.value }
-    }
-    
     //cluster 결과값을 반환한다.
     private func clustering(target: BoundingBox, zoomLevel: Double) -> [Cluster] {
         let quadTrees = self.quadTrees(target: target)
@@ -91,14 +42,13 @@ final class QuadTreeClusteringService {
     private func excuteClustering(quadTrees: [QuadTree],
                                   boundingBox: BoundingBox,
                                   zoomLevel: Double) -> [Cluster] {
-        var result = [Cluster]()
         
-        let widthCount = clusterWidthCount(zoomLevel: zoomLevel)
-        let heightCount = Int(Double(widthCount) / boundingBox.topRight.ratio(other: boundingBox.bottomLeft))
+        let (widthCount, heightCount) = clusterCount(at: boundingBox, zoomLevel: zoomLevel)
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
         var (bottomLeftX, bottomLeftY) = (boundingBox.bottomLeft.x, boundingBox.bottomLeft.y)
+        var result = [Cluster]()
         
         (0..<heightCount).forEach { _ in
             (0..<widthCount).forEach { _ in
@@ -122,8 +72,11 @@ final class QuadTreeClusteringService {
         return result
     }
     
-    private func clusterWidthCount(zoomLevel: Double) -> Int {
-        Int(min((zoomLevel / 2.5), 8))
+    private func clusterCount(at boundingBox: BoundingBox, zoomLevel: Double) -> (width: Int, height: Int) {
+        let widthCount = Int(min((zoomLevel / 2.5), 8))
+        let heightCount = Int(Double(widthCount) / boundingBox.topRight.ratio(other: boundingBox.bottomLeft))
+        
+        return (width: max(1, widthCount), height: max(1, heightCount))
     }
     
 }
