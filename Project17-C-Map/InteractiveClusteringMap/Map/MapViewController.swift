@@ -111,9 +111,9 @@ final class MapViewController: UIViewController {
                 let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
                 let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
                 if containX && containY {
-                    // 마커 삭제 모드 진입
                     let generator = UIImpactFeedbackGenerator(style: .heavy)
                     generator.impactOccurred()
+                    
                     touchedMarker = true
                     break
                 }
@@ -189,14 +189,13 @@ final class MapViewController: UIViewController {
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         interactiveMapView.mapView.isScrollGestureEnabled = true
-        print("터치터치")
         self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer()
         }
         
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false
         }
-//
+//  머지 후 삭제 예정
 //        infoWindowForAdd.close()
 //        infoWindowForDelete.close()
 //        infoWindowForAdd.position = latlng

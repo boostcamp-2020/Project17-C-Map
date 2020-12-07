@@ -36,7 +36,6 @@ class LeafNodeMarkerLayer: CALayer {
         let editImage = UIImage(systemName: "minus.circle.fill")?.cgImage
         editLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         editLayer.contents = editImage
-       // editLayer.contentsGravity = CALayerContentsGravity.resize
         addSublayer(editLayer)
     }
     
