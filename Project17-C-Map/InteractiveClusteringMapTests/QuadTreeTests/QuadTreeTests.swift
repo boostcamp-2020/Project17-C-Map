@@ -70,6 +70,67 @@ class QuadTreeTests: XCTestCase {
         testQuadTreeFindCoordinates(region: region, expectedCoordinates: expectedCoordinates)
     }
     
+    func test_QuadTree_remove_x_1_y_1() {
+        quadTree?.remove(coordinate: coordinates[0])
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        
+        let expectedCoornates = [
+            Coordinate(x: 2, y: 2),
+            Coordinate(x: 3, y: 3),
+            Coordinate(x: 6, y: 6)
+        ]
+        XCTAssertEqual(foundCoordinates, expectedCoornates)
+    }
+    
+    func test_QuadTree_remove_x_2_y_2() {
+        quadTree?.remove(coordinate: coordinates[1])
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        
+        let expectedCoornates = [
+            Coordinate(x: 1, y: 1),
+            Coordinate(x: 3, y: 3),
+            Coordinate(x: 6, y: 6)
+        ]
+        XCTAssertEqual(foundCoordinates, expectedCoornates)
+    }
+    
+    func test_QuadTree_remove_x_3_y_3() {
+        quadTree?.remove(coordinate: coordinates[2])
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        
+        let expectedCoornates = [
+            Coordinate(x: 1, y: 1),
+            Coordinate(x: 2, y: 2),
+            Coordinate(x: 6, y: 6)
+        ]
+        XCTAssertEqual(foundCoordinates, expectedCoornates)
+    }
+    
+    func test_QuadTree_remove_x_6_y_6() {
+        quadTree?.remove(coordinate: coordinates[3])
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        
+        let expectedCoornates = [
+            Coordinate(x: 1, y: 1),
+            Coordinate(x: 2, y: 2),
+            Coordinate(x: 3, y: 3)
+        ]
+        XCTAssertEqual(foundCoordinates, expectedCoornates)
+    }
+    
+    func test_QuadTree_remove_not_contains() {
+        quadTree?.remove(coordinate: Coordinate(x: 4, y: 4))
+        let foundCoordinates = quadTree?.findCoordinates(region: boundingBox)
+        
+        let expectedCoornates = [
+            Coordinate(x: 1, y: 1),
+            Coordinate(x: 2, y: 2),
+            Coordinate(x: 3, y: 3),
+            Coordinate(x: 6, y: 6)
+        ]
+        XCTAssertEqual(foundCoordinates, expectedCoornates)
+    }
+    
     private func testQuadTreeFindCoordinates(region: BoundingBox, expectedCoordinates: [Coordinate]) {
         let findCoordinates = quadTree?.findCoordinates(
             region: region)
