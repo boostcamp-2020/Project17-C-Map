@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomInfoWindow: UIView {
+class CustomInfoWindowView: UIView {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
 }

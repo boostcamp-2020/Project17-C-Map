@@ -79,6 +79,7 @@
 		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
 		FAACC7B3257E8F16005190F6 /* CustomInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */; };
 		FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */; };
+		FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
@@ -179,6 +180,7 @@
 		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
 		FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindow.swift; sourceTree = "<group>"; };
 		FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
+		FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */,
 				FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */,
+				FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 				19D16870257BD5D0002888F4 /* TreeDataStore.swift */,
@@ -681,6 +684,7 @@
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
+				FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
 				190CAB3525738FB800234F23 /* MapPresenter.swift in Sources */,
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
