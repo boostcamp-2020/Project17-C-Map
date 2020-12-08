@@ -17,7 +17,6 @@ final class MapViewController: UIViewController {
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
-    
     private var presentedMarkers: [NMFMarker] = []
     
     private var touchedDeleteLayer: Bool = false
@@ -118,10 +117,10 @@ final class MapViewController: UIViewController {
     private func isMarkerLongPressed(gesture: UILongPressGestureRecognizer) -> Bool {
         for marker in presentedMarkers {
             if let leafMarker = marker as? LeafNodeMarker {
-                let markerScreenCoordinate = interactiveMapView.projectPoint(from: marker.position)
-                let markerMinX = markerScreenCoordinate.x - (marker.iconImage.imageWidth / 2) - 5
-                let markerMaxX = markerScreenCoordinate.x + (marker.iconImage.imageWidth / 2) + 5
-                let markerMinY = markerScreenCoordinate.y - (marker.iconImage.imageHeight / 2) - 30
+                let markerScreenCoordinate = interactiveMapView.projectPoint(from: leafMarker.position)
+                let markerMinX = markerScreenCoordinate.x - (leafMarker.iconImage.imageWidth / 2) - 5
+                let markerMaxX = markerScreenCoordinate.x + (leafMarker.iconImage.imageWidth / 2) + 5
+                let markerMinY = markerScreenCoordinate.y - (leafMarker.iconImage.imageHeight / 2) - 30
                 let markerMaxY = markerScreenCoordinate.y
                 
                 let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
@@ -134,7 +133,6 @@ final class MapViewController: UIViewController {
                     return true
                 }
             } else {
-                return false
             }
         }
         return false
@@ -244,26 +242,26 @@ final class MapViewController: UIViewController {
         interactiveMapView.showLocationButton = false
     }
     
-    private func setMarkersHandler(marker: InteractiveMarker) {
-//        marker.touchHandler = { [weak self] _ in
-//            guard let self = self else { return true }
-//
-//            let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
-//            let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
-//            let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
-//            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
-//
-//            cameraUpdate.animation = .easeOut
-//            cameraUpdate.animationDuration = 0.6
-//            self.interactiveMapView.mapView.moveCamera(cameraUpdate)
-//
-//            return true
-//        }
+    func setMarkersHandler(marker: InteractiveMarker) {
+        marker.touchHandler = { [weak self] _ in
+            guard let self = self else { return true }
+            let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
+            let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
+            let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
+            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
+            
+            cameraUpdate.animation = .easeOut
+            cameraUpdate.animationDuration = 0.6
+            self.interactiveMapView.mapView.moveCamera(cameraUpdate)
+            
+            return true
+        }
     }
     
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
+    
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         guard !touchedDeleteLayer else { return }
         
@@ -276,4 +274,5 @@ extension MapViewController: NMFMapViewTouchDelegate {
             $0.hidden = false
         }
     }
+    
 }

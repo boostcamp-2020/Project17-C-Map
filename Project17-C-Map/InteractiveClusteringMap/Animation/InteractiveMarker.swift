@@ -13,11 +13,13 @@ final class InteractiveMarker: NMFMarker {
     let coordinate: Coordinate
     private let coordinatesCount: Int
     private(set) var markerLayer: ClusteringMarkerLayer
+    let boundingBox: BoundingBox
     
     required init(cluster: Cluster) {
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
         self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
+        self.boundingBox = cluster.boundingBox
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
         
@@ -28,21 +30,12 @@ final class InteractiveMarker: NMFMarker {
     func configure(image: UIImage) {
         iconImage = NMFOverlayImage(image: image)
         
-        switch coordinatesCount {
-        case 1..<ClusteringColor.hundred.rawValue:
-            iconTintColor = ClusteringColor.hundred.value
-        case ClusteringColor.hundred.rawValue..<ClusteringColor.thousand.rawValue:
-            iconTintColor = ClusteringColor.thousand.value
-        case ClusteringColor.thousand.rawValue..<ClusteringColor.tenThousand.rawValue:
-            iconTintColor = ClusteringColor.tenThousand.value
-        default:
-            iconTintColor = ClusteringColor.hundredThousand.value
-        }
+        iconTintColor = ClusteringColor.getColor(count: coordinatesCount)
         
         anchor = CGPoint(x: 0.5, y: 0.5)
-        alpha = 0.8
+        alpha = 0.9
     }
-
+    
     func imageFromLayer(layer: CALayer) -> UIImage {
         let originalColor = layer.backgroundColor
         
