@@ -46,13 +46,11 @@ final class MapInteractor: ClusterBusinessLogic {
                             zoomLevel: Double) {
         
         quadTreeClusteringService.execute(coordinates: nil,
-                                   boundingBox: boundingBox,
-                                   zoomLevel: zoomLevel) { [weak self] clusters in
+                                          boundingBox: boundingBox,
+                                          zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
-            }
+            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
     

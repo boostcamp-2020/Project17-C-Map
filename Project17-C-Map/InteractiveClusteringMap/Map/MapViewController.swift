@@ -166,28 +166,23 @@ final class MapViewController: UIViewController {
     
     private func create(markers: [NMFMarker]) {
         markers.forEach { marker in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                marker.mapView = self.interactiveMapView.mapView
-                marker.hidden = true
-                self.presentedMarkers.append(marker)
-                
-                if let leafNodeMarker = marker as? LeafNodeMarker {
-                    self.animate(marker: leafNodeMarker)
-                } else if let interactiveMarker = marker as? InteractiveMarker {
-                    self.setMarkersHandler(marker: interactiveMarker)
-                    self.animate(marker: interactiveMarker)
-                }
+            marker.mapView = self.interactiveMapView.mapView
+            marker.hidden = true
+            self.presentedMarkers.append(marker)
+            
+            if let leafNodeMarker = marker as? LeafNodeMarker {
+                self.animate(marker: leafNodeMarker)
+            } else if let interactiveMarker = marker as? InteractiveMarker {
+                self.setMarkersHandler(marker: interactiveMarker)
+                self.animate(marker: interactiveMarker)
             }
+            
         }
     }
     
     private func remove(markers: [NMFMarker]) {
         markers.forEach { marker in
-            DispatchQueue.main.async {
-                marker.mapView = nil
-            }
+            marker.mapView = nil
             self.presentedMarkers.removeAll { $0 == marker }
         }
     }

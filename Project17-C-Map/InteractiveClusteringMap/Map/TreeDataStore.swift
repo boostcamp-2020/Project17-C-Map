@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TreeDataStorable {
-    func quadTrees(target: BoundingBox) -> [QuadTree]
+    func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void)
     func remove(coordinate: Coordinate)
     func add(coordinate: Coordinate)
 }
@@ -18,6 +18,7 @@ class TreeDataStore: TreeDataStorable {
     private let concurrentQueue: DispatchQueue = DispatchQueue.init(label: QueueName.concurrent, attributes: .concurrent)
     private let poiService: POIServicing
     private var quadTreeWithBoundary: [BoundingBox: QuadTree] = [: ]
+    private let dispatchGroup: DispatchGroup = DispatchGroup()
     
     init(poiService: POIServicing) {
         self.poiService = poiService
@@ -25,8 +26,11 @@ class TreeDataStore: TreeDataStorable {
     }
     
     //target에 속한 쿼드트리를 찾아서 반환한다.
-    func quadTrees(target: BoundingBox) -> [QuadTree] {
-        return quadTreeWithBoundary.filter { $0.key.isOverlapped(with: target) }.map {$0.value}
+    func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void) {
+        dispatchGroup.notify(queue: concurrentQueue) {
+            let quadTress = self.quadTreeWithBoundary.filter { $0.key.isOverlapped(with: target) }.map {$0.value}
+            completion(quadTress)
+        }
     }
     
     func remove(coordinate: Coordinate) {
@@ -47,6 +51,7 @@ class TreeDataStore: TreeDataStorable {
         
         for row in 1...Count.split {
             for column in 1...Count.split {
+                dispatchGroup.enter()
                 concurrentQueue.async {
                     let left = (BoundingBox.korea.bottomLeft.x + 2) + (width / Double(Count.split) * Double(row - 1))
                     let right = (BoundingBox.korea.bottomLeft.x + 2) + (width / Double(Count.split)) * Double(row)
@@ -70,6 +75,7 @@ class TreeDataStore: TreeDataStorable {
             self.quadTreeWithBoundary[boundingBox] = tree
             self.concurrentQueue.async {
                 self.insertCoordinatesAsync(quadTree: tree, coordinates: coordinates)
+                self.dispatchGroup.leave()
             }
         }
     }
