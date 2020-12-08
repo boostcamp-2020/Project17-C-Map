@@ -11,9 +11,10 @@ import NMapsMap
 extension MapViewController: NMFMapViewCameraDelegate {
     
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        self.transparentLayer?.sublayers?.forEach { subLayer in
+        self.transparentLayer?.sublayers?.forEach { sublayer in
             guard !isEditMode else { return }
-            subLayer.removeAllAnimations()
+            sublayer.removeAllAnimations()
+            sublayer.removeFromSuperlayer()
         }
     }
 }

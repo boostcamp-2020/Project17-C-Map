@@ -77,6 +77,13 @@ final class MapViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let sublayers = transparentLayer?.sublayers else { return }
+        if !isEditMode {
+            sublayers.forEach { sublayer in
+                sublayer.removeAllAnimations()
+                sublayer.removeFromSuperlayer()
+            }
+        }
         guard isEditMode else { return }
         guard let touch = touches.first else { return }
         let point = touch.location(in: interactiveMapView.mapView)
