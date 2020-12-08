@@ -13,7 +13,7 @@ extension Array {
         indices ~= index ? self[index] : nil
     }
     
-    func shifted(by shiftAmount: Int) -> Array<Element> {
+    func shifted(by shiftAmount: Int) -> [Element] {
         guard self.count > 0, (shiftAmount % self.count) != 0 else {
             return self
         }
