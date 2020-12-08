@@ -30,7 +30,9 @@ class MapPresenter: ClusterPresentationLogic {
     }
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster]) {
-        serialQueue.async {
+        serialQueue.async { [weak self] in
+            guard let self = self else { return }
+            
             guard !self.undeletedTileIds.contains(tileId) else {
                 return self.undeletedTileIds.removeAll { $0 == tileId }
             }
@@ -52,7 +54,9 @@ class MapPresenter: ClusterPresentationLogic {
     }
     
     func removePresentMarkers(tileIds: [CLong]) {
-        serialQueue.async {
+        serialQueue.async { [weak self] in
+            guard let self = self else { return }
+            
             let targetIds = self.presentMarkers.filter { tileIds.contains($0.key) }
             self.undeletedTileIds += tileIds.filter { !targetIds.keys.contains($0) }
             
