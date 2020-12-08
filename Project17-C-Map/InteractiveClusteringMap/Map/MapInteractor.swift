@@ -11,6 +11,7 @@ protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
     func remove(tileIds: [CLong])
+    func delete(coordinate: Coordinate)
     
 }
 
@@ -45,14 +46,17 @@ final class MapInteractor: ClusterBusinessLogic {
                             zoomLevel: Double) {
         
         quadTreeClusteringService.execute(coordinates: nil,
-                                   boundingBox: boundingBox,
-                                   zoomLevel: zoomLevel) { [weak self] clusters in
+                                          boundingBox: boundingBox,
+                                          zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
-            }
+            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
+    }
+    
+    func delete(coordinate: Coordinate) {
+        quadTreeClusteringService.delete(coordinate: coordinate)
+        presenter.delete(coordinate: coordinate)
     }
     
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 class KMeansValidateService: ClusteringServicing {
-
+    
     private let dispatchGroup = DispatchGroup()
     private let concurrentQueue = DispatchQueue.init(label: concurrentQueueName,
                                                      qos: .userInitiated,
@@ -41,6 +41,10 @@ class KMeansValidateService: ClusteringServicing {
 
     func cancel() {
 
+    }
+    
+    func delete(coordinate: Coordinate) {
+        
     }
 
     private func validateKMeans(coordinates: [Coordinate]) {
