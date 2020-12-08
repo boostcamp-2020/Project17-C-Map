@@ -19,21 +19,30 @@ final class QuadTreeClusteringService {
         self.treeDataStore = treeDataStore
     }
     
+    func delete(coordinate: Coordinate) {
+        treeDataStore.remove(coordinate: coordinate)
+        // TODO: quad tree에서도 marker를 삭제하는 logic 구현 필요
+    }
+    
     // 클러스터링 Task를 WorkItem으로 반환
     private func clusteringWorkItem(target: BoundingBox,
                                     zoomLevel: Double,
                                     completion: @escaping (([Cluster]) -> Void)) -> DispatchWorkItem {
         DispatchWorkItem { [weak self] in
             guard let self = self else { return }
-            let clusters = self.clustering(target: target, zoomLevel: zoomLevel)
-            completion(clusters)
+            self.clustering(target: target, zoomLevel: zoomLevel) { clusters in
+                DispatchQueue.main.async {
+                    completion(clusters)
+                }
+            }
         }
     }
     
     //cluster 결과값을 반환한다.
-    private func clustering(target: BoundingBox, zoomLevel: Double) -> [Cluster] {
-        let quadTrees = treeDataStore.quadTrees(target: target)
-        return excuteClustering(quadTrees: quadTrees, boundingBox: target, zoomLevel: zoomLevel)
+    private func clustering(target: BoundingBox, zoomLevel: Double, completion: @escaping ([Cluster]) -> Void) {
+        treeDataStore.quadTrees(target: target) {
+            completion(self.excuteClustering(quadTrees: $0, boundingBox: target, zoomLevel: zoomLevel))
+        }
     }
     
     // TODO: 추후 workItem 클러스터링 한개 별로 병렬로 넣는것 vs 한번에 처리하는 것 성능 비교
@@ -62,7 +71,7 @@ final class QuadTreeClusteringService {
                     $0.findCoordinates(region: region)
                 }
                 guard !foundCoordinates.isEmpty else { return }
-                result.append(Cluster(coordinates: foundCoordinates))
+                result.append(Cluster(coordinates: foundCoordinates, boundingBox: region))
             }
             
             bottomLeftY += clusterRegionHeight
@@ -91,8 +100,6 @@ extension QuadTreeClusteringService: ClusteringServicing {
         DispatchQueue.global().async(execute: workItem)
     }
     
-    // cancel시 진행중인 workItem은 취소가 안된다고 함..
-    // 어떻게 할지 공부 더 필요
     func cancel() {}
     
 }

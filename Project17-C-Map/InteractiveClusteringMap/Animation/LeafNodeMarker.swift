@@ -11,10 +11,11 @@ import NMapsMap
 final class LeafNodeMarker: NMFMarker {
     
     let coordinate: Coordinate
-    private(set) var markerLayer = CALayer()
+    let markerLayer: LeafNodeMarkerLayer
     
     required init(coordinate: Coordinate) {
         self.coordinate = coordinate
+        self.markerLayer = LeafNodeMarkerLayer(markerID: coordinate.id)
         super.init()
         
         configure()
@@ -23,12 +24,10 @@ final class LeafNodeMarker: NMFMarker {
     func configure() {
         position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconImage = NMF_MARKER_IMAGE_GREEN
-        markerLayer.bounds = CGRect(x: 0,
-                                    y: 0,
+        markerLayer.bounds = CGRect(x: 0, y: 0,
                                     width: iconImage.imageWidth,
                                     height: iconImage.imageHeight)
         markerLayer.contents = iconImage.image.cgImage
-        markerLayer.contentsGravity = CALayerContentsGravity.resize
     }
 
 }

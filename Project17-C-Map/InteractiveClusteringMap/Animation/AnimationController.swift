@@ -50,7 +50,7 @@ final class AnimationController {
         
         animation.duration = 0.5
         animation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-       
+        
         return animation
     }
     
@@ -81,24 +81,27 @@ final class AnimationController {
     /// bezierPath 추후 구현
     static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
         let bezierPath = UIBezierPath()
-
+        
         bezierPath.move(to: start)
         return bezierPath
     }
     
     static func shake() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
-        let shakeValues: [Double] = [-5, 5, -5, 5, -3, 3, -2, 2, 0]
-        
+        let shakeValues: [Double] = [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0, 0]
+        guard let randomIndex = (0...shakeValues.count).filter({ $0 % 2 == 0 }).randomElement() else {
+            return shakeAnimation
+        }
         let translation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        translation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-        translation.values = shakeValues
-        
         let rotation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+        
+        translation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        translation.values = shakeValues.shifted(by: randomIndex)
+        
         rotation.values = shakeValues.map { (Double.pi * $0) / 180 }
         
         shakeAnimation.animations = [translation, rotation]
-        shakeAnimation.duration = 0.5
+        shakeAnimation.duration = 2
         
         return shakeAnimation
     }

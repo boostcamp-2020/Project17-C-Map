@@ -21,6 +21,14 @@ final class MapController: NSObject {
         configureTileCoverHelper()
     }
     
+    func add(coordinate: Coordinate) {
+//        interactor?.add(coordinate: coordinate)
+    }
+    
+    func delete(coordinate: Coordinate) {
+        interactor?.delete(coordinate: coordinate)
+    }
+    
     private func configureTileCoverHelper() {
         guard let interactiveMapView = interactiveMapView else { return }
         
