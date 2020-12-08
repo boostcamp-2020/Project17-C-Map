@@ -86,7 +86,7 @@ final class MapViewController: UIViewController {
         guard let touch = touches.first else { return }
         let point = touch.location(in: interactiveMapView.mapView)
         
-        for marker in presentedMarkers {
+        for (index, marker) in presentedMarkers.enumerated() {
             guard let leafMarker = marker as? LeafNodeMarker else { continue }
             
             let editButtonRange = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafMarker.coordinate.y, lng: leafMarker.coordinate.x))
@@ -98,12 +98,15 @@ final class MapViewController: UIViewController {
             
             if containX && containY {
                 touchedDeleteLayer = true
-                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] (_) in
+                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
+                    leafMarker.mapView = nil
+                    leafMarker.markerLayer.removeFromSuperlayer()
+                    self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
+                    
                     self?.touchedDeleteLayer = false
-                }, cancelHandler: { [weak self] (_) in
-                    guard let self = self else { return }
-                    self.touchedDeleteLayer = false
+                }, cancelHandler: { [weak self] _ in
+                    self?.touchedDeleteLayer = false
                 })
                 present(alert.createAlertController(), animated: true)
             }
@@ -111,7 +114,7 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began else {
+        guard gesture.state != .began && !isEditMode else {
             return
         }
         if isMarkerLongPressed(gesture: gesture) {
@@ -137,7 +140,6 @@ final class MapViewController: UIViewController {
                     
                     return true
                 }
-            } else {
             }
         }
         return false
@@ -149,7 +151,7 @@ final class MapViewController: UIViewController {
         presentedMarkers.forEach { marker in
             guard let marker = marker as? LeafNodeMarker else { return }
             marker.hidden = true
-            let leafNodeMarkerLayer = LeafNodeMarkerLayer(markerID: marker.coordinate.id)
+            let leafNodeMarkerLayer = marker.markerLayer
             leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0,
                                                 width: marker.iconImage.imageWidth,
                                                 height: marker.iconImage.imageHeight)

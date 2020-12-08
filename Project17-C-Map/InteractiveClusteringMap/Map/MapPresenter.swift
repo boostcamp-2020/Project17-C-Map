@@ -87,6 +87,7 @@ class MapPresenter: ClusterPresentationLogic {
                     leafMarker.mapView = nil
                     return false
                 }
+                
                 return true
             }
         }
