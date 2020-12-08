@@ -16,6 +16,8 @@
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
+		19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */; };
+		19C70EF5257F65C8006C86E4 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C70EF4257F65C8006C86E4 /* PreviewViewController.swift */; };
 		19D16871257BD5D0002888F4 /* TreeDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16870257BD5D0002888F4 /* TreeDataStore.swift */; };
 		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
@@ -120,6 +122,8 @@
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
 		19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
+		19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Attributes.swift"; sourceTree = "<group>"; };
+		19C70EF4257F65C8006C86E4 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		19D16870257BD5D0002888F4 /* TreeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDataStore.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
@@ -225,9 +229,17 @@
 				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
-				19D16870257BD5D0002888F4 /* TreeDataStore.swift */,
+				19C70EF4257F65C8006C86E4 /* PreviewViewController.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		19C202CA257FDCB7009DEA27 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		372216CB256943C800231245 /* VO */ = {
@@ -287,6 +299,7 @@
 		37EB73272562592700AC44D6 /* InteractiveClusteringMap */ = {
 			isa = PBXGroup;
 			children = (
+				19C202CA257FDCB7009DEA27 /* View */,
 				467F953A2576A1A200CD5A3E /* Animation */,
 				19B15C6B2572ABB4008CDEE5 /* Map */,
 				FCE422AD257018E30017416F /* Clustering */,
@@ -297,7 +310,6 @@
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
-				FA194F632576035C003B07D9 /* DBI.swift */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
 				37EB73392562592800AC44D6 /* Info.plist */,
@@ -350,6 +362,7 @@
 			children = (
 				192D34AC256E355500861703 /* QuadTree.swift */,
 				461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */,
+				19D16870257BD5D0002888F4 /* TreeDataStore.swift */,
 			);
 			path = QuadTree;
 			sourceTree = "<group>";
@@ -455,6 +468,7 @@
 				FAC9FD04256E2107009FBB41 /* KCoefficient.swift */,
 				FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */,
 				379DC4C5256E1EC60044DA6C /* KMeans.swift */,
+				FA194F632576035C003B07D9 /* DBI.swift */,
 			);
 			path = KMeans;
 			sourceTree = "<group>";
@@ -672,6 +686,7 @@
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
+				19C70EF5257F65C8006C86E4 /* PreviewViewController.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
@@ -692,6 +707,7 @@
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
+				19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
