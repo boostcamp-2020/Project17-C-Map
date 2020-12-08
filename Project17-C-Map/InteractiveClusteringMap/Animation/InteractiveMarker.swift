@@ -11,7 +11,7 @@ import NMapsMap
 final class InteractiveMarker: NMFMarker {
     
     let coordinate: Coordinate
-    private let coordinatesCount: Int
+    let coordinatesCount: Int
     private(set) var markerLayer: ClusteringMarkerLayer
     let boundingBox: BoundingBox
     

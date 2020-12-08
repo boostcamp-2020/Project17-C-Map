@@ -247,14 +247,20 @@ final class MapViewController: UIViewController {
     func setMarkersHandler(marker: InteractiveMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
-            let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
-            let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
-            let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
-            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 25)
+            var cameraUpdate: NMFCameraUpdate?
+            if marker.coordinatesCount <= 10000 {
+                cameraUpdate = NMFCameraUpdate(fit: marker.boundingBox.boundingBoxToNMGBounds(),
+                                               padding: 25)
+            } else {
+                cameraUpdate = NMFCameraUpdate(scrollTo: marker.position,
+                                           zoomTo: self.interactiveMapView.zoomLevel + 2)
+            }
             
-            cameraUpdate.animation = .easeOut
-            cameraUpdate.animationDuration = 0.6
+            guard let update = cameraUpdate else { return false }
             
+            update.animation = .easeOut
+            update.animationDuration = 0.6
+            self.interactiveMapView.mapView.moveCamera(update)
             let markerLayer = marker.markerLayer
             markerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(
                                                                             lat: marker.coordinate.y,
@@ -262,11 +268,12 @@ final class MapViewController: UIViewController {
             let markerAnimation = AnimationController.zoomTouchAnimation()
             markerLayer.opacity = 0
             self.transparentLayer?.addSublayer(markerLayer)
-            self.interactiveMapView.mapView.moveCamera(cameraUpdate)
+            
             CATransaction.begin()
             marker.hidden = true
             CATransaction.setCompletionBlock {
                 markerLayer.removeFromSuperlayer()
+                marker.hidden = false
             }
             markerLayer.add(markerAnimation, forKey: "dismissMarker")
             CATransaction.commit()
