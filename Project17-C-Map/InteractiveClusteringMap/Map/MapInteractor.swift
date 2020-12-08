@@ -52,6 +52,7 @@ final class MapInteractor: ClusterBusinessLogic {
             DispatchQueue.main.async {
                 self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
             }
+            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
     
