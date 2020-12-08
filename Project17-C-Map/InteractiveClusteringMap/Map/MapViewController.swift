@@ -93,16 +93,15 @@ final class MapViewController: UIViewController {
             
             if containX && containY {
                 touchedDeleteLayer = true
-                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] (_) in
+                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
                     leafMarker.mapView = nil
                     leafMarker.markerLayer.removeFromSuperlayer()
                     self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
                     
                     self?.touchedDeleteLayer = false
-                }, cancelHandler: { [weak self] (_) in
-                    guard let self = self else { return }
-                    self.touchedDeleteLayer = false
+                }, cancelHandler: { [weak self] _ in
+                    self?.touchedDeleteLayer = false
                 })
                 present(alert.createAlertController(), animated: true)
             }
