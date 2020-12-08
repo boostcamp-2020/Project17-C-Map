@@ -29,6 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     }
     
+    func applicationWillTerminate(_ application: UIApplication) {
+        CoreDataStack.shared.save { }
+    }
+    
     // MARK: - Core Data Stack
     lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: containerName)

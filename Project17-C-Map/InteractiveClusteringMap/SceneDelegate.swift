@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        
+        CoreDataStack.shared.save { }
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-
+        CoreDataStack.shared.save { }
     }
 
 }
