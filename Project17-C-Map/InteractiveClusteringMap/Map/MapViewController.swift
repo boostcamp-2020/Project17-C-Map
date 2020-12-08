@@ -255,6 +255,7 @@ final class MapViewController: UIViewController {
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
+    
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         enableGestures()
         
@@ -263,10 +264,6 @@ extension MapViewController: NMFMapViewTouchDelegate {
         presentedMarkers.forEach {
             $0.hidden = false
         }
-        //  머지 후 삭제 예정
-        //        infoWindowForAdd.close()
-        //        infoWindowForDelete.close()
-        //        infoWindowForAdd.position = latlng
-        //        infoWindowForAdd.open(with: mapView)
     }
+    
 }

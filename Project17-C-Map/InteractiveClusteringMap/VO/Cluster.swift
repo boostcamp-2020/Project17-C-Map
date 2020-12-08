@@ -19,7 +19,7 @@ struct Cluster {
         self.boundingBox = boundingBox
         
         if coordinates.count < 100000 {
-        updateBoundingBox(coordinates: coordinates)
+            updateBoundingBox(coordinates: coordinates)
         }
     }
     
