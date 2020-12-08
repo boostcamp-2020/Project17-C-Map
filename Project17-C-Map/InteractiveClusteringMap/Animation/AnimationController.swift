@@ -124,4 +124,15 @@ final class AnimationController {
         return resultAnimation
     }
     
+    static func zoomTouchAnimation() -> CAAnimationGroup {
+        let resultAnimation = CAAnimationGroup()
+        let reduceScale = transformScale(option: .decrease)
+        let fadeOut = fadeInOut(option: .fadeOut)
+        
+        resultAnimation.animations = [reduceScale, fadeOut]
+        resultAnimation.duration = 0.5
+        
+        return resultAnimation
+    }
+    
 }
