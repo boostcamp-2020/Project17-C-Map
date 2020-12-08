@@ -77,8 +77,9 @@ final class MapViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard isEditMode else { return }
-        let touch = touches.first
-        let point = touch!.location(in: interactiveMapView.mapView)
+        guard let touch = touches.first else { return }
+        let point = touch.location(in: interactiveMapView.mapView)
+        
         for marker in presentedLeafNodeMarkers {
             let editButtonRange = interactiveMapView.projectPoint(from: NMGLatLng(lat: marker.coordinate.y, lng: marker.coordinate.x))
             let x = editButtonRange.x - marker.iconImage.imageWidth / 2
@@ -91,18 +92,13 @@ final class MapViewController: UIViewController {
                 let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] (_) in
                     self?.mapController?.delete(coordinate: marker.coordinate)
                     self?.touchedDeleteLayer = false
-                    
                 }, cancelHandler: { [weak self] (_) in
                     guard let self = self else { return }
                     self.touchedDeleteLayer = false
-                    
-                    print("취소")
                 })
-                
                 present(alert.createAlertController(), animated: true)
             }
         }
-        print("탭탭")
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -172,7 +168,6 @@ final class MapViewController: UIViewController {
                     self.animate(marker: leafNodeMarker)
                     self.presentedLeafNodeMarkers.append(leafNodeMarker)
                 } else if let interactiveMarker = marker as? InteractiveMarker {
-                    interactiveMarker.touchHandler = self.deleteMarkerTouchHandler
                     interactiveMarker.mapView = self.interactiveMapView.mapView
                     self.animate(marker: interactiveMarker)
                 }
@@ -241,33 +236,17 @@ final class MapViewController: UIViewController {
         interactiveMapView.showLocationButton = false
     }
     
-    private func addMarkerTouchHandler(overlay: NMFOverlay) -> Bool {
-        guard let mapView = overlay.mapView else {
-            return false
-        }
-        
-        return true
-    }
-    
-    private func deleteMarkerTouchHandler(overlay: NMFOverlay) -> Bool {
-        guard let marker = overlay as? InteractiveMarker else {
-            return true
-        }
-        
-        return true
-    }
-    
 }
 
 extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        print("맵!")
         guard !touchedDeleteLayer else { return }
         
         isEditMode = false
         enableGestures()
         
-        self.transparentLayer!.sublayers?.forEach { $0.removeFromSuperlayer() }
+        self.transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
+        
         presentedLeafNodeMarkers.forEach {
             $0.hidden = false
         }

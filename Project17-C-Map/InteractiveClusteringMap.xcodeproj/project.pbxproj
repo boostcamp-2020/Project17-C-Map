@@ -12,7 +12,7 @@
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
-		192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
+		192D34BE256E36B900861703 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
@@ -60,7 +60,7 @@
 		468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */; };
 		46A048E9257765DA00A99BE6 /* ClusteringMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */; };
 		46A048EE257768BE00A99BE6 /* TranparentLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A048ED257768BE00A99BE6 /* TranparentLayer.swift */; };
-		46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+Subscript.swift */; };
+		46A12E1B256CD099007BDF3E /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+.swift */; };
 		46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		46A12E2F256CED3A007BDF3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB73282562592700AC44D6 /* AppDelegate.swift */; };
 		46A12E3A256CED57007BDF3E /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
@@ -161,7 +161,7 @@
 		468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarker.swift; sourceTree = "<group>"; };
 		46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringMarkerLayer.swift; sourceTree = "<group>"; };
 		46A048ED257768BE00A99BE6 /* TranparentLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranparentLayer.swift; sourceTree = "<group>"; };
-		46A12E1A256CD099007BDF3E /* Array+Subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Subscript.swift"; sourceTree = "<group>"; };
+		46A12E1A256CD099007BDF3E /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
 		46B444572568F095001B79D4 /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
@@ -253,7 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
-				46A12E1A256CD099007BDF3E /* Array+Subscript.swift */,
+				46A12E1A256CD099007BDF3E /* Array+.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -684,7 +684,7 @@
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
 				37B73DE02577B50600C48E99 /* POIInfoMO+CoreDataProperties.swift in Sources */,
 				37B73DDD2577B50600C48E99 /* POIInfoMO+CoreDataClass.swift in Sources */,
-				46A12E1B256CD099007BDF3E /* Array+Subscript.swift in Sources */,
+				46A12E1B256CD099007BDF3E /* Array+.swift in Sources */,
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
@@ -709,9 +709,9 @@
 				FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */,
 				378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */,
 				FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
-				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
+				192D34BE256E36B900861703 /* Array+.swift in Sources */,
 				37FC44802575324900578543 /* KDefineTests.swift in Sources */,
-				192D34BE256E36B900861703 /* Array+Subscript.swift in Sources */,
+				192D34BE256E36B900861703 /* Array+.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */,
 				FCE422DA25701CC00017416F /* Degree.swift in Sources */,

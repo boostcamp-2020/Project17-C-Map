@@ -11,7 +11,7 @@ import NMapsMap
 final class LeafNodeMarker: NMFMarker {
     
     let coordinate: Coordinate
-    private(set) var markerLayer: LeafNodeMarkerLayer
+    let markerLayer: LeafNodeMarkerLayer
     
     required init(coordinate: Coordinate) {
         self.coordinate = coordinate
