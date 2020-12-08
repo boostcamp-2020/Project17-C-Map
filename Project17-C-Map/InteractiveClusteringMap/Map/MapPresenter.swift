@@ -12,6 +12,7 @@ protocol ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster])
     func removePresentMarkers(tileIds: [CLong])
+    func delete(coordinate: Coordinate)
     
 }
 
@@ -70,6 +71,25 @@ class MapPresenter: ClusterPresentationLogic {
             }
         }
         
+    }
+    
+    func delete(coordinate: Coordinate) {
+        let targetID = coordinate.id
+        
+        for (markersKey, markersValue) in presentMarkers {
+            presentMarkers[markersKey] = markersValue.filter { marker in
+                guard let leafMarker = marker as? LeafNodeMarker else {
+                    return true
+                }
+                let leafMarkerID = leafMarker.coordinate.id
+                
+                guard targetID != leafMarkerID else {
+                    leafMarker.mapView = nil
+                    return false
+                }
+                return true
+            }
+        }
     }
     
 }
