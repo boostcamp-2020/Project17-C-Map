@@ -95,7 +95,10 @@ struct KMeans {
     ///   - centers: 현재 중심인 센터
     /// - Returns: 분류한 points를 가지는 clusters를 리턴한다. (Cluster)
     private func classify(_ points: [Coordinate], from centers: [Coordinate]) -> [Cluster] {
-        var clusters = [Cluster](repeating: Cluster(coordinates: []), count: centers.count)
+        var clusters = [Cluster](repeating: Cluster(coordinates: [],
+                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 0, y: 0),
+                                                                             bottomLeft: Coordinate(x: 0, y: 0))),
+                                 count: centers.count)
         
         points.forEach { point in
             let centerIndex = indexOfNearestCenter(point, centers: centers)
