@@ -64,9 +64,7 @@ final class MapViewController: UIViewController {
         polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
         polygonOverlay?.outlineWidth = 3
         polygonOverlay?.mapView = interactiveMapView.mapView
-        
-        interactiveMapView.mapView.addCameraDelegate(delegate: self)
-        
+
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
         
