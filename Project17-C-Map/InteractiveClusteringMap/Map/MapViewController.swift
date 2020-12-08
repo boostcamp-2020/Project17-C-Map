@@ -248,11 +248,26 @@ final class MapViewController: UIViewController {
             let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
             let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
             let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
-            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
+            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 25)
             
             cameraUpdate.animation = .easeOut
             cameraUpdate.animationDuration = 0.6
+            
+            let markerLayer = marker.markerLayer
+            markerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(
+                                                                            lat: marker.coordinate.y,
+                                                                            lng: marker.coordinate.x))
+            let markerAnimation = AnimationController.zoomTouchAnimation()
+            markerLayer.opacity = 0
+            self.transparentLayer?.addSublayer(markerLayer)
             self.interactiveMapView.mapView.moveCamera(cameraUpdate)
+            CATransaction.begin()
+            marker.hidden = true
+            CATransaction.setCompletionBlock {
+                markerLayer.removeFromSuperlayer()
+            }
+            markerLayer.add(markerAnimation, forKey: "dismissMarker")
+            CATransaction.commit()
             
             return true
         }
