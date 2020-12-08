@@ -9,6 +9,8 @@ import Foundation
 
 protocol TreeDataStorable {
     func quadTrees(target: BoundingBox) -> [QuadTree]
+    func remove(coordinate: Coordinate)
+    func add(coordinate: Coordinate)
 }
 
 class TreeDataStore: TreeDataStorable {
@@ -25,6 +27,18 @@ class TreeDataStore: TreeDataStorable {
     //target에 속한 쿼드트리를 찾아서 반환한다.
     func quadTrees(target: BoundingBox) -> [QuadTree] {
         return quadTreeWithBoundary.filter { $0.key.isOverlapped(with: target) }.map {$0.value}
+    }
+    
+    func remove(coordinate: Coordinate) {
+        let trees = quadTreeWithBoundary.filter { $0.key.contains(coordinate: coordinate) }
+        trees.forEach {
+            $0.value.remove(coordinate: coordinate)
+        }
+    }
+    
+    func add(coordinate: Coordinate) {
+        let trees = quadTreeWithBoundary.filter { $0.key.contains(coordinate: coordinate) }
+        trees.first?.value.insert(coordinate: coordinate)
     }
     
     private func makeQuadTrees() {
