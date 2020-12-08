@@ -8,7 +8,6 @@
 import Foundation
 
 protocol TreeDataStorable {
-//    func quadTrees(target: BoundingBox) -> [QuadTree]
     func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void)
     func remove(coordinate: Coordinate)
     func add(coordinate: Coordinate)
