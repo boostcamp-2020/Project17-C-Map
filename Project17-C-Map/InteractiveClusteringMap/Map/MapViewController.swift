@@ -243,8 +243,8 @@ final class MapViewController: UIViewController {
             let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
             let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
             let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
-            print(bounds)
             let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
+            
             cameraUpdate.animation = .easeOut
             cameraUpdate.animationDuration = 0.6
             self.interactiveMapView.mapView.moveCamera(cameraUpdate)
