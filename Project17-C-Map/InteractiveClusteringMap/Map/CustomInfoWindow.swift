@@ -11,6 +11,7 @@ class CustomInfoWindowView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -41,7 +42,7 @@ class CustomInfoWindowView: UIView {
         titleLabel.sizeToFit()
         categoryLabel.sizeToFit()
         
-        let width = titleLabel.frame.size.width + categoryLabel.frame.size.width + 500
+        let width = titleLabel.frame.size.width + categoryLabel.frame.size.width + 178
         frame = CGRect(x: 0, y: 0, width: width, height: 100)
         layoutIfNeeded()
     }

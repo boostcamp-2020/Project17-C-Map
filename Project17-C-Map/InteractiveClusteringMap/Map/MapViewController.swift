@@ -187,9 +187,9 @@ final class MapViewController: UIViewController {
             
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 self.animate(marker: leafNodeMarker)
-                leafNodeMarker.userInfo["title"] = "Marker 1"
-                leafNodeMarker.userInfo["category"] = "카페"
-                leafNodeMarker.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+                leafNodeMarker.userInfo["title"] = "Marker 사과사과 충주사과!"
+                leafNodeMarker.userInfo["category"] = "양대창 어라아아아아아ㅏㅏㅏㅏ"
+                leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     self?.infoWindow.open(with: leafNodeMarker)
                     return true
                 }

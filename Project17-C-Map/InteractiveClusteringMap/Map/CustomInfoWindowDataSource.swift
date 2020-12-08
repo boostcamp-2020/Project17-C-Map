@@ -21,8 +21,7 @@ class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
         
         guard let infoWindow = overlay as? NMFInfoWindow,
               infoWindow.marker != nil else { return rootView }
-        
-        print(infoWindow.marker?.userInfo)
+        infoWindow.offsetX = -136
         let title = infoWindow.marker?.userInfo["title"] as? String ?? "성주"
         let category = infoWindow.marker?.userInfo["category"] as? String ?? "은정"
         
@@ -31,4 +30,3 @@ class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
         return rootView
     }
 }
-
