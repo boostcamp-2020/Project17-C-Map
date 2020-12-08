@@ -89,7 +89,7 @@ final class AnimationController {
     static func shake() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
         let shakeValues: [Double] = [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0, 0]
-        guard let randomIndex = (0...10).filter({ $0 % 2 == 0 }).randomElement() else {
+        guard let randomIndex = (0...shakeValues.count).filter({ $0 % 2 == 0 }).randomElement() else {
             return shakeAnimation
         }
         let translation = CAKeyframeAnimation(keyPath: "transform.translation.x")
