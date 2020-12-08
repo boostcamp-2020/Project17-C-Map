@@ -8,9 +8,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomInfoWindow">
+            <connections>
+                <outlet property="categoryLabel" destination="pGH-yI-kfA" id="wn3-qB-3nQ"/>
+                <outlet property="titleLabel" destination="GMb-lm-Ykj" id="ar4-gb-EFp"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomInfoWindowView" customModule="InteractiveClusteringMap" customModuleProvider="target">
+        <view contentMode="scaleToFill" restorationIdentifier="CustomInfoWindow" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="453" height="105"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -59,7 +64,7 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="f16-B7-6HG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="EaK-fY-t32"/>
                 <constraint firstItem="NcR-Bl-lUT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="PF0-R9-nvO"/>
@@ -76,10 +81,6 @@
                 <constraint firstItem="pGH-yI-kfA" firstAttribute="leading" secondItem="GMb-lm-Ykj" secondAttribute="trailing" constant="10" id="zXK-Tx-zMy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <connections>
-                <outlet property="categoryLabel" destination="pGH-yI-kfA" id="4B7-8c-XPr"/>
-                <outlet property="titleLabel" destination="GMb-lm-Ykj" id="OG9-NO-29K"/>
-            </connections>
             <point key="canvasLocation" x="87.681159420289859" y="61.272321428571423"/>
         </view>
     </objects>
@@ -90,9 +91,6 @@
         <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
