@@ -41,6 +41,7 @@ final class CoreDataStack: DataManagable {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+        save(successHandler: nil)
     }
     
     func delete(coordinate: Coordinate) {
@@ -51,10 +52,12 @@ final class CoreDataStack: DataManagable {
         objects.forEach {
             context.delete($0)
         }
+        save(successHandler: nil)
     }
     
     func add(poi: POI) {
         setValue(POI(x: poi.x, y: poi.y, id: poi.id, name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
+        save(successHandler: nil)
     }
     
     func update(poi: POI) {
@@ -63,6 +66,7 @@ final class CoreDataStack: DataManagable {
             return
         }
         objects.first?.update(poi)
+        save(successHandler: nil)
     }
     
     func fetch() -> [POIMO] {
