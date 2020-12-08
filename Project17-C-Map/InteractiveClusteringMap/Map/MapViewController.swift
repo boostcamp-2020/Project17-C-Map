@@ -148,34 +148,28 @@ final class MapViewController: UIViewController {
     
     private func create(markers: [NMFMarker]) {
         markers.forEach { marker in
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                
-                marker.mapView = self.interactiveMapView.mapView
-                marker.hidden = true
-                
-                if let leafNodeMarker = marker as? LeafNodeMarker {
-                    self.animate(marker: leafNodeMarker)
-                    self.presentedLeafNodeMarkers.append(leafNodeMarker)
-                } else if let interactiveMarker = marker as? InteractiveMarker {
-                    interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
-                        self?.infoWindowForAdd.close()
-                        self?.infoWindowForDelete.open(with: interactiveMarker)
-                        return true
-                    }
-                    self.animate(marker: interactiveMarker)
+            marker.mapView = interactiveMapView.mapView
+            marker.hidden = true
+
+            if let leafNodeMarker = marker as? LeafNodeMarker {
+                animate(marker: leafNodeMarker)
+                presentedLeafNodeMarkers.append(leafNodeMarker)
+            } else if let interactiveMarker = marker as? InteractiveMarker {
+                interactiveMarker.touchHandler = { [weak self] (_) -> Bool in
+                    self?.infoWindowForAdd.close()
+                    self?.infoWindowForDelete.open(with: interactiveMarker)
+                    return true
                 }
+                self.animate(marker: interactiveMarker)
             }
         }
     }
     
     private func remove(markers: [NMFMarker]) {
         markers.forEach { marker in
-            DispatchQueue.main.async {
-                marker.mapView = nil
-            }
+            marker.mapView = nil
             if let leafNodeMarker = marker as? LeafNodeMarker {
-                self.presentedLeafNodeMarkers.removeAll { $0 == leafNodeMarker }
+                presentedLeafNodeMarkers.removeAll { $0 == leafNodeMarker }
             }
         }
     }
