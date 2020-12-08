@@ -7,6 +7,16 @@
 
 import XCTest
 
+struct MockupDataStore: TreeDataStorable {
+    
+    func quadTrees(target: BoundingBox) -> [QuadTree] {
+        [Mockup().mockupQuadTree()]
+    }
+    func remove(coordinate: Coordinate) {}
+    func add(coordinate: Coordinate) {}
+ 
+}
+
 class QuadTreeServiceTests: XCTestCase {
     
     private let coordinates = [
@@ -21,8 +31,8 @@ class QuadTreeServiceTests: XCTestCase {
     private var quadTreeClusteringService: QuadTreeClusteringService?
     
     override func setUpWithError() throws {
-        quadTreeClusteringService = QuadTreeClusteringService(coordinates: coordinates,
-                                                              boundingBox: boundingBox)
+        let dataStore = MockupDataStore()
+        quadTreeClusteringService = QuadTreeClusteringService(treeDataStore: dataStore)
     }
     
     func test_QuadTreeClusteringService_init() {

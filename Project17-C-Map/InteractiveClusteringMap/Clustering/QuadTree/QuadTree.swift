@@ -16,7 +16,7 @@ final class QuadTree {
     private var bottomLeft: QuadTree?
     private var bottomRight: QuadTree?
     
-    private var boundingBox: BoundingBox
+    private(set) var boundingBox: BoundingBox
     private let nodeCapacity: Int
     
     private lazy var minX: Double = boundingBox.topRight.x
@@ -78,6 +78,19 @@ final class QuadTree {
             return true
         }
         return false
+    }
+    
+    func remove(coordinate: Coordinate) {
+        guard boundingBox.contains(coordinate: coordinate) else { return }
+        
+        if coordinates.contains(coordinate) {
+            coordinates.removeAll { $0 == coordinate }
+            return
+        }
+        topLeft?.remove(coordinate: coordinate)
+        topRight?.remove(coordinate: coordinate)
+        bottomLeft?.remove(coordinate: coordinate)
+        bottomRight?.remove(coordinate: coordinate)
     }
     
     // 모든 Coordinate가 insert 되면 외부에서 한번 호출 -> 자식까지 모두 BoundingBox 조절

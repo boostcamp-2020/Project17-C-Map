@@ -20,9 +20,9 @@ final class MapInteractor: ClusterBusinessLogic {
     private let presenter: ClusterPresentationLogic
     private let quadTreeClusteringService: ClusteringServicing
     
-    init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
+    init(treeDataStore: TreeDataStorable, presenter: ClusterPresentationLogic) {
         self.presenter = presenter
-        self.quadTreeClusteringService = QuadTreeClusteringService(poiService: poiService)
+        self.quadTreeClusteringService = QuadTreeClusteringService(treeDataStore: treeDataStore)
     }
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
