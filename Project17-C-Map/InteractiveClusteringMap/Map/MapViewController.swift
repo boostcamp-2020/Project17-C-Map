@@ -301,6 +301,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         guard !touchedDeleteLayer else { return }
+        
         infoWindow.close()
         isEditMode = false
         enableGestures()
