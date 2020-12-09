@@ -23,6 +23,10 @@ class CustomInfoWindowView: UIView {
         self.configureNib()
     }
     
+    @IBAction func touchedEditButton(_ sender: UIButton) {
+        print("에딧에딧")
+    }
+    
     var viewFromNib: UIView? {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: "CustomInfoWindow", bundle: bundle)

@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomInfoWindow">
             <connections>
                 <outlet property="categoryLabel" destination="pGH-yI-kfA" id="wn3-qB-3nQ"/>
-                <outlet property="editButton" destination="0bD-6V-x93" id="VM9-K6-LF8"/>
                 <outlet property="titleLabel" destination="GMb-lm-Ykj" id="ar4-gb-EFp"/>
             </connections>
         </placeholder>
@@ -21,27 +20,28 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgInfowindow12" translatesAutoresizingMaskIntoConstraints="NO" id="htD-FF-PQ5">
-                    <rect key="frame" x="120" y="5" width="30" height="100"/>
+                    <rect key="frame" x="131" y="5" width="30" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="hdU-2R-f90"/>
                         <constraint firstAttribute="height" constant="100" id="tAE-qm-kV2"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgInfowindow11" translatesAutoresizingMaskIntoConstraints="NO" id="NcR-Bl-lUT">
-                    <rect key="frame" x="10" y="11" width="112" height="100"/>
+                    <rect key="frame" x="10" y="11" width="123" height="100"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="112" id="8Kn-ql-I58"/>
+                        <constraint firstAttribute="width" constant="123" id="8Kn-ql-I58"/>
                         <constraint firstAttribute="height" constant="100" id="kZQ-DT-VrH"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgInfowindow13" translatesAutoresizingMaskIntoConstraints="NO" id="f16-B7-6HG">
-                    <rect key="frame" x="146" y="11" width="65" height="100"/>
+                    <rect key="frame" x="160" y="11" width="110" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="BBS-jn-5UO"/>
+                        <constraint firstAttribute="width" constant="110" id="Wm6-Qw-gEf"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="여기는 카테고리" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pGH-yI-kfA">
-                    <rect key="frame" x="31" y="54.5" width="89" height="17"/>
+                    <rect key="frame" x="31" y="54.5" width="255" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" systemColor="secondaryLabelColor"/>
                     <nil key="highlightedColor"/>
@@ -52,32 +52,21 @@
                     <color key="textColor" red="0.27820330859999998" green="0.61967003350000005" blue="0.85885983710000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0bD-6V-x93">
-                    <rect key="frame" x="166" y="30" width="26" height="36"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                    <color key="tintColor" red="0.1647058824" green="0.23529411759999999" blue="0.50980392159999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" image="square.and.pencil" catalog="system">
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="large" weight="heavy">
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                        </preferredSymbolConfiguration>
-                    </state>
-                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="pGH-yI-kfA" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="f16-B7-6HG" secondAttribute="trailing" constant="16" id="1JN-Jv-vI8"/>
+                <constraint firstItem="f16-B7-6HG" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GMb-lm-Ykj" secondAttribute="trailing" constant="16" id="8el-sO-Cdl"/>
                 <constraint firstItem="pGH-yI-kfA" firstAttribute="leading" secondItem="GMb-lm-Ykj" secondAttribute="leading" id="AQm-K6-u2D"/>
                 <constraint firstItem="f16-B7-6HG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="EaK-fY-t32"/>
-                <constraint firstItem="0bD-6V-x93" firstAttribute="trailing" secondItem="f16-B7-6HG" secondAttribute="trailing" constant="-20" id="FfP-23-FWI"/>
-                <constraint firstItem="0bD-6V-x93" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GMb-lm-Ykj" secondAttribute="trailing" constant="16" id="It6-UW-tW0"/>
                 <constraint firstItem="NcR-Bl-lUT" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="PF0-R9-nvO"/>
                 <constraint firstItem="pGH-yI-kfA" firstAttribute="top" secondItem="GMb-lm-Ykj" secondAttribute="bottom" constant="5" id="ScL-66-wiw"/>
-                <constraint firstItem="0bD-6V-x93" firstAttribute="top" secondItem="f16-B7-6HG" secondAttribute="top" constant="19" id="Tsf-dB-59I"/>
                 <constraint firstItem="f16-B7-6HG" firstAttribute="top" secondItem="NcR-Bl-lUT" secondAttribute="top" id="W8R-MW-9SO"/>
                 <constraint firstItem="f16-B7-6HG" firstAttribute="top" secondItem="htD-FF-PQ5" secondAttribute="top" constant="6" id="bP2-2a-PLt"/>
                 <constraint firstItem="htD-FF-PQ5" firstAttribute="leading" secondItem="NcR-Bl-lUT" secondAttribute="trailing" constant="-2" id="hTx-10-mJR"/>
                 <constraint firstItem="GMb-lm-Ykj" firstAttribute="top" secondItem="NcR-Bl-lUT" secondAttribute="top" constant="17" id="nM4-Rv-kvF"/>
-                <constraint firstItem="f16-B7-6HG" firstAttribute="leading" secondItem="htD-FF-PQ5" secondAttribute="trailing" constant="-4" id="nc3-Jd-fLW"/>
+                <constraint firstItem="f16-B7-6HG" firstAttribute="leading" secondItem="htD-FF-PQ5" secondAttribute="trailing" constant="-1" id="nc3-Jd-fLW"/>
                 <constraint firstItem="GMb-lm-Ykj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="31" id="qPT-U8-MgV"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -88,7 +77,6 @@
         <image name="imgInfowindow11" width="24" height="88"/>
         <image name="imgInfowindow12" width="30" height="88"/>
         <image name="imgInfowindow13" width="27" height="88"/>
-        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
