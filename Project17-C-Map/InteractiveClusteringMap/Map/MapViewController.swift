@@ -19,6 +19,9 @@ final class MapViewController: UIViewController {
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
     
+    let infoWindow = NMFInfoWindow()
+    var customInfoWindowDataSource = CustomInfoWindowDataSource()
+    
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
     
@@ -36,6 +39,7 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
+        configureInfoWindow()
     }
     
     private func dependencyInject() {
@@ -72,6 +76,17 @@ final class MapViewController: UIViewController {
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         gestureRecognizer.minimumPressDuration = 0.7
         interactiveMapView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    private func configureInfoWindow() {
+        infoWindow.anchor = CGPoint(x: 0, y: 1)
+        infoWindow.dataSource = customInfoWindowDataSource
+        infoWindow.offsetX = -40
+        infoWindow.offsetY = -5
+        infoWindow.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+            self?.infoWindow.close()
+            return true
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -168,6 +183,13 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
+                leafNodeMarker.userInfo["title"] = "Markㅏㅓㅇ라ㅓㅏ너라ㅣ어ㅣㅁ러ㅣㅓㄹㅇ니ㅓ과!"
+                leafNodeMarker.userInfo["category"] = "양대창 어라아아아아아ㅏㅏㅏㅏ"
+                leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
+                    self?.infoWindow.open(with: leafNodeMarker)
+                    return true
+                }
+                
             } else if let interactiveMarker = marker as? InteractiveMarker {
                 self.setMarkersHandler(marker: interactiveMarker)
                 self.animate(marker: interactiveMarker)
@@ -277,6 +299,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         guard !touchedDeleteLayer else { return }
         
+        infoWindow.close()
         isEditMode = false
         enableGestures()
         
