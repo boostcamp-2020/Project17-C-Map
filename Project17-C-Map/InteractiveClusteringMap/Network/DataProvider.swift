@@ -58,6 +58,45 @@ struct LocalDataProvider: DataProvided {
     }
 }
 
+struct HTTPDataProvider: DataProvided {
+    
+    static let shared = HTTPDataProvider()
+
+    private init() {}
+    
+    private let session = URLSession(configuration: .default)
+    private let concurrentQueue = DispatchQueue(label: Name.dataProviderConcurrentQueue,
+                                                       qos: .utility,
+                                                       attributes: .concurrent)
+    
+    func data(path: String, completion: @escaping (Data?) -> Void) {
+        guard let url = URL(string: path)
+        else {
+            return completion(nil)
+        }
+        
+        concurrentQueue.async {
+            session.dataTask(with: url) { (data, _, _) in
+                completion(data)
+            }.resume()
+        }
+    }
+    
+    func imageURL(path: String, completion: @escaping (URL?) -> Void) {
+        guard let base = URL(string: path)
+        else {
+            return completion(nil)
+        }
+        
+        concurrentQueue.async {
+            URLSession.shared.downloadTask(with: base) { (url, _, _) in
+                completion(url)
+            }.resume()
+        }
+    }
+
+}
+
 private enum Name {
     static let jsonType: String = "json"
     static let dataProviderConcurrentQueue = "DataProviderConcurrentQueue"
