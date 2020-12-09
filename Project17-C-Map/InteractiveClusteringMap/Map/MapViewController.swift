@@ -273,7 +273,6 @@ final class MapViewController: UIViewController {
             marker.hidden = true
             CATransaction.setCompletionBlock {
                 markerLayer.removeFromSuperlayer()
-                marker.hidden = false
             }
             markerLayer.add(markerAnimation, forKey: "dismissMarker")
             CATransaction.commit()
