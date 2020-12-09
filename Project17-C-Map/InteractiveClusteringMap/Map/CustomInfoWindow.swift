@@ -11,7 +11,6 @@ class CustomInfoWindowView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var editButton: UIButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -20,11 +19,7 @@ class CustomInfoWindowView: UIView {
     
     init() {
         super.init(frame: .zero)
-        self.configureNib()
-    }
-    
-    @IBAction func touchedEditButton(_ sender: UIButton) {
-        print("에딧에딧")
+        configureNib()
     }
     
     var viewFromNib: UIView? {
