@@ -136,7 +136,7 @@ final class MapViewController: UIViewController {
         if pressedMarker is LeafNodeMarker {
             showEditMode()
         } else if pressedMarker is ClusteringMarker {
-           // 클러스터 롱터치 구현 부분
+            // 클러스터 롱터치 구현 부분
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
         }
@@ -220,20 +220,19 @@ final class MapViewController: UIViewController {
         
         if let leafNodeMarker = marker as? LeafNodeMarker {
             markerLayer = leafNodeMarker.markerLayer
-           markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
-                                                                                   lng: leafNodeMarker.coordinate.x))
+            markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+                                                                             lng: leafNodeMarker.coordinate.x))
             
         } else if let clusteringMarker = marker as? ClusteringMarker {
             markerLayer = clusteringMarker.markerLayer
             markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: clusteringMarker.coordinate.y,
-                                                                                    lng: clusteringMarker.coordinate.x))
+                                                                             lng: clusteringMarker.coordinate.x))
         }
         guard let layer = markerLayer,
               let position = markerPosition else { return }
-       
+        
         transparentLayer?.addSublayer(layer)
         marker.animate(position: position)
-        
     }
     
     private func enableGestures() {
