@@ -40,6 +40,10 @@ final class MapController: NSObject {
         interactor?.remove(coordinate: coordinate)
     }
     
+    func fetchInfo(by coordinate: Coordinate) -> POIInfo? {
+        return interactor?.fetch(coordinate: coordinate)
+    }
+    
     private func configureTileCoverHelper() {
         guard let interactiveMapView = interactiveMapView else { return }
         
