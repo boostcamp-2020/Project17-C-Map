@@ -136,10 +136,9 @@ final class MapViewController: UIViewController {
         if pressedMarker is LeafNodeMarker {
             showEditMode()
         } else if pressedMarker is ClusteringMarker {
-           print("클러스터")
+           // 클러스터 롱터치 구현 부분
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
-            print("빈 공간")
         }
     }
     
@@ -172,10 +171,8 @@ final class MapViewController: UIViewController {
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
             self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
-            
-        }, cancelHandler: { [weak self] _ in
-            self?.touchedDeleteLayer = false
-        })
+        }, cancelHandler: nil)
+        
         present(alert.createAlertController(), animated: true)
     }
     

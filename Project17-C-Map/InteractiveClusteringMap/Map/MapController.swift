@@ -35,7 +35,7 @@ final class MapController: NSObject {
     }
     
     func delete(coordinate: Coordinate) {
-        interactor?.delete(coordinate: coordinate)
+        interactor?.remove(coordinate: coordinate)
     }
     
     private func configureTileCoverHelper() {
