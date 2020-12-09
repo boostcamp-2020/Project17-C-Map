@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct Places: Codable {
-    
-    let places: [POI]
-    
+struct Place {
+    let coordinate: Coordinate
+    let info: POIInfo
+}
+
+extension Place: Hashable {
+    static func == (lhs: Place, rhs: Place) -> Bool {
+        return lhs.coordinate == rhs.coordinate &&
+            lhs.info == rhs.info
+    }
 }
