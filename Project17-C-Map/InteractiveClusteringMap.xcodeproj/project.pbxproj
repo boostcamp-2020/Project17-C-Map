@@ -84,6 +84,10 @@
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
 		FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
+		FC5B24852580B14500450EEF /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B24842580B14500450EEF /* PlaceCell.swift */; };
+		FC5B248A2580C75D00450EEF /* PlaceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B24892580C75D00450EEF /* PlaceHeaderView.swift */; };
+		FC5B248F2580CF2D00450EEF /* Places.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B248E2580CF2D00450EEF /* Places.swift */; };
+		FC5B249825810AC000450EEF /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5B249725810AC000450EEF /* APIService.swift */; };
 		FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
@@ -183,6 +187,10 @@
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
+		FC5B24842580B14500450EEF /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		FC5B24892580C75D00450EEF /* PlaceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHeaderView.swift; sourceTree = "<group>"; };
+		FC5B248E2580CF2D00450EEF /* Places.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Places.swift; sourceTree = "<group>"; };
+		FC5B249725810AC000450EEF /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
 		FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
 		FCDD0531257E444F00220467 /* InteractiveMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
@@ -238,6 +246,8 @@
 			isa = PBXGroup;
 			children = (
 				19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */,
+				FC5B24842580B14500450EEF /* PlaceCell.swift */,
+				FC5B24892580C75D00450EEF /* PlaceHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -245,13 +255,14 @@
 		372216CB256943C800231245 /* VO */ = {
 			isa = PBXGroup;
 			children = (
-				37352CDF25695EE000CAFDFD /* Place.swift */,
 				372216CC256943D300231245 /* POI.swift */,
 				376A56532576A7B900D1AE5A /* POIInfo.swift */,
 				FCE422AF2570194B0017416F /* Coordinate.swift */,
 				46A12E22256CD4DB007BDF3E /* BoundingBox.swift */,
 				FCE422B7257019650017416F /* Cluster.swift */,
 				378E83432574F00C00E25A9F /* Clusters.swift */,
+				37352CDF25695EE000CAFDFD /* Place.swift */,
+				FC5B248E2580CF2D00450EEF /* Places.swift */,
 			);
 			path = VO;
 			sourceTree = "<group>";
@@ -299,6 +310,7 @@
 		37EB73272562592700AC44D6 /* InteractiveClusteringMap */ = {
 			isa = PBXGroup;
 			children = (
+				FC5B249625810AAF00450EEF /* Network */,
 				19C202CA257FDCB7009DEA27 /* View */,
 				467F953A2576A1A200CD5A3E /* Animation */,
 				19B15C6B2572ABB4008CDEE5 /* Map */,
@@ -448,6 +460,14 @@
 				FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */,
 			);
 			path = Centroids;
+			sourceTree = "<group>";
+		};
+		FC5B249625810AAF00450EEF /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FC5B249725810AC000450EEF /* APIService.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		FCE422AD257018E30017416F /* Clustering */ = {
@@ -671,6 +691,7 @@
 				FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
+				FC5B248A2580C75D00450EEF /* PlaceHeaderView.swift in Sources */,
 				46EDEA43257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
 				19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */,
@@ -687,6 +708,7 @@
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				19C70EF5257F65C8006C86E4 /* PreviewViewController.swift in Sources */,
+				FC5B249825810AC000450EEF /* APIService.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */,
@@ -695,6 +717,7 @@
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
+				FC5B248F2580CF2D00450EEF /* Places.swift in Sources */,
 				37B73DDC2577B50600C48E99 /* POIMO+CoreDataClass.swift in Sources */,
 				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
@@ -711,6 +734,7 @@
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
+				FC5B24852580B14500450EEF /* PlaceCell.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
