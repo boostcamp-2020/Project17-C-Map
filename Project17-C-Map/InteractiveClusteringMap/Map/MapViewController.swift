@@ -48,7 +48,7 @@ final class MapViewController: UIViewController {
         let poiService = POIService(dataManager: dataManager)
         let treeDataStore = TreeDataStore(poiService: poiService)
         let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
-        let mapInteractor: ClusterBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
+        let mapInteractor: MapBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
     

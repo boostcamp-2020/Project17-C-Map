@@ -8,13 +8,15 @@
 import Foundation
 import NMapsMap
 
+typealias MapBusinessLogic = ClusterBusinessLogic & DataBusinessLogic
+
 final class MapController: NSObject {
     
     private var tileCoverHelper: NMFTileCoverHelper?
-    private var interactor: ClusterBusinessLogic?
+    private var interactor: (MapBusinessLogic)?
     private weak var interactiveMapView: InteractiveMapView?
     
-    init(mapView: InteractiveMapView, interactor: ClusterBusinessLogic) {
+    init(mapView: InteractiveMapView, interactor: MapBusinessLogic) {
         super.init()
         self.interactiveMapView = mapView
         self.interactor = interactor
@@ -72,25 +74,6 @@ private extension MapController {
     
     enum QueueName {
         static let serial: String = "MapController.TileChangedEventQueue"
-    }
-    
-}
-
-enum Index {
-    static let BL: Int = 0
-    static let TR: Int = 1
-}
-
-extension NMGLatLngBounds {
-    
-    func makeBoundingBox() -> BoundingBox {
-        let BL = self.boundsLatLngs[Index.BL]
-        let TR = self.boundsLatLngs[Index.TR]
-        
-        let bottomLeft = Coordinate(x: BL.lng, y: BL.lat)
-        let topRight = Coordinate(x: TR.lng, y: TR.lat)
-        
-        return BoundingBox(topRight: topRight, bottomLeft: bottomLeft)
     }
     
 }

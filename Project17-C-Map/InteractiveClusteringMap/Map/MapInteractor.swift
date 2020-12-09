@@ -10,19 +10,27 @@ import Foundation
 protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
-    func add(tileId: CLong, coordinate: Coordinate)
     func remove(tileIds: [CLong])
+    
+    
+}
+
+protocol DataBusinessLogic: class {
+    
+    func add(tileId: CLong, coordinate: Coordinate)
     func remove(coordinate: Coordinate)
     
 }
 
-final class MapInteractor: ClusterBusinessLogic {
+final class MapInteractor: MapBusinessLogic {
     
     private let presenter: ClusterPresentationLogic
     private let quadTreeClusteringService: ClusteringServicing
+    private let treeDataStore: TreeDataStorable
     
     init(treeDataStore: TreeDataStorable, presenter: ClusterPresentationLogic) {
         self.presenter = presenter
+        self.treeDataStore = treeDataStore
         self.quadTreeClusteringService = QuadTreeClusteringService(treeDataStore: treeDataStore)
     }
     
@@ -56,12 +64,12 @@ final class MapInteractor: ClusterBusinessLogic {
     }
     
     func add(tileId: CLong, coordinate: Coordinate) {
-        quadTreeClusteringService.add(coordinate: coordinate)
+        treeDataStore.add(coordinate: coordinate)
         presenter.add(tileId: tileId, coordinate: coordinate)
     }
     
     func remove(coordinate: Coordinate) {
-        quadTreeClusteringService.delete(coordinate: coordinate)
+        treeDataStore.remove(coordinate: coordinate)
         presenter.delete(coordinate: coordinate)
     }
     
