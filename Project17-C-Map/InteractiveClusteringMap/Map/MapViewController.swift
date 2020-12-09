@@ -68,9 +68,7 @@ final class MapViewController: UIViewController {
         polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
         polygonOverlay?.outlineWidth = 3
         polygonOverlay?.mapView = interactiveMapView.mapView
-        
-        interactiveMapView.mapView.addCameraDelegate(delegate: self)
-        
+
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
         
@@ -92,6 +90,13 @@ final class MapViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let sublayers = transparentLayer?.sublayers else { return }
+        if !isEditMode {
+            sublayers.forEach { sublayer in
+                sublayer.removeAllAnimations()
+                sublayer.removeFromSuperlayer()
+            }
+        }
         guard isEditMode else { return }
         guard let touch = touches.first else { return }
         let point = touch.location(in: interactiveMapView.mapView)
@@ -265,11 +270,26 @@ final class MapViewController: UIViewController {
             let southWest = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
             let northEast = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
             let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
-            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 50)
+            let cameraUpdate = NMFCameraUpdate(fit: bounds, padding: 25)
             
             cameraUpdate.animation = .easeOut
             cameraUpdate.animationDuration = 0.6
+            
+            let markerLayer = marker.markerLayer
+            markerLayer.position = self.interactiveMapView.projectPoint(from: NMGLatLng(
+                                                                            lat: marker.coordinate.y,
+                                                                            lng: marker.coordinate.x))
+            let markerAnimation = AnimationController.zoomTouchAnimation()
+            markerLayer.opacity = 0
+            self.transparentLayer?.addSublayer(markerLayer)
             self.interactiveMapView.mapView.moveCamera(cameraUpdate)
+            CATransaction.begin()
+            marker.hidden = true
+            CATransaction.setCompletionBlock {
+                markerLayer.removeFromSuperlayer()
+            }
+            markerLayer.add(markerAnimation, forKey: "dismissMarker")
+            CATransaction.commit()
             
             return true
         }

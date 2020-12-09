@@ -34,7 +34,10 @@ class TreeDataStore: TreeDataStorable {
     }
     
     func remove(coordinate: Coordinate) {
+        poiService.delete(coordinate: coordinate)
+        
         let trees = quadTreeWithBoundary.filter { $0.key.contains(coordinate: coordinate) }
+        
         trees.forEach {
             $0.value.remove(coordinate: coordinate)
         }
