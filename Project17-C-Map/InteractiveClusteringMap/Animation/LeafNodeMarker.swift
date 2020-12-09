@@ -42,4 +42,21 @@ final class LeafNodeMarker: NMFMarker {
         iconImage = NMF_MARKER_IMAGE_GREEN
     }
     
+    override func animate(position: CGPoint) {
+        let animation = AnimationController.leafNodeAnimation(position: position)
+        guard let markerLayer = markerLayer else { return }
+        
+        markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
+        markerLayer.position = position
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        CATransaction.setCompletionBlock { [weak self] in
+            markerLayer.removeFromSuperlayer()
+            self?.hidden = false
+        }
+        markerLayer.add(animation, forKey: "markerAnimation")
+        CATransaction.commit()
+    }
+    
 }

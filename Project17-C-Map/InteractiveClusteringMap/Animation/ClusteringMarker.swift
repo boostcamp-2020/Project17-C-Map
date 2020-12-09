@@ -60,6 +60,20 @@ final class ClusteringMarker: NMFMarker {
         return outputImage
     }
     
+    override func animate(position: CGPoint) {
+        let animation = AnimationController.transformScale(option: .increase)
+        markerLayer.position = position
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        CATransaction.setCompletionBlock { [weak self] in
+            self?.markerLayer.removeFromSuperlayer()
+            self?.hidden = false
+        }
+        markerLayer.add(animation, forKey: "markerAnimation")
+        CATransaction.commit()
+        
+    }
+    
 }
 
 extension ClusteringMarker: NMFOverlayImageDataSource {

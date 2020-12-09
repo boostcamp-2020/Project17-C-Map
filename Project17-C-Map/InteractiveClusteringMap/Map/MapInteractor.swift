@@ -12,7 +12,6 @@ protocol ClusterBusinessLogic: class {
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
     func remove(tileIds: [CLong])
     
-    
 }
 
 protocol DataBusinessLogic: class {

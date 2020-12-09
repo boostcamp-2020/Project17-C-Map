@@ -216,36 +216,24 @@ final class MapViewController: UIViewController {
     
     private func animate(marker: NMFMarker) {
         var markerLayer: CALayer?
-        var markerAnimation: CAAnimation?
+        var markerPosition: CGPoint?
         
         if let leafNodeMarker = marker as? LeafNodeMarker {
             markerLayer = leafNodeMarker.markerLayer
-            guard let markerLayer = markerLayer else { return }
-            
-            markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
-            markerLayer.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+           markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
                                                                                    lng: leafNodeMarker.coordinate.x))
-            markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
             
         } else if let clusteringMarker = marker as? ClusteringMarker {
             markerLayer = clusteringMarker.markerLayer
-            markerLayer?.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: clusteringMarker.coordinate.y,
+            markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: clusteringMarker.coordinate.y,
                                                                                     lng: clusteringMarker.coordinate.x))
-            markerAnimation = AnimationController.transformScale(option: .increase)
         }
         guard let layer = markerLayer,
-              let animation = markerAnimation else { return }
-        
+              let position = markerPosition else { return }
+       
         transparentLayer?.addSublayer(layer)
+        marker.animate(position: position)
         
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        CATransaction.setCompletionBlock {
-            markerLayer?.removeFromSuperlayer()
-            marker.hidden = false
-        }
-        markerLayer?.add(animation, forKey: "markerAnimation")
-        CATransaction.commit()
     }
     
     private func enableGestures() {
