@@ -7,6 +7,20 @@
 
 import UIKit
 
+enum Store {
+    case local
+    case http
+    
+    var dataProvider: DataProvided {
+        switch self {
+        case .local:
+            return LocalDataProvider.shared
+        case .http:
+            return HTTPDataProvider.shared
+        }
+    }
+}
+
 protocol DataProvided {
     func data(path: String, completion: @escaping (Data?) -> Void)
     func imageURL(path: String, completion: @escaping (URL?) -> Void)
