@@ -129,25 +129,21 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began && !isEditMode,
-              isMarkerLongPressed(gesture: gesture) else {
-            return
+        guard gesture.state != .began && !isEditMode else { return }
+        guard let pressedMarker = interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView)) else { return }
+        
+        if pressedMarker is LeafNodeMarker {
+            showEditMode()
+        } else if pressedMarker is ClusteringMarker {
+            
         }
-        showEditMode()
     }
     
-    private func isMarkerLongPressed(gesture: UILongPressGestureRecognizer) -> Bool {
-        guard interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView)) != nil else {
-            return false
-        }
+  
+    private func showEditMode() {
         isEditMode = true
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
-        
-        return true
-    }
-    
-    private func showEditMode() {
         unableGestures()
         
         presentedMarkers.forEach { marker in
@@ -190,7 +186,7 @@ final class MapViewController: UIViewController {
                     return true
                 }
                 
-            } else if let interactiveMarker = marker as? InteractiveMarker {
+            } else if let interactiveMarker = marker as? ClusteringMarker {
                 self.setMarkersHandler(marker: interactiveMarker)
                 self.animate(marker: interactiveMarker)
             }
@@ -218,7 +214,7 @@ final class MapViewController: UIViewController {
                                                                                    lng: leafNodeMarker.coordinate.x))
             markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
             
-        } else if let interactiveMarker = marker as? InteractiveMarker {
+        } else if let interactiveMarker = marker as? ClusteringMarker {
             markerLayer = interactiveMarker.markerLayer
             markerLayer?.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y,
                                                                                     lng: interactiveMarker.coordinate.x))
@@ -255,7 +251,7 @@ final class MapViewController: UIViewController {
         interactiveMapView.showLocationButton = false
     }
     
-    func setMarkersHandler(marker: InteractiveMarker) {
+    func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
             var cameraUpdate: NMFCameraUpdate?

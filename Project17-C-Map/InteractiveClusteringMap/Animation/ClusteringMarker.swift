@@ -1,5 +1,5 @@
 //
-//  InteractiveMarker.swift
+//  ClusteringMarker.swift
 //  InteractiveClusteringMap
 //
 //  Created by eunjeong lee on 2020/11/29.
@@ -8,7 +8,7 @@
 import Foundation
 import NMapsMap
 
-final class InteractiveMarker: NMFMarker {
+final class ClusteringMarker: NMFMarker {
     
     let coordinate: Coordinate
     let coordinatesCount: Int
@@ -62,7 +62,7 @@ final class InteractiveMarker: NMFMarker {
     
 }
 
-extension InteractiveMarker: NMFOverlayImageDataSource {
+extension ClusteringMarker: NMFOverlayImageDataSource {
     
     func view(with overlay: NMFOverlay) -> UIView {
         guard let marker = overlay as? NMFMarker else { return UIView() }
