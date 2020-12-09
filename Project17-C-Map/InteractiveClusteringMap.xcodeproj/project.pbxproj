@@ -89,7 +89,6 @@
 		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
 		FC9145F1257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
-		FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD0531257E444F00220467 /* InteractiveMarker.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
 		FCE422B8257019650017416F /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422B7257019650017416F /* Cluster.swift */; };
 		FCE422BD25701A200017416F /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422BC25701A200017416F /* Quadrant.swift */; };
@@ -187,7 +186,6 @@
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
 		FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
-		FCDD0531257E444F00220467 /* InteractiveMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
 		FCE422BC25701A200017416F /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 		467F953A2576A1A200CD5A3E /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				FCDD0531257E444F00220467 /* InteractiveMarker.swift */,
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
@@ -665,7 +662,6 @@
 				37955722257E63F200681654 /* ClusteringMarker.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
-				FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
