@@ -48,4 +48,9 @@ final class POIService: POIServicing {
         }
     }
     
+    func fetch(coordinates: [Coordinate]) -> [POIInfo] {
+        let infoMO = dataManager.fetch(coordinates: coordinates)
+        return infoMO.map { $0.info }
+    }
+    
 }

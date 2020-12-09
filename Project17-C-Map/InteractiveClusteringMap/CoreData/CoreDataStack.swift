@@ -133,6 +133,19 @@ final class CoreDataStack: DataManagable {
         }
     }
     
+    func fetch(coordinates: [Coordinate]) -> [POIInfoMO] {
+        let predicates = coordinates.map { NSPredicate(format: "id == %d", $0.id) }
+        let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+        request.predicate = compoundPredicate
+        
+        guard let entities = try? context.fetch(request) else {
+            return []
+        }
+        
+        return entities.compactMap { $0.info }
+    }
+    
     func setValue(_ poi: POI) {
         guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
               let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
