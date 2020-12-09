@@ -19,6 +19,10 @@ final class QuadTreeClusteringService {
         self.treeDataStore = treeDataStore
     }
     
+    func add(coordinate: Coordinate) {
+        treeDataStore.add(coordinate: coordinate)
+    }
+    
     func delete(coordinate: Coordinate) {
         treeDataStore.remove(coordinate: coordinate)
     }

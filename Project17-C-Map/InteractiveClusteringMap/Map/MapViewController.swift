@@ -138,6 +138,7 @@ final class MapViewController: UIViewController {
         } else if pressedMarker is ClusteringMarker {
            print("클러스터")
         } else {
+            addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
             print("빈 공간")
         }
     }
@@ -167,15 +168,15 @@ final class MapViewController: UIViewController {
     
     private func addLeafNodeMarker(at location: CGPoint) {
         let alert = MapAlertController(alertType: .add, okHandler: { [weak self] _ in
-            let latlng = interactiveMapView.mapView.projection.latlng(from: location)
-            leafMarker.markerLayer?.removeFromSuperlayer()
-            self?.presentedMarkers.remove(at: index)
-            self?.mapController?.delete(coordinate: leafMarker.coordinate)
+            guard let self = self else { return }
             
-            self?.touchedDeleteLayer = false
+            let latlng = self.interactiveMapView.projectLatLng(from: location)
+            self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
+            
         }, cancelHandler: { [weak self] _ in
             self?.touchedDeleteLayer = false
         })
+        present(alert.createAlertController(), animated: true)
     }
     
     internal func setMarkerPosition(marker: CALayer) {

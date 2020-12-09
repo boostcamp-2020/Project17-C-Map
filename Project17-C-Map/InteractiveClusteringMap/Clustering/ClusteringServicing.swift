@@ -14,6 +14,7 @@ protocol ClusteringServicing {
                  zoomLevel: Double,
                  completionHandler: @escaping (([Cluster]) -> Void))
     func cancel()
+    func add(coordinate: Coordinate)
     func delete(coordinate: Coordinate)
     
 }

@@ -20,6 +20,13 @@ final class LeafNodeMarker: NMFMarker {
         configure()
     }
     
+    init(latlng: NMGLatLng) {
+        coordinate = Coordinate(x: latlng.lng, y: latlng.lat)
+        super.init()
+        
+        configure()
+    }
+    
     func createMarkerLayer() {
         markerLayer = LeafNodeMarkerLayer()
         guard let markerLayer = self.markerLayer else { return }

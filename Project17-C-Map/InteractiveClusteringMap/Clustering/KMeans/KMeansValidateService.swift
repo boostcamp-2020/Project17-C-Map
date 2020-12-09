@@ -40,7 +40,11 @@ class KMeansValidateService: ClusteringServicing {
     }
 
     func cancel() {
-
+        
+    }
+    
+    func add(coordinate: Coordinate) {
+        
     }
     
     func delete(coordinate: Coordinate) {

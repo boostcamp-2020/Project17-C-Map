@@ -8,9 +8,11 @@
 import Foundation
 
 protocol TreeDataStorable {
+    
     func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void)
     func remove(coordinate: Coordinate)
     func add(coordinate: Coordinate)
+    
 }
 
 class TreeDataStore: TreeDataStorable {
@@ -44,6 +46,7 @@ class TreeDataStore: TreeDataStorable {
     }
     
     func add(coordinate: Coordinate) {
+        poiService.add(coordinate: coordinate)
         let trees = quadTreeWithBoundary.filter { $0.key.contains(coordinate: coordinate) }
         trees.first?.value.insert(coordinate: coordinate)
     }

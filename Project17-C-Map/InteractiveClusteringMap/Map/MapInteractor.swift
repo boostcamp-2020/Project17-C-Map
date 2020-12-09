@@ -10,6 +10,7 @@ import Foundation
 protocol ClusterBusinessLogic: class {
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double)
+    func add(tileId: CLong, coordinate: Coordinate)
     func remove(tileIds: [CLong])
     func delete(coordinate: Coordinate)
     
@@ -52,6 +53,11 @@ final class MapInteractor: ClusterBusinessLogic {
             
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
+    }
+    
+    func add(tileId: CLong, coordinate: Coordinate) {
+        quadTreeClusteringService.add(coordinate: coordinate)
+        presenter.add(tileId: tileId, coordinate: coordinate)
     }
     
     func delete(coordinate: Coordinate) {
