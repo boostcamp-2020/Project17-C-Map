@@ -13,11 +13,13 @@ protocol POIServicing {
     func update(poi: POI)
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
+    func fetch(coordinate: Coordinate) -> Place?
     func save()
     
 }
 
 final class POIService: POIServicing {
+    
     
     private let dataManager: DataManagable
     private var coordinates: [Coordinate] = []
@@ -53,4 +55,10 @@ final class POIService: POIServicing {
         return infoMO.map { $0.info }
     }
     
+    func fetch(coordinate: Coordinate) -> Place? {
+        guard let infoMO = dataManager.fetch(coordinate: coordinate) else {
+            return nil
+        }
+        return Place(coordinate: coordinate, info: infoMO.info)
+    }
 }
