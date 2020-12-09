@@ -37,7 +37,17 @@ struct ImageProvider: ImageProviding {
     }
     
     private func networkImageURL(from path: String, completion: @escaping (URL) -> Void) {
-
+        httpStore.imageURL(path: path) { networkURL in
+            guard let networkURL = networkURL,
+                  let fileName = path.fileName,
+                  let url = networkURL.saveFileToCachesDirectory(fileName: fileName)
+            else {
+                return
+            }
+            DispatchQueue.main.async {
+                completion(url)
+            }
+        }
     }
     
 }
