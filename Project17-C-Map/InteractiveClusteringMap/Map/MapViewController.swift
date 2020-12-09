@@ -64,7 +64,7 @@ final class MapViewController: UIViewController {
         polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
         polygonOverlay?.outlineWidth = 3
         polygonOverlay?.mapView = interactiveMapView.mapView
-
+        
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
         
@@ -100,7 +100,7 @@ final class MapViewController: UIViewController {
                 touchedDeleteLayer = true
                 let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
                     leafMarker.mapView = nil
-                    leafMarker.markerLayer.removeFromSuperlayer()
+                    leafMarker.markerLayer?.removeFromSuperlayer()
                     self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
                     
@@ -114,44 +114,32 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began && !isEditMode else {
+        guard gesture.state != .began && !isEditMode,
+              isMarkerLongPressed(gesture: gesture) else {
             return
         }
-        if isMarkerLongPressed(gesture: gesture) {
-            showMarkerEditMode()
-        }
+        showEditMode()
     }
     
     private func isMarkerLongPressed(gesture: UILongPressGestureRecognizer) -> Bool {
-        for marker in presentedMarkers {
-            if let leafMarker = marker as? LeafNodeMarker {
-                let markerScreenCoordinate = interactiveMapView.projectPoint(from: leafMarker.position)
-                let markerMinX = markerScreenCoordinate.x - (leafMarker.iconImage.imageWidth / 2) - 5
-                let markerMaxX = markerScreenCoordinate.x + (leafMarker.iconImage.imageWidth / 2) + 5
-                let markerMinY = markerScreenCoordinate.y - (leafMarker.iconImage.imageHeight / 2) - 30
-                let markerMaxY = markerScreenCoordinate.y
-                
-                let containX = (markerMinX..<markerMaxX).contains(gesture.location(in: interactiveMapView).x)
-                let containY = (markerMinY..<markerMaxY).contains(gesture.location(in: interactiveMapView).y)
-                if containX && containY {
-                    isEditMode = true
-                    let generator = UIImpactFeedbackGenerator(style: .heavy)
-                    generator.impactOccurred()
-                    
-                    return true
-                }
-            }
+        guard interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView)) != nil else {
+            return false
         }
-        return false
+        isEditMode = true
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
+        return true
     }
     
-    private func showMarkerEditMode() {
+    private func showEditMode() {
         unableGestures()
         
         presentedMarkers.forEach { marker in
             guard let marker = marker as? LeafNodeMarker else { return }
             marker.hidden = true
-            let leafNodeMarkerLayer = marker.markerLayer
+            marker.createMarkerLayer()
+            guard let leafNodeMarkerLayer = marker.markerLayer else { return }
             leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0,
                                                 width: marker.iconImage.imageWidth,
                                                 height: marker.iconImage.imageHeight)
@@ -178,6 +166,7 @@ final class MapViewController: UIViewController {
             self.presentedMarkers.append(marker)
             
             if let leafNodeMarker = marker as? LeafNodeMarker {
+                leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
             } else if let interactiveMarker = marker as? InteractiveMarker {
                 self.setMarkersHandler(marker: interactiveMarker)
@@ -253,7 +242,7 @@ final class MapViewController: UIViewController {
                                                padding: 25)
             } else {
                 cameraUpdate = NMFCameraUpdate(scrollTo: marker.position,
-                                           zoomTo: self.interactiveMapView.zoomLevel + 2)
+                                               zoomTo: self.interactiveMapView.zoomLevel + 2)
             }
             
             guard let update = cameraUpdate else { return false }

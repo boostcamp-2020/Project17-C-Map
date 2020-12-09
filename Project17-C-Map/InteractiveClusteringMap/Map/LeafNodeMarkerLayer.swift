@@ -11,21 +11,20 @@ import UIKit
 class LeafNodeMarkerLayer: CALayer {
 
     let editButtonLayer: CALayer
-    let markerID: Int64
     
     private let systemCircleImageName: String = "minus.circle.fill"
     
-    init(markerID: Int64) {
+    override init() {
         self.editButtonLayer = CALayer()
-        self.markerID = markerID
         super.init()
+        
         configure()
     }
     
     required init?(coder: NSCoder) {
         self.editButtonLayer = CALayer()
-        self.markerID = -1
         super.init()
+        
         configure()
     }
     
