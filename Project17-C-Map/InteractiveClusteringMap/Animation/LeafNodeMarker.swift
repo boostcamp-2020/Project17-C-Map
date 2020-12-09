@@ -33,7 +33,6 @@ final class LeafNodeMarker: NMFMarker {
     func configure() {
         position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconImage = NMF_MARKER_IMAGE_GREEN
-        
     }
     
 }
