@@ -34,7 +34,7 @@
 		378E83442574F00D00E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E83482574F04500E25A9F /* Clusters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E83432574F00C00E25A9F /* Clusters.swift */; };
 		378E834C2574F19200E25A9F /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
-		37955722257E63F200681654 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37955721257E63F200681654 /* InteractiveMarker.swift */; };
+		37955722257E63F200681654 /* ClusteringMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37955721257E63F200681654 /* ClusteringMarker.swift */; };
 		379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
 		37B73DDC2577B50600C48E99 /* POIMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B73DD62577B50600C48E99 /* POIMO+CoreDataClass.swift */; };
 		37B73DDD2577B50600C48E99 /* POIInfoMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B73DD72577B50600C48E99 /* POIInfoMO+CoreDataClass.swift */; };
@@ -77,6 +77,8 @@
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertController.swift */; };
 		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
+		FAA63422258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */; };
+		FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6342625813A910022F2FC /* NMFMarker+.swift */; };
 		FAACC7B3257E8F16005190F6 /* CustomInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */; };
 		FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */; };
 		FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */; };
@@ -89,7 +91,6 @@
 		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
 		FC9145F1257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
-		FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD0531257E444F00220467 /* InteractiveMarker.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
 		FCE422B8257019650017416F /* Cluster.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422B7257019650017416F /* Cluster.swift */; };
 		FCE422BD25701A200017416F /* Quadrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422BC25701A200017416F /* Quadrant.swift */; };
@@ -132,7 +133,7 @@
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
 		376A56532576A7B900D1AE5A /* POIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIInfo.swift; sourceTree = "<group>"; };
 		378E83432574F00C00E25A9F /* Clusters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clusters.swift; sourceTree = "<group>"; };
-		37955721257E63F200681654 /* InteractiveMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
+		37955721257E63F200681654 /* ClusteringMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClusteringMarker.swift; sourceTree = "<group>"; };
 		379DC4C5256E1EC60044DA6C /* KMeans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KMeans.swift; sourceTree = "<group>"; };
 		37B73DD62577B50600C48E99 /* POIMO+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		37B73DD72577B50600C48E99 /* POIInfoMO+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "POIInfoMO+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -178,6 +179,8 @@
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAA4B518257A96CA00F61D8B /* MapAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAlertController.swift; sourceTree = "<group>"; };
 		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
+		FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMGLatLngBounds+BoundingBox.swift"; sourceTree = "<group>"; };
+		FAA6342625813A910022F2FC /* NMFMarker+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMarker+.swift"; sourceTree = "<group>"; };
 		FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindow.swift; sourceTree = "<group>"; };
 		FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
 		FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
@@ -187,7 +190,6 @@
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
 		FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
-		FCDD0531257E444F00220467 /* InteractiveMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveMarker.swift; sourceTree = "<group>"; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
 		FCE422BC25701A200017416F /* Quadrant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quadrant.swift; sourceTree = "<group>"; };
@@ -225,12 +227,11 @@
 			children = (
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
-
 				FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */,
 				FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */,
 				FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */,
-
 				4623BD1225694A1400940B12 /* MapController.swift */,
+				FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
@@ -367,13 +368,13 @@
 		467F953A2576A1A200CD5A3E /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				FCDD0531257E444F00220467 /* InteractiveMarker.swift */,
 				467F953B2576A20400CD5A3E /* AnimationController.swift */,
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
 				468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */,
 				468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */,
-				37955721257E63F200681654 /* InteractiveMarker.swift */,
+				37955721257E63F200681654 /* ClusteringMarker.swift */,
+				FAA6342625813A910022F2FC /* NMFMarker+.swift */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -664,10 +665,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				37955722257E63F200681654 /* InteractiveMarker.swift in Sources */,
+				37955722257E63F200681654 /* ClusteringMarker.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
-				FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
@@ -678,12 +678,14 @@
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
+				FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				FA194F642576035C003B07D9 /* DBI.swift in Sources */,
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
+				FAA63422258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift in Sources */,
 				378E83442574F00D00E25A9F /* Clusters.swift in Sources */,
 				FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */,
 				FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */,

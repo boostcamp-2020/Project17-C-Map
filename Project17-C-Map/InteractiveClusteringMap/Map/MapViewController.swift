@@ -48,7 +48,7 @@ final class MapViewController: UIViewController {
         let poiService = POIService(dataManager: dataManager)
         let treeDataStore = TreeDataStore(poiService: poiService)
         let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
-        let mapInteractor: ClusterBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
+        let mapInteractor: MapBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
     }
     
@@ -83,7 +83,7 @@ final class MapViewController: UIViewController {
         infoWindow.dataSource = customInfoWindowDataSource
         infoWindow.offsetX = -40
         infoWindow.offsetY = -5
-        infoWindow.touchHandler = { [weak self] (overlay: NMFOverlay) -> Bool in
+        infoWindow.touchHandler = { [weak self] (_) -> Bool in
             self?.infoWindow.close()
             return true
         }
@@ -129,25 +129,23 @@ final class MapViewController: UIViewController {
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began && !isEditMode,
-              isMarkerLongPressed(gesture: gesture) else {
-            return
-        }
-        showEditMode()
-    }
-    
-    private func isMarkerLongPressed(gesture: UILongPressGestureRecognizer) -> Bool {
-        guard interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView)) != nil else {
-            return false
-        }
-        isEditMode = true
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
+        guard gesture.state != .began && !isEditMode else { return }
         
-        return true
+        let pressedMarker = interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView))
+        
+        if pressedMarker is LeafNodeMarker {
+            showEditMode()
+        } else if pressedMarker is ClusteringMarker {
+            // 클러스터 롱터치 구현 부분
+        } else {
+            addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
+        }
     }
     
     private func showEditMode() {
+        isEditMode = true
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
         unableGestures()
         
         presentedMarkers.forEach { marker in
@@ -165,6 +163,17 @@ final class MapViewController: UIViewController {
             leafNodeMarkerLayer.editButtonLayer.position = CGPoint(x: 8, y: 8)
             leafNodeMarkerLayer.animate()
         }
+    }
+    
+    private func addLeafNodeMarker(at location: CGPoint) {
+        let alert = MapAlertController(alertType: .add, okHandler: { [weak self] _ in
+            guard let self = self else { return }
+            
+            let latlng = self.interactiveMapView.projectLatLng(from: location)
+            self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
+        }, cancelHandler: nil)
+        
+        present(alert.createAlertController(), animated: true)
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -190,9 +199,9 @@ final class MapViewController: UIViewController {
                     return true
                 }
                 
-            } else if let interactiveMarker = marker as? InteractiveMarker {
-                self.setMarkersHandler(marker: interactiveMarker)
-                self.animate(marker: interactiveMarker)
+            } else if let clusteringMarker = marker as? ClusteringMarker {
+                self.setMarkersHandler(marker: clusteringMarker)
+                self.animate(marker: clusteringMarker)
             }
             
         }
@@ -207,36 +216,23 @@ final class MapViewController: UIViewController {
     
     private func animate(marker: NMFMarker) {
         var markerLayer: CALayer?
-        var markerAnimation: CAAnimation?
+        var markerPosition: CGPoint?
         
         if let leafNodeMarker = marker as? LeafNodeMarker {
             markerLayer = leafNodeMarker.markerLayer
-            guard let markerLayer = markerLayer else { return }
+            markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
+                                                                             lng: leafNodeMarker.coordinate.x))
             
-            markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
-            markerLayer.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: leafNodeMarker.coordinate.y,
-                                                                                   lng: leafNodeMarker.coordinate.x))
-            markerAnimation = AnimationController.leafNodeAnimation(position: markerLayer.position)
-            
-        } else if let interactiveMarker = marker as? InteractiveMarker {
-            markerLayer = interactiveMarker.markerLayer
-            markerLayer?.position = interactiveMapView.projectPoint(from: NMGLatLng(lat: interactiveMarker.coordinate.y,
-                                                                                    lng: interactiveMarker.coordinate.x))
-            markerAnimation = AnimationController.transformScale(option: .increase)
+        } else if let clusteringMarker = marker as? ClusteringMarker {
+            markerLayer = clusteringMarker.markerLayer
+            markerPosition = interactiveMapView.projectPoint(from: NMGLatLng(lat: clusteringMarker.coordinate.y,
+                                                                             lng: clusteringMarker.coordinate.x))
         }
         guard let layer = markerLayer,
-              let animation = markerAnimation else { return }
+              let position = markerPosition else { return }
         
         transparentLayer?.addSublayer(layer)
-        
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        CATransaction.setCompletionBlock {
-            markerLayer?.removeFromSuperlayer()
-            marker.hidden = false
-        }
-        markerLayer?.add(animation, forKey: "markerAnimation")
-        CATransaction.commit()
+        marker.animate(position: position)
     }
     
     private func enableGestures() {
@@ -255,7 +251,7 @@ final class MapViewController: UIViewController {
         interactiveMapView.showLocationButton = false
     }
     
-    func setMarkersHandler(marker: InteractiveMarker) {
+    func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
             var cameraUpdate: NMFCameraUpdate?

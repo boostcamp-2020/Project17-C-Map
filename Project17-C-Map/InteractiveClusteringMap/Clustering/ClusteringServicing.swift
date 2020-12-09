@@ -13,7 +13,5 @@ protocol ClusteringServicing {
                  boundingBox: BoundingBox,
                  zoomLevel: Double,
                  completionHandler: @escaping (([Cluster]) -> Void))
-    func cancel()
-    func delete(coordinate: Coordinate)
     
 }

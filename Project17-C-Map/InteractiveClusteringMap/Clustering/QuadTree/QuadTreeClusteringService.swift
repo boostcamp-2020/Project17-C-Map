@@ -19,10 +19,6 @@ final class QuadTreeClusteringService {
         self.treeDataStore = treeDataStore
     }
     
-    func delete(coordinate: Coordinate) {
-        treeDataStore.remove(coordinate: coordinate)
-    }
-    
     // 클러스터링 Task를 WorkItem으로 반환
     private func clusteringWorkItem(target: BoundingBox,
                                     zoomLevel: Double,
@@ -98,7 +94,5 @@ extension QuadTreeClusteringService: ClusteringServicing {
         let workItem = clusteringWorkItem(target: boundingBox, zoomLevel: zoomLevel, completion: completionHandler)
         DispatchQueue.global().async(execute: workItem)
     }
-    
-    func cancel() {}
-    
+
 }

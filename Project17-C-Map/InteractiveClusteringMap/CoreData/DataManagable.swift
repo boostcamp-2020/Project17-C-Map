@@ -12,7 +12,7 @@ protocol DataManagable {
     
     func deleteAll()
     func delete(coordinate: Coordinate)
-    func add(poi: POI)
+    func add(coordinate: Coordinate)
     func update(poi: POI)
     func fetch() -> [POIMO]
     func fetch(handler: @escaping ([POIMO]) -> Void)
