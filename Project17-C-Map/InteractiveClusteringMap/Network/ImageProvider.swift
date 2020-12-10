@@ -13,8 +13,6 @@ protocol ImageProviding {
 
 struct ImageProvider: ImageProviding {
     
-    private let concurrentQueue = DispatchQueue(label: Name.concurrentQueue,
-                                                attributes: .concurrent)
     private let localStore: DataProvided
     private let httpStore: DataProvided
     
