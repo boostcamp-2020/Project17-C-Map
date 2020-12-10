@@ -139,7 +139,7 @@ final class AnimationController {
         return bezierPath
     }
     
-    static func splashMarkerAimation(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
+    static func splashMarkerAnimation1(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
         let resultAnimation = CAAnimationGroup()
         let treeQuarters = CGPoint(x: ((start.x * 0.25) + (end.x * 0.75)), y: ((start.y * 0.25) + (end.y * 0.75)))
 
@@ -154,7 +154,7 @@ final class AnimationController {
         return resultAnimation
     }
     
-    static func splashMarkerAimation2(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
+    static func splashMarkerAnimation2(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
         let resultAnimation = CAAnimationGroup()
         let aHalf = CGPoint(x: ((start.x + end.x) / 2), y: ((start.y + end.y) / 2))
         let treeQuarters = CGPoint(x: ((start.x * 0.25) + (end.x * 0.75)), y: ((start.y * 0.25) + (end.y * 0.75)))
@@ -170,6 +170,29 @@ final class AnimationController {
         
         resultAnimation.animations = [move1, move2, move3]
         resultAnimation.duration = 3
+        return resultAnimation
+    }
+    
+    static func splashMarkerAnimation3(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
+        let resultAnimation = CAAnimationGroup()
+        let aHalf = CGPoint(x: ((start.x + end.x) / 2), y: ((start.y + end.y) / 2))
+        let twoThird = CGPoint(x: ((start.x / 3) + (end.x * 2 / 3)), y: ((start.y / 3) + (end.y * 2 / 3)))
+        let treeQuarters = CGPoint(x: ((start.x * 0.25) + (end.x * 0.75)), y: ((start.y * 0.25) + (end.y * 0.75)))
+        
+        let move1 = movePositionWithPath(start: start, end: aHalf)
+        move1.duration = 1.2
+        let move2 = movePositionWithPath(start: aHalf, end: treeQuarters)
+        move2.duration = 0.7
+        move2.beginTime = 1.2
+        let move3 = movePositionWithPath(start: treeQuarters, end: twoThird)
+        move3.duration = 0.5
+        move3.beginTime = 1.9
+        let move4 = movePositionWithPath(start: twoThird, end: end)
+        move4.duration = 0.8
+        move4.beginTime = 2.4
+        
+        resultAnimation.animations = [move1, move2, move3, move4]
+        resultAnimation.duration = 3.2
         return resultAnimation
     }
     

@@ -31,7 +31,7 @@ class SplashViewController: UIViewController {
         (0..<3).forEach { i in
             let markerLayer = CALayer()
             markerLayer.isHidden = true
-            markerLayer.frame = CGRect(x: 0, y: 250 + (i * 150), width: 40, height: 40)
+            markerLayer.frame = CGRect(x: 0, y: 250 + (i * 150), width: 50, height: 50)
             markerLayer.contents = image.maskWithColor(color: .brown)?.cgImage
             markerLayer.contentsGravity = .resize
             
@@ -42,7 +42,7 @@ class SplashViewController: UIViewController {
             let markerLayer = CALayer()
             markerLayer.isHidden = true
             
-            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: 250 + (i * 200), width: 40, height: 40)
+            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: 250 + (i * 200), width: 50, height: 50)
             markerLayer.contents = image.maskWithColor(color: .red)?.cgImage
             markerLayer.contentsGravity = .resize
             
@@ -50,7 +50,9 @@ class SplashViewController: UIViewController {
         }
         
         let endPosition = CGPoint(x: 200, y: 400)
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
             leftMarkerLayers.forEach { markerLayer in
                 self.markerLayerAnimate(markerLayer: markerLayer, endPosition: endPosition)
             }
@@ -63,12 +65,14 @@ class SplashViewController: UIViewController {
     }
     
     private func markerLayerAnimate(markerLayer: CALayer, endPosition: CGPoint) {
+        var ani: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [AnimationController.splashMarkerAnimation1, AnimationController.splashMarkerAnimation2, AnimationController.splashMarkerAnimation3]
+        ani.shuffle()
+        guard let animation = ani.first else { return }
         
-        let animation = AnimationController.splashMarkerAimation2(start: markerLayer.position, end: endPosition)
-        
+        let aaa = animation(markerLayer.position, endPosition)
         CATransaction.begin()
         transparentUIView.layer.addSublayer(markerLayer)
-        markerLayer.add(animation, forKey: "makerMove")
+        markerLayer.add(aaa, forKey: "makerMove")
         CATransaction.setCompletionBlock {
             markerLayer.position = endPosition
             markerLayer.isHidden = false
