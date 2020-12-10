@@ -9,7 +9,7 @@ import Foundation
 
 protocol POIServicing {
     
-    func add(poi: POI)
+    func add(coordinate: Coordinate)
     func update(poi: POI)
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
@@ -28,8 +28,8 @@ final class POIService: POIServicing {
         self.dataManager = dataManager
     }
     
-    func add(poi: POI) {
-        dataManager.add(poi: poi)
+    func add(coordinate: Coordinate) {
+        dataManager.add(coordinate: coordinate)
     }
     
     func update(poi: POI) {

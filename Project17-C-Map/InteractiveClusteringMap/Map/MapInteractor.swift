@@ -14,13 +14,22 @@ protocol ClusterBusinessLogic: class {
     
 }
 
-final class MapInteractor: ClusterBusinessLogic {
+protocol DataBusinessLogic: class {
+    
+    func add(tileId: CLong, coordinate: Coordinate)
+    func remove(coordinate: Coordinate)
+    
+}
+
+final class MapInteractor: MapBusinessLogic {
     
     private let presenter: ClusterPresentationLogic
     private let quadTreeClusteringService: ClusteringServicing
+    private let treeDataStore: TreeDataStorable
     
     init(treeDataStore: TreeDataStorable, presenter: ClusterPresentationLogic) {
         self.presenter = presenter
+        self.treeDataStore = treeDataStore
         self.quadTreeClusteringService = QuadTreeClusteringService(treeDataStore: treeDataStore)
     }
     
@@ -45,14 +54,22 @@ final class MapInteractor: ClusterBusinessLogic {
                             zoomLevel: Double) {
         
         quadTreeClusteringService.execute(coordinates: nil,
-                                   boundingBox: boundingBox,
-                                   zoomLevel: zoomLevel) { [weak self] clusters in
+                                          boundingBox: boundingBox,
+                                          zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
             
-            DispatchQueue.main.async {
-                self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
-            }
+            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
+    }
+    
+    func add(tileId: CLong, coordinate: Coordinate) {
+        treeDataStore.add(coordinate: coordinate)
+        presenter.add(tileId: tileId, coordinate: coordinate)
+    }
+    
+    func remove(coordinate: Coordinate) {
+        treeDataStore.remove(coordinate: coordinate)
+        presenter.delete(coordinate: coordinate)
     }
     
 }
