@@ -24,4 +24,11 @@ class PlaceCell: UICollectionViewCell {
         self.address.text = place.info.imageUrl
     }
     
+    func configure(image: UIImage?) {
+        self.imageView.image = image
+    }
+    
+    func configure(address: String) {
+        self.address.text = address
+    }
 }
