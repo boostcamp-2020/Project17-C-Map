@@ -31,11 +31,16 @@ class MapAlertController {
     
     private func createAddAlertController(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: okHandler)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelHandler)
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)
+        alert.addTextField { (textField) in
+            textField.placeholder = "장소 이름"
+        }
         
         return alert
     }
@@ -58,7 +63,7 @@ extension MapAlertController {
         static let deleteTitle: String = "마커 삭제"
         static let deleteMessage: String = "해당 위치의 마커를 삭제하시겠습니까?"
         static let addTitle: String = "마커 추가"
-        static let addMessage: String = "해당 위치에 마커를 추가하시겠습니까?"
+        static let addMessage: String = "해당 위치에 마커를 추가하시겠습니까? \n장소의 이름을 입력해 주세요."
     }
     
     enum AlertType {

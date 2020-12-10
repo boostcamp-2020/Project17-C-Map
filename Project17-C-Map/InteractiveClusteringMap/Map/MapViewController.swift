@@ -171,8 +171,10 @@ final class MapViewController: UIViewController {
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
             self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
+        
         }, cancelHandler: nil)
         
+    
         present(alert.createAlertController(), animated: true)
     }
     
