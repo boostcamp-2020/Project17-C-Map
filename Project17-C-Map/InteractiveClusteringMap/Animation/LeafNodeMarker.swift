@@ -10,6 +10,11 @@ import NMapsMap
 
 final class LeafNodeMarker: NMFMarker {
     
+    private enum InfoKey {
+        static let title = "title"
+        static let category = "category"
+    }
+
     let coordinate: Coordinate
     private(set) var markerLayer: LeafNodeMarkerLayer?
     
@@ -40,6 +45,21 @@ final class LeafNodeMarker: NMFMarker {
     func configure() {
         position = NMGLatLng(lat: coordinate.y, lng: coordinate.x)
         iconImage = NMF_MARKER_IMAGE_GREEN
+    }
+    
+    func configureUserInfo(userInfo: POIInfo?) {
+        self.userInfo[InfoKey.title] = userInfo?.name ?? ""
+        self.userInfo[InfoKey.category] = userInfo?.category ?? ""
+    }
+    
+    func resizeMarkerSize() {
+        width = iconImage.imageWidth
+        height = iconImage.imageHeight
+    }
+    
+    func sizeUp() {
+        width = iconImage.imageWidth + 11
+        height = iconImage.imageHeight + 11
     }
     
     override func animate(position: CGPoint) {
