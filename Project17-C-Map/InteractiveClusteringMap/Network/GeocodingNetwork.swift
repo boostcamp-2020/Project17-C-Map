@@ -24,7 +24,13 @@ enum NetworkError: Error {
     }
 }
 
-final class APIService {
+protocol Geocodable: class {
+    
+    func address(lat: Double, lng: Double, completion: @escaping ((Result<Data, Error>) -> Void))
+    
+}
+
+final class GeocodingNetwork: Geocodable {
     
     func address(lat: Double, lng: Double, completion: @escaping ((Result<Data, Error>) -> Void)) {
         guard let url = URL(string: "\(Geocoding.url)" + "\(EndPoint.query(lat: lat, lng: lng))")
@@ -43,7 +49,6 @@ final class APIService {
         }
         
         var request = URLRequest(url: url)
-        
         request.allHTTPHeaderFields = headerField
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -70,7 +75,7 @@ final class APIService {
     
 }
 
-private extension APIService {
+private extension GeocodingNetwork {
     
     enum Geocoding {
         static let url = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"
@@ -80,7 +85,7 @@ private extension APIService {
         static func get() -> [String: String]? {
             let clientKey = "NMFClientId"
             let secretKey = "NMFClientSecret"
-
+            
             let clientKeyField = "X-NCP-APIGW-API-KEY-ID"
             let secretKeyFeild = "X-NCP-APIGW-API-KEY"
             
