@@ -18,7 +18,7 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
-    private var pickedMarker: NMFMarker? = nil
+    private var pickedMarker: LeafNodeMarker? = nil
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
@@ -199,10 +199,8 @@ final class MapViewController: UIViewController {
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
                     
-                    self.resizePickedMarker()
-                    
-                    leafNodeMarker.width = leafNodeMarker.iconImage.imageWidth + 11
-                    leafNodeMarker.height = leafNodeMarker.iconImage.imageHeight + 11
+                    self.pickedMarker?.resizeMarkerSize()
+                    leafNodeMarker.sizeUp()
                     self.pickedMarker = leafNodeMarker
                     self.infoWindow.open(with: leafNodeMarker)
                     return true
@@ -214,13 +212,6 @@ final class MapViewController: UIViewController {
             }
             
         }
-    }
-    
-    private func resizePickedMarker() {
-        guard let pickedMarker = pickedMarker else { return }
-        
-        pickedMarker.width = pickedMarker.iconImage.imageWidth
-        pickedMarker.height = pickedMarker.iconImage.imageHeight
     }
     
     private func remove(markers: [NMFMarker]) {
@@ -320,8 +311,9 @@ extension MapViewController: NMFMapViewTouchDelegate {
         presentedMarkers.forEach {
             $0.hidden = false
         }
+    
+        pickedMarker?.resizeMarkerSize()
         
-        resizePickedMarker()
     }
     
 }

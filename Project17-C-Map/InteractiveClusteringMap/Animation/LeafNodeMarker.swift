@@ -42,6 +42,16 @@ final class LeafNodeMarker: NMFMarker {
         iconImage = NMF_MARKER_IMAGE_GREEN
     }
     
+    func resizeMarkerSize() {
+        width = iconImage.imageWidth
+        height = iconImage.imageHeight
+    }
+    
+    func sizeUp() {
+        width = iconImage.imageWidth + 11
+        height = iconImage.imageHeight + 11
+    }
+    
     override func animate(position: CGPoint) {
         let animation = AnimationController.leafNodeAnimation(position: position)
         guard let markerLayer = markerLayer else { return }

@@ -50,6 +50,7 @@ final class POIService: POIServicing {
             $0.info?.info
         }.first ?? POIInfo(name: "", imageUrl: "", category: "")
     }
+    
     func save() {
         dataManager.save(successHandler: nil, failureHandler: nil)
     }
