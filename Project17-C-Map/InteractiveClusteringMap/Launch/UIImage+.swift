@@ -18,7 +18,15 @@ extension UIImage {
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-        let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+        guard let context = CGContext(data: nil,
+                                width: Int(width),
+                                height: Int(height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: 0,
+                                space: colorSpace,
+                                bitmapInfo: bitmapInfo.rawValue) else {
+            return nil
+        }
 
         context.clip(to: bounds, mask: maskImage)
         context.setFillColor(color.cgColor)
@@ -26,6 +34,7 @@ extension UIImage {
 
         if let cgImage = context.makeImage() {
             let coloredImage = UIImage(cgImage: cgImage)
+            
             return coloredImage
         } else {
             return nil
