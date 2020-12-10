@@ -13,7 +13,6 @@ class MarkerTextLayer: CATextLayer {
     init(radius: CGFloat, text: String) {
         super.init()
         self.configure(radius: radius, text: text)
-                
     }
     
     required init?(coder: NSCoder) {

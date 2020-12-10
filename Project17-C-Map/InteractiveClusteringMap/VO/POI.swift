@@ -10,12 +10,12 @@ import Foundation
 struct POI: Codable {
     
     let x, y: Double
-    let id: Int64
+    let id: String 
     let name: String?
     let imageUrl: String?
     let category: String?
     
-    init(x: Double, y: Double, id: Int64, name: String?, imageUrl: String?, category: String?) {
+    init(x: Double, y: Double, id: String, name: String? = nil, imageUrl: String? = nil, category: String? = nil) {
         self.x = x
         self.y = y
         self.id = id
@@ -27,7 +27,7 @@ struct POI: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        id = Int64(try container.decode(String.self, forKey: .id)) ?? 0
+        id = UUID().uuidString
         x = Double(try container.decode(String.self, forKey: .x)) ?? 0
         y = Double(try container.decode(String.self, forKey: .y)) ?? 0
         name = try? container.decode(String.self, forKey: .name)
