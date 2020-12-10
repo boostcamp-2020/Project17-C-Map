@@ -5,7 +5,7 @@
 //  Created by eunjeong lee on 2020/10/16.
 //
 
-import UIKit
+import Foundation
 
 enum Store {
     case local

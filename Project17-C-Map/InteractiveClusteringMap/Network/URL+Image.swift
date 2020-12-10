@@ -5,7 +5,7 @@
 //  Created by eunjeong lee on 2020/12/09.
 //
 
-import UIKit
+import Foundation
 
 extension URL {
     
