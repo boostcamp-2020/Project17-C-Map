@@ -38,7 +38,7 @@ class SplashViewController: UIViewController {
             let markerLayer = CALayer()
             markerLayer.isHidden = true
             markerLayer.frame = CGRect(x: 0, y: 250 + (i * 150), width: 50, height: 50)
-            markerLayer.contents = image.maskWithColor(color: .brown)?.cgImage
+            markerLayer.contents = image.maskWithColor(color: randomColor())?.cgImage
             markerLayer.contentsGravity = .resize
             
             leftMarkerLayers.append(markerLayer)
@@ -49,7 +49,7 @@ class SplashViewController: UIViewController {
             markerLayer.isHidden = true
             
             markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: 250 + (i * 200), width: 50, height: 50)
-            markerLayer.contents = image.maskWithColor(color: .red)?.cgImage
+            markerLayer.contents = image.maskWithColor(color: randomColor())?.cgImage
             markerLayer.contentsGravity = .resize
             
             rightMarkerLayers.append(markerLayer)
@@ -73,7 +73,10 @@ class SplashViewController: UIViewController {
     }
     
     private func markerLayerAnimate(markerLayer: CALayer, endPosition: CGPoint) {
-        var animations: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [AnimationController.splashMarkerAnimation1, AnimationController.splashMarkerAnimation2, AnimationController.splashMarkerAnimation3]
+        var animations: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [
+            AnimationController.splashMarkerAnimation1,
+            AnimationController.splashMarkerAnimation2,
+            AnimationController.splashMarkerAnimation3]
         animations.shuffle()
         guard let animation = animations.first else { return }
         
@@ -104,13 +107,26 @@ class SplashViewController: UIViewController {
        
     }
     
-    func presentMapViewController() {
+    private func presentMapViewController() {
         guard let mapViewController = mapViewController else { return }
         let window = self.view.window
         self.dismiss(animated: true) {
             window?.rootViewController = mapViewController
             window?.makeKeyAndVisible()
         }
+    }
+
+    private func randomColor() -> UIColor {
+        let colors = [UIColor(named: "fiftyColor"), UIColor(named: "hundredColor"), UIColor(named: "thousandColor"), UIColor(named: "fiveThousandColor"), UIColor(named: "overFiveThousandColor"), UIColor.systemRed, UIColor.systemGreen]
+
+        guard let color = colors.randomElement() else {
+            return UIColor(red: 53/255, green: 60/255, blue: 130/255, alpha: 1)
+        }
+        guard let uiColor = color else {
+            return UIColor(red: 53/255, green: 60/255, blue: 130/255, alpha: 1)
+        }
+        
+        return uiColor
     }
     
 }
