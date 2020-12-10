@@ -32,11 +32,7 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        places = cluster?.coordinates.compactMap {
-//            poiService?.fetch(coordinate: $0)
-//        } ?? []
-        
+
         let urls = [ "http://ldb.phinf.naver.net/20190110_293/1547048398707IGmBs_JPEG/scXaoTP-_ccxbMqn2vFL-k-G.jpg",
                      "http://ldb.phinf.naver.net/20190616_192/1560681495671CW2VX_JPEG/pPfSjNLsKKvdhYcaTkyabjtZ.jpg",
                      "http://ldb.phinf.naver.net/20190806_213/1565088665739jPvCP_JPEG/GemsLMNPxqYN0yRFOigiabqz.jpg" ]
@@ -82,7 +78,7 @@ class PreviewViewController: UIViewController {
             return section
             
         }, configuration: config)
-//        })
+        
         return layout
     }
     
