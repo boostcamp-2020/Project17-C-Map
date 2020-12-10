@@ -12,25 +12,38 @@ class MapAlertController {
     
     private let alertType: AlertType
     private let okHandler: ((UIAlertAction) -> Void)?
+    private let cancelHandler: ((UIAlertAction) -> Void)?
     
-    init(alertType: AlertType, okHandler: ((UIAlertAction) -> Void)?) {
+    init(alertType: AlertType, okHandler: ((UIAlertAction) -> Void)?, cancelHandler: ((UIAlertAction) -> Void)?) {
         self.alertType = alertType
         self.okHandler = okHandler
+        self.cancelHandler = cancelHandler
     }
     
     func createAlertController() -> UIAlertController {
         switch alertType {
         case .delete:
-            return createAlertController(title: Name.deleteTitle, message: Name.deleteMessage)
+            return createDeleteAlertController(title: Name.deleteTitle, message: Name.deleteMessage)
         case .add:
-            return createAlertController(title: Name.addTitle, message: Name.addMessage)
+            return createAddAlertController(title: Name.addTitle, message: Name.addMessage)
         }
     }
     
-    private func createAlertController(title: String, message: String) -> UIAlertController {
+    private func createAddAlertController(title: String, message: String) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .destructive, handler: okHandler)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: okHandler)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelHandler)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        return alert
+    }
+    
+    private func createDeleteAlertController(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Delete", style: .destructive, handler: okHandler)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelHandler)
         
         alert.addAction(okAction)
         alert.addAction(cancelAction)

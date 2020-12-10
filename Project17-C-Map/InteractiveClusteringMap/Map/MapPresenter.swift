@@ -12,6 +12,8 @@ protocol ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster])
     func removePresentMarkers(tileIds: [CLong])
+    func add(tileId: CLong, coordinate: Coordinate)
+    func delete(coordinate: Coordinate)
     
 }
 
@@ -41,7 +43,7 @@ class MapPresenter: ClusterPresentationLogic {
                 if $0.coordinates.count == 1 {
                     return LeafNodeMarker(coordinate: $0.coordinates.first ?? Coordinate(x: 0, y: 0))
                 } else {
-                    return InteractiveMarker(cluster: $0)
+                    return ClusteringMarker(cluster: $0)
                 }
             }
             self.presentMarkers[tileId] = (self.presentMarkers[tileId] ?? []) + markers
@@ -50,7 +52,6 @@ class MapPresenter: ClusterPresentationLogic {
                 self.createMarkerHandler(markers)
             }
         }
-        
     }
     
     func removePresentMarkers(tileIds: [CLong]) {
@@ -69,7 +70,32 @@ class MapPresenter: ClusterPresentationLogic {
                 self.removeMarkerHandler(markers)
             }
         }
+    }
+    
+    func add(tileId: CLong, coordinate: Coordinate) {
+        let leafMarker = LeafNodeMarker(coordinate: coordinate)
+        presentMarkers[tileId]?.append(leafMarker)
+        createMarkerHandler([leafMarker])
+    }
+    
+    func delete(coordinate: Coordinate) {
+        let targetID = coordinate.id
         
+        for (markersKey, markersValue) in presentMarkers {
+            presentMarkers[markersKey] = markersValue.filter { marker in
+                guard let leafMarker = marker as? LeafNodeMarker else {
+                    return true
+                }
+                let leafMarkerID = leafMarker.coordinate.id
+                
+                guard targetID != leafMarkerID else {
+                    leafMarker.mapView = nil
+                    return false
+                }
+                
+                return true
+            }
+        }
     }
     
 }

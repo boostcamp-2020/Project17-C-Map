@@ -16,7 +16,6 @@ class ClusteringMarkerLayer: CALayer {
     private var textLayer: MarkerTextLayer
     
     required init(cluster: Cluster) {
-        
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
         self.textLayer = MarkerTextLayer(radius: 0, text: "")

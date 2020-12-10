@@ -24,9 +24,13 @@ final class CoreDataStack: DataManagable {
     private init() {
         context.parent = container?.viewContext
         
-        let pois = JSONReader.readPOIs(fileName: Name.fileName)
-        pois?.forEach {
-            setValue($0)
+        guard let pois = try? context.fetch(POIMO.fetchRequest()),
+              pois.count != 0 else {
+            let pois = JSONReader.readPOIs(fileName: Name.fileName)
+            pois?.forEach {
+                setValue($0)
+            }
+            return
         }
     }
     
@@ -37,6 +41,7 @@ final class CoreDataStack: DataManagable {
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+        save(successHandler: nil)
     }
     
     func delete(coordinate: Coordinate) {
@@ -47,10 +52,12 @@ final class CoreDataStack: DataManagable {
         objects.forEach {
             context.delete($0)
         }
+        save(successHandler: nil)
     }
     
-    func add(poi: POI) {
-        setValue(POI(x: poi.x, y: poi.y, id: poi.id, name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
+    func add(coordinate: Coordinate) {
+        setValue(POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+        save(successHandler: nil)
     }
     
     func update(poi: POI) {
@@ -59,6 +66,7 @@ final class CoreDataStack: DataManagable {
             return
         }
         objects.first?.update(poi)
+        save(successHandler: nil)
     }
     
     func fetch() -> [POIMO] {

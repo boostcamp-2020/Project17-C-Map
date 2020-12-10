@@ -35,6 +35,7 @@ final class InteractiveMapView: NMFNaverMapView {
         showCompass = true
         showScaleBar = true
         mapView.allowsTilting = false
+        mapView.minZoomLevel = 2
         
         configureExtent()
     }
@@ -47,8 +48,12 @@ final class InteractiveMapView: NMFNaverMapView {
         mapView.extent = extent
     }
     
-    func projectPoint(from: NMGLatLng) -> CGPoint {
-        return mapView.projection.point(from: from)
+    func projectPoint(from latlng: NMGLatLng) -> CGPoint {
+        return mapView.projection.point(from: latlng)
+    }
+    
+    func projectLatLng(from point: CGPoint) -> NMGLatLng {
+        return mapView.projection.latlng(from: point)
     }
     
 }
