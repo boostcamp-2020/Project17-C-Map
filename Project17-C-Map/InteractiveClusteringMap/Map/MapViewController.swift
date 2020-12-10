@@ -18,6 +18,7 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
+    private var pickedMarker: NMFMarker? = nil
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
@@ -193,10 +194,17 @@ final class MapViewController: UIViewController {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
-                leafNodeMarker.userInfo["title"] = userInfo?.name
-                leafNodeMarker.userInfo["category"] = userInfo?.category
+                leafNodeMarker.userInfo[InfoKey.title] = userInfo?.name
+                leafNodeMarker.userInfo[InfoKey.category] = userInfo?.category
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
-                    self?.infoWindow.open(with: leafNodeMarker)
+                    guard let self = self else { return false }
+                    
+                    self.resizePickedMarker()
+                    
+                    leafNodeMarker.width = leafNodeMarker.iconImage.imageWidth + 11
+                    leafNodeMarker.height = leafNodeMarker.iconImage.imageHeight + 11
+                    self.pickedMarker = leafNodeMarker
+                    self.infoWindow.open(with: leafNodeMarker)
                     return true
                 }
                 
@@ -206,6 +214,13 @@ final class MapViewController: UIViewController {
             }
             
         }
+    }
+    
+    private func resizePickedMarker() {
+        guard let pickedMarker = pickedMarker else { return }
+        
+        pickedMarker.width = pickedMarker.iconImage.imageWidth
+        pickedMarker.height = pickedMarker.iconImage.imageHeight
     }
     
     private func remove(markers: [NMFMarker]) {
@@ -300,11 +315,18 @@ extension MapViewController: NMFMapViewTouchDelegate {
         isEditMode = false
         enableGestures()
         
-        self.transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
+        transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedMarkers.forEach {
             $0.hidden = false
         }
+        
+        resizePickedMarker()
     }
     
+}
+
+enum InfoKey {
+    static let title = "title"
+    static let category = "category"
 }
