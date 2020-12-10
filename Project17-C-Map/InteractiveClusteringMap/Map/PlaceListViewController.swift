@@ -9,9 +9,9 @@
 
 import UIKit
 
-class PreviewViewController: UIViewController {
+class PlaceListViewController: UIViewController {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView!
     private var poiService: POIServicing?
     private var placeInfoService: PlaceInfoServicing?
     private var cluster: Cluster?
@@ -32,7 +32,14 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let gesture = UIPanGestureRecognizer.init(target: self,
+                                                  action: #selector(panGesture))
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
+        
+        
+        
         let urls = [ "http://ldb.phinf.naver.net/20190110_293/1547048398707IGmBs_JPEG/scXaoTP-_ccxbMqn2vFL-k-G.jpg",
                      "http://ldb.phinf.naver.net/20190616_192/1560681495671CW2VX_JPEG/pPfSjNLsKKvdhYcaTkyabjtZ.jpg",
                      "http://ldb.phinf.naver.net/20190806_213/1565088665739jPvCP_JPEG/GemsLMNPxqYN0yRFOigiabqz.jpg" ]
@@ -49,7 +56,12 @@ class PreviewViewController: UIViewController {
         configureDataSource()
     }
     
-    private func createLayout() -> UICollectionViewLayout {
+}
+
+// MARK: - collectionView
+private extension PlaceListViewController {
+    
+    func createLayout() -> UICollectionViewLayout {
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
@@ -82,7 +94,7 @@ class PreviewViewController: UIViewController {
         return layout
     }
     
-    private func configureDataSource() {
+    func configureDataSource() {
         
         dataSource = UICollectionViewDiffableDataSource<String, Place>(collectionView: collectionView) {
             (collectionView: UICollectionView, indexPath: IndexPath, identifier: Place) -> UICollectionViewCell? in
@@ -123,7 +135,7 @@ class PreviewViewController: UIViewController {
         applySnapshot()
     }
     
-    private func applySnapshot() {
+    func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<String, Place>()
         
         categories.forEach { category in
@@ -134,19 +146,15 @@ class PreviewViewController: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: false)
     }
     
-}
-
-private extension PreviewViewController {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
     
     enum Configuration {
         static let headerElementKind = "header-element-kind"
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
         static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.continuous
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
 }
