@@ -122,7 +122,7 @@ final class AnimationController {
     static func movePositionWithPath(start: CGPoint, end: CGPoint) -> CAKeyframeAnimation {
         let animation = CAKeyframeAnimation(keyPath: "position")
         let jump = abs(start.x - end.x) * 1.2
-        print(jump)
+
         animation.path = jumpBezierPath(start: start, end: end, jump: jump).cgPath
         animation.timingFunction = CAMediaTimingFunction(name: .easeIn)
         
@@ -153,5 +153,25 @@ final class AnimationController {
         resultAnimation.duration = 3
         return resultAnimation
     }
+    
+    static func splashMarkerAimation2(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
+        let resultAnimation = CAAnimationGroup()
+        let aHalf = CGPoint(x: ((start.x + end.x) / 2), y: ((start.y + end.y) / 2))
+        let treeQuarters = CGPoint(x: ((start.x * 0.25) + (end.x * 0.75)), y: ((start.y * 0.25) + (end.y * 0.75)))
+        
+        let move1 = movePositionWithPath(start: start, end: aHalf)
+        move1.duration = 1.2
+        let move2 = movePositionWithPath(start: aHalf, end: treeQuarters)
+        move2.duration = 1
+        move2.beginTime = 1.2
+        let move3 = movePositionWithPath(start: treeQuarters, end: end)
+        move3.duration = 0.7
+        move3.beginTime = 2.2
+        
+        resultAnimation.animations = [move1, move2, move3]
+        resultAnimation.duration = 3
+        return resultAnimation
+    }
+    
     
 }
