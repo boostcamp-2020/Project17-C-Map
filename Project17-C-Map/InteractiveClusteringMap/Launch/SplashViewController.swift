@@ -11,15 +11,21 @@ class SplashViewController: UIViewController {
 
     @IBOutlet weak var transparentUIView: UIView!
     @IBOutlet weak var globeImageView: UIImageView!
+    private var mapViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapViewController = createMapViewController()
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureMarkers()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) {
+            self.presentMapViewController()
+        }
     }
     
     private func configureMarkers() {
@@ -50,6 +56,7 @@ class SplashViewController: UIViewController {
         }
         
         let endPosition = CGPoint(x: 200, y: 400)
+        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -65,14 +72,14 @@ class SplashViewController: UIViewController {
     }
     
     private func markerLayerAnimate(markerLayer: CALayer, endPosition: CGPoint) {
-        var ani: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [AnimationController.splashMarkerAnimation1, AnimationController.splashMarkerAnimation2, AnimationController.splashMarkerAnimation3]
-        ani.shuffle()
-        guard let animation = ani.first else { return }
+        var animations: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [AnimationController.splashMarkerAnimation1, AnimationController.splashMarkerAnimation2, AnimationController.splashMarkerAnimation3]
+        animations.shuffle()
+        guard let animation = animations.first else { return }
         
-        let aaa = animation(markerLayer.position, endPosition)
+        let randomAnimation = animation(markerLayer.position, endPosition)
         CATransaction.begin()
         transparentUIView.layer.addSublayer(markerLayer)
-        markerLayer.add(aaa, forKey: "makerMove")
+        markerLayer.add(randomAnimation, forKey: "makerMove")
         CATransaction.setCompletionBlock {
             markerLayer.position = endPosition
             markerLayer.isHidden = false
@@ -80,4 +87,29 @@ class SplashViewController: UIViewController {
         CATransaction.commit()
     }
 
+    private func createMapViewController() -> UIViewController {
+        let dataManager = CoreDataStack.shared
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(
+            identifier: "MapViewController",
+            creator: { coder in
+                return MapViewController(coder: coder, dataManager: dataManager)
+            })
+        
+        viewController.modalPresentationStyle = .fullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        
+        return viewController
+       
+    }
+    
+    func presentMapViewController() {
+        guard let mapViewController = mapViewController else { return }
+        let window = self.view.window
+        self.dismiss(animated: true) {
+            window?.rootViewController = mapViewController
+            window?.makeKeyAndVisible()
+        }
+    }
+    
 }

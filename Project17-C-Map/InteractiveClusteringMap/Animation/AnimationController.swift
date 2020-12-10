@@ -146,11 +146,11 @@ final class AnimationController {
         let move1 = movePositionWithPath(start: start, end: treeQuarters)
         move1.duration = 1
         let move2 = movePositionWithPath(start: treeQuarters, end: end)
-        move2.duration = 1
+        move2.duration = 0.8
         move2.beginTime = 1
         
         resultAnimation.animations = [move1, move2]
-        resultAnimation.duration = 3
+        resultAnimation.duration = 1.8
         return resultAnimation
     }
     
@@ -169,7 +169,7 @@ final class AnimationController {
         move3.beginTime = 2.2
         
         resultAnimation.animations = [move1, move2, move3]
-        resultAnimation.duration = 3
+        resultAnimation.duration = 2.9
         return resultAnimation
     }
     
@@ -195,6 +195,5 @@ final class AnimationController {
         resultAnimation.duration = 3.2
         return resultAnimation
     }
-    
     
 }
