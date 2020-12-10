@@ -55,7 +55,8 @@ class SplashViewController: UIViewController {
             rightMarkerLayers.append(markerLayer)
         }
         
-        let endPosition = CGPoint(x: 200, y: 400)
+        let endPosition = CGPoint(x: globeImageView.layer.position.x + 20,
+                                  y: globeImageView.layer.position.y - 118)
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
