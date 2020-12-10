@@ -193,9 +193,11 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
+                
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
-                leafNodeMarker.userInfo[InfoKey.title] = userInfo?.name
-                leafNodeMarker.userInfo[InfoKey.category] = userInfo?.category
+                leafNodeMarker.configureUserInfo(userInfo: userInfo)
+                
+                
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
                     
@@ -311,14 +313,8 @@ extension MapViewController: NMFMapViewTouchDelegate {
         presentedMarkers.forEach {
             $0.hidden = false
         }
-    
-        pickedMarker?.resizeMarkerSize()
         
+        pickedMarker?.resizeMarkerSize()
     }
     
-}
-
-enum InfoKey {
-    static let title = "title"
-    static let category = "category"
 }

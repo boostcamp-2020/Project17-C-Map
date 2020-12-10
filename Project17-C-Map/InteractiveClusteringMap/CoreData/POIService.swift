@@ -13,7 +13,7 @@ protocol POIServicing {
     func update(poi: POI)
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
-    func fetch(coordinate: Coordinate) -> POIInfo
+    func fetch(coordinate: Coordinate) -> POIInfo?
     func save()
     
 }
@@ -45,10 +45,10 @@ final class POIService: POIServicing {
         }
     }
     
-    func fetch(coordinate: Coordinate) -> POIInfo {
+    func fetch(coordinate: Coordinate) -> POIInfo? {
         return dataManager.fetch(coordinate: coordinate).compactMap {
             $0.info?.info
-        }.first ?? POIInfo(name: "", imageUrl: "", category: "")
+        }.first
     }
     
     func save() {
