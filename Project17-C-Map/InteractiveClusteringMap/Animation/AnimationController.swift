@@ -64,28 +64,6 @@ final class AnimationController {
         return animation
     }
     
-    /// bezierPath를 통한 위치변경 애니메이션
-    ///
-    /// - Parameters:
-    ///   - start: start position
-    ///   - end: end position
-    /// - Returns: CAKeyframeAnimation
-    static func movePositionWithPath(start: CGPoint, end: CGPoint) -> CAKeyframeAnimation {
-        let animation = CAKeyframeAnimation(keyPath: "position")
-        animation.path = bezierPath(start: start, end: end).cgPath
-        animation.duration = 1
-        
-        return animation
-    }
-    
-    /// bezierPath 추후 구현
-    static private func bezierPath(start: CGPoint, end: CGPoint) -> UIBezierPath {
-        let bezierPath = UIBezierPath()
-        
-        bezierPath.move(to: start)
-        return bezierPath
-    }
-    
     static func shake() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
         let shakeValues: [Double] = [-5, 5, -4, 4, -3, 3, -2, 2, -1, 1, 0, 0]
@@ -132,6 +110,47 @@ final class AnimationController {
         resultAnimation.animations = [reduceScale, fadeOut]
         resultAnimation.duration = 0.5
         
+        return resultAnimation
+    }
+    
+    /// bezierPath를 통한 위치변경 애니메이션
+    ///
+    /// - Parameters:
+    ///   - start: start position
+    ///   - end: end position
+    /// - Returns: CAKeyframeAnimation
+    static func movePositionWithPath(start: CGPoint, end: CGPoint) -> CAKeyframeAnimation {
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        let jump = abs(start.x - end.x) * 1.2
+        print(jump)
+        animation.path = jumpBezierPath(start: start, end: end, jump: jump).cgPath
+        animation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+        
+        return animation
+    }
+    
+    static private func jumpBezierPath(start: CGPoint, end: CGPoint, jump: CGFloat) -> UIBezierPath {
+        let bezierPath = UIBezierPath()
+        let controlPoint = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2 - jump)
+        
+        bezierPath.move(to: start)
+        bezierPath.addQuadCurve(to: end, controlPoint: controlPoint)
+        
+        return bezierPath
+    }
+    
+    static func splashMarkerAimation(start: CGPoint, end: CGPoint) -> CAAnimationGroup {
+        let resultAnimation = CAAnimationGroup()
+        let treeQuarters = CGPoint(x: ((start.x * 0.25) + (end.x * 0.75)), y: ((start.y * 0.25) + (end.y * 0.75)))
+
+        let move1 = movePositionWithPath(start: start, end: treeQuarters)
+        move1.duration = 1
+        let move2 = movePositionWithPath(start: treeQuarters, end: end)
+        move2.duration = 1
+        move2.beginTime = 1
+        
+        resultAnimation.animations = [move1, move2]
+        resultAnimation.duration = 3
         return resultAnimation
     }
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sGb-JB-0gP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FRA-zA-bsa">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
@@ -7,57 +7,63 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="BlackOpsOne_Regular.ttf">
-            <string>BlackOpsOne-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Splash View Controller-->
-        <scene sceneID="H1d-Jo-tcN">
+        <scene sceneID="7la-Ub-lt9">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sGb-JB-0gP" customClass="SplashViewController" customModule="InteractiveClusteringMap" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vpG-ei-AYj">
+                <viewController storyboardIdentifier="SplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FRA-zA-bsa" customClass="SplashViewController" customModule="InteractiveClusteringMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3uI-es-VQG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="pBg-fy-IXB">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="vwy-xY-v3G">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map C" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gw-13-k0i">
-                                <rect key="frame" x="111.5" y="144" width="191" height="75"/>
-                                <fontDescription key="fontDescription" name="BlackOpsOne-Regular" family="Black Ops One" pointSize="60"/>
-                                <color key="textColor" red="0.027285106480000001" green="0.24707660079999999" blue="0.3136815429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="globe" translatesAutoresizingMaskIntoConstraints="NO" id="MK4-zm-Juf">
-                                <rect key="frame" x="79" y="319" width="256" height="256"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapC" translatesAutoresizingMaskIntoConstraints="NO" id="duK-TM-ndC">
+                                <rect key="frame" x="40" y="64" width="334" height="264"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="globe" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-zW-Vlu">
+                                <rect key="frame" x="79" y="358" width="256" height="256"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="256" id="cZ0-Tj-VQp"/>
-                                    <constraint firstAttribute="height" constant="256" id="hs3-Tk-qF9"/>
+                                    <constraint firstAttribute="height" constant="256" id="9zY-nB-9tD"/>
+                                    <constraint firstAttribute="width" constant="256" id="kup-TC-cNs"/>
                                 </constraints>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbd-x3-AfU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="VRE-MN-mlT"/>
+                        <viewLayoutGuide key="safeArea" id="Puw-kG-f4P"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="MK4-zm-Juf" firstAttribute="centerX" secondItem="vpG-ei-AYj" secondAttribute="centerX" id="Aze-bb-HMH"/>
-                            <constraint firstItem="pBg-fy-IXB" firstAttribute="top" secondItem="VRE-MN-mlT" secondAttribute="top" id="LCa-xj-gce"/>
-                            <constraint firstItem="pBg-fy-IXB" firstAttribute="leading" secondItem="VRE-MN-mlT" secondAttribute="leading" id="M2w-CT-VN1"/>
-                            <constraint firstItem="MK4-zm-Juf" firstAttribute="top" secondItem="7gw-13-k0i" secondAttribute="bottom" constant="100" id="TtC-dP-vwc"/>
-                            <constraint firstItem="VRE-MN-mlT" firstAttribute="bottom" secondItem="pBg-fy-IXB" secondAttribute="bottom" id="UFN-3m-HKY"/>
-                            <constraint firstItem="VRE-MN-mlT" firstAttribute="trailing" secondItem="pBg-fy-IXB" secondAttribute="trailing" id="hZ2-Ma-pfb"/>
-                            <constraint firstItem="7gw-13-k0i" firstAttribute="centerX" secondItem="vpG-ei-AYj" secondAttribute="centerX" id="ham-Z8-8qH"/>
-                            <constraint firstItem="7gw-13-k0i" firstAttribute="top" secondItem="VRE-MN-mlT" secondAttribute="top" constant="100" id="p0A-9b-7La"/>
+                            <constraint firstItem="V8W-zW-Vlu" firstAttribute="top" secondItem="duK-TM-ndC" secondAttribute="bottom" constant="30" id="8K9-Rc-BGC"/>
+                            <constraint firstItem="V8W-zW-Vlu" firstAttribute="centerX" secondItem="3uI-es-VQG" secondAttribute="centerX" id="8Lx-LV-09C"/>
+                            <constraint firstItem="duK-TM-ndC" firstAttribute="top" secondItem="Puw-kG-f4P" secondAttribute="top" constant="20" id="A8z-Z1-784"/>
+                            <constraint firstItem="tbd-x3-AfU" firstAttribute="leading" secondItem="Puw-kG-f4P" secondAttribute="leading" id="COy-5x-QdH"/>
+                            <constraint firstItem="Puw-kG-f4P" firstAttribute="trailing" secondItem="vwy-xY-v3G" secondAttribute="trailing" id="P1u-6A-IW3"/>
+                            <constraint firstItem="tbd-x3-AfU" firstAttribute="bottom" secondItem="Puw-kG-f4P" secondAttribute="bottom" id="Qkq-wA-xqO"/>
+                            <constraint firstItem="vwy-xY-v3G" firstAttribute="leading" secondItem="Puw-kG-f4P" secondAttribute="leading" id="Yuj-bf-3jW"/>
+                            <constraint firstItem="vwy-xY-v3G" firstAttribute="top" secondItem="3uI-es-VQG" secondAttribute="top" id="b2W-Hr-1bP"/>
+                            <constraint firstAttribute="trailing" secondItem="duK-TM-ndC" secondAttribute="trailing" constant="40" id="frc-IW-k4B"/>
+                            <constraint firstItem="tbd-x3-AfU" firstAttribute="top" secondItem="Puw-kG-f4P" secondAttribute="top" id="r87-rs-bbx"/>
+                            <constraint firstAttribute="bottom" secondItem="vwy-xY-v3G" secondAttribute="bottom" id="uDK-u5-UFd"/>
+                            <constraint firstItem="Puw-kG-f4P" firstAttribute="trailing" secondItem="tbd-x3-AfU" secondAttribute="trailing" id="vCG-9b-Gra"/>
+                            <constraint firstItem="duK-TM-ndC" firstAttribute="leading" secondItem="3uI-es-VQG" secondAttribute="leading" constant="40" id="y2E-Sg-sg6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="globeImageView" destination="V8W-zW-Vlu" id="lpH-Sq-fXn"/>
+                        <outlet property="transparentUIView" destination="tbd-x3-AfU" id="fUD-gB-yhc"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T0g-vB-yiM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M56-AN-rBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
     <resources>
+        <image name="MapC" width="518" height="264"/>
         <image name="background" width="118" height="256"/>
         <image name="globe" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
