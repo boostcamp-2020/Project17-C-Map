@@ -13,15 +13,17 @@ class PreviewViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     private var poiService: POIServicing?
+    private var placeInfoService: PlaceInfoServicing?
     private var cluster: Cluster?
     private var places: [Place] = []
     private var categories: [String] = []
     private var dataSource: UICollectionViewDiffableDataSource<String, Place>! = nil
     
-    init?(coder: NSCoder, cluster: Cluster, poiService: POIServicing) {
+    init?(coder: NSCoder, cluster: Cluster, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
         super.init(coder: coder)
         self.cluster = cluster
         self.poiService = poiService
+        self.placeInfoService = placeInfoService
     }
     
     required init?(coder: NSCoder) {
@@ -35,17 +37,14 @@ class PreviewViewController: UIViewController {
 //            poiService?.fetch(coordinate: $0)
 //        } ?? []
         
-        (0...3).forEach { _ in
-            let place = Place(coordinate: Coordinate.randomGenerate(rangeOfLat: (0...10000), rangeOfLng: (2...300000)),
-                              info: POIInfo(name: "커피조아", imageUrl: "라마바", category: "카페"))
-            let place1 = Place(coordinate: Coordinate.randomGenerate(rangeOfLat: (0...10000), rangeOfLng: (2...300000)),
-                              info: POIInfo(name: "고기조아", imageUrl: "라마바", category: "음식점"))
-            let place2 = Place(coordinate: Coordinate.randomGenerate(rangeOfLat: (0...100000), rangeOfLng: (2...300000)),
-                              info: POIInfo(name: "술개좋아", imageUrl: "라마바", category: "술집"))
-            let place3 = Place(coordinate: Coordinate.randomGenerate(rangeOfLat: (0...100000), rangeOfLng: (2...300000)),
-                              info: POIInfo(name: "빵돌이", imageUrl: "라마바", category: "빵집"))
-            
-            places += [place, place1, place2, place3]
+        let urls = [ "http://ldb.phinf.naver.net/20190110_293/1547048398707IGmBs_JPEG/scXaoTP-_ccxbMqn2vFL-k-G.jpg",
+                     "http://ldb.phinf.naver.net/20190616_192/1560681495671CW2VX_JPEG/pPfSjNLsKKvdhYcaTkyabjtZ.jpg",
+                     "http://ldb.phinf.naver.net/20190806_213/1565088665739jPvCP_JPEG/GemsLMNPxqYN0yRFOigiabqz.jpg" ]
+        
+        
+        cluster?.coordinates.enumerated().forEach { index, coord in
+            let place = Place(coordinate: coord, info: POIInfo(name: "양꼬치엔", imageUrl: urls[index%3], category: "칭따오!"))
+            places.append(place)
         }
         
         categories = Array(Set(places.compactMap { $0.info.category }))
@@ -98,6 +97,17 @@ class PreviewViewController: UIViewController {
             }
             
             cell.configure(place: identifier)
+            
+            self.placeInfoService?.fetchAdrress(lat: identifier.coordinate.y, lng: identifier.coordinate.x, completion: {
+                cell.configure(address: $0)
+            })
+            
+            if let url = identifier.info.imageUrl {
+                self.placeInfoService?.fetchImage(url: url, completion: {
+                    cell.configure(image: $0)
+                })
+            }
+            
             return cell
             
         }
@@ -110,6 +120,7 @@ class PreviewViewController: UIViewController {
             }
             
             sectionHeader.configure(text: self.categories[indexPath.section])
+            
             return sectionHeader
         }
         
@@ -135,7 +146,7 @@ private extension PreviewViewController {
         static let headerElementKind = "header-element-kind"
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
-        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.continuousGroupLeadingBoundary
+        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.continuous
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
