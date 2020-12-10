@@ -113,17 +113,15 @@ final class MapViewController: UIViewController {
             
             if containX && containY {
                 touchedDeleteLayer = true
-                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
+                let alert = MapAlertController.createDeleteAlertController { [weak self] _ in
                     leafMarker.mapView = nil
                     leafMarker.markerLayer?.removeFromSuperlayer()
                     self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
                     
                     self?.touchedDeleteLayer = false
-                }, cancelHandler: { [weak self] _ in
-                    self?.touchedDeleteLayer = false
-                })
-                present(alert.createAlertController(), animated: true)
+                }
+                present(alert, animated: true)
             }
         }
     }
@@ -166,16 +164,14 @@ final class MapViewController: UIViewController {
     }
     
     private func addLeafNodeMarker(at location: CGPoint) {
-        let alert = MapAlertController(alertType: .add, okHandler: { [weak self] _ in
+        let alert = MapAlertController.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
             self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
+        }
         
-        }, cancelHandler: nil)
-        
-    
-        present(alert.createAlertController(), animated: true)
+        present(alert, animated: true)
     }
     
     internal func setMarkerPosition(marker: CALayer) {
