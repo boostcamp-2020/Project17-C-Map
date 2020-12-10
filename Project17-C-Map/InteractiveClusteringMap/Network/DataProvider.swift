@@ -22,7 +22,7 @@ enum Store {
 }
 
 protocol DataProvided {
-    func data(path: String, completion: @escaping (Data?) -> Void)
+    func data(path: String, header: [String: String]?, completion: @escaping (Result<Data?, Error>) -> Void)
     func imageURL(path: String, completion: @escaping (URL?) -> Void)
 }
 
@@ -36,20 +36,20 @@ struct LocalDataProvider: DataProvided {
                                                        qos: .utility,
                                                        attributes: .concurrent)
     
-    func data(path: String, completion: @escaping (Data?) -> Void) {
+    func data(path: String, header: [String: String]?, completion: @escaping (Result<Data?, Error>) -> Void) {
         concurrentQueue.async {
             guard let file = Bundle.main.url(forResource: path,
                                              withExtension: Name.jsonType)
             else {
                 DispatchQueue.main.async {
-                    completion(nil)
+                    completion(.failure(LocalError.notFoundFile))
                 }
                 return
             }
-            DispatchQueue.main.async {
-                completion(try? Data(contentsOf: file))
-            }
             
+            DispatchQueue.main.async {
+                completion(.success(try? Data(contentsOf: file)))
+            }
         }
     }
     
@@ -83,15 +83,38 @@ struct HTTPDataProvider: DataProvided {
                                                        qos: .utility,
                                                        attributes: .concurrent)
     
-    func data(path: String, completion: @escaping (Data?) -> Void) {
+    func data(path: String, header: [String: String]?, completion: @escaping (Result<Data?, Error>) -> Void) {
         guard let url = URL(string: path)
         else {
-            return completion(nil)
+            defer {
+                completion(.failure(NetworkError.url))
+            }
+            return
         }
         
+        guard let header = header else {
+            defer {
+                completion(.failure(NetworkError.author))
+            }
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = header
+        
         concurrentQueue.async {
-            session.dataTask(with: url) { (data, _, _) in
-                completion(data)
+            session.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    return completion(.failure(error))
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                      200...299 ~= httpResponse.statusCode
+                else {
+                    return completion(.failure(NetworkError.unknown))
+                }
+                
+                completion(.success(data))
             }.resume()
         }
     }

@@ -30,18 +30,7 @@ final class PlaceInfoService: PlaceInfoServicing {
     
     func fetchAdrress(lat: Double, lng: Double, completion: @escaping (String) -> Void) {
         geocodingNetwork.address(lat: lat, lng: lng) { result in
-            switch result {
-            case .success(let data):
-                let decoder = JSONDecoder()
-                let result = try? decoder.decode(Geocoding.self, from: data)
-                DispatchQueue.main.async {
-                    completion(result?.description ?? "")
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    completion(error.localizedDescription)
-                }
-            }
+            completion(result)
         }
     }
     

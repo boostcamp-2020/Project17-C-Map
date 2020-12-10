@@ -12,6 +12,7 @@
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
+		1943CCC92581F79D0010B103 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1943CCC82581F79D0010B103 /* DataError.swift */; };
 		197E85402580B01600F2B46C /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E853F2580B01600F2B46C /* ImageProvider.swift */; };
 		197E85452580B03000F2B46C /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E85442580B03000F2B46C /* DataProvider.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
@@ -129,6 +130,7 @@
 		190CAB3425738FB800234F23 /* MapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenter.swift; sourceTree = "<group>"; };
 		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
+		1943CCC82581F79D0010B103 /* DataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataError.swift; sourceTree = "<group>"; };
 		197E853F2580B01600F2B46C /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
 		197E85442580B03000F2B46C /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				197E853F2580B01600F2B46C /* ImageProvider.swift */,
 				197E85442580B03000F2B46C /* DataProvider.swift */,
 				FC5B24A9258156E400450EEF /* PlaceInfoService.swift */,
+				1943CCC82581F79D0010B103 /* DataError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				19D16871257BD5D0002888F4 /* TreeDataStore.swift in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
+				1943CCC92581F79D0010B103 /* DataError.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
