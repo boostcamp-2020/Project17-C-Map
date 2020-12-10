@@ -169,8 +169,8 @@ final class MapViewController: UIViewController {
             guard let self = self else { return }
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
-//            let POI
-            self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
+            let poi = POI(x: latlng.lng, y: latlng.lat, name: text)
+            self.mapController?.add(poi: poi)
         }
         
         present(alert, animated: true)

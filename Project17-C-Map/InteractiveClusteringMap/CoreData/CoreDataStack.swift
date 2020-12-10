@@ -55,8 +55,8 @@ final class CoreDataStack: DataManagable {
         save(successHandler: nil)
     }
     
-    func add(coordinate: Coordinate) {
-        setValue(POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+    func add(poi: POI) {
+        setValue(poi)
         save(successHandler: nil)
     }
     

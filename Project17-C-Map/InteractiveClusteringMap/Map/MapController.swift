@@ -23,14 +23,16 @@ final class MapController: NSObject {
         configureTileCoverHelper()
     }
     
-    func add(coordinate: Coordinate) {
+    func add(poi: POI) {
         guard let tileIds = interactiveMapView?.mapView.getCoveringTileIds() as? [CLong] else { return }
+        
+        let coordinate = Coordinate(x: poi.x, y: poi.y, id: poi.id)
         
         for tileId in tileIds {
             let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
             let boundingBox = bounds.makeBoundingBox()
             if boundingBox.contains(coordinate: coordinate) {
-                interactor?.add(tileId: tileId, coordinate: coordinate)
+                interactor?.add(tileId: tileId, poi: poi)
                 break
             }
         }

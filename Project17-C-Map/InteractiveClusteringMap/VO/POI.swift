@@ -24,6 +24,10 @@ struct POI: Codable {
         self.category = category
     }
     
+    init(x: Double, y: Double, name: String? = nil, imageUrl: String? = nil, category: String? = nil) {
+        self.init(x: x, y: y, id: UUID().uuidString, name: name, imageUrl: imageUrl, category: category)
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

@@ -11,7 +11,7 @@ protocol TreeDataStorable {
     
     func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void)
     func remove(coordinate: Coordinate)
-    func add(coordinate: Coordinate)
+    func add(poi: POI)
     func fetch(coordinate: Coordinate) -> POIInfo?
 }
 
@@ -45,8 +45,9 @@ class TreeDataStore: TreeDataStorable {
         }
     }
     
-    func add(coordinate: Coordinate) {
-        poiService.add(coordinate: coordinate)
+    func add(poi: POI) {
+        let coordinate = Coordinate(x: poi.x, y: poi.y, id: poi.id)
+        poiService.add(poi: poi)
         let trees = quadTreeWithBoundary.filter { $0.key.contains(coordinate: coordinate) }
         trees.first?.value.insert(coordinate: coordinate)
     }
