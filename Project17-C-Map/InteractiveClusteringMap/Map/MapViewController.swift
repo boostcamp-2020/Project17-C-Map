@@ -36,10 +36,28 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.requestWhenInUseAuthorization()
-        dependencyInject()
-        configureMap()
-        configureInfoWindow()
+        self.locationManager.requestWhenInUseAuthorization()
+        self.dependencyInject()
+        self.configureMap()
+        self.configureInfoWindow()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if FirstLaunchDetector.shared.isFirstLaunch() {
+            presentOnboarding()
+        }
+    }
+    
+    private func presentOnboarding() {
+        let onboardViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(
+            identifier: "OnboardingViewController",
+            creator: { coder in
+                return OnboardingViewController(coder: coder)
+            })
+        onboardViewController.modalPresentationStyle = .fullScreen
+        present(onboardViewController, animated: true)
     }
     
     private func dependencyInject() {

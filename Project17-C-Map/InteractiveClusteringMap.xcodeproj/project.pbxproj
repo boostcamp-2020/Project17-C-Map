@@ -22,6 +22,9 @@
 		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
+		3724B3162581E3ED005DA3DE /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3724B3152581E3ED005DA3DE /* Onboarding.storyboard */; };
+		3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31A2581E478005DA3DE /* OnboardingViewController.swift */; };
+		3724B3202581ECB9005DA3DE /* FirstLaunchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */; };
 		37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
 		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
@@ -127,6 +130,9 @@
 		19D16870257BD5D0002888F4 /* TreeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDataStore.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
+		3724B3152581E3ED005DA3DE /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		3724B31A2581E478005DA3DE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLaunchDetector.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -268,6 +274,7 @@
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
 				46A12E1A256CD099007BDF3E /* Array+.swift */,
+				3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -308,6 +315,8 @@
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
+				3724B3152581E3ED005DA3DE /* Onboarding.storyboard */,
+				3724B31A2581E478005DA3DE /* OnboardingViewController.swift */,
 				FA194F632576035C003B07D9 /* DBI.swift */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
@@ -580,6 +589,7 @@
 				FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */,
 				37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */,
 				37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */,
+				3724B3162581E3ED005DA3DE /* Onboarding.storyboard in Resources */,
 				37EB73352562592800AC44D6 /* Assets.xcassets in Resources */,
 				37EB73302562592700AC44D6 /* Main.storyboard in Resources */,
 			);
@@ -708,7 +718,9 @@
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
+				3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
+				3724B3202581ECB9005DA3DE /* FirstLaunchDetector.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
