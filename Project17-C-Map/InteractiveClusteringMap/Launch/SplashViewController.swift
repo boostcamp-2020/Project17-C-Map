@@ -9,9 +9,10 @@ import UIKit
 
 class SplashViewController: UIViewController {
 
-    @IBOutlet weak var transparentUIView: UIView!
+    @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var globeImageView: UIImageView!
     private var mapViewController: UIViewController?
+    @IBOutlet weak var loadingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +24,14 @@ class SplashViewController: UIViewController {
         super.viewWillAppear(animated)
         configureMarkers()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
             self.presentMapViewController()
         }
     }
     
     private func configureMarkers() {
+        loadingLabel.setTextWithTypeAnimation(inputText: "클러스터링 정보를 가져오는 중입니다......")
+        
         guard let image = UIImage(named: "marker") else { return }
         
         var leftMarkerLayers = [CALayer]()
@@ -82,7 +85,7 @@ class SplashViewController: UIViewController {
         
         let randomAnimation = animation(markerLayer.position, endPosition)
         CATransaction.begin()
-        transparentUIView.layer.addSublayer(markerLayer)
+        transparentView.layer.addSublayer(markerLayer)
         markerLayer.add(randomAnimation, forKey: "makerMove")
         CATransaction.setCompletionBlock {
             markerLayer.position = endPosition
