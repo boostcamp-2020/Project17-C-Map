@@ -7,7 +7,6 @@
 
 import UIKit
 
-@IBDesignable
 extension UIView {
     
     @IBInspectable
