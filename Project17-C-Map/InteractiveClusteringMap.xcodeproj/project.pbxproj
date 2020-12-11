@@ -79,6 +79,8 @@
 		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
 		FAA63422258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */; };
 		FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6342625813A910022F2FC /* NMFMarker+.swift */; };
+		FAA634632583CE630022F2FC /* MappingModel.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAA634622583CE620022F2FC /* MappingModel.xcmappingmodel */; };
+		FAA6346B2583CFB30022F2FC /* POITransformationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6346A2583CFB30022F2FC /* POITransformationPolicy.swift */; };
 		FAACC7B3257E8F16005190F6 /* CustomInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */; };
 		FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */; };
 		FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */; };
@@ -181,6 +183,9 @@
 		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
 		FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMGLatLngBounds+BoundingBox.swift"; sourceTree = "<group>"; };
 		FAA6342625813A910022F2FC /* NMFMarker+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMarker+.swift"; sourceTree = "<group>"; };
+		FAA634612583CA130022F2FC /* InteractiveClusteringMap 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "InteractiveClusteringMap 2.xcdatamodel"; sourceTree = "<group>"; };
+		FAA634622583CE620022F2FC /* MappingModel.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel.xcmappingmodel; sourceTree = "<group>"; };
+		FAA6346A2583CFB30022F2FC /* POITransformationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POITransformationPolicy.swift; sourceTree = "<group>"; };
 		FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindow.swift; sourceTree = "<group>"; };
 		FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
 		FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
@@ -412,6 +417,8 @@
 			children = (
 				FAB1FC7F2568F1F0009E7535 /* POI */,
 				37EB73312562592700AC44D6 /* Model.xcdatamodeld */,
+				FAA6346A2583CFB30022F2FC /* POITransformationPolicy.swift */,
+				FAA634622583CE620022F2FC /* MappingModel.xcmappingmodel */,
 				372216C02569325600231245 /* DataManagable.swift */,
 				3753DCEF256B4C5B006D26A9 /* POIService.swift */,
 				FA81D67725690F360023E123 /* CoreDataStack.swift */,
@@ -675,6 +682,7 @@
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */,
 				19D16871257BD5D0002888F4 /* TreeDataStore.swift in Sources */,
+				FAA634632583CE630022F2FC /* MappingModel.xcmappingmodel in Sources */,
 				372216CD256943D300231245 /* POI.swift in Sources */,
 				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
@@ -712,6 +720,7 @@
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
 				FCE422C225701A390017416F /* Degree.swift in Sources */,
+				FAA6346B2583CFB30022F2FC /* POITransformationPolicy.swift in Sources */,
 				372216C12569325600231245 /* DataManagable.swift in Sources */,
 				37352CE025695EE000CAFDFD /* Place.swift in Sources */,
 				46A048EE257768BE00A99BE6 /* TranparentLayer.swift in Sources */,
@@ -1092,9 +1101,10 @@
 		37EB73312562592700AC44D6 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FAA634612583CA130022F2FC /* InteractiveClusteringMap 2.xcdatamodel */,
 				37EB73322562592700AC44D6 /* InteractiveClusteringMap.xcdatamodel */,
 			);
-			currentVersion = 37EB73322562592700AC44D6 /* InteractiveClusteringMap.xcdatamodel */;
+			currentVersion = FAA634612583CA130022F2FC /* InteractiveClusteringMap 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
