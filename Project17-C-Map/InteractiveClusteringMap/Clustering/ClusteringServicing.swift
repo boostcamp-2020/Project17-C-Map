@@ -14,6 +14,4 @@ protocol ClusteringServicing {
                  zoomLevel: Double,
                  completionHandler: @escaping (([Cluster]) -> Void))
     
-    func cancel()
-    
 }

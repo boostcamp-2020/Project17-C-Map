@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NMapsMap
 
 struct BoundingBox {
 
@@ -39,9 +40,21 @@ struct BoundingBox {
         self.bottomLeft <= other.topRight && other.bottomLeft <= self.topRight
     }
     
+    func boundingBoxToNMGBounds() -> NMGLatLngBounds {
+        let southWest = NMGLatLng(lat: bottomLeft.y, lng: bottomLeft.x)
+        let northEast = NMGLatLng(lat: topRight.y, lng: topRight.x)
+        
+        return NMGLatLngBounds(southWest: southWest, northEast: northEast)
+    }
+    
 }
 
-extension BoundingBox: Equatable {}
+extension BoundingBox: Hashable {
+    static func == (lhs: BoundingBox, rhs: BoundingBox) -> Bool {
+        return lhs.topRight == rhs.topRight &&
+            lhs.bottomLeft == rhs.bottomLeft
+    }
+}
 
 private extension BoundingBox {
     

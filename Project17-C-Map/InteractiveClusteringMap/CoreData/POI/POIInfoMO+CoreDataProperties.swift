@@ -22,13 +22,13 @@ extension POIInfoMO {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<POIInfoMO> {
         return NSFetchRequest<POIInfoMO>(entityName: name)
     }
-
+    
     @NSManaged public var category: String?
     @NSManaged public var imageUrl: String?
     @NSManaged public var name: String?
     
     var info: POIInfo {
-        return POIInfo(name: self.name, imageUrl: self.imageUrl, category: self.category)
+        return POIInfo(name: name, imageUrl: imageUrl, category: category)
     }
     
 }

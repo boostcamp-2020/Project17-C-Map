@@ -10,17 +10,18 @@ import UIKit
 
 class MarkerTextLayer: CATextLayer {
     
-    init(size: CGFloat, text: String) {
+    init(radius: CGFloat, text: String) {
         super.init()
-        configure(size: size, text: text)
+        self.configure(radius: radius, text: text)
+                
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    func configure(size: CGFloat, text: String) {
-        bounds = CGRect(x: 0, y: 0, width: size * 2, height: 20)
+    func configure(radius: CGFloat, text: String) {
+        bounds = CGRect(x: 0, y: 0, width: radius * 2, height: 20)
         
         fontSize = 15
         font = UIFont.systemFont(ofSize: 15, weight: .medium)

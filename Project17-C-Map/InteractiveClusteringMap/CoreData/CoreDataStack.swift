@@ -19,43 +19,69 @@ final class CoreDataStack: DataManagable {
     
     private weak var appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     private lazy var container: NSPersistentContainer? = appDelegate?.container
-    private lazy var context: NSManagedObjectContext? = container?.viewContext
-    
-    private let queue: DispatchQueue = .init(label: Name.queueName, qos: .background, attributes: .concurrent)
+    private lazy var context: NSManagedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
     
     private init() {
-        let pois = JSONReader.readPOIs(fileName: Name.fileName)
-        pois?.forEach {
-            setValue($0)
+        context.parent = container?.viewContext
+        
+        guard let pois = try? context.fetch(POIMO.fetchRequest()),
+              pois.count != 0 else {
+            let pois = JSONReader.readPOIs(fileName: Name.fileName)
+            pois?.forEach {
+                setValue($0)
+            }
+            return
         }
     }
     
     func deleteAll() {
-        guard let container = container else { return }
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: POIMO.fetchRequest())
-        
         do {
-            try container.persistentStoreCoordinator.execute(deleteRequest, with: container.viewContext)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: POIMO.fetchRequest())
+            try context.execute(deleteRequest)
         } catch let error as NSError {
             print(error.localizedDescription)
         }
+        save(successHandler: nil)
     }
     
-    func fetch() -> [POICoordinateMO] {
-        guard let context = context,
-              let entities = try? context.fetch(POICoordinateMO.fetchRequest()) as? [POICoordinateMO]
-        else {
+    func delete(coordinate: Coordinate) {
+        let request = POIMO.fetchRequest(coordinate: coordinate)
+        guard let objects = try? context.fetch(request) else {
+            return
+        }
+        objects.forEach {
+            context.delete($0)
+        }
+        save(successHandler: nil)
+    }
+    
+    func add(coordinate: Coordinate) {
+        setValue(POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+        save(successHandler: nil)
+    }
+    
+    func update(poi: POI) {
+        let request = POIMO.fetchRequest(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id))
+        guard let objects = try? context.fetch(request) else {
+            return
+        }
+        objects.first?.update(poi)
+        save(successHandler: nil)
+    }
+    
+    func fetch() -> [POIMO] {
+        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+        guard let entities = try? context.fetch(request) else {
             return []
         }
         return entities
     }
     
-    func fetchAsync(handler: @escaping ([POICoordinateMO]) -> Void) {
-        queue.async { [weak self] in
+    func fetch(handler: @escaping ([POIMO]) -> Void) {
+        context.perform { [weak self] in
+            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
             guard let self = self,
-                  let context = self.context,
-                  let entities = try? context.fetch(POICoordinateMO.fetchRequest()) as? [POICoordinateMO]
-            else {
+                  let entities = try? self.context.fetch(request) else {
                 DispatchQueue.main.async {
                     handler([])
                 }
@@ -67,27 +93,43 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch(topLeft: Coordinate, bottomRight: Coordinate) -> [POICoordinateMO] {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POICoordinateMO.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "lng >= %@ AND lng <= %@ AND lat >= %@ AND lat <= %@",
-                                             topLeft.x, bottomRight.x, bottomRight.y, topLeft.y)
-        guard let context = context,
-              let entities = try? context.fetch(fetchRequest) as? [POICoordinateMO]
-        else {
+    func fetch(coordinate: Coordinate) -> [POIMO] {
+        let request = POIMO.fetchRequest(coordinate: coordinate)
+        guard let entities = try? context.fetch(request) else {
             return []
         }
         return entities
     }
     
-    func fetchAsync(topLeft: Coordinate, bottomRight: Coordinate, handler: @escaping ([POICoordinateMO]) -> Void) {
-        queue.async { [weak self] in
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult> = POICoordinateMO.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "lng >= %@ AND lng <= %@ AND lat >= %@ AND lat <= %@",
-                                                 topLeft.x, bottomRight.x, bottomRight.y, topLeft.y)
+    func fetch(coordinate: Coordinate, handler: @escaping ([POIMO]) -> Void) {
+        context.perform { [weak self] in
+            let request = POIMO.fetchRequest(coordinate: coordinate)
             guard let self = self,
-                  let context = self.context,
-                  let entities = try? context.fetch(fetchRequest) as? [POICoordinateMO]
-            else {
+                  let entities = try? self.context.fetch(request) else {
+                DispatchQueue.main.async {
+                    handler([])
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                handler(entities)
+            }
+        }
+    }
+    
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate) -> [POIMO] {
+        let fetchRequest = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
+        guard let entities = try? context.fetch(fetchRequest) else {
+            return []
+        }
+        return entities
+    }
+    
+    func fetch(bottomLeft: Coordinate, topRight: Coordinate, handler: @escaping ([POIMO]) -> Void) {
+        context.perform { [weak self] in
+            let request = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
+            guard let self = self,
+                  let entities = try? self.context.fetch(request) else {
                 DispatchQueue.main.async {
                     handler([])
                 }
@@ -100,25 +142,22 @@ final class CoreDataStack: DataManagable {
     }
     
     func setValue(_ poi: POI) {
-        guard let context = context else { return }
-        
         guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
-              let coordMO = NSEntityDescription.insertNewObject(forEntityName: POICoordinateMO.name, into: context) as? POICoordinateMO,
               let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
             return
         }
-        coordMO.setValues(Coordinate(x: poi.x, y: poi.y))
         infoMO.setValues(POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
-        poiMO.setValues(id: poi.id, coordinate: coordMO, info: infoMO)
+        poiMO.setValues(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id), info: infoMO)
     }
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
-        guard let context = context else { return }
-        try? context.save()
-        
-        if context.hasChanges {
+        context.performAndWait {
+            guard context.hasChanges else {
+                return
+            }
             do {
                 try context.save()
+                try container?.viewContext.save()
                 successHandler?()
             } catch {
                 let nsError = error as NSError

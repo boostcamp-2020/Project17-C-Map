@@ -14,53 +14,67 @@ protocol ClusterBusinessLogic: class {
     
 }
 
-final class MapInteractor: ClusterBusinessLogic {
+protocol DataBusinessLogic: class {
     
-    private let poiService: POIServicing
+    func add(tileId: CLong, coordinate: Coordinate)
+    func remove(coordinate: Coordinate)
+    func fetch(coordinate: Coordinate) -> POIInfo?
+    
+}
+
+final class MapInteractor: MapBusinessLogic {
+    
     private let presenter: ClusterPresentationLogic
-    private var clusteringService: ClusteringServicing?
+    private let quadTreeClusteringService: ClusteringServicing
+    private let treeDataStore: TreeDataStorable
     
-    init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
-        self.poiService = poiService
+    init(treeDataStore: TreeDataStorable, presenter: ClusterPresentationLogic) {
         self.presenter = presenter
+        self.treeDataStore = treeDataStore
+        self.quadTreeClusteringService = QuadTreeClusteringService(treeDataStore: treeDataStore)
     }
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
         boundingBoxes.forEach { tileId, boundingBox in
-            self.poiService.fetchAsync { [weak self] pois in
-                guard let self = self else { return }
-
-                let coordinates = pois.map {
-                    Coordinate(x: $0.x, y: $0.y)
-                }
-                if self.clusteringService == nil {
-                    self.clusteringService = QuadTreeClusteringService(coordinates: coordinates,
-                                                                         boundingBox: BoundingBox.korea)
-                }
-                self.clustering(coordinates: coordinates,
-                                tileId: tileId,
-                                boundingBox: boundingBox,
-                                zoomLevel: zoomLevel)
-            }
+            self.clustering(
+                tileId: tileId,
+                boundingBox: boundingBox,
+                zoomLevel: zoomLevel)
         }
     }
     
-    private func clustering(coordinates: [Coordinate],
-                            tileId: CLong,
+    func fetch(coordinate: Coordinate) -> POIInfo? {
+        return treeDataStore.fetch(coordinate: coordinate)
+    }
+    
+    func remove(tileIds: [CLong]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.presenter.removePresentMarkers(tileIds: tileIds)
+        }
+    }
+    
+    private func clustering(tileId: CLong,
                             boundingBox: BoundingBox,
                             zoomLevel: Double) {
         
-        clusteringService?.execute(coordinates: coordinates,
-                                     boundingBox: boundingBox,
-                                     zoomLevel: zoomLevel) { [weak self] clusters in
+        quadTreeClusteringService.execute(coordinates: nil,
+                                          boundingBox: boundingBox,
+                                          zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-                                      
+            
             self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
         }
     }
     
-    func remove(tileIds: [CLong]) {
-        presenter.removePresentMarkers(tileIds: tileIds)
+    func add(tileId: CLong, coordinate: Coordinate) {
+        treeDataStore.add(coordinate: coordinate)
+        presenter.add(tileId: tileId, coordinate: coordinate)
+    }
+    
+    func remove(coordinate: Coordinate) {
+        treeDataStore.remove(coordinate: coordinate)
+        presenter.delete(coordinate: coordinate)
     }
     
 }

@@ -34,9 +34,9 @@ final class InteractiveMapView: NMFNaverMapView {
         showLocationButton = true
         showCompass = true
         showScaleBar = true
+        mapView.allowsTilting = false
+        mapView.minZoomLevel = 2
         
-        mapView.minZoomLevel = ZoomLevel.min
-        mapView.maxZoomLevel = ZoomLevel.max
         configureExtent()
     }
     
@@ -48,8 +48,12 @@ final class InteractiveMapView: NMFNaverMapView {
         mapView.extent = extent
     }
     
-    func projectPoint(from: NMGLatLng) -> CGPoint {
-        return mapView.projection.point(from: from)
+    func projectPoint(from latlng: NMGLatLng) -> CGPoint {
+        return mapView.projection.point(from: latlng)
+    }
+    
+    func projectLatLng(from point: CGPoint) -> NMGLatLng {
+        return mapView.projection.latlng(from: point)
     }
     
 }
@@ -61,11 +65,6 @@ private extension InteractiveMapView {
         static let southWestLng: Double = 124
         static let northEastLat: Double = 43
         static let northEastLng: Double = 132
-    }
-    
-    enum ZoomLevel {
-        static let min: Double = 5
-        static let max: Double = 20
     }
     
 }
