@@ -21,7 +21,6 @@ class POITransformationPolicy: NSEntityMigrationPolicy {
         
         let POI = NSEntityDescription.insertNewObject(forEntityName: "POI", into: dInstance.managedObjectContext!)
         
-        
         let id = sInstance.value(forKey: "id") as? Int64 ?? 0
         let stringId = String(id)
         
@@ -32,10 +31,6 @@ class POITransformationPolicy: NSEntityMigrationPolicy {
         print(stringId)
  
         manager.associate(sourceInstance: sInstance, withDestinationInstance: POI, for: mapping)
-    }
-    
-    override func createRelationships(forDestination dInstance: NSManagedObject, in mapping: NSEntityMapping, manager: NSMigrationManager) throws {
-        
     }
     
 }

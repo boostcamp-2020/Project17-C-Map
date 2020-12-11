@@ -35,6 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let error = error as NSError? {
                 print(error.localizedDescription)
             }
+            
+            let description = NSPersistentStoreDescription()
+            description.shouldMigrateStoreAutomatically = false
+            description.shouldInferMappingModelAutomatically = true
+            container.persistentStoreDescriptions = [description]
+            
         })
         return container
     }()
