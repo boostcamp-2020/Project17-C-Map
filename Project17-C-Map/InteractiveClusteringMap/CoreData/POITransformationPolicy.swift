@@ -13,7 +13,7 @@ class POITransformationPolicy: NSEntityMigrationPolicy {
     override func createDestinationInstances(forSource sInstance: NSManagedObject, in mapping: NSEntityMapping, manager: NSMigrationManager) throws {
         try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
         
-        print("Converting Event")
+//        print("Converting Event")
         
         guard let dInstance = manager.destinationInstances(forEntityMappingName: mapping.name, sourceInstances: [sInstance]).first else {
                     return
@@ -28,7 +28,7 @@ class POITransformationPolicy: NSEntityMigrationPolicy {
         POI.setValue(sInstance.value(forKey: "lat"), forKey: "lat")
         POI.setValue(sInstance.value(forKey: "lng"), forKey: "lng")
        
-        print(stringId)
+//        print(stringId)
  
         manager.associate(sourceInstance: sInstance, withDestinationInstance: POI, for: mapping)
     }

@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             let description = NSPersistentStoreDescription()
-            description.shouldMigrateStoreAutomatically = false
+            description.shouldMigrateStoreAutomatically = true
             description.shouldInferMappingModelAutomatically = true
             container.persistentStoreDescriptions = [description]
             

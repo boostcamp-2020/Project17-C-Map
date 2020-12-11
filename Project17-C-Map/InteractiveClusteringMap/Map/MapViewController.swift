@@ -193,12 +193,11 @@ final class MapViewController: UIViewController {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
                 
-                let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
-                leafNodeMarker.configureUserInfo(userInfo: userInfo)
-                
-                
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
+                    
+                    let userInfo = self.mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                    leafNodeMarker.configureUserInfo(userInfo: userInfo)
                     
                     self.pickedMarker?.resizeMarkerSize()
                     leafNodeMarker.sizeUp()
