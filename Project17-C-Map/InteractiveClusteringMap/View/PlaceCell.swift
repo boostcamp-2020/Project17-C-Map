@@ -15,10 +15,13 @@ class PlaceCell: UICollectionViewCell {
     @IBOutlet private weak var address: UILabel!
     
     override func prepareForReuse() {
-        
+        self.imageView.image = #imageLiteral(resourceName: "defaultImg")
+        self.category.text = ""
+        self.name.text = ""
+        self.address.text = ""
     }
     
-    func configure(place: Place = Place(coordinate: Coordinate(x: 0, y: 0), info: POIInfo(name: "11", imageUrl: "11", category: "1"))) {
+    func configure(place: Place) {
         self.category.text = place.info.category
         self.name.text = place.info.name
         self.address.text = place.info.imageUrl
@@ -31,4 +34,5 @@ class PlaceCell: UICollectionViewCell {
     func configure(address: String) {
         self.address.text = address
     }
+    
 }
