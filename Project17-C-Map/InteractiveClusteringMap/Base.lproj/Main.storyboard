@@ -137,8 +137,8 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zPJ-7u-JYK">
                                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="106"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.crop.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qk6-qG-XeG">
-                                                                        <rect key="frame" x="10" y="10.5" width="79" height="85"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qk6-qG-XeG">
+                                                                        <rect key="frame" x="10" y="10" width="79" height="86"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="85" id="sO0-h3-LRz"/>
                                                                             <constraint firstAttribute="width" secondItem="qk6-qG-XeG" secondAttribute="height" multiplier="1:1" id="zbx-Fu-g2a"/>
@@ -376,7 +376,6 @@
     </scenes>
     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
-        <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
