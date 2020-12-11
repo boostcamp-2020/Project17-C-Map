@@ -11,6 +11,11 @@ class PlaceHeaderView: UICollectionReusableView {
     
     @IBOutlet private weak var category: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.category.text = ""
+    }
+    
     func configure(text: String) {
         self.category.text = text
     }

@@ -15,6 +15,7 @@ class PlaceCell: UICollectionViewCell {
     @IBOutlet private weak var address: UILabel!
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         self.imageView.image = #imageLiteral(resourceName: "defaultImg")
         self.category.text = ""
         self.name.text = ""
