@@ -12,10 +12,10 @@
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
+		192D34BE256E36B900861703 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+.swift */; };
 		1943CCC92581F79D0010B103 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1943CCC82581F79D0010B103 /* DataError.swift */; };
 		197E85402580B01600F2B46C /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E853F2580B01600F2B46C /* ImageProvider.swift */; };
 		197E85452580B03000F2B46C /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E85442580B03000F2B46C /* DataProvider.swift */; };
-		192D34BE256E36B900861703 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
 		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
@@ -103,6 +103,8 @@
 		FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */; };
 		FC72B1E22581DE2600B84C84 /* Geocoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC72B1E12581DE2600B84C84 /* Geocoding.swift */; };
 		FC72B1F0258264AC00B84C84 /* PlaceListViewController+PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */; };
+		FC72B20025827A8A00B84C84 /* FilterScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC72B1FF25827A8A00B84C84 /* FilterScrollView.swift */; };
+		FC72B2052582A0A100B84C84 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC72B2042582A0A100B84C84 /* FilterButton.swift */; };
 		FC9145F0257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
 		FC9145F1257532EA00F961F1 /* KMeansValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */; };
 		FCE422B02570194B0017416F /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE422AF2570194B0017416F /* Coordinate.swift */; };
@@ -217,6 +219,8 @@
 		FC67155C2574F9BC0069DCC8 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KMeansValidateService.swift; path = InteractiveClusteringMap/Clustering/KMeans/KMeansValidateService.swift; sourceTree = SOURCE_ROOT; };
 		FC72B1E12581DE2600B84C84 /* Geocoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geocoding.swift; sourceTree = "<group>"; };
 		FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceListViewController+PanGesture.swift"; sourceTree = "<group>"; };
+		FC72B1FF25827A8A00B84C84 /* FilterScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScrollView.swift; sourceTree = "<group>"; };
+		FC72B2042582A0A100B84C84 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansValidateService.swift; sourceTree = "<group>"; };
 		FCE422AF2570194B0017416F /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		FCE422B7257019650017416F /* Cluster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cluster.swift; sourceTree = "<group>"; };
@@ -266,14 +270,9 @@
 			isa = PBXGroup;
 			children = (
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
-				46EDEA42257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
-				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
-				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
-				190CAB3425738FB800234F23 /* MapPresenter.swift */,
-				19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */,
 				FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */,
-				19C70EF4257F65C8006C86E4 /* PreviewViewController.swift */,
+				19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */,
 				FAACC7B2257E8F16005190F6 /* CustomInfoWindow.swift */,
 				FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */,
 				FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */,
@@ -283,7 +282,6 @@
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 				46B444572568F095001B79D4 /* InteractiveMapView.swift */,
 				FAA4B518257A96CA00F61D8B /* MapAlertController.swift */,
-				19D16870257BD5D0002888F4 /* TreeDataStore.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -294,6 +292,8 @@
 				19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */,
 				FC5B24842580B14500450EEF /* PlaceCell.swift */,
 				FC5B24892580C75D00450EEF /* PlaceHeaderView.swift */,
+				FC72B1FF25827A8A00B84C84 /* FilterScrollView.swift */,
+				FC72B2042582A0A100B84C84 /* FilterButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -515,7 +515,6 @@
 			isa = PBXGroup;
 			children = (
 				19C70B1C2580B9D90071D3A8 /* URL+Image.swift */,
-				46A12E1A256CD099007BDF3E /* Array+Subscript.swift */,
 				19C70B212580BA3E0071D3A8 /* FileManager+.swift */,
 			);
 			path = Extension;
@@ -741,12 +740,10 @@
 				37955722257E63F200681654 /* ClusteringMarker.swift in Sources */,
 				46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
-				FCDD0532257E444F00220467 /* InteractiveMarker.swift in Sources */,
 				19C70B1D2580B9D90071D3A8 /* URL+Image.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				FC5B248A2580C75D00450EEF /* PlaceHeaderView.swift in Sources */,
-				46EDEA43257885FD0008116A /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
@@ -758,6 +755,7 @@
 				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				1943CCC92581F79D0010B103 /* DataError.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
+				FC72B2052582A0A100B84C84 /* FilterButton.swift in Sources */,
 				FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
@@ -765,6 +763,7 @@
 				197E85452580B03000F2B46C /* DataProvider.swift in Sources */,
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
+				FC72B20025827A8A00B84C84 /* FilterScrollView.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
 				19C70EF5257F65C8006C86E4 /* PlaceListViewController.swift in Sources */,
 				FC5B249825810AC000450EEF /* GeocodingNetwork.swift in Sources */,
