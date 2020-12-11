@@ -11,8 +11,8 @@ class SplashViewController: UIViewController {
 
     @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var globeImageView: UIImageView!
-    private var mapViewController: UIViewController?
     @IBOutlet weak var loadingLabel: UILabel!
+    var mapViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,24 +103,34 @@ class SplashViewController: UIViewController {
                 return MapViewController(coder: coder, dataManager: dataManager)
             })
         
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        
         return viewController
-       
     }
     
     private func presentMapViewController() {
-        guard let mapViewController = mapViewController else { return }
-        let window = self.view.window
+        guard let mapViewController = mapViewController,
+              let window = self.view.window else {
+            return
+        }
+        
         self.dismiss(animated: true) {
-            window?.rootViewController = mapViewController
-            window?.makeKeyAndVisible()
+            window.rootViewController = mapViewController
+            window.makeKeyAndVisible()
+            UIView.transition(with: window,
+                                  duration: 0.5,
+                                  options: .transitionCrossDissolve,
+                                  animations: nil,
+                                  completion: nil)
         }
     }
 
     private func randomColor() -> UIColor {
-        let colors = [UIColor(named: "fiftyColor"), UIColor(named: "hundredColor"), UIColor(named: "thousandColor"), UIColor(named: "fiveThousandColor"), UIColor(named: "overFiveThousandColor"), UIColor.systemRed, UIColor.systemGreen]
+        let colors = [UIColor(named: "fiftyColor"),
+                      UIColor(named: "hundredColor"),
+                      UIColor(named: "thousandColor"),
+                      UIColor(named: "fiveThousandColor"),
+                      UIColor(named: "overFiveThousandColor"),
+                      UIColor.systemRed,
+                      UIColor.systemGreen]
 
         guard let color = colors.randomElement() else {
             return UIColor(red: 53/255, green: 60/255, blue: 130/255, alpha: 1)
