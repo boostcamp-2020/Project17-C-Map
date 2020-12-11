@@ -14,12 +14,12 @@ protocol POIServicing {
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func fetch(coordinate: Coordinate) -> Place?
+    func fetch(coordinate: Coordinate) -> POIInfo?
     func save()
     
 }
 
 final class POIService: POIServicing {
-    
     
     private let dataManager: DataManagable
     private var coordinates: [Coordinate] = []
@@ -46,6 +46,12 @@ final class POIService: POIServicing {
         }
     }
     
+    func fetch(coordinate: Coordinate) -> POIInfo? {
+        return dataManager.fetch(coordinate: coordinate).compactMap {
+            $0.info?.info
+        }.first
+    }
+    
     func fetch(coordinates: [Coordinate]) -> [POIInfo] {
         let infoMO = dataManager.fetch(coordinates: coordinates)
         return infoMO.map { $0.info }
@@ -57,4 +63,9 @@ final class POIService: POIServicing {
         }
         return Place(coordinate: coordinate, info: infoMO.info)
     }
+    
+    func save() {
+        dataManager.save(successHandler: nil, failureHandler: nil)
+    }
+    
 }
