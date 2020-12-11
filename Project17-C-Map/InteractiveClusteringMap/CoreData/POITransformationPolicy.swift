@@ -11,15 +11,15 @@ import CoreData
 class POITransformationPolicy: NSEntityMigrationPolicy {
     
     override func createDestinationInstances(forSource sInstance: NSManagedObject, in mapping: NSEntityMapping, manager: NSMigrationManager) throws {
-        try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
+//        try super.createDestinationInstances(forSource: sInstance, in: mapping, manager: manager)
         
-//        print("Converting Event")
+        print("Converting Event")
         
-        guard let dInstance = manager.destinationInstances(forEntityMappingName: mapping.name, sourceInstances: [sInstance]).first else {
-                    return
-                }
+//        guard let dInstance = manager.destinationInstances(forEntityMappingName: mapping.destinationEntityName!, sourceInstances: [sInstance]).first else {
+//                    return
+//                }
         
-        let POI = NSEntityDescription.insertNewObject(forEntityName: "POI", into: dInstance.managedObjectContext!)
+        let POI = NSEntityDescription.insertNewObject(forEntityName: "POI", into: manager.destinationContext)
         
         let id = sInstance.value(forKey: "id") as? Int64 ?? 0
         let stringId = String(id)
@@ -28,7 +28,7 @@ class POITransformationPolicy: NSEntityMigrationPolicy {
         POI.setValue(sInstance.value(forKey: "lat"), forKey: "lat")
         POI.setValue(sInstance.value(forKey: "lng"), forKey: "lng")
        
-//        print(stringId)
+        print(stringId)
  
         manager.associate(sourceInstance: sInstance, withDestinationInstance: POI, for: mapping)
     }
