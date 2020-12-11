@@ -13,8 +13,9 @@ typealias MapBusinessLogic = ClusterBusinessLogic & DataBusinessLogic
 final class MapController: NSObject {
     
     private var tileCoverHelper: NMFTileCoverHelper?
-    private var interactor: (MapBusinessLogic)?
+    private var interactor: MapBusinessLogic?
     private weak var interactiveMapView: InteractiveMapView?
+    private let serialQueue = DispatchQueue(label: "SerialQueue", qos: .utility)
     
     init(mapView: InteractiveMapView, interactor: MapBusinessLogic) {
         super.init()
@@ -58,14 +59,17 @@ extension MapController: NMFTileCoverHelperDelegate {
         else {
             return
         }
-
-        interactor?.remove(tileIds: removedTiles)
-        var boundsWithTileId = [CLong: BoundingBox]()
-        addedTiles.forEach { tileId in
-            let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
-            boundsWithTileId[tileId] = bounds.makeBoundingBox()
+        
+        serialQueue.async { [weak self] in
+            guard let self = self else { return }
+            self.interactor?.remove(tileIds: removedTiles)
+            var boundsWithTileId = [CLong: BoundingBox]()
+            addedTiles.forEach { tileId in
+                let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
+                boundsWithTileId[tileId] = bounds.makeBoundingBox()
+            }
+            self.interactor?.fetch(boundingBoxes: boundsWithTileId, zoomLevel: interactiveMapView.zoomLevel)
         }
-        interactor?.fetch(boundingBoxes: boundsWithTileId, zoomLevel: interactiveMapView.zoomLevel)
     }
     
 }
