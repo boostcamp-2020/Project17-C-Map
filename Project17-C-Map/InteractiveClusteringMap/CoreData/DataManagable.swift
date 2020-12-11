@@ -20,6 +20,8 @@ protocol DataManagable {
     func fetch(coordinate: Coordinate, handler: @escaping ([POIMO]) -> Void)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate) -> [POIMO]
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, handler: @escaping ([POIMO]) -> Void)
+    func fetch(coordinates: [Coordinate]) -> [POIInfoMO]
+    func fetch(coordinate: Coordinate) -> POIInfoMO?
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)?)
     func setValue(_ poi: POI)
     
