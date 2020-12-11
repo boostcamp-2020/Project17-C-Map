@@ -8,9 +8,11 @@
 import UIKit
 
 class PlaceHeaderView: UICollectionReusableView {
+    
     @IBOutlet private weak var category: UILabel!
     
     func configure(text: String) {
         self.category.text = text
     }
+    
 }
