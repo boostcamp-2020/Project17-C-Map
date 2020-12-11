@@ -46,6 +46,7 @@ class PlaceListViewController: UIViewController {
         
         filterScrollView.configure(filterItems: categories) { [weak self] category in
             guard let self = self else { return }
+            
             self.moveSection(to: category)
         }
     }
@@ -96,7 +97,6 @@ class PlaceListViewController: UIViewController {
 }
 
 
-
 // MARK: - collectionView
 private extension PlaceListViewController {
     
@@ -123,7 +123,9 @@ private extension PlaceListViewController {
                                                    heightDimension: .estimated(44)),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top)
+            sectionHeader.pinToVisibleBounds = true
             section.boundarySupplementaryItems = [sectionHeader]
+            
             return section
             
         }, configuration: config)
@@ -162,7 +164,8 @@ private extension PlaceListViewController {
                 return UICollectionReusableView()
             }
             
-            sectionHeader.configure(text: self.categories[indexPath.section])
+            let title = self.dataSource?.snapshot().sectionIdentifiers[indexPath.section] ?? ""
+            sectionHeader.configure(text: title)
             return sectionHeader
         }
     }
