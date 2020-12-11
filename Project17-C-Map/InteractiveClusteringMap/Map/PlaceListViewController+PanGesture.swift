@@ -49,6 +49,7 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
                             
                             if velocity.y < 0 {
                                 self.collectionView.isScrollEnabled = true
+                                self.filterScrollView.isScrollEnabled = true
                             }
                            })
         }
@@ -65,8 +66,10 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
         let y = view.frame.minY
         if (y == Boundary.fullView && direction > 0) || (y == Boundary.partialView) {
             collectionView.isScrollEnabled = false
+            filterScrollView.isScrollEnabled = false
         } else {
             collectionView.isScrollEnabled = true
+            filterScrollView.isScrollEnabled = true
         }
         
         return false
