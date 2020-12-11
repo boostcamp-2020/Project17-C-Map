@@ -18,6 +18,7 @@ protocol DataBusinessLogic: class {
     
     func add(tileId: CLong, coordinate: Coordinate)
     func remove(coordinate: Coordinate)
+    func fetch(coordinate: Coordinate) -> POIInfo?
     
 }
 
@@ -40,6 +41,10 @@ final class MapInteractor: MapBusinessLogic {
                 boundingBox: boundingBox,
                 zoomLevel: zoomLevel)
         }
+    }
+    
+    func fetch(coordinate: Coordinate) -> POIInfo? {
+        return treeDataStore.fetch(coordinate: coordinate)
     }
     
     func remove(tileIds: [CLong]) {

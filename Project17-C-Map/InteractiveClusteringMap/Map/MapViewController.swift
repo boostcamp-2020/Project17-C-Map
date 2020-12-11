@@ -18,6 +18,7 @@ final class MapViewController: UIViewController {
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
+    private var pickedMarker: LeafNodeMarker? = nil
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
@@ -193,10 +194,18 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
-                leafNodeMarker.userInfo["title"] = "Markㅏㅓㅇ라ㅓㅏ너라ㅣ어ㅣㅁ러ㅣㅓㄹㅇ니ㅓ과!"
-                leafNodeMarker.userInfo["category"] = "양대창 어라아아아아아ㅏㅏㅏㅏ"
+                
+                let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                leafNodeMarker.configureUserInfo(userInfo: userInfo)
+                
+                
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
-                    self?.infoWindow.open(with: leafNodeMarker)
+                    guard let self = self else { return false }
+                    
+                    self.pickedMarker?.resizeMarkerSize()
+                    leafNodeMarker.sizeUp()
+                    self.pickedMarker = leafNodeMarker
+                    self.infoWindow.open(with: leafNodeMarker)
                     return true
                 }
                 
@@ -300,11 +309,13 @@ extension MapViewController: NMFMapViewTouchDelegate {
         isEditMode = false
         enableGestures()
         
-        self.transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
+        transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedMarkers.forEach {
             $0.hidden = false
         }
+        
+        pickedMarker?.resizeMarkerSize()
     }
     
 }

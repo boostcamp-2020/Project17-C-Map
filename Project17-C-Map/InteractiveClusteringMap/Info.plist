@@ -29,12 +29,18 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NMFClientId</key>
+	<string>36b5lui25z</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>사용자의 위치를 받습니다.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>사용자의 위치를 받습니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>사용자의 위치를 받습니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>BlackOpsOne_Regular</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -49,7 +55,7 @@
 					<key>UISceneDelegateClassName</key>
 					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
 					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
+					<string>Splash</string>
 				</dict>
 			</array>
 		</dict>
@@ -59,7 +65,7 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>Splash</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

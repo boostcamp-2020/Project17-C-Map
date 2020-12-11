@@ -40,10 +40,6 @@ final class POIService: POIServicing {
         dataManager.delete(coordinate: coordinate)
     }
     
-    func save() {
-        dataManager.save(successHandler: nil, failureHandler: nil)
-    }
-    
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void) {
         dataManager.fetch(bottomLeft: bottomLeft, topRight: topRight) {
             completion($0.map { $0.coordinate })

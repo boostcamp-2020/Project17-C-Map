@@ -60,8 +60,12 @@
 		37FC44802575324900578543 /* KDefineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447C2575324900578543 /* KDefineTests.swift */; };
 		37FC44812575324900578543 /* KMeansTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447D2575324900578543 /* KMeansTests.swift */; };
 		37FC44822575324900578543 /* KMeansPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FC447E2575324900578543 /* KMeansPerformanceTests.swift */; };
+		4614394D2581DE5C00B2AE76 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4614394C2581DE5C00B2AE76 /* UIImage+.swift */; };
 		461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		4623BD1325694A1400940B12 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4623BD1225694A1400940B12 /* MapController.swift */; };
+		465BA4002580EEE9000B6590 /* BlackOpsOne_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */; };
+		465BA40F258104D5000B6590 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465BA40E258104D5000B6590 /* Splash.storyboard */; };
+		465BA41525810580000B6590 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465BA41425810580000B6590 /* SplashViewController.swift */; };
 		466F1838257219C500F95AA4 /* Mockup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466F1837257219C500F95AA4 /* Mockup.swift */; };
 		467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F953B2576A20400CD5A3E /* AnimationController.swift */; };
 		468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */; };
@@ -182,8 +186,12 @@
 		37FC447D2575324900578543 /* KMeansTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansTests.swift; sourceTree = "<group>"; };
 		37FC447E2575324900578543 /* KMeansPerformanceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KMeansPerformanceTests.swift; sourceTree = "<group>"; };
 		3E8B82A7C0D526E93DA97A0F /* Pods-InteractiveClusteringMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.debug.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.debug.xcconfig"; sourceTree = "<group>"; };
+		4614394C2581DE5C00B2AE76 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeClusteringService.swift; sourceTree = "<group>"; };
 		4623BD1225694A1400940B12 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BlackOpsOne_Regular.ttf; sourceTree = "<group>"; };
+		465BA40E258104D5000B6590 /* Splash.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		465BA41425810580000B6590 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		466F1837257219C500F95AA4 /* Mockup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mockup.swift; sourceTree = "<group>"; };
 		467F953B2576A20400CD5A3E /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerTextLayer.swift; sourceTree = "<group>"; };
@@ -371,7 +379,8 @@
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
-				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
+				465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */,
+				465BA41325810535000B6590 /* Launch */,
 				37EB73392562592800AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMap;
@@ -425,6 +434,17 @@
 				19D16870257BD5D0002888F4 /* TreeDataStore.swift */,
 			);
 			path = QuadTree;
+			sourceTree = "<group>";
+		};
+		465BA41325810535000B6590 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				465BA40E258104D5000B6590 /* Splash.storyboard */,
+				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
+				465BA41425810580000B6590 /* SplashViewController.swift */,
+				4614394C2581DE5C00B2AE76 /* UIImage+.swift */,
+			);
+			path = Launch;
 			sourceTree = "<group>";
 		};
 		467F953A2576A1A200CD5A3E /* Animation */ = {
@@ -652,8 +672,10 @@
 				FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */,
 				37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */,
 				37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */,
+				465BA4002580EEE9000B6590 /* BlackOpsOne_Regular.ttf in Resources */,
 				37EB73352562592800AC44D6 /* Assets.xcassets in Resources */,
 				37EB73302562592700AC44D6 /* Main.storyboard in Resources */,
+				465BA40F258104D5000B6590 /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -785,6 +807,7 @@
 				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
 				FCE422B8257019650017416F /* Cluster.swift in Sources */,
 				FAACC7B3257E8F16005190F6 /* CustomInfoWindow.swift in Sources */,
+				4614394D2581DE5C00B2AE76 /* UIImage+.swift in Sources */,
 				FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */,
 				FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */,
 				192D34AD256E355500861703 /* QuadTree.swift in Sources */,
@@ -793,6 +816,7 @@
 				37B73DDD2577B50600C48E99 /* POIInfoMO+CoreDataClass.swift in Sources */,
 				46A12E1B256CD099007BDF3E /* Array+.swift in Sources */,
 				FCE422BD25701A200017416F /* Quadrant.swift in Sources */,
+				465BA41525810580000B6590 /* SplashViewController.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
 				19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */,
