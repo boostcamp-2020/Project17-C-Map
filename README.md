@@ -10,7 +10,7 @@
 ### ✨ 맵시 있는 사람들
 | [@SeungeonKim](https://github.com/Seungeon-Kim) | [@A-by-alimelon](https://github.com/A-by-alimelon) | [@rnfxl92](https://github.com/rnfxl92) | [@DonggeonOh](https://github.com/DonggeonOh) | [@eunjeongS2](https://github.com/eunjeongS2) |
 |:--------------------------------------------------:|:--------------------------------------------------:|:--------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|
-|    <img width="200" src="https://i.imgur.com/JG88w51.png">      | <img width="300" src="https://i.imgur.com/UXiKFVa.png">    |<img width="300" src="https://i.imgur.com/tEmhx43.png">    | <img width="200" src="https://i.imgur.com/sYKyHpZ.png"> | <img width="200" src="https://i.imgur.com/t2PRPzZ.png">
+|    <img width="200" src="https://i.imgur.com/JG88w51.png">      | <img width="200" src="https://i.imgur.com/UXiKFVa.png">    |<img width="200" src="https://i.imgur.com/tEmhx43.png">    | <img width="200" src="https://i.imgur.com/sYKyHpZ.png"> | <img width="200" src="https://i.imgur.com/t2PRPzZ.png">
 |           S010_김승언😇                 |                 S016_문성주🙇🏻‍♀️                 |             S017_박성민🤡              |                S033_오동건🤪                 |                S040_이은정🤓                 |
 
 </div>
