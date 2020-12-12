@@ -377,8 +377,14 @@ private extension MapViewController {
 extension MapViewController: UIPopoverControllerDelegate {
     
     private func showPreviewController(marker: ClusteringMarker) {
+        isEditMode = true
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        unableGestures()
+        
         let previewViewController = self.storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as? PreviewViewController
         previewViewController?.modalPresentationStyle = .popover
+        previewViewController?.preferredContentSize = CGSize(width: 200, height: 150)
         
         let origin = interactiveMapView.projectPoint(from: marker.position)
         
