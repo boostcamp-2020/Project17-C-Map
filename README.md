@@ -77,13 +77,24 @@
 ### - 클러스터 Zoom In
 |  화면  |  <center>구현 내용 </center>         |
 |:-----:|:----------------------------------|
-|<img src="https://user-images.githubusercontent.com/57888770/101991662-9a649500-3cf1-11eb-8bd6-162e1a52e3e1.gif" width=320>|• 클러스터 마커를 터치 시 데이터 바운더리에 맞춰 카메라 이동<br>• 데이터 양이 많은 경우, 데이터 바운더리를 검색하는 시간이 오래걸리므로 일괄적으로 줌 레벨 2단계씩 카메라 이동<br>• 각 트리에 대한 탐색이 병렬로 진행되며, 각각의 트리의 클러스터링도 독립적으로 표현|
+|<img src="https://user-images.githubusercontent.com/57888770/101991662-9a649500-3cf1-11eb-8bd6-162e1a52e3e1.gif" width=200>|• 클러스터 마커를 터치 시 데이터 바운더리에 맞춰 카메라 이동<br>• 데이터 양이 많은 경우, 데이터 바운더리를 검색하는 시간이 오래걸리므로 일괄적으로 줌 레벨 2단계씩 카메라 이동<br>• 각 트리에 대한 탐색이 병렬로 진행되며, 각각의 트리의 클러스터링도 독립적으로 표현|
 
 
 ### - POI 정보 창
 |  화면  |  <center>구현 내용 </center>         |
 |:-----:|:----------------------------------|
-|<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fc43badc-d38a-4fbe-8f0a-05b01dca3af0/_2020-12-12__10.37.09.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201212%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201212T154301Z&X-Amz-Expires=86400&X-Amz-Signature=d16c325a2db64f54215a3e624d4125682f5994a80f86b1d48d1d6cc117e763ce&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22_2020-12-12__10.37.09.png%22" width=60%>|• 원하는 마커 선택 시 선택을 알리기 위해 마커 크기 확대<br>• 마커 지역 정보 customWindow 로 표시<br>• 장소 이름, 카테고리 정보 출력|
+|<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fc43badc-d38a-4fbe-8f0a-05b01dca3af0/_2020-12-12__10.37.09.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201212%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201212T154301Z&X-Amz-Expires=86400&X-Amz-Signature=d16c325a2db64f54215a3e624d4125682f5994a80f86b1d48d1d6cc117e763ce&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22_2020-12-12__10.37.09.png%22" width=200>|• 원하는 마커 선택 시 선택을 알리기 위해 마커 크기 확대<br>• 마커 지역 정보 customWindow 로 표시<br>• 장소 이름, 카테고리 정보 출력|
+
+
+### - POI 리스트 목록
+|  화면  |  <center>구현 내용 </center>         |
+|:-----:|:----------------------------------|
+|<img src="https://github.com/Seungeon-Kim/Baekjoon_Algorithm/blob/master/pyhton_basic/ezgif.com-gif-maker%20(1).gif" width=200>|• 사용자 선택에 따라  BottomSheetView의 히든 여부를 선택<br>• 해당 클러스터 내 필터 리스트 출력<br>•필터 클릭 시, 해당 카테고리 리스트를 최상위에 출력<br>•URLSession DownloadTask를 이용한 이미지 다운로드, 이미지 캐싱 
+
+### - 클러스터링 영역 표시
+|  화면  |  <center>구현 내용 </center>         |
+|:-----:|:----------------------------------|
+|<img src="https://user-images.githubusercontent.com/62557093/101996123-ebd14c00-3d12-11eb-8d1b-35cb05981c90.gif" width=200>|• 클러스터링 마커 롱 터치 시 해당 클러스터링 영역 polygon 표시<br>•클러스터 마커 터치 시 카메라 zoom In 이벤트와 함께 클러스터링 영역 polygon 표시<br>
 
 
 ### - POI 리스트 목록
