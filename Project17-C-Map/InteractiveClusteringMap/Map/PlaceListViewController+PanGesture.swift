@@ -57,7 +57,14 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let gesture = (gestureRecognizer as? UIPanGestureRecognizer) else {
+        guard let gesture = (gestureRecognizer as? UIPanGestureRecognizer)
+        else {
+            return false
+        }
+        
+        let currentY = gesture.location(in: view).y
+        guard currentY == Boundary.fullView || currentY == Boundary.partialView
+        else {
             return false
         }
         
@@ -80,4 +87,3 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
         static let partialView: CGFloat = UIScreen.main.bounds.height - 140
     }
 }
-
