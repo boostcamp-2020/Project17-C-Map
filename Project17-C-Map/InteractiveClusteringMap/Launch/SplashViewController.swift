@@ -31,7 +31,7 @@ class SplashViewController: UIViewController {
     }
     
     private func configureMarkers() {
-        loadingLabel.setTextWithTypeAnimation(inputText: "클러스터링 정보를 가져오는 중입니다......")
+        loadingLabel.setTextWithTypeAnimation(inputText: Name.loadingLabelText)
         
         var leftMarkerLayers = [CALayer]()
         var rightMarkerLayers = [CALayer]()
@@ -39,7 +39,8 @@ class SplashViewController: UIViewController {
         (0..<3).forEach { i in
             let markerLayer = CALayer()
             markerLayer.isHidden = true
-            markerLayer.frame = CGRect(x: 0, y: 250 + (i * 150), width: 40, height: 53)
+            let markerYPosition = 250 + (i * 150)
+            markerLayer.frame = CGRect(x: 0, y: markerYPosition, width: 40, height: 53)
             markerLayer.contents = randomColorMarker()
             markerLayer.contentsGravity = .resize
             
@@ -49,8 +50,8 @@ class SplashViewController: UIViewController {
         (0..<2).forEach { i in
             let markerLayer = CALayer()
             markerLayer.isHidden = true
-            
-            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: 250 + (i * 200), width: 40, height: 53)
+            let markerYPosition =  250 + (i * 200)
+            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: markerYPosition, width: 40, height: 53)
             markerLayer.contents = randomColorMarker()
             markerLayer.contentsGravity = .resize
             
@@ -134,4 +135,10 @@ class SplashViewController: UIViewController {
         return markers.randomElement()?.image.cgImage
     }
     
+}
+
+extension SplashViewController {
+    enum Name {
+            static let loadingLabelText = "클러스터링 정보를 가져오는 중입니다......"
+    }
 }
