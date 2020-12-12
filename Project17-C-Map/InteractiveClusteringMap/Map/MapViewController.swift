@@ -12,19 +12,22 @@ import NMapsMap
 final class MapViewController: UIViewController {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet private weak var placeListButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
-    private var pickedMarker: LeafNodeMarker? = nil
+    private var pickedMarker: LeafNodeMarker?
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
+    
+    private var placeListViewController: PlaceListViewController?
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -41,7 +44,6 @@ final class MapViewController: UIViewController {
         dependencyInject()
         configureMap()
         configureInfoWindow()
-        
         testMock()
     }
     
@@ -198,7 +200,6 @@ final class MapViewController: UIViewController {
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                 leafNodeMarker.configureUserInfo(userInfo: userInfo)
                 
-                
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
                     
@@ -289,6 +290,7 @@ final class MapViewController: UIViewController {
             CATransaction.begin()
             marker.hidden = true
             CATransaction.setCompletionBlock {
+                print("setCompletionBlock")
                 markerLayer.removeFromSuperlayer()
             }
             markerLayer.add(markerAnimation, forKey: "dismissMarker")
@@ -316,6 +318,33 @@ extension MapViewController: NMFMapViewTouchDelegate {
         }
         
         pickedMarker?.resizeMarkerSize()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    @IBAction func placeListButtonTouched(_ sender: UIButton) {
+        placeListButtonDisappear()
+        placeListViewController?.show()
+    }
+    
+    private func placeListButtonDisappear() {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            self.placeListButton.layer.isHidden = true
+        }
+        let animation = AnimationController.floatingButtonDisappearAnimation()
+        placeListButton.layer.add(animation, forKey: "floatingButtonDisappearAnimation")
+        CATransaction.commit()
+    }
+    
+    private func placeListButtonAppear() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.placeListButton.layer.isHidden = false
+        }
+        let animation = AnimationController.floatingButtonAppearAnimation()
+        placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
     }
     
 }
@@ -357,18 +386,19 @@ private extension MapViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let previewViewController = storyboard.instantiateViewController(
+        placeListViewController = storyboard.instantiateViewController(
             identifier: "PreviewViewController",
             creator: { coder in
                 return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
             })
-        
+        guard let placeListViewController = placeListViewController else { return }
+        placeListViewController.cancelButtonTouchedHandler = placeListButtonAppear
         let height = view.frame.height
         let width  = view.frame.width
-        previewViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
-        previewViewController.didMove(toParent: self)
-        self.addChild(previewViewController)
-        self.view.addSubview(previewViewController.view)
+        placeListViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+        placeListViewController.didMove(toParent: self)
+        self.addChild(placeListViewController)
+        self.view.addSubview(placeListViewController.view)
     }
     
 }
