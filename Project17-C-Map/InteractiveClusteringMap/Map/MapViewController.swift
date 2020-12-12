@@ -25,6 +25,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
+    internal var isPreviewMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -92,6 +93,11 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if isPreviewMode {
+            isPreviewMode = false
+        }
+        
         guard let sublayers = transparentLayer?.sublayers else { return }
         if !isEditMode {
             sublayers.forEach { sublayer in
@@ -131,7 +137,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began && !isEditMode else { return }
+        guard gesture.state != .began && !isEditMode && !isPreviewMode else { return }
         
         let pressedMarker = interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView))
         
@@ -140,6 +146,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         } else if let clusterMarker = pressedMarker as? ClusteringMarker {
             // 클러스터 롱터치 구현 부분
             print("롱롱")
+            isPreviewMode = true
             showPreviewController(marker: clusterMarker)
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
@@ -377,10 +384,8 @@ private extension MapViewController {
 extension MapViewController: UIPopoverControllerDelegate {
     
     private func showPreviewController(marker: ClusteringMarker) {
-        isEditMode = true
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
-        unableGestures()
         
         let previewViewController = self.storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as? PreviewViewController
         previewViewController?.modalPresentationStyle = .popover
