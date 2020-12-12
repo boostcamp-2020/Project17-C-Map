@@ -45,9 +45,9 @@ final class MapViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if FirstLaunchDetector.shared.isFirstLaunch() {
+//        if FirstLaunchDetector.shared.isFirstLaunch() {
             presentOnboarding()
-        }
+//        }
     }
     
     private func presentOnboarding() {

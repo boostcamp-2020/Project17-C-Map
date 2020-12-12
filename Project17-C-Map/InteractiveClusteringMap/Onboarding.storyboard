@@ -41,19 +41,22 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Fw5-xw-7u4">
                                 <rect key="frame" x="146" y="754" width="122.5" height="28"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <connections>
+                                    <action selector="pageControlValueChanged:" destination="ZRO-B4-qln" eventType="valueChanged" id="35R-2m-UXy"/>
+                                </connections>
                             </pageControl>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vh1-ay-67j" userLabel="Onboard Collection View">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vh1-ay-67j" userLabel="Onboard Collection View">
                                 <rect key="frame" x="20" y="112" width="374" height="626"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="oQl-2t-0Hv">
-                                    <size key="itemSize" width="199" height="145"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qdH-yQ-74Z">
+                                    <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OnboardingCollectionViewCell" id="1wN-7O-QDx" userLabel="Onboard Collection View Cell">
-                                        <rect key="frame" x="87.5" y="0.0" width="199" height="145"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OnboardingCollectionViewCell" id="1wN-7O-QDx" userLabel="Onboard Collection View Cell" customClass="OnboardCollectionViewCell" customModule="InteractiveClusteringMap" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="199" height="145"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="00i-lS-f4Z">
                                             <rect key="frame" x="0.0" y="0.0" width="199" height="145"/>
@@ -72,6 +75,9 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="199" height="145"/>
+                                        <connections>
+                                            <outlet property="onboardImage" destination="DX0-yN-FKi" id="UMk-c9-afs"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -100,7 +106,7 @@
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="d6s-Ng-qku" id="3PW-Kp-9IE"/>
-                        <outlet property="onboardCollectionViewCell" destination="vh1-ay-67j" id="arL-Qr-fhw"/>
+                        <outlet property="onboardCollectionView" destination="vh1-ay-67j" id="arL-Qr-fhw"/>
                         <outlet property="onboardPageControl" destination="Fw5-xw-7u4" id="GHX-Jx-mlz"/>
                         <outlet property="skipButton" destination="Y6v-ps-zth" id="bTM-zq-kZ8"/>
                     </connections>
