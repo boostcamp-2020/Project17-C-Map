@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-final class MapViewController: UIViewController {
+final class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     
@@ -137,8 +137,10 @@ final class MapViewController: UIViewController {
         
         if pressedMarker is LeafNodeMarker {
             showEditMode()
-        } else if pressedMarker is ClusteringMarker {
+        } else if let clusterMarker = pressedMarker as? ClusteringMarker {
             // 클러스터 롱터치 구현 부분
+            print("롱롱")
+            showPreviewController(marker: clusterMarker)
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
         }
@@ -197,7 +199,6 @@ final class MapViewController: UIViewController {
                 
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                 leafNodeMarker.configureUserInfo(userInfo: userInfo)
-                
                 
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
@@ -358,7 +359,7 @@ private extension MapViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let previewViewController = storyboard.instantiateViewController(
-            identifier: "PreviewViewController",
+            identifier: "PlaceListViewController",
             creator: { coder in
                 return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
             })
@@ -369,6 +370,31 @@ private extension MapViewController {
         previewViewController.didMove(toParent: self)
         self.addChild(previewViewController)
         self.view.addSubview(previewViewController.view)
+    }
+    
+}
+
+extension MapViewController: UIPopoverControllerDelegate {
+    
+    private func showPreviewController(marker: ClusteringMarker) {
+        let previewViewController = self.storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as? PreviewViewController
+        previewViewController?.modalPresentationStyle = .popover
+        
+        let origin = interactiveMapView.projectPoint(from: marker.position)
+        
+        if let previewPresentationController = previewViewController?.popoverPresentationController {
+            previewPresentationController.permittedArrowDirections = .down
+            previewPresentationController.sourceView = view
+                previewPresentationController.sourceRect = CGRect(origin: origin, size: CGSize(width: marker.iconImage.imageWidth, height: marker.iconImage.imageHeight))
+            previewPresentationController.delegate = self
+            if let previewController = previewViewController {
+                present(previewController, animated: true)
+            }
+        }
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
 }
