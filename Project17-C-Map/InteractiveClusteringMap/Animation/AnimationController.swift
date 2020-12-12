@@ -37,6 +37,17 @@ final class AnimationController {
         return animation
     }
     
+    static func rotation() -> CABasicAnimation {
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        rotateAnimation.fromValue = 0.0
+        rotateAnimation.toValue = CGFloat(Double.pi * 2)
+        rotateAnimation.repeatCount = .infinity
+        rotateAnimation.duration = 0.5
+        rotateAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeOut)
+
+        return rotateAnimation
+    }
+    
     static func transformScale(option: ScaleOption) -> CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale")
         
@@ -45,7 +56,7 @@ final class AnimationController {
             animation.toValue = 1
         } else {
             animation.fromValue = 1
-            animation.toValue = 0.3
+            animation.toValue = 0
         }
         
         animation.duration = 0.5
@@ -80,6 +91,28 @@ final class AnimationController {
         
         shakeAnimation.animations = [translation, rotation]
         shakeAnimation.duration = 2
+        
+        return shakeAnimation
+    }
+    
+    static func floatingButtonDisappearAnimation() -> CAAnimationGroup {
+        let shakeAnimation = CAAnimationGroup()
+        
+        let transformScaleAnimation = transformScale(option: .decrease)
+        
+        shakeAnimation.animations = [rotation(), transformScaleAnimation]
+        shakeAnimation.duration = 0.5
+        
+        return shakeAnimation
+    }
+    
+    static func floatingButtonAppearAnimation() -> CAAnimationGroup {
+        let shakeAnimation = CAAnimationGroup()
+        
+        let transformScaleAnimation = transformScale(option: .increase)
+        
+        shakeAnimation.animations = [rotation(), transformScaleAnimation]
+        shakeAnimation.duration = 0.5
         
         return shakeAnimation
     }
