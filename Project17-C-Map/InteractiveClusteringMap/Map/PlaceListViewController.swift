@@ -26,6 +26,7 @@ class PlaceListViewController: UIViewController {
         }
     }
     private var dataSource: DiffableDataSource?
+    var cancelButtonTouchedHandler: (() -> Void)?
     
     init?(coder: NSCoder, cluster: Cluster, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
         super.init(coder: coder)
@@ -40,25 +41,16 @@ class PlaceListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.frame.origin.y = UIScreen.main.bounds.maxY
         configure()
         configureDataSource()
         requestPlaces()
-        
+        disappearAnimation()
         filterScrollView.configure(filterItems: categories) { [weak self] category in
             guard let self = self else { return }
             
             self.moveSection(to: category)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let self = self else { return }
-            let frame = self.view.frame
-            let yComponent = Boundary.partialView
-            self.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height - 100)
-        })
     }
     
     private func configure() {
@@ -96,6 +88,36 @@ class PlaceListViewController: UIViewController {
     
 }
 
+extension PlaceListViewController {
+    
+    @IBAction private func placeListHideButtonTouched(_ sender: UIButton) {
+        cancelButtonTouchedHandler?()
+        disappearAnimation()
+    }
+    
+    func show() {
+        appearAnimation()
+    }
+    
+    private func appearAnimation() {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else { return }
+            let frame = self.view.frame
+            let yComponent = Boundary.partialView
+            self.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+        })
+    }
+    
+    private func disappearAnimation() {
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            guard let self = self else { return }
+            let frame = self.view.frame
+            let y = UIScreen.main.bounds.maxY
+            self.view.frame = CGRect(x: 0, y: y, width: frame.width, height: frame.height)
+        })
+    }
+    
+}
 
 // MARK: - collectionView
 private extension PlaceListViewController {
