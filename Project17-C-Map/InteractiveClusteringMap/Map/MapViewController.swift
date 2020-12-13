@@ -41,6 +41,8 @@ final class MapViewController: UIViewController {
         dependencyInject()
         configureMap()
         configureInfoWindow()
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
+        testMock()
     }
     
     private func dependencyInject() {
@@ -55,7 +57,6 @@ final class MapViewController: UIViewController {
     
     private func configureMap() {
         interactiveMapView?.mapView.touchDelegate = self
-        
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         
         let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
@@ -192,6 +193,9 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
+            
+                let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                leafNodeMarker.configureUserInfo(userInfo: userInfo)
                 
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
@@ -218,6 +222,7 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             marker.mapView = nil
             self.presentedMarkers.removeAll { $0 == marker }
+            marker.touchHandler = nil
         }
     }
     
@@ -313,6 +318,59 @@ extension MapViewController: NMFMapViewTouchDelegate {
         }
         
         pickedMarker?.resizeMarkerSize()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    func testMock() {
+        guard let dataManager = dataManager else { return }
+        let poiService = POIService(dataManager: dataManager)
+        let geo = GeocodingNetwork(store: Store.http.dataProvider)
+        let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
+        let service = PlaceInfoService(imageProvider: img, geocodingNetwork: geo)
+        
+        let coord = Coordinate(x: 127.1054065, y: 37.3595669)
+        let coord1 = Coordinate(x: 127.1054065, y: 37.359568)
+        let coord2 = Coordinate(x: 127.1054065, y: 37.35957)
+        let coord3 = Coordinate(x: 127.1054065, y: 37.359572)
+        let coord4 = Coordinate(x: 127.1054065, y: 37.359574)
+        let coord5 = Coordinate(x: 127.1054065, y: 37.359576)
+        let coord6 = Coordinate(x: 127.1054065, y: 37.359578)
+        let coord7 = Coordinate(x: 127.1054065, y: 37.35958)
+        let coord8 = Coordinate(x: 127.1054065, y: 37.359582)
+        let coord9 = Coordinate(x: 127.1054065, y: 37.359584)
+        let coord10 = Coordinate(x: 127.1054065, y: 37.359586)
+        
+        var places: Cluster = Cluster(coordinates: [], boundingBox: BoundingBox.korea)
+        
+        places.coordinates.append(coord)
+        places.coordinates.append(coord1)
+        places.coordinates.append(coord2)
+        places.coordinates.append(coord3)
+        places.coordinates.append(coord4)
+        places.coordinates.append(coord5)
+        places.coordinates.append(coord6)
+        places.coordinates.append(coord7)
+        places.coordinates.append(coord8)
+        places.coordinates.append(coord9)
+        places.coordinates.append(coord10)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let previewViewController = storyboard.instantiateViewController(
+            identifier: "PreviewViewController",
+            creator: { coder in
+                return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
+            })
+        
+        let height = view.frame.height
+        let width  = view.frame.width
+        previewViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+        previewViewController.didMove(toParent: self)
+        self.addChild(previewViewController)
+        self.view.addSubview(previewViewController.view)
     }
     
 }
