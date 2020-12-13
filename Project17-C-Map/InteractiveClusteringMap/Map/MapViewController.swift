@@ -22,10 +22,10 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
+    private var polygonOverlay: NMFPolygonOverlay? = nil
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
-    internal var isPreviewMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -60,18 +60,6 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         
-//        let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
-//                       NMGLatLng(lat: 37.5600365, lng: 126.9956437),
-//                       NMGLatLng(lat: 37.5600365, lng: 126.9903617),
-//                       NMGLatLng(lat: 37.5764792, lng: 126.9903617),
-//                       NMGLatLng(lat: 37.5764792, lng: 126.9956437)]
-//
-//        let polygon = NMGPolygon(ring: NMGLineString(points: coords1)) as NMGPolygon<AnyObject>
-//        let polygonOverlay = NMFPolygonOverlay(polygon)
-//        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
-//        polygonOverlay?.outlineWidth = 3
-//        polygonOverlay?.mapView = interactiveMapView.mapView
-        
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
         
@@ -93,12 +81,8 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if isPreviewMode {
-            isPreviewMode = false
-        }
-        
         guard let sublayers = transparentLayer?.sublayers else { return }
+        
         if !isEditMode {
             sublayers.forEach { sublayer in
                 sublayer.removeAllAnimations()
@@ -137,17 +121,13 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     }
     
     @objc func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        guard gesture.state != .began && !isEditMode && !isPreviewMode else { return }
+        guard gesture.state != .began && !isEditMode else { return }
         
         let pressedMarker = interactiveMapView.mapView.pick(gesture.location(in: interactiveMapView))
         
         if pressedMarker is LeafNodeMarker {
             showEditMode()
         } else if let clusterMarker = pressedMarker as? ClusteringMarker {
-            // 클러스터 롱터치 구현 부분
-            print("롱롱")
-            isPreviewMode = true
-            //showPreviewController(marker: clusterMarker)
             showBoundingBox(marker: clusterMarker)
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
@@ -273,20 +253,9 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
-            let TopRight = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
-            let BottomLeft = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
             
-            let coords1 = [BottomLeft,
-                           NMGLatLng(lat: BottomLeft.lat, lng: TopRight.lng),
-                           TopRight,
-                           NMGLatLng(lat: TopRight.lat, lng: BottomLeft.lng),
-                           BottomLeft]
+            self.showBoundingBox(marker: marker)
             
-            let polygon = NMGPolygon(ring: NMGLineString(points: coords1)) as NMGPolygon<AnyObject>
-            let polygonOverlay = NMFPolygonOverlay(polygon)
-            polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 41.0/255.0)
-            polygonOverlay?.outlineWidth = 1
-            polygonOverlay?.mapView = self.interactiveMapView.mapView
             var cameraUpdate: NMFCameraUpdate?
             if marker.coordinatesCount <= 10000 {
                 cameraUpdate = NMFCameraUpdate(fit: marker.boundingBox.boundingBoxToNMGBounds(),
@@ -332,6 +301,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         isEditMode = false
         enableGestures()
         
+        polygonOverlay?.mapView = nil
         transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedMarkers.forEach {
@@ -396,73 +366,26 @@ private extension MapViewController {
     
 }
 
-extension MapViewController: UIPopoverControllerDelegate {
-    
-    private func showPreviewController(marker: ClusteringMarker) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        let previewViewController = self.storyboard?.instantiateViewController(withIdentifier: "PreviewViewController") as? PreviewViewController
-        previewViewController?.modalPresentationStyle = .popover
-        previewViewController?.preferredContentSize = CGSize(width: 200, height: 150)
-        
-        let origin = interactiveMapView.projectPoint(from: marker.position)
-        
-        if let previewPresentationController = previewViewController?.popoverPresentationController {
-            previewPresentationController.permittedArrowDirections = .down
-            previewPresentationController.sourceView = view
-            previewPresentationController.sourceRect = CGRect(origin: origin, size: CGSize(width: marker.iconImage.imageWidth, height: marker.iconImage.imageHeight))
-            previewPresentationController.delegate = self
-            if let previewController = previewViewController {
-                present(previewController, animated: true)
-            }
-        }
-    }
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
-    
-}
-
 extension MapViewController {
     
     func showBoundingBox(marker: ClusteringMarker) {
+        polygonOverlay?.mapView = nil
         
         let TopRight = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
         let BottomLeft = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
         
-        let coords1 = [BottomLeft,
+        let coords = [BottomLeft,
                        NMGLatLng(lat: BottomLeft.lat, lng: TopRight.lng),
                        TopRight,
                        NMGLatLng(lat: TopRight.lat, lng: BottomLeft.lng),
                        BottomLeft]
         
-        let polygon = NMGPolygon(ring: NMGLineString(points: coords1)) as NMGPolygon<AnyObject>
-        let polygonOverlay = NMFPolygonOverlay(polygon)
+        let polygon = NMGPolygon(ring: NMGLineString(points: coords)) as NMGPolygon<AnyObject>
+        polygonOverlay = NMFPolygonOverlay(polygon)
+        
         polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 41.0/255.0)
         polygonOverlay?.outlineWidth = 1
         polygonOverlay?.mapView = interactiveMapView.mapView
-        
-//        let width = screenTopRight.x - screenBottomLeft.x
-//        let height = screenBottomLeft.y - screenTopRight.y
-//
-//        let view1 = UIView(frame: CGRect(x: screenBottomLeft.x, y: screenTopRight.y, width: width/2, height: height/2))
-//        view1.backgroundColor = .green
-//        view1.alpha = 0.3
-//        let view2 = UIView(frame: CGRect(x: screenBottomLeft.x + width/2, y: screenTopRight.y, width: width/2, height: height/2))
-//        view2.backgroundColor = .blue
-//        view2.alpha = 0.3
-//        let view3 = UIView(frame: CGRect(x: screenBottomLeft.x, y: screenTopRight.y + height/2, width: width/2, height: height/2))
-//        view3.backgroundColor = .magenta
-//        view3.alpha = 0.3
-//        let view4 = UIView(frame: CGRect(x: screenBottomLeft.x + width/2, y: screenTopRight.y + height/2, width: width/2, height: height/2))
-//        view4.backgroundColor = .brown
-//        view4.alpha = 0.3
-//        interactiveMapView.mapView.addSubview(view1)
-//        interactiveMapView.mapView.addSubview(view2)
-//        interactiveMapView.mapView.addSubview(view3)
-//        interactiveMapView.mapView.addSubview(view4)
     }
+    
 }
-

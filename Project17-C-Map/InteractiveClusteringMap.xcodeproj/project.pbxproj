@@ -95,7 +95,6 @@
 		FAACC7BD257E9AC8005190F6 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */; };
 		FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
 		FAC9FD0E256E2495009FBB41 /* KCoefficient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC9FD04256E2107009FBB41 /* KCoefficient.swift */; };
-		FAFE233D25854D40002E6E21 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFE233C25854D40002E6E21 /* PreviewViewController.swift */; };
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
 		FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
@@ -217,7 +216,6 @@
 		FAACC7B7257E8F65005190F6 /* CustomInfoWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
 		FAACC7BC257E9AC8005190F6 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
 		FAC9FD04256E2107009FBB41 /* KCoefficient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KCoefficient.swift; sourceTree = "<group>"; };
-		FAFE233C25854D40002E6E21 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 				FA81D66E2568FEC50023E123 /* CoreData */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
-				FAFE233C25854D40002E6E21 /* PreviewViewController.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */,
@@ -787,7 +784,6 @@
 				FA194F642576035C003B07D9 /* DBI.swift in Sources */,
 				197E85452580B03000F2B46C /* DataProvider.swift in Sources */,
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
-				FAFE233D25854D40002E6E21 /* PreviewViewController.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
 				FC72B20025827A8A00B84C84 /* FilterScrollView.swift in Sources */,
 				FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */,
