@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-final class MapViewController: UIViewController {
+final class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
@@ -23,6 +23,7 @@ final class MapViewController: UIViewController {
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
+    private var polygonOverlay: NMFPolygonOverlay? = nil
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
@@ -45,6 +46,7 @@ final class MapViewController: UIViewController {
         configureMap()
         configureInfoWindow()
         configurePlaceListViewController()
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
     }
     
     private func dependencyInject() {
@@ -60,18 +62,6 @@ final class MapViewController: UIViewController {
     private func configureMap() {
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
-        
-        let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
-                       NMGLatLng(lat: 37.5600365, lng: 126.9956437),
-                       NMGLatLng(lat: 37.5600365, lng: 126.9903617),
-                       NMGLatLng(lat: 37.5764792, lng: 126.9903617),
-                       NMGLatLng(lat: 37.5764792, lng: 126.9956437)]
-        
-        let polygon = NMGPolygon(ring: NMGLineString(points: coords1)) as NMGPolygon<AnyObject>
-        let polygonOverlay = NMFPolygonOverlay(polygon)
-        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
-        polygonOverlay?.outlineWidth = 3
-        polygonOverlay?.mapView = interactiveMapView.mapView
         
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
@@ -95,6 +85,7 @@ final class MapViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let sublayers = transparentLayer?.sublayers else { return }
+        
         if !isEditMode {
             sublayers.forEach { sublayer in
                 sublayer.removeAllAnimations()
@@ -117,17 +108,15 @@ final class MapViewController: UIViewController {
             
             if containX && containY {
                 touchedDeleteLayer = true
-                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
+                let alert = MapAlertController.createDeleteAlertController { [weak self] _ in
                     leafMarker.mapView = nil
                     leafMarker.markerLayer?.removeFromSuperlayer()
                     self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
                     
                     self?.touchedDeleteLayer = false
-                }, cancelHandler: { [weak self] _ in
-                    self?.touchedDeleteLayer = false
-                })
-                present(alert.createAlertController(), animated: true)
+                }
+                present(alert, animated: true)
             }
         }
     }
@@ -139,8 +128,11 @@ final class MapViewController: UIViewController {
         
         if pressedMarker is LeafNodeMarker {
             showEditMode()
-        } else if pressedMarker is ClusteringMarker {
-            // 클러스터 롱터치 구현 부분
+        } else if let clusterMarker = pressedMarker as? ClusteringMarker {
+            polygonOverlay?.mapView = nil
+            polygonOverlay = clusterMarker.createBoundingBoxPolygon()
+            polygonOverlay?.mapView = interactiveMapView.mapView
+            
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
         }
@@ -170,14 +162,15 @@ final class MapViewController: UIViewController {
     }
     
     private func addLeafNodeMarker(at location: CGPoint) {
-        let alert = MapAlertController(alertType: .add, okHandler: { [weak self] _ in
+        let alert = MapAlertController.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
-            self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
-        }, cancelHandler: nil)
+            let poi = POI(x: latlng.lng, y: latlng.lat, name: text)
+            self.mapController?.add(poi: poi)
+        }
         
-        present(alert.createAlertController(), animated: true)
+        present(alert, animated: true)
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -196,12 +189,15 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
-                
+            
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                 leafNodeMarker.configureUserInfo(userInfo: userInfo)
                 
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
+                    
+                    let userInfo = self.mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                    leafNodeMarker.configureUserInfo(userInfo: userInfo)
                     
                     self.pickedMarker?.resizeMarkerSize()
                     leafNodeMarker.sizeUp()
@@ -222,6 +218,7 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             marker.mapView = nil
             self.presentedMarkers.removeAll { $0 == marker }
+            marker.touchHandler = nil
         }
     }
     
@@ -265,6 +262,11 @@ final class MapViewController: UIViewController {
     func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
+            
+            self.polygonOverlay?.mapView = nil
+            self.polygonOverlay = marker.createBoundingBoxPolygon()
+            self.polygonOverlay?.mapView = self.interactiveMapView.mapView
+            
             var cameraUpdate: NMFCameraUpdate?
             if marker.coordinatesCount <= 10000 {
                 cameraUpdate = NMFCameraUpdate(fit: marker.boundingBox.boundingBoxToNMGBounds(),
@@ -311,6 +313,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         isEditMode = false
         enableGestures()
         
+        polygonOverlay?.mapView = nil
         transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedMarkers.forEach {

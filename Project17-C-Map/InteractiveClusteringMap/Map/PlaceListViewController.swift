@@ -67,10 +67,6 @@ class PlaceListViewController: UIViewController {
                 self.moveSection(to: category)
             }
         })
-//        cluster.coordinates.forEach {
-//            guard let place: Place = poiService?.fetchInfo(coordinate: $0) else { return }
-//            places.append(place)
-//        }
     }
     
 }
@@ -127,7 +123,6 @@ private extension PlaceListViewController {
             let containerGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
                                                    heightDimension: .fractionalHeight(groupHeight)), subitem: leadingItem, count: 1)
-//            containerGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
             
             let section = NSCollectionLayoutSection(group: containerGroup)
             section.orthogonalScrollingBehavior = Configuration.type
