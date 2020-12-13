@@ -133,13 +133,12 @@ private extension PlaceListViewController {
             section.orthogonalScrollingBehavior = Configuration.type
             
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                layoutSize: NSCollectionLayoutSize(widthDimension: .estimated(1.0),
                                                    heightDimension: .estimated(44)),
                 elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
+                alignment: .topLeading)
             
             sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10)
-            
             sectionHeader.pinToVisibleBounds = true
             section.boundarySupplementaryItems = [sectionHeader]
             
