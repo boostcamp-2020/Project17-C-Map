@@ -19,13 +19,13 @@ extension POIMO {
         
         static let rangeLngPredicateFormat: String = "%lf <= lng && lng <= %lf"
         static let rangeLatPredicateFormat: String = "%lf <= lat && lat <= %lf"
-        static let equalIDPredicateFormat: String = "id == %d"
+        static let equalIDPredicateFormat: String = "id == %@"
     }
     
     static let name: String = "POI"
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<POIMO> {
-        return NSFetchRequest<POIMO>(entityName: "POI")
+        return NSFetchRequest<POIMO>(entityName: name)
     }
     
     @nonobjc class func fetchRequest(coordinate: Coordinate) -> NSFetchRequest<POIMO> {
@@ -47,7 +47,7 @@ extension POIMO {
         return request
     }
     
-    @NSManaged public var id: Int64
+    @NSManaged public var id: String
     @NSManaged public var lat: Double
     @NSManaged public var lng: Double
     @NSManaged public var info: POIInfoMO?

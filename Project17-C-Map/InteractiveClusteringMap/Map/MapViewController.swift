@@ -115,17 +115,15 @@ final class MapViewController: UIViewController {
             
             if containX && containY {
                 touchedDeleteLayer = true
-                let alert = MapAlertController(alertType: .delete, okHandler: { [weak self] _ in
+                let alert = MapAlertController.createDeleteAlertController { [weak self] _ in
                     leafMarker.mapView = nil
                     leafMarker.markerLayer?.removeFromSuperlayer()
                     self?.presentedMarkers.remove(at: index)
                     self?.mapController?.delete(coordinate: leafMarker.coordinate)
                     
                     self?.touchedDeleteLayer = false
-                }, cancelHandler: { [weak self] _ in
-                    self?.touchedDeleteLayer = false
-                })
-                present(alert.createAlertController(), animated: true)
+                }
+                present(alert, animated: true)
             }
         }
     }
@@ -168,14 +166,15 @@ final class MapViewController: UIViewController {
     }
     
     private func addLeafNodeMarker(at location: CGPoint) {
-        let alert = MapAlertController(alertType: .add, okHandler: { [weak self] _ in
+        let alert = MapAlertController.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
             let latlng = self.interactiveMapView.projectLatLng(from: location)
-            self.mapController?.add(coordinate: Coordinate(x: latlng.lng, y: latlng.lat))
-        }, cancelHandler: nil)
+            let poi = POI(x: latlng.lng, y: latlng.lat, name: text)
+            self.mapController?.add(poi: poi)
+        }
         
-        present(alert.createAlertController(), animated: true)
+        present(alert, animated: true)
     }
     
     internal func setMarkerPosition(marker: CALayer) {
@@ -194,12 +193,15 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
-                
+            
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                 leafNodeMarker.configureUserInfo(userInfo: userInfo)
                 
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
+                    
+                    let userInfo = self.mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                    leafNodeMarker.configureUserInfo(userInfo: userInfo)
                     
                     self.pickedMarker?.resizeMarkerSize()
                     leafNodeMarker.sizeUp()
