@@ -18,7 +18,6 @@ class PlaceListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private var poiService: POIServicing?
     private var placeInfoService: PlaceInfoServicing?
-    private var cluster: Cluster?
     private var places: [Place] = []
     private var categories: [String] = [] {
         didSet {
@@ -28,9 +27,8 @@ class PlaceListViewController: UIViewController {
     private var dataSource: DiffableDataSource?
     var cancelButtonTouchedHandler: (() -> Void)?
     
-    init?(coder: NSCoder, cluster: Cluster, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
+    init?(coder: NSCoder, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
         super.init(coder: coder)
-        self.cluster = cluster
         self.poiService = poiService
         self.placeInfoService = placeInfoService
     }
@@ -44,13 +42,6 @@ class PlaceListViewController: UIViewController {
         view.frame.origin.y = UIScreen.main.bounds.maxY
         configure()
         configureDataSource()
-        requestPlaces()
-        disappearAnimation()
-        filterScrollView.configure(filterItems: categories) { [weak self] category in
-            guard let self = self else { return }
-            
-            self.moveSection(to: category)
-        }
     }
     
     private func configure() {
@@ -66,32 +57,29 @@ class PlaceListViewController: UIViewController {
         view.addGestureRecognizer(gesture)
     }
     
-    // 현재는 목업데이터로 사용 중
-    // 추후 cluster 주입 후 poi info를 fetch하여 보여주도록 수정
-    private func requestPlaces() {
-        let urls = [ "http://ldb.phinf.naver.net/20190110_293/1547048398707IGmBs_JPEG/scXaoTP-_ccxbMqn2vFL-k-G.jpg",
-                     "http://ldb.phinf.naver.net/20190616_192/1560681495671CW2VX_JPEG/pPfSjNLsKKvdhYcaTkyabjtZ.jpg",
-                     "http://ldb.phinf.naver.net/20190806_213/1565088665739jPvCP_JPEG/GemsLMNPxqYN0yRFOigiabqz.jpg" ]
-        
-        let categoryList = [ "Cafe",
-                             "Food",
-                             "Beer",
-                             "Burger"]
-        
-        cluster?.coordinates.enumerated().forEach { index, coord in
-            let place = Place(coordinate: coord, info: POIInfo(name: "양꼬치엔", imageUrl: urls[index%3], category: categoryList[index%4]))
+    func requestPlaces(cluster: Cluster) {
+        places = []
+
+        cluster.coordinates.forEach {
+            guard let place: Place = poiService?.fetch(coordinate: $0) else { return }
             places.append(place)
         }
-        
+
         categories = Array(Set(places.compactMap { $0.info.category }))
+
+        filterScrollView.configure(filterItems: categories) { [weak self] category in
+            guard let self = self else { return }
+
+            self.moveSection(to: category)
+        }
     }
     
 }
 
+// MARK: - 화면 Show/Hide 애니메이션
 extension PlaceListViewController {
     
     @IBAction private func placeListHideButtonTouched(_ sender: UIButton) {
-        cancelButtonTouchedHandler?()
         disappearAnimation()
     }
     
@@ -100,7 +88,7 @@ extension PlaceListViewController {
     }
     
     private func appearAnimation() {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
             let yComponent = Boundary.partialView
@@ -109,11 +97,13 @@ extension PlaceListViewController {
     }
     
     private func disappearAnimation() {
-        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
             let y = UIScreen.main.bounds.maxY
             self.view.frame = CGRect(x: 0, y: y, width: frame.width, height: frame.height)
+        }, completion: { _ in
+            self.cancelButtonTouchedHandler?()
         })
     }
     
@@ -224,7 +214,7 @@ private extension PlaceListViewController {
         static let headerElementKind = "header-element-kind"
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
-        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.continuous
+        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.paging
     }
     
 }
