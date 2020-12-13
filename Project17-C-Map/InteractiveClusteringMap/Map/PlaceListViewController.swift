@@ -116,7 +116,10 @@ private extension PlaceListViewController {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (_, _) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (_, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let contentSize = layoutEnvironment.container.effectiveContentSize
+            let groupHeight: CGFloat = contentSize.height > 660 ? 0.18 : 0.24
             
             let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                                                         widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
@@ -124,7 +127,7 @@ private extension PlaceListViewController {
             
             let containerGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
-                                                   heightDimension: .fractionalHeight(0.18)), subitem: leadingItem, count: 1)
+                                                   heightDimension: .fractionalHeight(groupHeight)), subitem: leadingItem, count: 1)
             containerGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
             
             let section = NSCollectionLayoutSection(group: containerGroup)
@@ -214,7 +217,7 @@ private extension PlaceListViewController {
         static let headerElementKind = "header-element-kind"
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
-        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.paging
+        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.groupPaging
     }
     
 }
