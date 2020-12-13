@@ -97,18 +97,6 @@
 |<img src="https://user-images.githubusercontent.com/62557093/101996123-ebd14c00-3d12-11eb-8d1b-35cb05981c90.gif" width=200>|• 클러스터링 마커 롱 터치 시 해당 클러스터링 영역 polygon 표시<br>•클러스터 마커 터치 시 카메라 zoom In 이벤트와 함께 클러스터링 영역 polygon 표시<br>
 
 
-### - POI 리스트 목록
-
-이미지 추후 등록 예정
-
-- 사용자가 BottomSheetView의 히든 여부를 선택
-
-    BottomSheetView 내 Hidden 버튼 클릭 시, Hidden 후 플로팅 버튼 생성
-
-    플로팅 버튼 클릭시, BottomSheetView를 Visible 
-
-- URLSession DownloadTask를 이용한 이미지 다운로드, 이미지 캐싱
-
 ## 기술 특장점
 ### [CoreData]
 
