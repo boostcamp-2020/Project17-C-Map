@@ -331,6 +331,7 @@ private extension MapViewController {
     
     private func placeListButtonDisappear() {
         CATransaction.begin()
+        placeListButton.layer.opacity = 0
         CATransaction.setCompletionBlock {
             self.placeListButton.layer.isHidden = true
         }
@@ -340,11 +341,14 @@ private extension MapViewController {
     }
     
     private func placeListButtonAppear() {
+        CATransaction.begin()
+        placeListButton.layer.opacity = 1
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.placeListButton.layer.isHidden = false
         }
         let animation = AnimationController.floatingButtonAppearAnimation()
         placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
+        CATransaction.commit()
     }
     
 }
@@ -358,38 +362,12 @@ private extension MapViewController {
         let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
         let service = PlaceInfoService(imageProvider: img, geocodingNetwork: geo)
         
-        let coord = Coordinate(x: 127.1054065, y: 37.3595669)
-        let coord1 = Coordinate(x: 127.1054065, y: 37.359568)
-        let coord2 = Coordinate(x: 127.1054065, y: 37.35957)
-        let coord3 = Coordinate(x: 127.1054065, y: 37.359572)
-        let coord4 = Coordinate(x: 127.1054065, y: 37.359574)
-        let coord5 = Coordinate(x: 127.1054065, y: 37.359576)
-        let coord6 = Coordinate(x: 127.1054065, y: 37.359578)
-        let coord7 = Coordinate(x: 127.1054065, y: 37.35958)
-        let coord8 = Coordinate(x: 127.1054065, y: 37.359582)
-        let coord9 = Coordinate(x: 127.1054065, y: 37.359584)
-        let coord10 = Coordinate(x: 127.1054065, y: 37.359586)
-        
-        var places: Cluster = Cluster(coordinates: [], boundingBox: BoundingBox.korea)
-        
-        places.coordinates.append(coord)
-        places.coordinates.append(coord1)
-        places.coordinates.append(coord2)
-        places.coordinates.append(coord3)
-        places.coordinates.append(coord4)
-        places.coordinates.append(coord5)
-        places.coordinates.append(coord6)
-        places.coordinates.append(coord7)
-        places.coordinates.append(coord8)
-        places.coordinates.append(coord9)
-        places.coordinates.append(coord10)
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         placeListViewController = storyboard.instantiateViewController(
             identifier: "PreviewViewController",
             creator: { coder in
-                return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
+                return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: service)
             })
         guard let placeListViewController = placeListViewController else { return }
         placeListViewController.cancelButtonTouchedHandler = placeListButtonAppear
