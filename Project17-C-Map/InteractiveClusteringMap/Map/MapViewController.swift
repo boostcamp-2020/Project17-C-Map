@@ -44,7 +44,7 @@ final class MapViewController: UIViewController {
         dependencyInject()
         configureMap()
         configureInfoWindow()
-        testMock()
+        configurePlaceListViewController()
     }
     
     private func dependencyInject() {
@@ -365,8 +365,9 @@ private extension MapViewController {
 
 private extension MapViewController {
     
-    func testMock() {
+    func configurePlaceListViewController() {
         guard let dataManager = dataManager else { return }
+        
         let poiService = POIService(dataManager: dataManager)
         let geo = GeocodingNetwork(store: Store.http.dataProvider)
         let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
@@ -375,18 +376,16 @@ private extension MapViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         placeListViewController = storyboard.instantiateViewController(
-            identifier: "PreviewViewController",
+            identifier: "PlaceListViewController",
             creator: { coder in
                 return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: service)
             })
         guard let placeListViewController = placeListViewController else { return }
+        
         placeListViewController.cancelButtonTouchedHandler = placeListButtonAppear
-        let height = view.frame.height
-        let width  = view.frame.width
-        placeListViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
         placeListViewController.didMove(toParent: self)
-        self.addChild(placeListViewController)
-        self.view.addSubview(placeListViewController.view)
+        addChild(placeListViewController)
+        view.addSubview(placeListViewController.view)
     }
     
 }
