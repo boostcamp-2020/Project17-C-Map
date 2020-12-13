@@ -15,10 +15,13 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var loadingLabel: UILabel!
     var mapViewController: UIViewController?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapViewController = createMapViewController()
-
+    init?(coder: NSCoder, mapViewController: MapViewController) {
+        super.init(coder: coder)
+        self.mapViewController = mapViewController
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,18 +95,6 @@ class SplashViewController: UIViewController {
             markerLayer.isHidden = false
         }
         CATransaction.commit()
-    }
-
-    private func createMapViewController() -> UIViewController {
-        let dataManager = CoreDataStack.shared
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(
-            identifier: "MapViewController",
-            creator: { coder in
-                return MapViewController(coder: coder, dataManager: dataManager)
-            })
-        
-        return viewController
     }
     
     private func presentMapViewController() {
