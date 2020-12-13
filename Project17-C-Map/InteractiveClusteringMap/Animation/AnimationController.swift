@@ -97,10 +97,10 @@ final class AnimationController {
     
     static func floatingButtonDisappearAnimation() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
-        
         let transformScaleAnimation = transformScale(option: .decrease)
+        let fadeOutAnimation = fadeInOut(option: .fadeOut)
         
-        shakeAnimation.animations = [rotation(), transformScaleAnimation]
+        shakeAnimation.animations = [rotation(), transformScaleAnimation, fadeOutAnimation]
         shakeAnimation.duration = 0.5
         
         return shakeAnimation
@@ -108,10 +108,10 @@ final class AnimationController {
     
     static func floatingButtonAppearAnimation() -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
-        
         let transformScaleAnimation = transformScale(option: .increase)
+        let fadeInAnimation = fadeInOut(option: .fadeIn)
         
-        shakeAnimation.animations = [rotation(), transformScaleAnimation]
+        shakeAnimation.animations = [rotation(), transformScaleAnimation, fadeInAnimation]
         shakeAnimation.duration = 0.5
         
         return shakeAnimation
