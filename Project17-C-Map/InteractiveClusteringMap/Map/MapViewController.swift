@@ -327,6 +327,14 @@ private extension MapViewController {
     @IBAction func placeListButtonTouched(_ sender: UIButton) {
         placeListButtonDisappear()
         placeListViewController?.show()
+        
+        let clusters: [[Coordinate]] = presentedMarkers.compactMap {
+            guard let marker = $0 as? ClusteringMarker else { return nil }
+            return marker.cluster.coordinates
+        }
+        let coordinates: [Coordinate] = clusters.flatMap { $0 }
+        let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
+        placeListViewController?.requestPlaces(cluster: cluster)
     }
     
     private func placeListButtonDisappear() {
