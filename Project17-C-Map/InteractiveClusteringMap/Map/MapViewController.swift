@@ -289,7 +289,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         interactiveMapView.enableGestures()
         
         polygonOverlay?.mapView = nil
-        transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
+        transparentLayer?.removeSublayers()
         
         presentedMarkers.forEach {
             $0.hidden = false
