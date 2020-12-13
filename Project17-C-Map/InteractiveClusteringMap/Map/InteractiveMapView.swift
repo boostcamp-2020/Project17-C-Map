@@ -56,6 +56,22 @@ final class InteractiveMapView: NMFNaverMapView {
         return mapView.projection.latlng(from: point)
     }
     
+    func enableGestures() {
+        mapView.allowsScrolling = true
+        mapView.allowsRotating = true
+        mapView.allowsZooming = true
+        showZoomControls = true
+        showLocationButton = true
+    }
+    
+    func unableGestures() {
+        mapView.allowsScrolling = false
+        mapView.allowsRotating = false
+        mapView.allowsZooming = false
+        showZoomControls = false
+        showLocationButton = false
+    }
+    
 }
 
 private extension InteractiveMapView {

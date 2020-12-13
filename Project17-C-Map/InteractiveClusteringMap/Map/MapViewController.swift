@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-final class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+final class MapViewController: UIViewController {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     
@@ -18,11 +18,11 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
-    private var pickedMarker: LeafNodeMarker? = nil
+    private var pickedMarker: LeafNodeMarker?
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
-    private var polygonOverlay: NMFPolygonOverlay? = nil
+    private var polygonOverlay: NMFPolygonOverlay?
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
@@ -43,7 +43,6 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         configureMap()
         configureInfoWindow()
         interactiveMapView.mapView.addCameraDelegate(delegate: self)
-        testMock()
     }
     
     private func dependencyInject() {
@@ -81,14 +80,10 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let sublayers = transparentLayer?.sublayers else { return }
-        
         if !isEditMode {
-            sublayers.forEach { sublayer in
-                sublayer.removeAllAnimations()
-                sublayer.removeFromSuperlayer()
-            }
+            transparentLayer?.removeSublayers()
         }
+        
         guard isEditMode else { return }
         guard let touch = touches.first else { return }
         let point = touch.location(in: interactiveMapView.mapView)
@@ -139,7 +134,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         isEditMode = true
         let generator = UIImpactFeedbackGenerator(style: .heavy)
         generator.impactOccurred()
-        unableGestures()
+        interactiveMapView.unableGestures()
         
         presentedMarkers.forEach { marker in
             guard let marker = marker as? LeafNodeMarker else { return }
@@ -240,22 +235,6 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         marker.animate(position: position)
     }
     
-    private func enableGestures() {
-        interactiveMapView.mapView.allowsScrolling = true
-        interactiveMapView.mapView.allowsRotating = true
-        interactiveMapView.mapView.allowsZooming = true
-        interactiveMapView.showZoomControls = true
-        interactiveMapView.showLocationButton = true
-    }
-    
-    private func unableGestures() {
-        interactiveMapView.mapView.allowsScrolling = false
-        interactiveMapView.mapView.allowsRotating = false
-        interactiveMapView.mapView.allowsZooming = false
-        interactiveMapView.showZoomControls = false
-        interactiveMapView.showLocationButton = false
-    }
-    
     func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
@@ -307,7 +286,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         
         infoWindow.close()
         isEditMode = false
-        enableGestures()
+        interactiveMapView.enableGestures()
         
         polygonOverlay?.mapView = nil
         transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
@@ -317,59 +296,6 @@ extension MapViewController: NMFMapViewTouchDelegate {
         }
         
         pickedMarker?.resizeMarkerSize()
-    }
-    
-}
-
-private extension MapViewController {
-    
-    func testMock() {
-        guard let dataManager = dataManager else { return }
-        let poiService = POIService(dataManager: dataManager)
-        let geo = GeocodingNetwork(store: Store.http.dataProvider)
-        let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
-        let service = PlaceInfoService(imageProvider: img, geocodingNetwork: geo)
-        
-        let coord = Coordinate(x: 127.1054065, y: 37.3595669)
-        let coord1 = Coordinate(x: 127.1054065, y: 37.359568)
-        let coord2 = Coordinate(x: 127.1054065, y: 37.35957)
-        let coord3 = Coordinate(x: 127.1054065, y: 37.359572)
-        let coord4 = Coordinate(x: 127.1054065, y: 37.359574)
-        let coord5 = Coordinate(x: 127.1054065, y: 37.359576)
-        let coord6 = Coordinate(x: 127.1054065, y: 37.359578)
-        let coord7 = Coordinate(x: 127.1054065, y: 37.35958)
-        let coord8 = Coordinate(x: 127.1054065, y: 37.359582)
-        let coord9 = Coordinate(x: 127.1054065, y: 37.359584)
-        let coord10 = Coordinate(x: 127.1054065, y: 37.359586)
-        
-        var places: Cluster = Cluster(coordinates: [], boundingBox: BoundingBox.korea)
-        
-        places.coordinates.append(coord)
-        places.coordinates.append(coord1)
-        places.coordinates.append(coord2)
-        places.coordinates.append(coord3)
-        places.coordinates.append(coord4)
-        places.coordinates.append(coord5)
-        places.coordinates.append(coord6)
-        places.coordinates.append(coord7)
-        places.coordinates.append(coord8)
-        places.coordinates.append(coord9)
-        places.coordinates.append(coord10)
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let previewViewController = storyboard.instantiateViewController(
-            identifier: "PlaceListViewController",
-            creator: { coder in
-                return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
-            })
-        
-        let height = view.frame.height
-        let width  = view.frame.width
-        previewViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
-        previewViewController.didMove(toParent: self)
-        self.addChild(previewViewController)
-        self.view.addSubview(previewViewController.view)
     }
     
 }
