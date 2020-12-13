@@ -128,7 +128,10 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         if pressedMarker is LeafNodeMarker {
             showEditMode()
         } else if let clusterMarker = pressedMarker as? ClusteringMarker {
-            showBoundingBox(marker: clusterMarker)
+            polygonOverlay?.mapView = nil
+            polygonOverlay = clusterMarker.createBoundingBoxPolygon()
+            polygonOverlay?.mapView = interactiveMapView.mapView
+            
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
         }
@@ -254,7 +257,9 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
             
-            self.showBoundingBox(marker: marker)
+            self.polygonOverlay?.mapView = nil
+            self.polygonOverlay = marker.createBoundingBoxPolygon()
+            self.polygonOverlay?.mapView = self.interactiveMapView.mapView
             
             var cameraUpdate: NMFCameraUpdate?
             if marker.coordinatesCount <= 10000 {
@@ -362,30 +367,6 @@ private extension MapViewController {
         previewViewController.didMove(toParent: self)
         self.addChild(previewViewController)
         self.view.addSubview(previewViewController.view)
-    }
-    
-}
-
-extension MapViewController {
-    
-    func showBoundingBox(marker: ClusteringMarker) {
-        polygonOverlay?.mapView = nil
-        
-        let TopRight = NMGLatLng(lat: marker.boundingBox.topRight.y, lng: marker.boundingBox.topRight.x)
-        let BottomLeft = NMGLatLng(lat: marker.boundingBox.bottomLeft.y, lng: marker.boundingBox.bottomLeft.x)
-        
-        let coords = [BottomLeft,
-                       NMGLatLng(lat: BottomLeft.lat, lng: TopRight.lng),
-                       TopRight,
-                       NMGLatLng(lat: TopRight.lat, lng: BottomLeft.lng),
-                       BottomLeft]
-        
-        let polygon = NMGPolygon(ring: NMGLineString(points: coords)) as NMGPolygon<AnyObject>
-        polygonOverlay = NMFPolygonOverlay(polygon)
-        
-        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 41.0/255.0)
-        polygonOverlay?.outlineWidth = 1
-        polygonOverlay?.mapView = interactiveMapView.mapView
     }
     
 }
