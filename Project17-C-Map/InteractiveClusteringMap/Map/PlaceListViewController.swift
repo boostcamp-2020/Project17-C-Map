@@ -58,20 +58,19 @@ class PlaceListViewController: UIViewController {
     }
     
     func requestPlaces(cluster: Cluster) {
-        places = []
-
-        cluster.coordinates.forEach {
-            guard let place: Place = poiService?.fetch(coordinate: $0) else { return }
-            places.append(place)
-        }
-
-        categories = Array(Set(places.compactMap { $0.info.category }))
-
-        filterScrollView.configure(filterItems: categories) { [weak self] category in
+        poiService?.fetchInfo(coordinates: cluster.coordinates, completion: { [weak self] in
             guard let self = self else { return }
+            self.places = $0
+            self.categories = Array(Set(self.places.compactMap { $0.info.category }))
 
-            self.moveSection(to: category)
-        }
+            self.filterScrollView.configure(filterItems: self.categories) { category in
+                self.moveSection(to: category)
+            }
+        })
+//        cluster.coordinates.forEach {
+//            guard let place: Place = poiService?.fetchInfo(coordinate: $0) else { return }
+//            places.append(place)
+//        }
     }
     
 }
@@ -123,12 +122,12 @@ private extension PlaceListViewController {
             
             let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                                                         widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
-            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 0, trailing: 0)
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10)
             
             let containerGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
                                                    heightDimension: .fractionalHeight(groupHeight)), subitem: leadingItem, count: 1)
-            containerGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+//            containerGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
             
             let section = NSCollectionLayoutSection(group: containerGroup)
             section.orthogonalScrollingBehavior = Configuration.type
@@ -138,6 +137,9 @@ private extension PlaceListViewController {
                                                    heightDimension: .estimated(44)),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top)
+            
+            sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10)
+            
             sectionHeader.pinToVisibleBounds = true
             section.boundarySupplementaryItems = [sectionHeader]
             
