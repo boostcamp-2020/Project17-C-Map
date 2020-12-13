@@ -73,15 +73,15 @@ extension ClusteringColor {
     static func getColor(count: Int) -> UIColor {
         switch count {
         case 1..<ClusteringColor.fifty.rawValue:
-            return UIColor(red: 53/255, green: 60/255, blue: 130/255, alpha: 0.9)
+            return UIColor(named: "fiftyColor") ?? UIColor()
         case ClusteringColor.fifty.rawValue..<ClusteringColor.hundred.rawValue:
-            return UIColor(red: 250/255, green: 200/255, blue: 33/255, alpha: 0.9)
+            return UIColor(named: "hundredColor") ?? UIColor()
         case ClusteringColor.hundred.rawValue..<ClusteringColor.thousand.rawValue:
-            return UIColor(red: 252/255, green: 145/255, blue: 58/255, alpha: 0.9)
+            return UIColor(named: "thousandColor") ?? UIColor()
         case ClusteringColor.thousand.rawValue..<ClusteringColor.fiveThousand.rawValue:
-            return UIColor(red: 255/255, green: 78/255, blue: 80/255, alpha: 0.9)
+            return UIColor(named: "fiveThousandColor") ?? UIColor()
         default:
-            return UIColor(red: 92/255, green: 25/255, blue: 107/255, alpha: 0.9)
+            return UIColor(named: "fiveThousandColor") ?? UIColor()
         }
     }
     
