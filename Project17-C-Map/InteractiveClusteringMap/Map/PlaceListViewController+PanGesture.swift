@@ -80,4 +80,3 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
         static let partialView: CGFloat = UIScreen.main.bounds.height - 140
     }
 }
-

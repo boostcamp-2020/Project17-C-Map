@@ -41,7 +41,7 @@ final class MapViewController: UIViewController {
         dependencyInject()
         configureMap()
         configureInfoWindow()
-        
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
         testMock()
     }
     
@@ -220,6 +220,7 @@ final class MapViewController: UIViewController {
         markers.forEach { marker in
             marker.mapView = nil
             self.presentedMarkers.removeAll { $0 == marker }
+            marker.touchHandler = nil
         }
     }
     

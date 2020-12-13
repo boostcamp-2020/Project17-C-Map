@@ -34,20 +34,20 @@ extension UIView {
     }
     
     @IBInspectable
-    var shadowOffset : CGSize{
+    var shadowOffset: CGSize {
         get { return layer.shadowOffset }
         set { layer.shadowOffset = newValue }
     }
     
     @IBInspectable
-    var shadowColor : UIColor{
-        get{ return UIColor.init(cgColor: layer.shadowColor!) }
+    var shadowColor: UIColor {
+        get { return UIColor.init(cgColor: layer.shadowColor!) }
         set { layer.shadowColor = newValue.cgColor }
     }
     
     @IBInspectable
-    var shadowOpacity : Float {
-        get{ return layer.shadowOpacity }
+    var shadowOpacity: Float {
+        get { return layer.shadowOpacity }
         set { layer.shadowOpacity = newValue}
     }
 }

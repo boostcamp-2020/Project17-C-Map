@@ -96,7 +96,6 @@ class PlaceListViewController: UIViewController {
     
 }
 
-
 // MARK: - collectionView
 private extension PlaceListViewController {
     
