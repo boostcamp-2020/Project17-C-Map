@@ -214,8 +214,8 @@ final class MapViewController: UIViewController {
                 self.setMarkersHandler(marker: clusteringMarker)
                 self.animate(marker: clusteringMarker)
             }
-            
         }
+        updatePlaceListViewController()
     }
     
     private func remove(markers: [NMFMarker]) {
@@ -327,7 +327,9 @@ private extension MapViewController {
     @IBAction func placeListButtonTouched(_ sender: UIButton) {
         placeListButtonDisappear()
         placeListViewController?.show()
-        
+    }
+    
+    private func updatePlaceListViewController() {
         let clusters: [[Coordinate]] = presentedMarkers.compactMap {
             guard let marker = $0 as? ClusteringMarker else { return nil }
             return marker.cluster.coordinates
