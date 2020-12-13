@@ -8,9 +8,12 @@
 import Foundation
 import UIKit
 
+typealias HandlerWithText = (String?) -> Void
+typealias actionHandler = (UIAlertAction) -> Void
+
 final class MapAlertController {
     
-    static func createAddAlertController(_ okHandler: @escaping (String?) -> Void, cancelHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+    static func createAddAlertController(_ okHandler: @escaping HandlerWithText, cancelHandler: actionHandler? = nil) -> UIAlertController {
         let alert = UIAlertController(title: Name.addTitle, message: Name.addMessage, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
             okHandler(alert.textFields?.first?.text)
@@ -26,7 +29,7 @@ final class MapAlertController {
         return alert
     }
     
-    static func createDeleteAlertController(_ okHandler: @escaping (UIAlertAction) -> Void, cancelHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+    static func createDeleteAlertController(_ okHandler: @escaping actionHandler, cancelHandler: actionHandler? = nil) -> UIAlertController {
         let alert = UIAlertController(title: Name.deleteTitle, message: Name.deleteMessage, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Delete", style: .destructive, handler: okHandler)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelHandler)
