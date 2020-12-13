@@ -141,7 +141,7 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetch(coordinates: [Coordinate]) -> [POIInfoMO] {
+    func fetchInfo(coordinates: [Coordinate]) -> [POIInfoMO] {
         let predicates = coordinates.map { NSPredicate(format: "id == %d", $0.id) }
         let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
@@ -154,7 +154,7 @@ final class CoreDataStack: DataManagable {
         return entities.compactMap { $0.info }
     }
     
-    func fetch(coordinate: Coordinate) -> POIInfoMO? {
+    func fetchInfo(coordinate: Coordinate) -> POIInfoMO? {
         let predicate = NSPredicate(format: "id == %d", coordinate.id)
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
         request.predicate = predicate
@@ -164,6 +164,45 @@ final class CoreDataStack: DataManagable {
         }
         
         return entity.first?.info
+    }
+    
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIInfoMO]) -> Void) {
+        context.perform { [weak self] in
+            let predicates = coordinates.map { NSPredicate(format: "id == %d", $0.id) }
+            let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+            request.predicate = compoundPredicate
+            
+            guard let self = self,
+                  let entities = try? self.context.fetch(request) else {
+                DispatchQueue.main.async {
+                    completion([])
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(entities.compactMap { $0.info })
+            }
+        }
+    }
+    
+    func fetchInfo(coordinate: Coordinate, completion: @escaping (POIInfoMO?) -> Void) {
+        context.perform { [weak self] in
+            let predicate = NSPredicate(format: "id == %d", coordinate.id)
+            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+            request.predicate = predicate
+            
+            guard let self = self,
+                  let entities = try? self.context.fetch(request) else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(entities.first?.info)
+            }
+        }
     }
     
     func setValue(_ poi: POI) {

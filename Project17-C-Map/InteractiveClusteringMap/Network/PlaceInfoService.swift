@@ -15,6 +15,7 @@ protocol PlaceInfoServicing: class {
 final class PlaceInfoService: PlaceInfoServicing {
     private let imageProvider: ImageProviding
     private let geocodingNetwork: Geocodable
+    private var repositroy: [Coordinate: String] = [: ]
     
     init(imageProvider: ImageProviding, geocodingNetwork: Geocodable) {
         self.imageProvider = imageProvider
@@ -29,9 +30,17 @@ final class PlaceInfoService: PlaceInfoServicing {
     }
     
     func fetchAdrress(lat: Double, lng: Double, completion: @escaping (String) -> Void) {
-        geocodingNetwork.address(lat: lat, lng: lng) { result in
-            completion(result)
+        let coordinate = Coordinate(x: lng, y: lat)
+       
+        guard let address = repositroy[coordinate] else {
+            geocodingNetwork.address(lat: lat, lng: lng) { [weak self] result in
+                guard let self = self else { return }
+                self.repositroy[coordinate] = result
+                completion(result)
+            }
+            return
         }
+        completion(address)
     }
     
 }

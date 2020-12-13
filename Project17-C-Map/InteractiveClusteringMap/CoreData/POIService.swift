@@ -13,8 +13,10 @@ protocol POIServicing {
     func update(poi: POI)
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
-    func fetch(coordinate: Coordinate) -> Place?
-    func fetch(coordinate: Coordinate) -> POIInfo?
+    func fetchInfo(coordinate: Coordinate) -> Place?
+    func fetchInfo(coordinate: Coordinate, handler: @escaping (Place?) -> Void)
+    func fetchInfo(coordinate: Coordinate) -> POIInfo?
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> ())
     func save()
     
 }
@@ -46,22 +48,39 @@ final class POIService: POIServicing {
         }
     }
     
-    func fetch(coordinate: Coordinate) -> POIInfo? {
+    func fetchInfo(coordinate: Coordinate) -> POIInfo? {
         return dataManager.fetch(coordinate: coordinate).compactMap {
             $0.info?.info
         }.first
     }
     
-    func fetch(coordinates: [Coordinate]) -> [POIInfo] {
-        let infoMO = dataManager.fetch(coordinates: coordinates)
+    func fetchInfo(coordinates: [Coordinate]) -> [POIInfo] {
+        let infoMO = dataManager.fetchInfo(coordinates: coordinates)
         return infoMO.map { $0.info }
     }
     
-    func fetch(coordinate: Coordinate) -> Place? {
-        guard let infoMO = dataManager.fetch(coordinate: coordinate) else {
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> ()) {
+        dataManager.fetchInfo(coordinates: coordinates) { info in
+            if info.isEmpty { return completion([]) }
+            let places = zip(coordinates, info).map { coordinate, info -> Place in
+                return Place(coordinate: coordinate, info: info.info)
+            }
+            completion(places)
+        }
+    }
+    
+    func fetchInfo(coordinate: Coordinate) -> Place? {
+        guard let infoMO = dataManager.fetchInfo(coordinate: coordinate) else {
             return nil
         }
         return Place(coordinate: coordinate, info: infoMO.info)
+    }
+    
+    func fetchInfo(coordinate: Coordinate, handler: @escaping (Place?) -> Void) {
+        dataManager.fetchInfo(coordinate: coordinate) { infoMo in
+            guard let info = infoMo?.info else { return handler(nil) }
+            handler(Place(coordinate: coordinate, info: info))
+        }
     }
     
     func save() {
