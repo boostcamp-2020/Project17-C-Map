@@ -9,7 +9,7 @@ import UIKit
 import CoreLocation
 import NMapsMap
 
-final class MapViewController: UIViewController {
+final class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
     
@@ -22,6 +22,7 @@ final class MapViewController: UIViewController {
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
+    private var polygonOverlay: NMFPolygonOverlay? = nil
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
@@ -59,18 +60,6 @@ final class MapViewController: UIViewController {
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         
-        let coords1 = [NMGLatLng(lat: 37.5764792, lng: 126.9956437),
-                       NMGLatLng(lat: 37.5600365, lng: 126.9956437),
-                       NMGLatLng(lat: 37.5600365, lng: 126.9903617),
-                       NMGLatLng(lat: 37.5764792, lng: 126.9903617),
-                       NMGLatLng(lat: 37.5764792, lng: 126.9956437)]
-        
-        let polygon = NMGPolygon(ring: NMGLineString(points: coords1)) as NMGPolygon<AnyObject>
-        let polygonOverlay = NMFPolygonOverlay(polygon)
-        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
-        polygonOverlay?.outlineWidth = 3
-        polygonOverlay?.mapView = interactiveMapView.mapView
-        
         transparentLayer = TransparentLayer(bounds: view.bounds)
         guard let transparentLayer = transparentLayer else { return }
         
@@ -93,6 +82,7 @@ final class MapViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let sublayers = transparentLayer?.sublayers else { return }
+        
         if !isEditMode {
             sublayers.forEach { sublayer in
                 sublayer.removeAllAnimations()
@@ -135,8 +125,11 @@ final class MapViewController: UIViewController {
         
         if pressedMarker is LeafNodeMarker {
             showEditMode()
-        } else if pressedMarker is ClusteringMarker {
-            // 클러스터 롱터치 구현 부분
+        } else if let clusterMarker = pressedMarker as? ClusteringMarker {
+            polygonOverlay?.mapView = nil
+            polygonOverlay = clusterMarker.createBoundingBoxPolygon()
+            polygonOverlay?.mapView = interactiveMapView.mapView
+            
         } else {
             addLeafNodeMarker(at: gesture.location(in: interactiveMapView))
         }
@@ -266,6 +259,11 @@ final class MapViewController: UIViewController {
     func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
             guard let self = self else { return true }
+            
+            self.polygonOverlay?.mapView = nil
+            self.polygonOverlay = marker.createBoundingBoxPolygon()
+            self.polygonOverlay?.mapView = self.interactiveMapView.mapView
+            
             var cameraUpdate: NMFCameraUpdate?
             if marker.coordinatesCount <= 10000 {
                 cameraUpdate = NMFCameraUpdate(fit: marker.boundingBox.boundingBoxToNMGBounds(),
@@ -311,6 +309,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         isEditMode = false
         enableGestures()
         
+        polygonOverlay?.mapView = nil
         transparentLayer?.sublayers?.forEach { $0.removeFromSuperlayer() }
         
         presentedMarkers.forEach {
@@ -360,7 +359,7 @@ private extension MapViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         let previewViewController = storyboard.instantiateViewController(
-            identifier: "PreviewViewController",
+            identifier: "PlaceListViewController",
             creator: { coder in
                 return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
             })

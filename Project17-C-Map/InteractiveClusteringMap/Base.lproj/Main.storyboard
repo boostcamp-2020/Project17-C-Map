@@ -42,7 +42,7 @@
         <!--Place List View Controller-->
         <scene sceneID="njo-yu-0eN">
             <objects>
-                <viewController storyboardIdentifier="PreviewViewController" id="tiI-66-VoM" customClass="PlaceListViewController" customModule="InteractiveClusteringMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlaceListViewController" id="tiI-66-VoM" customClass="PlaceListViewController" customModule="InteractiveClusteringMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="XH6-me-4E8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
