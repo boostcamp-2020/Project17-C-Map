@@ -9,9 +9,6 @@ import UIKit
 
 class OnboardingViewController: UIViewController {
     
-    @IBOutlet weak var onboardImageView: UIImageView!
-    
-    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
     
     @IBAction func closeButtonTouched(_ sender: UIButton) {
@@ -20,8 +17,7 @@ class OnboardingViewController: UIViewController {
     }
     
     @IBAction func skipButtonTouched(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        print(skipButton.isSelected)
+        skipButton.isSelected = !sender.isSelected
     }
     
 }

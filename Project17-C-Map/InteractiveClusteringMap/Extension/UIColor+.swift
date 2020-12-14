@@ -9,8 +9,8 @@ import UIKit
 
 extension UIColor {
     
-    static let greenCyan = UIColor(hex: 0xB4E2C9)
-    static let deepBlue = UIColor(hex: 0x64C1CF)
+    static let greenCyan = UIColor(named: "greenCyan")
+    static let deepBlue = UIColor(named: "deepBlue")
     
     convenience init(hex: Int, alpha: Float = 1.0) {
         self.init(red: CGFloat((hex >> 16) & 0xFF) / 255.0,

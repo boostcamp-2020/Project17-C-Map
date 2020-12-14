@@ -17,7 +17,6 @@ final class FirstLaunchDetector {
     var isLaunched: Bool {
         get {
             userDefaults.bool(forKey: firstLaunchKey)
-            return false
         } set {
             userDefaults.set(newValue, forKey: firstLaunchKey)
         }

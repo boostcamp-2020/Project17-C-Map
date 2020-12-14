@@ -63,7 +63,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tE-nA-icY">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7tE-nA-icY">
                                                     <rect key="frame" x="113" y="0.0" width="19.5" height="22"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" image="checkmark.square" catalog="system"/>
@@ -96,8 +96,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="closeButton" destination="T0B-LH-3Um" id="e5D-Bk-yR1"/>
-                        <outlet property="onboardImageView" destination="tyc-zq-i24" id="M6p-Bu-oby"/>
                         <outlet property="skipButton" destination="7tE-nA-icY" id="n52-O9-EN0"/>
                     </connections>
                 </viewController>
