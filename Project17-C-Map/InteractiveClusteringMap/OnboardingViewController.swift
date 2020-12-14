@@ -8,23 +8,39 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
-
+    
     @IBOutlet weak var onboardCollectionView: UICollectionView!
     @IBOutlet weak var onboardPageControl: UIPageControl!
     
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var skipButton: UIButton!
     
-    private let assetImagesString: [String] = ["onboard0",
-                                               "onboard0",
-                                               "onboard0",
-                                               "onboard0",
-                                               "onboard0",
-                                               "onboard0",
-                                               "onboard0"]
+    private let assetImageStrings = [["main"],
+                              ["marker-short-touch-0",
+                               "marker-short-touch-1"],
+                              ["marker-long-touch-0",
+                               "marker-long-touch-1"],
+                              ["cluster-short-touch-0",
+                               "cluster-short-touch-1"],
+                              ["cluster-long-touch-0",
+                               "cluster-long-touch-1"],
+                              ["map-long-touch-0",
+                               "map-long-touch-1",
+                               "map-long-touch-2"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        configureRootViewBackgroundColor()
+    }
+    
+    func configureRootViewBackgroundColor() {
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = view.frame
+        gradient.colors = [UIColor.greenCyan.cgColor, UIColor.deepBlue.cgColor]
+        
+        view.layer.insertSublayer(gradient, at: .zero)
     }
     
     @IBAction func closeButtonTouched(_ sender: UIButton) {
@@ -50,14 +66,21 @@ extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let onboardCell = cell as? OnboardCollectionViewCell else {
             return cell
         }
-        onboardCell.onboardImage.image = UIImage(named: assetImagesString[indexPath.item])
+        onboardCell.configure(imageStrings: assetImageStrings[indexPath.row])
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? OnboardCollectionViewCell else {
+            return
+        }
+        cell.animate()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        onboardPageControl.numberOfPages = assetImagesString.count
-        return assetImagesString.count
+        onboardPageControl.numberOfPages = assetImageStrings.count
+        return assetImageStrings.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
