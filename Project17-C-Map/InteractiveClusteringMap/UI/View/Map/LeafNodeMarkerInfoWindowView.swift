@@ -1,5 +1,5 @@
 //
-//  CustomInfoWindow.swift
+//  CustomInfoWindowView.swift
 //  InteractiveClusteringMap
 //
 //  Created by A on 2020/12/08.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomInfoWindowView: UIView {
+class LeafNodeMarkerInfoWindowView: UIView {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
@@ -24,7 +24,7 @@ class CustomInfoWindowView: UIView {
     
     var viewFromNib: UIView? {
         let bundle = Bundle(for: type(of: self))
-        let nib = UINib(nibName: "CustomInfoWindow", bundle: bundle)
+        let nib = UINib(nibName: "LeafNodeMarkerInfoWindowView", bundle: bundle)
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     

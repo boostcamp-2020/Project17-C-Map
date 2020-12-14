@@ -36,7 +36,7 @@ final class ClusteringMarker: NMFMarker {
         alpha = 0.9
     }
     
-    func imageFromLayer(layer: CALayer) -> UIImage {
+    private func imageFromLayer(layer: CALayer) -> UIImage {
         let originalColor = layer.backgroundColor
         
         defer {
@@ -58,25 +58,6 @@ final class ClusteringMarker: NMFMarker {
         UIGraphicsEndImageContext()
         
         return outputImage
-    }
-    
-    func createBoundingBoxPolygon() -> NMFPolygonOverlay? {
-        let topRight = NMGLatLng(lat: boundingBox.topRight.y, lng: boundingBox.topRight.x)
-        let bottomLeft = NMGLatLng(lat: boundingBox.bottomLeft.y, lng: boundingBox.bottomLeft.x)
-    
-        let coords = [bottomLeft,
-                       NMGLatLng(lat: bottomLeft.lat, lng: topRight.lng),
-                       topRight,
-                       NMGLatLng(lat: topRight.lat, lng: bottomLeft.lng),
-                       bottomLeft]
-        
-        let polygon = NMGPolygon(ring: NMGLineString(points: coords)) as NMGPolygon<AnyObject>
-        let polygonOverlay = NMFPolygonOverlay(polygon)
-        
-        polygonOverlay?.fillColor = UIColor(named: "polygon") ?? UIColor.red
-        polygonOverlay?.outlineWidth = 1
-        
-        return polygonOverlay
     }
     
     override func animate(position: CGPoint) {

@@ -62,6 +62,21 @@ final class LeafNodeMarker: NMFMarker {
         height = iconImage.imageHeight + 11
     }
     
+    func containsMarker(at point: CGPoint) -> Bool {
+        guard let editButtonRange = mapView?.project(from: NMGLatLng(lat: coordinate.y, lng: coordinate.x))
+        else {
+            return false
+        }
+        
+        let x = editButtonRange.x - iconImage.imageWidth / 2
+        let y = editButtonRange.y - iconImage.imageHeight
+        
+        let containX = (x..<x + 30).contains(point.x)
+        let containY = (y..<y + 30).contains(point.y)
+        
+        return containX && containY
+    }
+    
     override func animate(position: CGPoint) {
         let animation = AnimationController.leafNodeAnimation(position: position)
         guard let markerLayer = markerLayer else { return }
