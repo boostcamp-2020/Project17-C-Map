@@ -16,8 +16,9 @@ protocol ClusterBusinessLogic: class {
 
 protocol DataBusinessLogic: class {
     
-    func add(tileId: CLong, coordinate: Coordinate)
+    func add(tileId: CLong, poi: POI)
     func remove(coordinate: Coordinate)
+    func fetch(coordinate: Coordinate) -> POIInfo?
     
 }
 
@@ -42,6 +43,10 @@ final class MapInteractor: MapBusinessLogic {
         }
     }
     
+    func fetch(coordinate: Coordinate) -> POIInfo? {
+        return treeDataStore.fetch(coordinate: coordinate)
+    }
+    
     func remove(tileIds: [CLong]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -62,9 +67,9 @@ final class MapInteractor: MapBusinessLogic {
         }
     }
     
-    func add(tileId: CLong, coordinate: Coordinate) {
-        treeDataStore.add(coordinate: coordinate)
-        presenter.add(tileId: tileId, coordinate: coordinate)
+    func add(tileId: CLong, poi: POI) {
+        treeDataStore.add(poi: poi)
+        presenter.add(tileId: tileId, poi: poi)
     }
     
     func remove(coordinate: Coordinate) {

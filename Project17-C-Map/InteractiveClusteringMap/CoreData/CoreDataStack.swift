@@ -55,8 +55,8 @@ final class CoreDataStack: DataManagable {
         save(successHandler: nil)
     }
     
-    func add(coordinate: Coordinate) {
-        setValue(POI(x: coordinate.x, y: coordinate.y, id: coordinate.id, name: "", imageUrl: "", category: ""))
+    func add(poi: POI) {
+        setValue(poi)
         save(successHandler: nil)
     }
     
@@ -137,6 +137,51 @@ final class CoreDataStack: DataManagable {
             }
             DispatchQueue.main.async {
                 handler(entities)
+            }
+        }
+    }
+    
+    func fetchInfo(coordinates: [Coordinate]) -> [POIInfoMO] {
+        let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
+        let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+        request.predicate = compoundPredicate
+        
+        guard let entities = try? context.fetch(request) else {
+            return []
+        }
+        
+        return entities.compactMap { $0.info }
+    }
+    
+    func fetchInfo(coordinate: Coordinate) -> POIInfoMO? {
+        let predicate = NSPredicate(format: "id == %@", coordinate.id)
+        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+        request.predicate = predicate
+        
+        guard let entity = try? context.fetch(request) else {
+            return nil
+        }
+        
+        return entity.first?.info
+    }
+    
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIInfoMO]) -> Void) {
+        context.perform { [weak self] in
+            let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
+            let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
+            request.predicate = compoundPredicate
+            
+            guard let self = self,
+                  let entities = try? self.context.fetch(request) else {
+                DispatchQueue.main.async {
+                    completion([])
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(entities.compactMap { $0.info })
             }
         }
     }

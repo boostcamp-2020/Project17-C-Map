@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let containerName: String = "Model"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         return true
     }
     
@@ -35,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let error = error as NSError? {
                 print(error.localizedDescription)
             }
+            
+            let description = NSPersistentStoreDescription()
+            description.shouldMigrateStoreAutomatically = true
+            description.shouldInferMappingModelAutomatically = true
+            container.persistentStoreDescriptions = [description]
+            
         })
         return container
     }()

@@ -8,7 +8,6 @@
 import Foundation
 import NMapsMap
 
-
 extension NMGLatLngBounds {
     
     private enum Index {

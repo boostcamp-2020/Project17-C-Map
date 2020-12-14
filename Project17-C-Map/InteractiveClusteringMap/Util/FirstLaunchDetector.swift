@@ -14,16 +14,17 @@ final class FirstLaunchDetector {
     private let userDefaults: UserDefaults
     private let firstLaunchKey: String = "com.boostcamp.mapc.InteractiveClusteringMap.WasLaunchedBefore"
     
-    init(userDefaults: UserDefaults) {
-        self.userDefaults = userDefaults
+    var isLaunched: Bool {
+        get {
+            userDefaults.bool(forKey: firstLaunchKey)
+            return false
+        } set {
+            userDefaults.set(newValue, forKey: firstLaunchKey)
+        }
     }
     
-    func isFirstLaunch() -> Bool {
-        guard userDefaults.bool(forKey: firstLaunchKey) else {
-            userDefaults.set(true, forKey: firstLaunchKey)
-            return true
-        }
-        return false
+    init(userDefaults: UserDefaults) {
+        self.userDefaults = userDefaults
     }
     
 }

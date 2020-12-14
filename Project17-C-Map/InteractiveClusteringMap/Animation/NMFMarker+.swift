@@ -8,7 +8,6 @@
 import Foundation
 import NMapsMap
 
-
 extension NMFMarker {
     
     @objc func animate(position: CGPoint) {
