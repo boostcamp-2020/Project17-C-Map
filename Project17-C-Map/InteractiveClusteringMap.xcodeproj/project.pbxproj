@@ -38,7 +38,6 @@
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
-		3752C29225855C63000DE9B9 /* OnboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752C29125855C63000DE9B9 /* OnboardCollectionViewCell.swift */; };
 		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		375CDB28258639F9009E447A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CDB27258639F9009E447A /* UIColor+.swift */; };
 		376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376A56532576A7B900D1AE5A /* POIInfo.swift */; };
@@ -168,7 +167,6 @@
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		3752C29125855C63000DE9B9 /* OnboardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardCollectionViewCell.swift; sourceTree = "<group>"; };
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
 		375CDB27258639F9009E447A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		376A56532576A7B900D1AE5A /* POIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIInfo.swift; sourceTree = "<group>"; };
@@ -362,7 +360,6 @@
 			isa = PBXGroup;
 			children = (
 				3724B3152581E3ED005DA3DE /* Onboarding.storyboard */,
-				3752C29125855C63000DE9B9 /* OnboardCollectionViewCell.swift */,
 				3724B31A2581E478005DA3DE /* OnboardingViewController.swift */,
 			);
 			path = Onboarding;
@@ -815,7 +812,6 @@
 				FC72B2052582A0A100B84C84 /* FilterButton.swift in Sources */,
 				FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */,
 				375CDB28258639F9009E447A /* UIColor+.swift in Sources */,
-				3752C29225855C63000DE9B9 /* OnboardCollectionViewCell.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				197E85452580B03000F2B46C /* DataProvider.swift in Sources */,
