@@ -62,18 +62,17 @@ final class MapViewController: UIViewController {
     }
     
     private func longTouchedMarker(pressedMarker: NMFPickable?, latLng: NMGLatLng) {
-        guard let marker = pressedMarker else {
-            return addLeafNodeMarker(latlng: latLng)
-        }
-        
-        if marker is LeafNodeMarker {
+        if pressedMarker is LeafNodeMarker {
             interactiveMapView.mode = .edit
             return
         }
         
-        if let clusterMarker = marker as? ClusteringMarker {
+        if let clusterMarker = pressedMarker as? ClusteringMarker {
             interactiveMapView.drawPolygon(boundingBox: clusterMarker.boundingBox)
+            return
         }
+        
+        addLeafNodeMarker(latlng: latLng)
     }
     
     private func addLeafNodeMarker(latlng: NMGLatLng) {
