@@ -12,7 +12,7 @@ protocol ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster])
     func removePresentMarkers(tileIds: [CLong])
-    func add(tileId: CLong, coordinate: Coordinate)
+    func add(tileId: CLong, poi: POI)
     func delete(coordinate: Coordinate)
     
 }
@@ -72,8 +72,8 @@ class MapPresenter: ClusterPresentationLogic {
         }
     }
     
-    func add(tileId: CLong, coordinate: Coordinate) {
-        let leafMarker = LeafNodeMarker(coordinate: coordinate)
+    func add(tileId: CLong, poi: POI) {
+        let leafMarker = LeafNodeMarker(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id))
         presentMarkers[tileId]?.append(leafMarker)
         createMarkerHandler([leafMarker])
     }

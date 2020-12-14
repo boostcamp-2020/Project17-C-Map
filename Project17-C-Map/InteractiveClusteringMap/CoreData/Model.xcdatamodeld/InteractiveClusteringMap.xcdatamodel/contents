@@ -12,7 +12,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="POI" positionX="-6181.820678710938" positionY="1008.434020996094" width="128" height="103"/>
+        <element name="POI" positionX="-6181.820678710938" positionY="1008.434020996094" width="128" height="89"/>
         <element name="POIInfo" positionX="-5849.69970703125" positionY="1058.520263671875" width="104.4691162109375" height="88"/>
     </elements>
 </model>
