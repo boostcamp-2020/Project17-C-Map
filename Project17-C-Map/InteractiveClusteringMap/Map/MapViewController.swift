@@ -290,7 +290,6 @@ final class MapViewController: UIViewController {
             CATransaction.begin()
             marker.hidden = true
             CATransaction.setCompletionBlock {
-                print("setCompletionBlock")
                 markerLayer.removeFromSuperlayer()
             }
             markerLayer.add(markerAnimation, forKey: "dismissMarker")
@@ -345,7 +344,7 @@ private extension MapViewController {
         CATransaction.setCompletionBlock {
             self.placeListButton.layer.isHidden = true
         }
-        let animation = AnimationController.floatingButtonDisappearAnimation()
+        let animation = AnimationController.floatingButtonAnimation(option: .disapper)
         placeListButton.layer.add(animation, forKey: "floatingButtonDisappearAnimation")
         CATransaction.commit()
     }
@@ -356,7 +355,7 @@ private extension MapViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.placeListButton.layer.isHidden = false
         }
-        let animation = AnimationController.floatingButtonAppearAnimation()
+        let animation = AnimationController.floatingButtonAnimation(option: .appear)
         placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
         CATransaction.commit()
     }

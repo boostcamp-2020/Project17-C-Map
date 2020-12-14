@@ -17,6 +17,10 @@ enum ScaleOption {
     case increase, decrease
 }
 
+enum FloatingButtonOption {
+    case appear, disapper
+}
+
 final class AnimationController {
     
     /// Fade In/Out animation
@@ -95,23 +99,16 @@ final class AnimationController {
         return shakeAnimation
     }
     
-    static func floatingButtonDisappearAnimation() -> CAAnimationGroup {
+    static func floatingButtonAnimation(option: FloatingButtonOption) -> CAAnimationGroup {
         let shakeAnimation = CAAnimationGroup()
-        let transformScaleAnimation = transformScale(option: .decrease)
-        let fadeOutAnimation = fadeInOut(option: .fadeOut)
         
-        shakeAnimation.animations = [rotation(), transformScaleAnimation, fadeOutAnimation]
-        shakeAnimation.duration = 0.5
+        let scaleAnimationOption: ScaleOption = option == .appear ? .increase : .decrease
+        let transformScaleAnimation = transformScale(option: scaleAnimationOption)
+
+        let fadeAnimationOption: FadeOption = option == .appear ? .fadeIn : .fadeOut
+        let fadeAnimation = fadeInOut(option: fadeAnimationOption)
         
-        return shakeAnimation
-    }
-    
-    static func floatingButtonAppearAnimation() -> CAAnimationGroup {
-        let shakeAnimation = CAAnimationGroup()
-        let transformScaleAnimation = transformScale(option: .increase)
-        let fadeInAnimation = fadeInOut(option: .fadeIn)
-        
-        shakeAnimation.animations = [rotation(), transformScaleAnimation, fadeInAnimation]
+        shakeAnimation.animations = [rotation(), transformScaleAnimation, fadeAnimation]
         shakeAnimation.duration = 0.5
         
         return shakeAnimation

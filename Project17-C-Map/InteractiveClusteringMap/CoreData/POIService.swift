@@ -14,9 +14,9 @@ protocol POIServicing {
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
     func fetchInfo(coordinate: Coordinate) -> Place?
-    func fetchInfo(coordinate: Coordinate, handler: @escaping (Place?) -> Void)
+    func fetchInfo(coordinate: Coordinate, completion: @escaping (Place?) -> Void)
     func fetchInfo(coordinate: Coordinate) -> POIInfo?
-    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> ())
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void)
     func save()
     
 }
@@ -59,7 +59,7 @@ final class POIService: POIServicing {
         return infoMO.map { $0.info }
     }
     
-    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> ()) {
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void) {
         dataManager.fetchInfo(coordinates: coordinates) { info in
             if info.isEmpty { return completion([]) }
             let places = zip(coordinates, info).map { coordinate, info -> Place in
@@ -76,10 +76,9 @@ final class POIService: POIServicing {
         return Place(coordinate: coordinate, info: infoMO.info)
     }
     
-    func fetchInfo(coordinate: Coordinate, handler: @escaping (Place?) -> Void) {
-        dataManager.fetchInfo(coordinate: coordinate) { infoMo in
-            guard let info = infoMo?.info else { return handler(nil) }
-            handler(Place(coordinate: coordinate, info: info))
+    func fetchInfo(coordinate: Coordinate, completion: @escaping (Place?) -> Void) {
+        fetchInfo(coordinates: [coordinate]) {
+            completion($0.first)
         }
     }
     
