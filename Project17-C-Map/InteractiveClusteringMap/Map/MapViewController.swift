@@ -52,7 +52,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if FirstLaunchDetector.shared.isLaunched {
+        if !FirstLaunchDetector.shared.isLaunched {
             presentOnboarding()
         }
     }

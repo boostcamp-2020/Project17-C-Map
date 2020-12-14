@@ -358,6 +358,16 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		37BACC9E2587ADE2001A14D6 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				3724B3152581E3ED005DA3DE /* Onboarding.storyboard */,
+				3752C29125855C63000DE9B9 /* OnboardCollectionViewCell.swift */,
+				3724B31A2581E478005DA3DE /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		37EB731C2562592700AC44D6 = {
 			isa = PBXGroup;
 			children = (
@@ -394,15 +404,13 @@
 				37352CCF25695AA500CAFDFD /* Resource */,
 				372216CB256943C800231245 /* VO */,
 				FA81D66E2568FEC50023E123 /* CoreData */,
+				465BA41325810535000B6590 /* Launch */,
+				37BACC9E2587ADE2001A14D6 /* Onboarding */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
-				3724B3152581E3ED005DA3DE /* Onboarding.storyboard */,
-				3752C29125855C63000DE9B9 /* OnboardCollectionViewCell.swift */,
-				3724B31A2581E478005DA3DE /* OnboardingViewController.swift */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */,
-				465BA41325810535000B6590 /* Launch */,
 				37EB73392562592800AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMap;
