@@ -142,7 +142,7 @@ final class CoreDataStack: DataManagable {
     }
     
     func fetchInfo(coordinates: [Coordinate]) -> [POIInfoMO] {
-        let predicates = coordinates.map { NSPredicate(format: "id == %d", $0.id) }
+        let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
         let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
         request.predicate = compoundPredicate
@@ -155,7 +155,7 @@ final class CoreDataStack: DataManagable {
     }
     
     func fetchInfo(coordinate: Coordinate) -> POIInfoMO? {
-        let predicate = NSPredicate(format: "id == %d", coordinate.id)
+        let predicate = NSPredicate(format: "id == %@", coordinate.id)
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
         request.predicate = predicate
         
@@ -168,7 +168,7 @@ final class CoreDataStack: DataManagable {
     
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIInfoMO]) -> Void) {
         context.perform { [weak self] in
-            let predicates = coordinates.map { NSPredicate(format: "id == %d", $0.id) }
+            let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
             let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
             let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
             request.predicate = compoundPredicate

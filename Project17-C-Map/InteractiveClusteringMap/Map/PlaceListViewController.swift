@@ -58,7 +58,7 @@ class PlaceListViewController: UIViewController {
     }
     
     func requestPlaces(cluster: Cluster) {
-        poiService?.fetchInfo(coordinates: cluster.coordinates, completion: { [weak self] in
+        poiService?.fetchInfo(coordinates: cluster.coordinates) { [weak self] in
             guard let self = self else { return }
             self.places = $0
             self.categories = Array(Set(self.places.compactMap { $0.info.category }))
@@ -66,7 +66,7 @@ class PlaceListViewController: UIViewController {
             self.filterScrollView.configure(filterItems: self.categories) { category in
                 self.moveSection(to: category)
             }
-        })
+        }
     }
     
 }

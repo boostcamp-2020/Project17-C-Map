@@ -16,6 +16,7 @@ protocol POIServicing {
     func fetchInfo(coordinate: Coordinate) -> Place?
     func fetchInfo(coordinate: Coordinate, completion: @escaping (Place?) -> Void)
     func fetchInfo(coordinate: Coordinate) -> POIInfo?
+    func fetchInfo(coordinates: [Coordinate]) -> [POIInfo]
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void)
     func save()
     
