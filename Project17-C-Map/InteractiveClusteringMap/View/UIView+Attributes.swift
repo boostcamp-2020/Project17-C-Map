@@ -23,7 +23,7 @@ extension UIView {
     
     @IBInspectable
     var borderColor: UIColor? {
-        get { return UIColor.init(cgColor: layer.borderColor!) }
+        get { return UIColor.init(cgColor: layer.borderColor ?? UIColor.red.cgColor) }
         set { layer.borderColor = newValue?.cgColor }
     }
     
@@ -34,20 +34,20 @@ extension UIView {
     }
     
     @IBInspectable
-    var shadowOffset : CGSize{
+    var shadowOffset: CGSize {
         get { return layer.shadowOffset }
         set { layer.shadowOffset = newValue }
     }
     
     @IBInspectable
-    var shadowColor : UIColor{
-        get{ return UIColor.init(cgColor: layer.shadowColor!) }
+    var shadowColor: UIColor {
+        get { return UIColor.init(cgColor: layer.shadowColor ?? UIColor.red.cgColor) }
         set { layer.shadowColor = newValue.cgColor }
     }
     
     @IBInspectable
-    var shadowOpacity : Float {
-        get{ return layer.shadowOpacity }
+    var shadowOpacity: Float {
+        get { return layer.shadowOpacity }
         set { layer.shadowOpacity = newValue}
     }
 }

@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import NMapsMap
 
 class SplashViewController: UIViewController {
 
-    @IBOutlet weak var transparentUIView: UIView!
+    @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var globeImageView: UIImageView!
-    private var mapViewController: UIViewController?
+    @IBOutlet weak var loadingLabel: UILabel!
+    var mapViewController: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,13 +25,13 @@ class SplashViewController: UIViewController {
         super.viewWillAppear(animated)
         configureMarkers()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
             self.presentMapViewController()
         }
     }
     
     private func configureMarkers() {
-        guard let image = UIImage(named: "marker") else { return }
+        loadingLabel.setTextWithTypeAnimation(inputText: Name.loadingLabelText)
         
         var leftMarkerLayers = [CALayer]()
         var rightMarkerLayers = [CALayer]()
@@ -37,8 +39,9 @@ class SplashViewController: UIViewController {
         (0..<3).forEach { i in
             let markerLayer = CALayer()
             markerLayer.isHidden = true
-            markerLayer.frame = CGRect(x: 0, y: 250 + (i * 150), width: 50, height: 50)
-            markerLayer.contents = image.maskWithColor(color: .brown)?.cgImage
+            let markerYPosition = 250 + (i * 150)
+            markerLayer.frame = CGRect(x: 0, y: markerYPosition, width: 40, height: 53)
+            markerLayer.contents = randomColorMarker()
             markerLayer.contentsGravity = .resize
             
             leftMarkerLayers.append(markerLayer)
@@ -47,15 +50,16 @@ class SplashViewController: UIViewController {
         (0..<2).forEach { i in
             let markerLayer = CALayer()
             markerLayer.isHidden = true
-            
-            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: 250 + (i * 200), width: 50, height: 50)
-            markerLayer.contents = image.maskWithColor(color: .red)?.cgImage
+            let markerYPosition =  250 + (i * 200)
+            markerLayer.frame = CGRect(x: Int(view.frame.width) - 40, y: markerYPosition, width: 40, height: 53)
+            markerLayer.contents = randomColorMarker()
             markerLayer.contentsGravity = .resize
             
             rightMarkerLayers.append(markerLayer)
         }
         
-        let endPosition = CGPoint(x: 200, y: 400)
+        let endPosition = CGPoint(x: globeImageView.layer.position.x + 20,
+                                  y: globeImageView.layer.position.y - 118)
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -72,13 +76,16 @@ class SplashViewController: UIViewController {
     }
     
     private func markerLayerAnimate(markerLayer: CALayer, endPosition: CGPoint) {
-        var animations: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [AnimationController.splashMarkerAnimation1, AnimationController.splashMarkerAnimation2, AnimationController.splashMarkerAnimation3]
+        var animations: [(CGPoint, CGPoint) -> (CAAnimationGroup)] = [
+            AnimationController.splashMarkerAnimation1,
+            AnimationController.splashMarkerAnimation2,
+            AnimationController.splashMarkerAnimation3]
         animations.shuffle()
         guard let animation = animations.first else { return }
         
         let randomAnimation = animation(markerLayer.position, endPosition)
         CATransaction.begin()
-        transparentUIView.layer.addSublayer(markerLayer)
+        transparentView.layer.addSublayer(markerLayer)
         markerLayer.add(randomAnimation, forKey: "makerMove")
         CATransaction.setCompletionBlock {
             markerLayer.position = endPosition
@@ -96,20 +103,42 @@ class SplashViewController: UIViewController {
                 return MapViewController(coder: coder, dataManager: dataManager)
             })
         
-        viewController.modalPresentationStyle = .fullScreen
-        viewController.modalTransitionStyle = .crossDissolve
-        
         return viewController
-       
     }
     
-    func presentMapViewController() {
-        guard let mapViewController = mapViewController else { return }
-        let window = self.view.window
+    private func presentMapViewController() {
+        guard let mapViewController = mapViewController,
+              let window = self.view.window else {
+            return
+        }
+        
         self.dismiss(animated: true) {
-            window?.rootViewController = mapViewController
-            window?.makeKeyAndVisible()
+            window.rootViewController = mapViewController
+            window.makeKeyAndVisible()
+            UIView.transition(with: window,
+                                  duration: 0.5,
+                                  options: .transitionCrossDissolve,
+                                  animations: nil,
+                                  completion: nil)
         }
     }
+
+    private func randomColorMarker() -> CGImage? {
+       let markers = [NMF_MARKER_IMAGE_RED,
+                      NMF_MARKER_IMAGE_LIGHTBLUE,
+                      NMF_MARKER_IMAGE_BLUE,
+                      NMF_MARKER_IMAGE_PINK,
+                      NMF_MARKER_IMAGE_GREEN,
+                      NMF_MARKER_IMAGE_YELLOW
+       ]
+        
+        return markers.randomElement()?.image.cgImage
+    }
     
+}
+
+extension SplashViewController {
+    enum Name {
+            static let loadingLabelText = "클러스터링 정보를 가져오는 중입니다......"
+    }
 }
