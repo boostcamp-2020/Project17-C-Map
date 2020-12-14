@@ -31,33 +31,40 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
                            delay: 0.0,
                            options: [.allowUserInteraction],
                            animations: { [weak self] in
-                            guard let self = self else { return }
-                            
-                            if  velocity.y >= 0 {
-                                self.view.frame = CGRect(x: 0,
-                                                         y: Boundary.partialView,
-                                                         width: self.view.frame.width,
-                                                         height: self.view.frame.height)
-                            } else {
-                                self.view.frame = CGRect(x: 0,
-                                                         y: Boundary.fullView,
-                                                         width: self.view.frame.width,
-                                                         height: self.view.frame.height)
-                            }
-                           }, completion: { [weak self] _ in
-                            guard let self = self else { return }
-                            
-                            if velocity.y < 0 {
-                                self.collectionView.isScrollEnabled = true
-                                self.filterScrollView.isScrollEnabled = true
-                            }
-                           })
+                guard let self = self else { return }
+                
+                if velocity.y >= 0 {
+                    self.view.frame = CGRect(x: 0,
+                                             y: Boundary.partialView,
+                                             width: self.view.frame.width,
+                                             height: self.view.frame.height)
+                } else {
+                    self.view.frame = CGRect(x: 0,
+                                             y: Boundary.fullView,
+                                             width: self.view.frame.width,
+                                             height: self.view.frame.height)
+                }
+            }, completion: { [weak self] _ in
+                guard let self = self else { return }
+                
+                if velocity.y < 0 {
+                    self.collectionView.isScrollEnabled = true
+                    self.filterScrollView.isScrollEnabled = true
+                }
+            })
         }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let gesture = (gestureRecognizer as? UIPanGestureRecognizer) else {
+        guard let gesture = (gestureRecognizer as? UIPanGestureRecognizer)
+        else {
+            return false
+        }
+        
+        let currentY = gesture.location(in: view).y
+        guard currentY == Boundary.fullView || currentY == Boundary.partialView
+        else {
             return false
         }
         

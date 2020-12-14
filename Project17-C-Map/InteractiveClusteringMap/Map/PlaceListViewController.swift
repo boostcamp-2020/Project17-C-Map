@@ -18,7 +18,6 @@ class PlaceListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private var poiService: POIServicing?
     private var placeInfoService: PlaceInfoServicing?
-    private var cluster: Cluster?
     private var places: [Place] = []
     private var categories: [String] = [] {
         didSet {
@@ -26,10 +25,10 @@ class PlaceListViewController: UIViewController {
         }
     }
     private var dataSource: DiffableDataSource?
+    var cancelButtonTouchedHandler: (() -> Void)?
     
-    init?(coder: NSCoder, cluster: Cluster, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
+    init?(coder: NSCoder, poiService: POIServicing, placeInfoService: PlaceInfoServicing) {
         super.init(coder: coder)
-        self.cluster = cluster
         self.poiService = poiService
         self.placeInfoService = placeInfoService
     }
@@ -40,25 +39,9 @@ class PlaceListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.frame.origin.y = UIScreen.main.bounds.maxY
         configure()
         configureDataSource()
-        requestPlaces()
-        
-        filterScrollView.configure(filterItems: categories) { [weak self] category in
-            guard let self = self else { return }
-            
-            self.moveSection(to: category)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            guard let self = self else { return }
-            let frame = self.view.frame
-            let yComponent = Boundary.partialView
-            self.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height - 100)
-        })
     }
     
     private func configure() {
@@ -74,24 +57,49 @@ class PlaceListViewController: UIViewController {
         view.addGestureRecognizer(gesture)
     }
     
-    // 현재는 목업데이터로 사용 중
-    // 추후 cluster 주입 후 poi info를 fetch하여 보여주도록 수정
-    private func requestPlaces() {
-        let urls = [ "http://ldb.phinf.naver.net/20190110_293/1547048398707IGmBs_JPEG/scXaoTP-_ccxbMqn2vFL-k-G.jpg",
-                     "http://ldb.phinf.naver.net/20190616_192/1560681495671CW2VX_JPEG/pPfSjNLsKKvdhYcaTkyabjtZ.jpg",
-                     "http://ldb.phinf.naver.net/20190806_213/1565088665739jPvCP_JPEG/GemsLMNPxqYN0yRFOigiabqz.jpg" ]
-        
-        let categoryList = [ "Cafe",
-                             "Food",
-                             "Beer",
-                             "Burger"]
-        
-        cluster?.coordinates.enumerated().forEach { index, coord in
-            let place = Place(coordinate: coord, info: POIInfo(name: "양꼬치엔", imageUrl: urls[index%3], category: categoryList[index%4]))
-            places.append(place)
+    func requestPlaces(cluster: Cluster) {
+        poiService?.fetchInfo(coordinates: cluster.coordinates) { [weak self] in
+            guard let self = self else { return }
+            self.places = $0
+            self.categories = Array(Set(self.places.compactMap { $0.info.category }))
+
+            self.filterScrollView.configure(filterItems: self.categories) { category in
+                self.moveSection(to: category)
+            }
         }
-        
-        categories = Array(Set(places.compactMap { $0.info.category }))
+    }
+    
+}
+
+// MARK: - 화면 Show/Hide 애니메이션
+extension PlaceListViewController {
+    
+    @IBAction private func placeListHideButtonTouched(_ sender: UIButton) {
+        disappearAnimation()
+    }
+    
+    func show() {
+        appearAnimation()
+    }
+    
+    private func appearAnimation() {
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
+            let frame = self.view.frame
+            let yComponent = Boundary.partialView
+            self.view.frame = CGRect(x: 0, y: yComponent, width: frame.width, height: frame.height)
+        })
+    }
+    
+    private func disappearAnimation() {
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
+            let frame = self.view.frame
+            let y = UIScreen.main.bounds.maxY
+            self.view.frame = CGRect(x: 0, y: y, width: frame.width, height: frame.height)
+        }, completion: { _ in
+            self.cancelButtonTouchedHandler?()
+        })
     }
     
 }
@@ -103,25 +111,29 @@ private extension PlaceListViewController {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         
-        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (_, _) -> NSCollectionLayoutSection? in
+        let layout = UICollectionViewCompositionalLayout(sectionProvider: { (_, layoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let contentSize = layoutEnvironment.container.effectiveContentSize
+            let groupHeight: CGFloat = contentSize.height > 660 ? 0.18 : 0.24
             
             let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
                                                         widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
-            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 5, bottom: 0, trailing: 0)
+            leadingItem.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10)
             
             let containerGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
-                                                   heightDimension: .fractionalHeight(0.18)), subitem: leadingItem, count: 1)
-            containerGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+                                                   heightDimension: .fractionalHeight(groupHeight)), subitem: leadingItem, count: 1)
             
             let section = NSCollectionLayoutSection(group: containerGroup)
             section.orthogonalScrollingBehavior = Configuration.type
             
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                layoutSize: NSCollectionLayoutSize(widthDimension: .estimated(1.0),
                                                    heightDimension: .estimated(44)),
                 elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top)
+                alignment: .topLeading)
+            
+            sectionHeader.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 10)
             sectionHeader.pinToVisibleBounds = true
             section.boundarySupplementaryItems = [sectionHeader]
             
@@ -201,7 +213,7 @@ private extension PlaceListViewController {
         static let headerElementKind = "header-element-kind"
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
-        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.continuous
+        static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.groupPaging
     }
     
 }

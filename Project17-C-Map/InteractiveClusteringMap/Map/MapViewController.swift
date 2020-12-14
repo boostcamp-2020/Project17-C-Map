@@ -12,13 +12,14 @@ import NMapsMap
 final class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet private weak var placeListButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
     private var dataManager: DataManagable?
     internal var transparentLayer: TransparentLayer?
     private var presentedMarkers: [NMFMarker] = []
-    private var pickedMarker: LeafNodeMarker? = nil
+    private var pickedMarker: LeafNodeMarker?
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
@@ -26,6 +27,8 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
+    
+    private var placeListViewController: PlaceListViewController?
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -42,8 +45,8 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         dependencyInject()
         configureMap()
         configureInfoWindow()
+        configurePlaceListViewController()
         interactiveMapView.mapView.addCameraDelegate(delegate: self)
-        testMock()
     }
     
     private func dependencyInject() {
@@ -207,8 +210,8 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
                 self.setMarkersHandler(marker: clusteringMarker)
                 self.animate(marker: clusteringMarker)
             }
-            
         }
+        updatePlaceListViewController()
     }
     
     private func remove(markers: [NMFMarker]) {
@@ -323,53 +326,68 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 private extension MapViewController {
     
-    func testMock() {
+    @IBAction func placeListButtonTouched(_ sender: UIButton) {
+        placeListButtonDisappear()
+        placeListViewController?.show()
+    }
+    
+    private func updatePlaceListViewController() {
+        let clusters: [[Coordinate]] = presentedMarkers.compactMap {
+            guard let marker = $0 as? ClusteringMarker else { return nil }
+            return marker.cluster.coordinates
+        }
+        let coordinates: [Coordinate] = clusters.flatMap { $0 }
+        let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
+        placeListViewController?.requestPlaces(cluster: cluster)
+    }
+    
+    private func placeListButtonDisappear() {
+        CATransaction.begin()
+        placeListButton.layer.opacity = 0
+        CATransaction.setCompletionBlock {
+            self.placeListButton.layer.isHidden = true
+        }
+        let animation = AnimationController.floatingButtonAnimation(option: .disapper)
+        placeListButton.layer.add(animation, forKey: "floatingButtonDisappearAnimation")
+        CATransaction.commit()
+    }
+    
+    private func placeListButtonAppear() {
+        CATransaction.begin()
+        placeListButton.layer.opacity = 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.placeListButton.layer.isHidden = false
+        }
+        let animation = AnimationController.floatingButtonAnimation(option: .appear)
+        placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
+        CATransaction.commit()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    func configurePlaceListViewController() {
         guard let dataManager = dataManager else { return }
+        
         let poiService = POIService(dataManager: dataManager)
         let geo = GeocodingNetwork(store: Store.http.dataProvider)
         let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
         let service = PlaceInfoService(imageProvider: img, geocodingNetwork: geo)
         
-        let coord = Coordinate(x: 127.1054065, y: 37.3595669)
-        let coord1 = Coordinate(x: 127.1054065, y: 37.359568)
-        let coord2 = Coordinate(x: 127.1054065, y: 37.35957)
-        let coord3 = Coordinate(x: 127.1054065, y: 37.359572)
-        let coord4 = Coordinate(x: 127.1054065, y: 37.359574)
-        let coord5 = Coordinate(x: 127.1054065, y: 37.359576)
-        let coord6 = Coordinate(x: 127.1054065, y: 37.359578)
-        let coord7 = Coordinate(x: 127.1054065, y: 37.35958)
-        let coord8 = Coordinate(x: 127.1054065, y: 37.359582)
-        let coord9 = Coordinate(x: 127.1054065, y: 37.359584)
-        let coord10 = Coordinate(x: 127.1054065, y: 37.359586)
-        
-        var places: Cluster = Cluster(coordinates: [], boundingBox: BoundingBox.korea)
-        
-        places.coordinates.append(coord)
-        places.coordinates.append(coord1)
-        places.coordinates.append(coord2)
-        places.coordinates.append(coord3)
-        places.coordinates.append(coord4)
-        places.coordinates.append(coord5)
-        places.coordinates.append(coord6)
-        places.coordinates.append(coord7)
-        places.coordinates.append(coord8)
-        places.coordinates.append(coord9)
-        places.coordinates.append(coord10)
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let previewViewController = storyboard.instantiateViewController(
+        placeListViewController = storyboard.instantiateViewController(
             identifier: "PlaceListViewController",
             creator: { coder in
-                return PlaceListViewController(coder: coder, cluster: places, poiService: poiService, placeInfoService: service)
+                return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: service)
             })
+        guard let placeListViewController = placeListViewController else { return }
         
-        let height = view.frame.height
-        let width  = view.frame.width
-        previewViewController.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
-        previewViewController.didMove(toParent: self)
-        self.addChild(previewViewController)
-        self.view.addSubview(previewViewController.view)
+        placeListViewController.cancelButtonTouchedHandler = placeListButtonAppear
+        placeListViewController.didMove(toParent: self)
+        addChild(placeListViewController)
+        view.addSubview(placeListViewController.view)
     }
     
 }

@@ -53,7 +53,7 @@ class TreeDataStore: TreeDataStorable {
     }
     
     func fetch(coordinate: Coordinate) -> POIInfo? {
-        return poiService.fetch(coordinate: coordinate)
+        return poiService.fetchInfo(coordinate: coordinate)
     }
     
     private func makeQuadTrees() {
