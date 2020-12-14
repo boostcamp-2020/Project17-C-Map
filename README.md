@@ -54,7 +54,7 @@
 ### - 클러스터링 
 |  화면  |  <center>구현 내용 </center>    |
 |:-----:|:------------------------------|
-|<img src="https://github.com/Seungeon-Kim/Baekjoon_Algorithm/blob/master/pyhton_basic/maingif.gif?raw=true" width=200>|• Naver SDK에서 제공하는 TileCoverHelper의 `onTileChanged` 이벤트에 맞춰 새로 클러스터링 <br>• CAAnimation으로 `Fade in / out` 자연스러운 화면 전환 <br> • 클러스터 내의 데이터 수에 따라 원의 크기 및 색상 조정<br>• 클러스터 마커 터치 시 해당 클러스터의 데이터 범위로 카메라 이동|
+|<img src="https://user-images.githubusercontent.com/18098363/102044222-bbc0a080-3e19-11eb-9dea-c1fa8bf477c7.gif" width=200>|• Naver SDK에서 제공하는 TileCoverHelper의 `onTileChanged` 이벤트에 맞춰 새로 클러스터링 <br>• CAAnimation으로 `Fade in / out` 자연스러운 화면 전환 <br> • 클러스터 내의 데이터 수에 따라 원의 크기 및 색상 조정<br>• 클러스터 마커 터치 시 해당 클러스터의 데이터 범위로 카메라 이동|
 
 <br> 
 
@@ -89,7 +89,7 @@
 ### - POI 리스트 목록
 |  화면  |  <center>구현 내용 </center>         |
 |:-----:|:----------------------------------|
-|<img src="https://github.com/Seungeon-Kim/Baekjoon_Algorithm/blob/master/pyhton_basic/ezgif.com-gif-maker%20(1).gif" width=200>|• 사용자 선택에 따라  BottomSheetView의 히든 여부를 선택<br>• 해당 클러스터 내 필터 리스트 출력<br>•필터 클릭 시, 해당 카테고리 리스트를 최상위에 출력<br>•URLSession DownloadTask를 이용한 이미지 다운로드, 이미지 캐싱 
+|<img src="https://user-images.githubusercontent.com/18098363/102044205-b3686580-3e19-11eb-85e1-4e6b4508e6fb.gif" width=200>|• 사용자 선택에 따라  BottomSheetView의 히든 여부를 선택<br>• 해당 클러스터 내 필터 리스트 출력<br>•필터 클릭 시, 해당 카테고리 리스트를 최상위에 출력<br>•URLSession DownloadTask를 이용한 이미지 다운로드, 이미지 캐싱 
 
 ### - 클러스터링 영역 표시
 |  화면  |  <center>구현 내용 </center>         |
