@@ -61,10 +61,11 @@ final class POIService: POIServicing {
     }
     
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void) {
-        dataManager.fetchInfo(coordinates: coordinates) { info in
-            if info.isEmpty { return completion([]) }
-            let places = zip(coordinates, info).map { coordinate, info -> Place in
-                return Place(coordinate: coordinate, info: info.info)
+        dataManager.fetchInfo(coordinates: coordinates) { pois in
+            let places: [Place] = pois.compactMap {
+                guard let info = $0.info?.info else { return nil }
+                
+                return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
             }
             completion(places)
         }
