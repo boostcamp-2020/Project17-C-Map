@@ -1,5 +1,5 @@
 //
-//  FirstLaunchDetector.swift
+//  UserDefaultsManager.swift
 //  InteractiveClusteringMap
 //
 //  Created by Oh Donggeon on 2020/12/10.
@@ -7,9 +7,17 @@
 
 import Foundation
 
-final class FirstLaunchDetector {
+protocol UserDefaultsManagable {
     
-    static let shared = FirstLaunchDetector(userDefaults: .standard)
+    var isLaunched: Bool { get set }
+    
+    init(userDefaults: UserDefaults)
+    
+}
+
+final class UserDefaultsManager: UserDefaultsManagable {
+    
+    static let shared = UserDefaultsManager(userDefaults: .standard)
     
     private let userDefaults: UserDefaults
     private let firstLaunchKey: String = "com.boostcamp.mapc.InteractiveClusteringMap.WasLaunchedBefore"

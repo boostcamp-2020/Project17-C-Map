@@ -31,7 +31,7 @@
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		3724B3162581E3ED005DA3DE /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3724B3152581E3ED005DA3DE /* Onboarding.storyboard */; };
 		3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31A2581E478005DA3DE /* OnboardingViewController.swift */; };
-		3724B3202581ECB9005DA3DE /* FirstLaunchDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */; };
+		3724B3202581ECB9005DA3DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */; };
 		37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
 		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
@@ -162,7 +162,7 @@
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
 		3724B3152581E3ED005DA3DE /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		3724B31A2581E478005DA3DE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstLaunchDetector.swift; sourceTree = "<group>"; };
+		3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
-				3724B31F2581ECB9005DA3DE /* FirstLaunchDetector.swift */,
+				3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -854,7 +854,7 @@
 				3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */,
 				19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
-				3724B3202581ECB9005DA3DE /* FirstLaunchDetector.swift in Sources */,
+				3724B3202581ECB9005DA3DE /* UserDefaultsManager.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
 				FC5B24852580B14500450EEF /* PlaceCell.swift in Sources */,

@@ -12,7 +12,7 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var skipButton: UIButton!
     
     @IBAction func closeButtonTouched(_ sender: UIButton) {
-        FirstLaunchDetector.shared.isLaunched = skipButton.isSelected
+        UserDefaultsManager.shared.isLaunched = skipButton.isSelected
         dismiss(animated: true)
     }
     
