@@ -12,7 +12,6 @@
 		192D34B2256E368D00861703 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34B1256E368D00861703 /* QuadTreeTests.swift */; };
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
-		192D34BE256E36B900861703 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E1A256CD099007BDF3E /* Array+.swift */; };
 		1943CCC92581F79D0010B103 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1943CCC82581F79D0010B103 /* DataError.swift */; };
 		197E85402580B01600F2B46C /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E853F2580B01600F2B46C /* ImageProvider.swift */; };
 		197E85452580B03000F2B46C /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E85442580B03000F2B46C /* DataProvider.swift */; };
@@ -27,14 +26,19 @@
 		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
+		37156B0F25879D2B00A4E8F7 /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37156B0E25879D2B00A4E8F7 /* DBI.swift */; };
 		372216C12569325600231245 /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
 		372216CD256943D300231245 /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
+		3724B3162581E3ED005DA3DE /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3724B3152581E3ED005DA3DE /* Onboarding.storyboard */; };
+		3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31A2581E478005DA3DE /* OnboardingViewController.swift */; };
+		3724B3202581ECB9005DA3DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */; };
 		37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379DC4C5256E1EC60044DA6C /* KMeans.swift */; };
 		3731108C256F641F00350D55 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
 		37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */ = {isa = PBXBuildFile; fileRef = 37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */; };
 		37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDA25695E7400CAFDFD /* JSONReader.swift */; };
 		37352CE025695EE000CAFDFD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3753DCEF256B4C5B006D26A9 /* POIService.swift */; };
+		375CDB28258639F9009E447A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CDB27258639F9009E447A /* UIColor+.swift */; };
 		376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376A56532576A7B900D1AE5A /* POIInfo.swift */; };
 		378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		378E833F2574E9AB00E25A9F /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
@@ -83,9 +87,7 @@
 		46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		46E7BFBA2582745B00688533 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7BFB92582745B00688533 /* UILabel+.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
-		FA194F642576035C003B07D9 /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA3389302576D294008C74AA /* DBITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33892F2576D293008C74AA /* DBITests.swift */; };
-		FA3389342576D2A5008C74AA /* DBI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA194F632576035C003B07D9 /* DBI.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAA4B519257A96CA00F61D8B /* MapAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertController.swift */; };
 		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
@@ -155,12 +157,17 @@
 		19C70B212580BA3E0071D3A8 /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
 		19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListViewController.swift; sourceTree = "<group>"; };
 		19D16870257BD5D0002888F4 /* TreeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDataStore.swift; sourceTree = "<group>"; };
+		37156B0E25879D2B00A4E8F7 /* DBI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
+		3724B3152581E3ED005DA3DE /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		3724B31A2581E478005DA3DE /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		37352CD025695B8A00CAFDFD /* restuarant-list-for-test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "restuarant-list-for-test.json"; sourceTree = "<group>"; };
 		37352CDA25695E7400CAFDFD /* JSONReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONReader.swift; sourceTree = "<group>"; };
 		37352CDF25695EE000CAFDFD /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		3753DCEF256B4C5B006D26A9 /* POIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIService.swift; sourceTree = "<group>"; };
+		375CDB27258639F9009E447A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		376A56532576A7B900D1AE5A /* POIInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIInfo.swift; sourceTree = "<group>"; };
 		378E83432574F00C00E25A9F /* Clusters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clusters.swift; sourceTree = "<group>"; };
 		37955721257E63F200681654 /* ClusteringMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClusteringMarker.swift; sourceTree = "<group>"; };
@@ -209,7 +216,6 @@
 		46E7BFB92582745B00688533 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA194F632576035C003B07D9 /* DBI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		FA33892F2576D293008C74AA /* DBITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBITests.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAA4B518257A96CA00F61D8B /* MapAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAlertController.swift; sourceTree = "<group>"; };
@@ -342,9 +348,18 @@
 			isa = PBXGroup;
 			children = (
 				37352CDA25695E7400CAFDFD /* JSONReader.swift */,
-				46A12E1A256CD099007BDF3E /* Array+.swift */,
+				3724B31F2581ECB9005DA3DE /* UserDefaultsManager.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		37BACC9E2587ADE2001A14D6 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				3724B3152581E3ED005DA3DE /* Onboarding.storyboard */,
+				3724B31A2581E478005DA3DE /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		37EB731C2562592700AC44D6 = {
@@ -383,12 +398,13 @@
 				37352CCF25695AA500CAFDFD /* Resource */,
 				372216CB256943C800231245 /* VO */,
 				FA81D66E2568FEC50023E123 /* CoreData */,
+				465BA41325810535000B6590 /* Launch */,
+				37BACC9E2587ADE2001A14D6 /* Onboarding */,
 				37EB73282562592700AC44D6 /* AppDelegate.swift */,
 				37EB732A2562592700AC44D6 /* SceneDelegate.swift */,
 				37EB732E2562592700AC44D6 /* Main.storyboard */,
 				37EB73342562592800AC44D6 /* Assets.xcassets */,
 				465BA3FF2580EEE9000B6590 /* BlackOpsOne_Regular.ttf */,
-				465BA41325810535000B6590 /* Launch */,
 				37EB73392562592800AC44D6 /* Info.plist */,
 			);
 			path = InteractiveClusteringMap;
@@ -546,6 +562,8 @@
 			children = (
 				19C70B1C2580B9D90071D3A8 /* URL+Image.swift */,
 				19C70B212580BA3E0071D3A8 /* FileManager+.swift */,
+				46A12E1A256CD099007BDF3E /* Array+.swift */,
+				375CDB27258639F9009E447A /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -563,12 +581,12 @@
 		FCE422AE257018EA0017416F /* KMeans */ = {
 			isa = PBXGroup;
 			children = (
+				37156B0E25879D2B00A4E8F7 /* DBI.swift */,
 				FC2A9D5E25721F5C00D524B0 /* Metrics */,
 				FC2A9D682572371C00D524B0 /* Centroids */,
 				FAC9FD04256E2107009FBB41 /* KCoefficient.swift */,
 				FC9145EF257532EA00F961F1 /* KMeansValidateService.swift */,
 				379DC4C5256E1EC60044DA6C /* KMeans.swift */,
-				FA194F632576035C003B07D9 /* DBI.swift */,
 			);
 			path = KMeans;
 			sourceTree = "<group>";
@@ -682,6 +700,7 @@
 				FAACC7B8257E8F65005190F6 /* CustomInfoWindow.xib in Resources */,
 				37352CD125695B8A00CAFDFD /* restuarant-list-for-test.json in Resources */,
 				37EB73382562592800AC44D6 /* LaunchScreen.storyboard in Resources */,
+				3724B3162581E3ED005DA3DE /* Onboarding.storyboard in Resources */,
 				465BA4002580EEE9000B6590 /* BlackOpsOne_Regular.ttf in Resources */,
 				37EB73352562592800AC44D6 /* Assets.xcassets in Resources */,
 				37EB73302562592700AC44D6 /* Main.storyboard in Resources */,
@@ -788,11 +807,12 @@
 				FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */,
 				1943CCC92581F79D0010B103 /* DataError.swift in Sources */,
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
+				37156B0F25879D2B00A4E8F7 /* DBI.swift in Sources */,
 				FC72B2052582A0A100B84C84 /* FilterButton.swift in Sources */,
 				FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */,
+				375CDB28258639F9009E447A /* UIColor+.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
-				FA194F642576035C003B07D9 /* DBI.swift in Sources */,
 				197E85452580B03000F2B46C /* DataProvider.swift in Sources */,
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				46E7BFBA2582745B00688533 /* UILabel+.swift in Sources */,
@@ -831,8 +851,10 @@
 				465BA41525810580000B6590 /* SplashViewController.swift in Sources */,
 				37352CDB25695E7400CAFDFD /* JSONReader.swift in Sources */,
 				46A12E23256CD4DB007BDF3E /* BoundingBox.swift in Sources */,
+				3724B31B2581E479005DA3DE /* OnboardingViewController.swift in Sources */,
 				19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */,
 				FAC9FD05256E2107009FBB41 /* KCoefficient.swift in Sources */,
+				3724B3202581ECB9005DA3DE /* UserDefaultsManager.swift in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				468CA478257BF8A6006394C3 /* MarkerTextLayer.swift in Sources */,
 				FC5B24852580B14500450EEF /* PlaceCell.swift in Sources */,
@@ -857,9 +879,7 @@
 				378E833B2574E52600E25A9F /* ScreenCentroidGenerator.swift in Sources */,
 				FC67155E2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
 				37FC44802575324900578543 /* KDefineTests.swift in Sources */,
-				192D34BE256E36B900861703 /* Array+.swift in Sources */,
 				37FC44802575324900578543 /* KDefineTests.swift in Sources */,
-				192D34BE256E36B900861703 /* Array+.swift in Sources */,
 				3713D3E425694CD300E703EC /* POI.swift in Sources */,
 				37279B0B256EBC6E00EA689A /* KMeans.swift in Sources */,
 				FCE422DA25701CC00017416F /* Degree.swift in Sources */,
@@ -867,7 +887,6 @@
 				3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */,
 				378E833F2574E9AB00E25A9F /* RandomCentroidGenerator.swift in Sources */,
 				46DCB47D256FC90B00DE0B4C /* QuadTreeServiceTests.swift in Sources */,
-				FA3389342576D2A5008C74AA /* DBI.swift in Sources */,
 				3731108C256F641F00350D55 /* POIService.swift in Sources */,
 				FCE422D625701CBD0017416F /* Quadrant.swift in Sources */,
 				37FC44812575324900578543 /* KMeansTests.swift in Sources */,

@@ -23,7 +23,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
     
     let infoWindow = NMFInfoWindow()
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
-    private var polygonOverlay: NMFPolygonOverlay? = nil
+    private var polygonOverlay: NMFPolygonOverlay?
     
     private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
@@ -47,6 +47,25 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
         configureInfoWindow()
         configurePlaceListViewController()
         interactiveMapView.mapView.addCameraDelegate(delegate: self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !UserDefaultsManager.shared.isLaunched {
+            presentOnboarding()
+        }
+    }
+    
+    private func presentOnboarding() {
+        let onboardViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(
+            identifier: "OnboardingViewController",
+            creator: { coder in
+                return OnboardingViewController(coder: coder)
+            })
+        onboardViewController.modalPresentationStyle = .overFullScreen
+        
+        present(onboardViewController, animated: true)
     }
     
     private func dependencyInject() {
