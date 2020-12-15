@@ -24,6 +24,9 @@ class PlaceListViewController: UIViewController {
             applySnapshot()
         }
     }
+    
+    var isShow: Bool = false
+    
     private var dataSource: DiffableDataSource?
     var cancelButtonTouchedHandler: (() -> Void)?
     
@@ -75,14 +78,15 @@ class PlaceListViewController: UIViewController {
 extension PlaceListViewController {
     
     @IBAction private func placeListHideButtonTouched(_ sender: UIButton) {
-        disappearAnimation()
+        disappearAnimation { [weak self] in
+            self?.cancelButtonTouchedHandler?()
+        }
     }
-    
-    func show() {
-        appearAnimation()
-    }
-    
-    private func appearAnimation() {
+        
+    func appearAnimation() {
+        guard !isShow else { return }
+        
+        isShow = true
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
@@ -91,15 +95,24 @@ extension PlaceListViewController {
         })
     }
     
-    private func disappearAnimation() {
+    func disappearAnimation(completion: @escaping () -> Void) {
+        guard isShow else { return }
+        
+        isShow = false
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
             let y = UIScreen.main.bounds.maxY
             self.view.frame = CGRect(x: 0, y: y, width: frame.width, height: frame.height)
         }, completion: { _ in
-            self.cancelButtonTouchedHandler?()
+            completion()
         })
+    }
+    
+    func disappear() {
+        isShow = false
+        let y = UIScreen.main.bounds.maxY
+        view.frame = CGRect(x: 0, y: y, width: view.frame.width, height: view.frame.height)
     }
     
 }
