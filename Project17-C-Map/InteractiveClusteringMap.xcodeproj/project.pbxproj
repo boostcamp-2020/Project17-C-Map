@@ -77,7 +77,6 @@
 		46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */; };
 		46B444582568F095001B79D4 /* InteractiveMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B444572568F095001B79D4 /* InteractiveMapView.swift */; };
 		46B5178B2574C32B0037AA8C /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
-		46DAAC362585F18500D081F4 /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DAAC352585F18500D081F4 /* MapViewController+NMFMapViewCameraDelegate.swift */; };
 		46DCB47D256FC90B00DE0B4C /* QuadTreeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */; };
 		46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		46E7BFBA2582745B00688533 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7BFB92582745B00688533 /* UILabel+.swift */; };
@@ -206,7 +205,6 @@
 		46A12E22256CD4DB007BDF3E /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		46A12E3F256CEDF2007BDF3E /* BoundingBoxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
 		46B444572568F095001B79D4 /* InteractiveMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveMapView.swift; sourceTree = "<group>"; };
-		46DAAC352585F18500D081F4 /* MapViewController+NMFMapViewCameraDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+NMFMapViewCameraDelegate.swift"; sourceTree = "<group>"; };
 		46DCB47C256FC90B00DE0B4C /* QuadTreeServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeServiceTests.swift; sourceTree = "<group>"; };
 		46E7BFB92582745B00688533 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
@@ -575,7 +573,6 @@
 			isa = PBXGroup;
 			children = (
 				37EB732C2562592700AC44D6 /* MapViewController.swift */,
-				46DAAC352585F18500D081F4 /* MapViewController+NMFMapViewCameraDelegate.swift */,
 				19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */,
 				FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */,
 			);
@@ -857,7 +854,6 @@
 				FCE422B02570194B0017416F /* Coordinate.swift in Sources */,
 				197E85402580B01600F2B46C /* ImageProvider.swift in Sources */,
 				37EB732D2562592700AC44D6 /* MapViewController.swift in Sources */,
-				46DAAC362585F18500D081F4 /* MapViewController+NMFMapViewCameraDelegate.swift in Sources */,
 				FC72B1E22581DE2600B84C84 /* Geocoding.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
