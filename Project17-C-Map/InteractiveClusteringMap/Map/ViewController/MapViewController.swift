@@ -121,6 +121,7 @@ final class MapViewController: UIViewController {
                 
                 leafNodeMarker.mapView = nil
                 leafNodeMarker.markerLayer?.removeFromSuperlayer()
+                leafNodeMarker.touchHandler = nil
                 self.presentedMarkers.remove(at: index)
                 self.mapController?.delete(coordinate: leafNodeMarker.coordinate)
                 self.isTouchedRemove = false
