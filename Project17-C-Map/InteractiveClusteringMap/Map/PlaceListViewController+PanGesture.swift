@@ -15,7 +15,7 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
         
         let y = view.frame.minY
         if (y + translation.y >= Boundary.fullView) && (y + translation.y <= Boundary.partialView) {
-            view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
+            view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: Boundary.partialView)
             recognizer.setTranslation(CGPoint.zero, in: view)
         }
         
@@ -37,12 +37,12 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
                     self.view.frame = CGRect(x: 0,
                                              y: Boundary.partialView,
                                              width: self.view.frame.width,
-                                             height: self.view.frame.height)
+                                             height: Boundary.fullView)
                 } else {
                     self.view.frame = CGRect(x: 0,
                                              y: Boundary.fullView,
                                              width: self.view.frame.width,
-                                             height: self.view.frame.height)
+                                             height: Boundary.partialView)
                 }
             }, completion: { [weak self] _ in
                 guard let self = self else { return }

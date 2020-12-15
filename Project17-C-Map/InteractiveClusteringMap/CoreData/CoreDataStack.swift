@@ -166,7 +166,7 @@ final class CoreDataStack: DataManagable {
         return entity.first?.info
     }
     
-    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIInfoMO]) -> Void) {
+    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIMO]) -> Void) {
         context.perform { [weak self] in
             let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
             let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
@@ -181,7 +181,7 @@ final class CoreDataStack: DataManagable {
                 return
             }
             DispatchQueue.main.async {
-                completion(entities.compactMap { $0.info })
+                completion(entities)
             }
         }
     }

@@ -208,7 +208,7 @@ final class MapViewController: UIViewController, UIPopoverPresentationController
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
-            
+                
                 let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                 leafNodeMarker.configureUserInfo(userInfo: userInfo)
                 
@@ -345,37 +345,78 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 private extension MapViewController {
     
-    @IBAction func placeListButtonTouched(_ sender: UIButton) {
-        placeListButtonDisappear()
-        placeListViewController?.show()
+    func markersToCoordinates(_ markers: [NMFMarker]) -> [Coordinate] {
+        let clusters: [[Coordinate]] = markers.compactMap {
+            if let marker = $0 as? ClusteringMarker {
+                return marker.cluster.coordinates
+            }
+            
+            if let marker = $0 as? LeafNodeMarker {
+                return [marker.coordinate]
+            }
+            
+            return nil
+        }
+        return clusters.flatMap { $0 }
     }
     
-    private func updatePlaceListViewController() {
-        let clusters: [[Coordinate]] = presentedMarkers.compactMap {
-            guard let marker = $0 as? ClusteringMarker else { return nil }
-            return marker.cluster.coordinates
-        }
-        let coordinates: [Coordinate] = clusters.flatMap { $0 }
+    @IBAction func placeListButtonTouched(_ sender: UIButton) {
+        placeListButtonDisappearAnimation()
+        placeListViewController?.appearAnimation()
+        
+        let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
         let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
         placeListViewController?.requestPlaces(cluster: cluster)
     }
     
+    private func updatePlaceListViewController() {
+        let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
+        
+        if coordinates.count < 100 {
+            if placeListButton.isHidden && placeListViewController!.isShow == false {
+                placeListButtonAppear()
+            } else if placeListButton.isHidden {
+                let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
+                placeListViewController?.requestPlaces(cluster: cluster)
+            }
+        } else {
+            placeListButtonDisappear()
+            placeListViewController?.disappear()
+        }
+    }
+    
+    private func placeListButtonAppear() {
+        placeListButton.isHidden = false
+        placeListButton.layer.isHidden = false
+        placeListButton.layer.opacity = 1
+    }
+    
     private func placeListButtonDisappear() {
+        placeListButton.isHidden = true
+        placeListButton.layer.isHidden = true
+        placeListButton.layer.opacity = 0
+    }
+
+    private func placeListButtonDisappearAnimation() {
+        guard !placeListButton.isHidden else { return }
         CATransaction.begin()
         placeListButton.layer.opacity = 0
         CATransaction.setCompletionBlock {
             self.placeListButton.layer.isHidden = true
+            self.placeListButton.isHidden = true
         }
         let animation = AnimationController.floatingButtonAnimation(option: .disapper)
         placeListButton.layer.add(animation, forKey: "floatingButtonDisappearAnimation")
         CATransaction.commit()
     }
     
-    private func placeListButtonAppear() {
+    private func placeListButtonAppearAnimation() {
+        guard placeListButton.isHidden else { return }
         CATransaction.begin()
         placeListButton.layer.opacity = 1
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             self.placeListButton.layer.isHidden = false
+            self.placeListButton.isHidden = false
         }
         let animation = AnimationController.floatingButtonAnimation(option: .appear)
         placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
@@ -403,10 +444,24 @@ private extension MapViewController {
             })
         guard let placeListViewController = placeListViewController else { return }
         
-        placeListViewController.cancelButtonTouchedHandler = placeListButtonAppear
+        placeListViewController.cancelButtonTouchedHandler = placeListButtonAppearAnimation
+        placeListViewController.delegate = self
         placeListViewController.didMove(toParent: self)
         addChild(placeListViewController)
         view.addSubview(placeListViewController.view)
+    }
+    
+}
+
+extension MapViewController: PlaceListViewControllerDelegate {
+    
+    func selectedPlace(_ placeListViewController: PlaceListViewController, place: Place) {
+        let lat = place.coordinate.y
+        let lng = place.coordinate.x
+        let zoom: Double = interactiveMapView.mapView.maxZoomLevel
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng), zoomTo: zoom)
+        cameraUpdate.animation = .fly
+        interactiveMapView.mapView.moveCamera(cameraUpdate)
     }
     
 }

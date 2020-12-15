@@ -9,6 +9,12 @@
 
 import UIKit
 
+protocol PlaceListViewControllerDelegate: class {
+    
+    func selectedPlace(_ placeListViewController: PlaceListViewController, place: Place)
+    
+}
+
 class PlaceListViewController: UIViewController {
     
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<String, Place>
@@ -24,6 +30,10 @@ class PlaceListViewController: UIViewController {
             applySnapshot()
         }
     }
+    
+    var isShow: Bool = false
+    weak var delegate: PlaceListViewControllerDelegate?
+    
     private var dataSource: DiffableDataSource?
     var cancelButtonTouchedHandler: (() -> Void)?
     
@@ -50,6 +60,7 @@ class PlaceListViewController: UIViewController {
         headerView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         collectionView.collectionViewLayout = createLayout()
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.delegate = self
         
         let gesture = UIPanGestureRecognizer.init(target: self,
                                                   action: #selector(panGesture))
@@ -75,14 +86,15 @@ class PlaceListViewController: UIViewController {
 extension PlaceListViewController {
     
     @IBAction private func placeListHideButtonTouched(_ sender: UIButton) {
-        disappearAnimation()
+        disappearAnimation { [weak self] in
+            self?.cancelButtonTouchedHandler?()
+        }
     }
-    
-    func show() {
-        appearAnimation()
-    }
-    
-    private func appearAnimation() {
+        
+    func appearAnimation() {
+        guard !isShow else { return }
+        
+        isShow = true
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
@@ -91,23 +103,32 @@ extension PlaceListViewController {
         })
     }
     
-    private func disappearAnimation() {
+    func disappearAnimation(completion: @escaping () -> Void) {
+        guard isShow else { return }
+        
+        isShow = false
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             guard let self = self else { return }
             let frame = self.view.frame
             let y = UIScreen.main.bounds.maxY
             self.view.frame = CGRect(x: 0, y: y, width: frame.width, height: frame.height)
         }, completion: { _ in
-            self.cancelButtonTouchedHandler?()
+            completion()
         })
+    }
+    
+    func disappear() {
+        isShow = false
+        let y = UIScreen.main.bounds.maxY
+        view.frame = CGRect(x: 0, y: y, width: view.frame.width, height: view.frame.height)
     }
     
 }
 
 // MARK: - collectionView
-private extension PlaceListViewController {
+extension PlaceListViewController: UICollectionViewDelegate {
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         
@@ -144,7 +165,7 @@ private extension PlaceListViewController {
         return layout
     }
     
-    func configureDataSource() {
+    private func configureDataSource() {
         dataSource = DiffableDataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: Place) -> UICollectionViewCell? in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Configuration.infoIdentifier,
@@ -181,7 +202,7 @@ private extension PlaceListViewController {
         }
     }
     
-    func applySnapshot() {
+    private func applySnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<String, Place>()
         
         categories.forEach { category in
@@ -192,7 +213,7 @@ private extension PlaceListViewController {
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
-    func moveSection(to category: String) {
+    private func moveSection(to category: String) {
         guard let dataSource = dataSource,
               let targetSection = dataSource.snapshot().sectionIdentifiers.first,
               category != targetSection
@@ -207,6 +228,9 @@ private extension PlaceListViewController {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        guard let selectedPlace = dataSource?.itemIdentifier(for: indexPath) else { return }
+        
+        delegate?.selectedPlace(self, place: selectedPlace)
     }
     
     enum Configuration {

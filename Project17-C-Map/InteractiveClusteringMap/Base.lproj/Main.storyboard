@@ -158,7 +158,7 @@
                                             </constraints>
                                         </view>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EMF-fI-qVl">
-                                            <rect key="frame" x="10" y="87.5" width="394" height="680.5"/>
+                                            <rect key="frame" x="10" y="87.5" width="394" height="730.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="c4n-yv-4Qv">
                                                 <size key="itemSize" width="394" height="106"/>
@@ -372,7 +372,7 @@
                                         <constraint firstItem="fvw-S5-Q6l" firstAttribute="top" secondItem="mJ2-K5-F5O" secondAttribute="top" id="9ZO-eG-kj4"/>
                                         <constraint firstItem="EMF-fI-qVl" firstAttribute="leading" secondItem="mJ2-K5-F5O" secondAttribute="leading" constant="10" id="G4I-7F-x1M"/>
                                         <constraint firstItem="EMF-fI-qVl" firstAttribute="top" secondItem="fvw-S5-Q6l" secondAttribute="bottom" id="HEL-CK-GuR"/>
-                                        <constraint firstAttribute="bottom" secondItem="EMF-fI-qVl" secondAttribute="bottom" constant="50" id="fWt-XK-5zQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="EMF-fI-qVl" secondAttribute="bottom" id="fWt-XK-5zQ"/>
                                         <constraint firstItem="fvw-S5-Q6l" firstAttribute="leading" secondItem="mJ2-K5-F5O" secondAttribute="leading" id="l48-to-bjQ"/>
                                         <constraint firstAttribute="trailing" secondItem="fvw-S5-Q6l" secondAttribute="trailing" id="ma5-tk-QUe"/>
                                         <constraint firstAttribute="trailing" secondItem="EMF-fI-qVl" secondAttribute="trailing" constant="10" id="yPF-T0-YdF"/>
