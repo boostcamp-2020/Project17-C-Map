@@ -329,6 +329,7 @@ private extension MapViewController {
     @IBAction func placeListButtonTouched(_ sender: UIButton) {
         placeListButtonDisappearAnimation()
         placeListViewController?.appearAnimation()
+        updatePlaceListViewController()
     }
     
     private func updatePlaceListViewController() {
@@ -345,8 +346,7 @@ private extension MapViewController {
         }
         
         let coordinates: [Coordinate] = clusters.flatMap { $0 }
-        
-        if coordinates.count < 50 {
+        if coordinates.count < 100 {
             if placeListButton.isHidden && placeListViewController!.isShow == false {
                 placeListButtonAppear()
             } else if placeListButton.isHidden {
@@ -419,9 +419,23 @@ private extension MapViewController {
         guard let placeListViewController = placeListViewController else { return }
         
         placeListViewController.cancelButtonTouchedHandler = placeListButtonAppearAnimation
+        placeListViewController.delegate = self
         placeListViewController.didMove(toParent: self)
         addChild(placeListViewController)
         view.addSubview(placeListViewController.view)
+    }
+    
+}
+
+extension MapViewController: PlaceListViewControllerDelegate {
+    
+    func selectedPlace(_ placeListViewController: PlaceListViewController, place: Place) {
+        let lat = place.coordinate.y
+        let lng = place.coordinate.x
+        let zoom: Double = interactiveMapView.mapView.maxZoomLevel
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng), zoomTo: zoom)
+        cameraUpdate.animation = .fly
+        interactiveMapView.mapView.moveCamera(cameraUpdate)
     }
     
 }
