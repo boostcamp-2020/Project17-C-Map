@@ -18,14 +18,14 @@ final class MapInteractor: ClusterBusinessLogic {
     private let poiService: POIServicing
     private let presenter: ClusterPresentationLogic
     private var clusteringServicing: ClusteringServicing?
-    
+    private var coordinates: [Coordinate] = []
     init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
         self.poiService = poiService
         self.presenter = presenter
     }
     
     func fetch(boundingBoxes: [CLong: BoundingBox], zoomLevel: Double) {
-        boundingBoxes.forEach { tileId, boundingBox in
+        if coordinates.isEmpty {
             self.poiService.fetch { [weak self] pois in
                 guard let self = self else { return }
 
@@ -37,14 +37,23 @@ final class MapInteractor: ClusterBusinessLogic {
                 self.clusteringServicing = KMeansValidateService(generator: generator)
 
                 self.clustering(coordinates: coordinates,
-                                tileId: tileId,
-                                boundingBox: boundingBox,
+                                tileId: boundingBoxes.first!.key,
+                                boundingBox: boundingBoxes.first!.value,
                                 zoomLevel: zoomLevel)
-//                DispatchQueue.global(qos: .userInitiated).async {
-//
-//                }
+    //                DispatchQueue.global(qos: .userInitiated).async {
+    //
+    //                }
             }
+        } else {
+//            let generator = BallCutCentroidGenerator(coverage: 0.001, coordinates: coordinates)
+//            self.clusteringServicing = KMeansValidateService(generator: generator)
+
+            self.clustering(coordinates: coordinates,
+                            tileId: boundingBoxes.first!.key,
+                            boundingBox: boundingBoxes.first!.value,
+                            zoomLevel: zoomLevel)
         }
+        
     }
     
     func remove(tileIds: [CLong]) {
