@@ -17,7 +17,7 @@ final class MapInteractor: ClusterBusinessLogic {
     
     private let poiService: POIServicing
     private let presenter: ClusterPresentationLogic
-    private var clusteringServicing: QuadTreeClusteringService?
+    private var clusteringServicing: ClusteringServicing?
     
     init(poiService: POIServicing, presenter: ClusterPresentationLogic) {
         self.poiService = poiService
@@ -32,17 +32,17 @@ final class MapInteractor: ClusterBusinessLogic {
                 let coordinates = pois.map {
                     Coordinate(x: $0.x, y: $0.y)
                 }
-                if self.clusteringServicing == nil {
-                    self.clusteringServicing = QuadTreeClusteringService(coordinates: coordinates,
-                                                                    boundingBox: BoundingBox(topRight: Coordinate(x: 126.9956437, y: 37.5764792),
-                                                                                             bottomLeft: Coordinate(x: 126.9903617, y: 37.5600365)))
-                }
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.clustering(coordinates: coordinates,
-                                    tileId: tileId,
-                                    boundingBox: boundingBox,
-                                    zoomLevel: zoomLevel)
-                }
+                
+                let generator = BallCutCentroidGenerator(coverage: 0.001, coordinates: coordinates)
+                self.clusteringServicing = KMeansValidateService(generator: generator)
+
+                self.clustering(coordinates: coordinates,
+                                tileId: tileId,
+                                boundingBox: boundingBox,
+                                zoomLevel: zoomLevel)
+//                DispatchQueue.global(qos: .userInitiated).async {
+//
+//                }
             }
         }
     }
@@ -60,8 +60,9 @@ final class MapInteractor: ClusterBusinessLogic {
                                      boundingBox: boundingBox,
                                      zoomLevel: zoomLevel) { [weak self] clusters in
             guard let self = self else { return }
-                                                            
-            self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
+            DispatchQueue.main.async {
+                self.presenter.clustersToMarkers(tileId: tileId, clusters: clusters)
+            }
         }
     }
     

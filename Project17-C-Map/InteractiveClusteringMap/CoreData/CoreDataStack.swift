@@ -23,6 +23,33 @@ final class CoreDataStack: DataManagable {
         pois?.forEach {
             setValue($0)
         }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
+        pois?.forEach {
+            setValue($0)
+        }
     }
     
     func deleteAll() {

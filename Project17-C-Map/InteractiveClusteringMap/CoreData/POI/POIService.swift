@@ -36,7 +36,10 @@ final class POIService: POIServicing {
                                 imageUrl: $0.imageUrl,
                                 category: $0.category))
             }
-            completion(pois)
+            
+            DispatchQueue.main.async {
+                completion(pois)
+            }
         }
     }
     

@@ -14,7 +14,8 @@ class KMeansValidateService: ClusteringServicing {
                                                      qos: .userInitiated,
                                                      attributes: .concurrent)
     private let serialQueue = DispatchQueue.init(label: serialQueueName)
-    private var optimalClusters = Clusters(items: [])
+    private var optimalClusters: [Cluster] = []
+    private let dbi = DBI()
     
     var generator: CentroidGeneratable
 
@@ -33,8 +34,9 @@ class KMeansValidateService: ClusteringServicing {
 
         dispatchGroup.notify(queue: serialQueue) { [weak self] in
             guard let self = self else { return }
-
-            completionHandler(self.optimalClusters.items)
+            self.serialQueue.async {
+                completionHandler(self.optimalClusters)
+            }
         }
 
     }
@@ -44,7 +46,7 @@ class KMeansValidateService: ClusteringServicing {
     }
 
     private func validateKMeans(coordinates: [Coordinate]) {
-        (2...10).forEach { k in
+        (8...10).forEach { k in
             self.startKMeans(k: k, coordinates: coordinates)
         }
     }
@@ -60,10 +62,12 @@ class KMeansValidateService: ClusteringServicing {
     }
 
     private func compareSilhouette(cluster: [Cluster]) {
-        let cluster = Clusters(items: cluster)
+//        let cluster = Clusters(items: cluster)
 
         serialQueue.async {
-            self.optimalClusters = self.optimalClusters.silhouette() > cluster.silhouette() ? self.optimalClusters : cluster
+//            print("optimalCluster :: \(self.optimalClusters.count), DBI :: \(self.dbi.calculateDBI(clusters: self.optimalClusters))")
+            print("Cluster :: \(cluster.count), DBI :: \(self.dbi.calculateDBI(clusters: cluster))")
+            self.optimalClusters = self.dbi.calculateDBI(clusters: self.optimalClusters) < self.dbi.calculateDBI(clusters: cluster) ? self.optimalClusters : cluster
         }
     }
 
