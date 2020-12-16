@@ -75,6 +75,7 @@ final class MapViewController: UIViewController {
     }
     
     private func configureMap() {
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
