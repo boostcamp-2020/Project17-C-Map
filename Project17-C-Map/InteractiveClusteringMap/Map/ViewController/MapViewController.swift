@@ -11,7 +11,7 @@ import NMapsMap
 
 final class MapViewController: UIViewController {
     
-    @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
     
     private let locationManager = CLLocationManager()
