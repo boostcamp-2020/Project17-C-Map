@@ -47,6 +47,7 @@ final class InteractiveMapView: NMFNaverMapView {
         showCompass = true
         showScaleBar = true
         mapView.allowsTilting = false
+        mapView.isStopGestureEnabled = false
         mapView.minZoomLevel = 2
         mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
     }
