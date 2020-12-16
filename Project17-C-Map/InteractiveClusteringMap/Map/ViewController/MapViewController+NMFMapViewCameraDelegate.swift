@@ -12,6 +12,9 @@ extension MapViewController: NMFMapViewCameraDelegate {
         if !isEditMode {
             interactiveMapView.removeAllFromTransparentLayer()
         }
+        if reason < 0 {
+            interactiveMapView.removePolygon()
+        }
     }
     
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
@@ -31,5 +34,5 @@ extension MapViewController: NMFMapViewCameraDelegate {
             interactiveMapView.removeAllFromTransparentLayer()
         }
     }
+    
 }
-

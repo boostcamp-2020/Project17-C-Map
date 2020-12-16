@@ -134,7 +134,7 @@ extension InteractiveMapView {
     }
     
     func drawPolygon(boundingBox: BoundingBox) {
-        polygonOverlay?.mapView = nil
+        removePolygon()
         polygonOverlay = createBoundingBoxPolygon(boundingBox: boundingBox)
         polygonOverlay?.mapView = mapView
     }
