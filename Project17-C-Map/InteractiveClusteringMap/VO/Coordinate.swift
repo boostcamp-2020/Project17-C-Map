@@ -11,9 +11,9 @@ struct Coordinate {
     
     let x: Double
     let y: Double
-    let id: Int64
+    let id: String
     
-    init(x: Double, y: Double, id: Int64 = -1) {
+    init(x: Double, y: Double, id: String = UUID().uuidString) {
         self.x = x
         self.y = y
         self.id = id
