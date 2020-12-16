@@ -21,11 +21,7 @@ final class MapViewController: UIViewController {
     private var pickedMarker: LeafNodeMarker?
     private let leafNodeMarkerInfoWindow = LeafNodeMarkerInfoWindow()
     private var placeListViewController: PlaceListViewController?
-    
-    var isTouchedRemove: Bool = false
-    
-    private var touchedDeleteLayer: Bool = false
-    internal var isEditMode: Bool = false
+    private var isTouchedRemove: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
