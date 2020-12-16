@@ -35,7 +35,7 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
-        interactiveMapView.mapView.addCameraDelegate(delegate: self)
+//        interactiveMapView.mapView.addCameraDelegate(delegate: self)
         bindingHandler()
     }
     

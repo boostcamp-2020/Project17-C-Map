@@ -288,6 +288,7 @@
 			children = (
 				FC2DDBA7258760B3001CAABE /* ViewController */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
+				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 			);
@@ -572,7 +573,6 @@
 		FC2DDBA7258760B3001CAABE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */,
 				FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */,
 			);
