@@ -1,5 +1,5 @@
 //
-//  CustomInfoWindowDataSource.swift
+//  LeafNodeMarkerInfoWindowDataSource.swift
 //  InteractiveClusteringMap
 //
 //  Created by A on 2020/12/08.
@@ -8,7 +8,7 @@
 import UIKit
 import NMapsMap
 
-class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
+class LeafNodeMarkerInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
     
     enum Name {
         static let title = "title"
@@ -16,7 +16,7 @@ class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
     }
     
     func view(with overlay: NMFOverlay) -> UIView {
-        let rootView = CustomInfoWindowView()
+        let rootView = LeafNodeMarkerInfoWindowView()
         rootView.configureNib()
         
         guard let infoWindow = overlay as? NMFInfoWindow,

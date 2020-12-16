@@ -1,11 +1,10 @@
 //
-//  NMFMarker+.swift
+//  NMFMarker+Animation.swift
 //  InteractiveClusteringMap
 //
-//  Created by A on 2020/12/10.
+//  Created by Seungeon Kim on 2020/12/14.
 //
 
-import Foundation
 import NMapsMap
 
 extension NMFMarker {
@@ -15,3 +14,4 @@ extension NMFMarker {
     }
     
 }
+

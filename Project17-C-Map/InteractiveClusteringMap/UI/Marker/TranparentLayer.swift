@@ -25,4 +25,11 @@ class TransparentLayer: CALayer {
         self.position = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
     }
     
+    func removeSublayers() {
+        sublayers?.forEach { sublayer in
+            sublayer.removeAllAnimations()
+            sublayer.removeFromSuperlayer()
+        }
+    }
+    
 }

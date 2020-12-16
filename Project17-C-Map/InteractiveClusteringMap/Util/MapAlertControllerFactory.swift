@@ -11,7 +11,7 @@ import UIKit
 typealias HandlerWithText = (String?) -> Void
 typealias ActionHandler = (UIAlertAction) -> Void
 
-final class MapAlertController {
+final class MapAlertControllerFactory {
     
     static func createAddAlertController(_ okHandler: @escaping HandlerWithText, cancelHandler: ActionHandler? = nil) -> UIAlertController {
         let alert = UIAlertController(title: Name.addTitle, message: Name.addMessage, preferredStyle: .alert)
@@ -42,7 +42,7 @@ final class MapAlertController {
     
 }
 
-extension MapAlertController {
+extension MapAlertControllerFactory {
     
     private enum Name {
         static let deleteTitle: String = "마커 삭제"
