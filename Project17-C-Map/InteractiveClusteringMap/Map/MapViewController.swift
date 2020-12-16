@@ -11,7 +11,8 @@ import NMapsMap
 
 final class MapViewController: UIViewController {
     
-    @IBOutlet private(set) weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet private weak var placeListButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -19,7 +20,12 @@ final class MapViewController: UIViewController {
     private var presentedMarkers: [NMFMarker] = []
     private var pickedMarker: LeafNodeMarker?
     private let leafNodeMarkerInfoWindow = LeafNodeMarkerInfoWindow()
+    private var placeListViewController: PlaceListViewController?
+    
     var isTouchedRemove: Bool = false
+    
+    private var touchedDeleteLayer: Bool = false
+    internal var isEditMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -35,8 +41,27 @@ final class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         dependencyInject()
         configureMap()
-//        interactiveMapView.mapView.addCameraDelegate(delegate: self)
+        configurePlaceListViewController()
         bindingHandler()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !UserDefaultsManager.shared.isLaunched {
+            presentOnboarding()
+        }
+    }
+    
+    private func presentOnboarding() {
+        let onboardViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(
+            identifier: "OnboardingViewController",
+            creator: { coder in
+                return OnboardingViewController(coder: coder)
+            })
+        onboardViewController.modalPresentationStyle = .overFullScreen
+        
+        present(onboardViewController, animated: true)
     }
     
     private func dependencyInject() {
@@ -160,8 +185,8 @@ final class MapViewController: UIViewController {
                 self.setMarkersHandler(marker: clusteringMarker)
                 self.animate(marker: clusteringMarker)
             }
-            
         }
+        updatePlaceListViewController()
     }
     
     private func remove(markers: [NMFMarker]) {
@@ -242,6 +267,129 @@ extension MapViewController: NMFMapViewTouchDelegate {
         }
         
         pickedMarker?.resizeMarkerSize()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    func markersToCoordinates(_ markers: [NMFMarker]) -> [Coordinate] {
+        let clusters: [[Coordinate]] = markers.compactMap {
+            if let marker = $0 as? ClusteringMarker {
+                return marker.cluster.coordinates
+            }
+            
+            if let marker = $0 as? LeafNodeMarker {
+                return [marker.coordinate]
+            }
+            
+            return nil
+        }
+        return clusters.flatMap { $0 }
+    }
+    
+    @IBAction func placeListButtonTouched(_ sender: UIButton) {
+        placeListButtonDisappearAnimation()
+        placeListViewController?.appearAnimation()
+        
+        let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
+        let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
+        placeListViewController?.requestPlaces(cluster: cluster)
+    }
+    
+    private func updatePlaceListViewController() {
+        let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
+        
+        if coordinates.count < 100 {
+            if placeListButton.isHidden && placeListViewController!.isShow == false {
+                placeListButtonAppear()
+            } else if placeListButton.isHidden {
+                let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
+                placeListViewController?.requestPlaces(cluster: cluster)
+            }
+        } else {
+            placeListButtonDisappear()
+            placeListViewController?.disappear()
+        }
+    }
+    
+    private func placeListButtonAppear() {
+        placeListButton.isHidden = false
+        placeListButton.layer.isHidden = false
+        placeListButton.layer.opacity = 1
+    }
+    
+    private func placeListButtonDisappear() {
+        placeListButton.isHidden = true
+        placeListButton.layer.isHidden = true
+        placeListButton.layer.opacity = 0
+    }
+
+    private func placeListButtonDisappearAnimation() {
+        guard !placeListButton.isHidden else { return }
+        CATransaction.begin()
+        placeListButton.layer.opacity = 0
+        CATransaction.setCompletionBlock {
+            self.placeListButton.layer.isHidden = true
+            self.placeListButton.isHidden = true
+        }
+        let animation = AnimationController.floatingButtonAnimation(option: .disapper)
+        placeListButton.layer.add(animation, forKey: "floatingButtonDisappearAnimation")
+        CATransaction.commit()
+    }
+    
+    private func placeListButtonAppearAnimation() {
+        guard placeListButton.isHidden else { return }
+        CATransaction.begin()
+        placeListButton.layer.opacity = 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.placeListButton.layer.isHidden = false
+            self.placeListButton.isHidden = false
+        }
+        let animation = AnimationController.floatingButtonAnimation(option: .appear)
+        placeListButton.layer.add(animation, forKey: "floatingButtonAppearAnimation")
+        CATransaction.commit()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    func configurePlaceListViewController() {
+        guard let dataManager = dataManager else { return }
+        
+        let poiService = POIService(dataManager: dataManager)
+        let geo = GeocodingNetwork(store: Store.http.dataProvider)
+        let img = ImageProvider(localStore: Store.local.dataProvider, httpStore: Store.http.dataProvider)
+        let service = PlaceInfoService(imageProvider: img, geocodingNetwork: geo)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        placeListViewController = storyboard.instantiateViewController(
+            identifier: "PlaceListViewController",
+            creator: { coder in
+                return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: service)
+            })
+        guard let placeListViewController = placeListViewController else { return }
+        
+        placeListViewController.cancelButtonTouchedHandler = placeListButtonAppearAnimation
+        placeListViewController.delegate = self
+        placeListViewController.didMove(toParent: self)
+        addChild(placeListViewController)
+        view.addSubview(placeListViewController.view)
+    }
+    
+}
+
+extension MapViewController: PlaceListViewControllerDelegate {
+    
+    func selectedPlace(_ placeListViewController: PlaceListViewController, place: Place) {
+        let lat = place.coordinate.y
+        let lng = place.coordinate.x
+        let zoom: Double = interactiveMapView.mapView.maxZoomLevel
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng), zoomTo: zoom)
+        cameraUpdate.animation = .fly
+        interactiveMapView.mapView.moveCamera(cameraUpdate)
     }
     
 }

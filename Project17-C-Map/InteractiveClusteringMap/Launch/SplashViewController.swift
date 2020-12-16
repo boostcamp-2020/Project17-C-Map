@@ -9,16 +9,19 @@ import UIKit
 import NMapsMap
 
 class SplashViewController: UIViewController {
-
+    
     @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var globeImageView: UIImageView!
     @IBOutlet weak var loadingLabel: UILabel!
     var mapViewController: UIViewController?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapViewController = createMapViewController()
-
+    init?(coder: NSCoder, mapViewController: MapViewController) {
+        super.init(coder: coder)
+        self.mapViewController = mapViewController
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,18 +96,6 @@ class SplashViewController: UIViewController {
         }
         CATransaction.commit()
     }
-
-    private func createMapViewController() -> UIViewController {
-        let dataManager = CoreDataStack.shared
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(
-            identifier: "MapViewController",
-            creator: { coder in
-                return MapViewController(coder: coder, dataManager: dataManager)
-            })
-        
-        return viewController
-    }
     
     private func presentMapViewController() {
         guard let mapViewController = mapViewController,
@@ -116,21 +107,21 @@ class SplashViewController: UIViewController {
             window.rootViewController = mapViewController
             window.makeKeyAndVisible()
             UIView.transition(with: window,
-                                  duration: 0.5,
-                                  options: .transitionCrossDissolve,
-                                  animations: nil,
-                                  completion: nil)
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: nil,
+                              completion: nil)
         }
     }
-
+    
     private func randomColorMarker() -> CGImage? {
-       let markers = [NMF_MARKER_IMAGE_RED,
-                      NMF_MARKER_IMAGE_LIGHTBLUE,
-                      NMF_MARKER_IMAGE_BLUE,
-                      NMF_MARKER_IMAGE_PINK,
-                      NMF_MARKER_IMAGE_GREEN,
-                      NMF_MARKER_IMAGE_YELLOW
-       ]
+        let markers = [NMF_MARKER_IMAGE_RED,
+                       NMF_MARKER_IMAGE_LIGHTBLUE,
+                       NMF_MARKER_IMAGE_BLUE,
+                       NMF_MARKER_IMAGE_PINK,
+                       NMF_MARKER_IMAGE_GREEN,
+                       NMF_MARKER_IMAGE_YELLOW
+        ]
         
         return markers.randomElement()?.image.cgImage
     }
@@ -139,6 +130,6 @@ class SplashViewController: UIViewController {
 
 extension SplashViewController {
     enum Name {
-            static let loadingLabelText = "클러스터링 정보를 가져오는 중입니다......"
+        static let loadingLabelText = "클러스터링 정보를 가져오는 중입니다……"
     }
 }

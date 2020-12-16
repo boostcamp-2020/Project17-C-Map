@@ -14,8 +14,10 @@ final class ClusteringMarker: NMFMarker {
     let coordinatesCount: Int
     private(set) var markerLayer: ClusteringMarkerLayer
     let boundingBox: BoundingBox
-    
+    let cluster: Cluster
+
     required init(cluster: Cluster) {
+        self.cluster = cluster
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
         self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
