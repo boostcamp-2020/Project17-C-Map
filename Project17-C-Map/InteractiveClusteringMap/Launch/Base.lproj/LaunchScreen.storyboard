@@ -20,10 +20,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapC" translatesAutoresizingMaskIntoConstraints="NO" id="XO8-iI-lgR">
-                                <rect key="frame" x="40" y="64" width="334" height="264"/>
+                                <rect key="frame" x="40" y="44" width="334" height="264"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="globe" translatesAutoresizingMaskIntoConstraints="NO" id="Pwp-KX-sod">
-                                <rect key="frame" x="79" y="358" width="256" height="256"/>
+                                <rect key="frame" x="79" y="308" width="256" height="256"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="256" id="QTC-uM-FaT"/>
                                     <constraint firstAttribute="height" constant="256" id="uSK-yY-Fc8"/>
@@ -38,9 +38,9 @@
                             <constraint firstItem="Pwp-KX-sod" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5y4-q2-mrx"/>
                             <constraint firstItem="XO8-iI-lgR" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="40" id="F3R-55-4Yw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6gt-l6-8ey" secondAttribute="trailing" id="G2Z-5m-NgJ"/>
-                            <constraint firstItem="Pwp-KX-sod" firstAttribute="top" secondItem="XO8-iI-lgR" secondAttribute="bottom" constant="30" id="Htc-hb-DCf"/>
+                            <constraint firstItem="Pwp-KX-sod" firstAttribute="top" secondItem="XO8-iI-lgR" secondAttribute="bottom" id="Htc-hb-DCf"/>
                             <constraint firstItem="6gt-l6-8ey" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wgc-VV-8hu"/>
-                            <constraint firstItem="XO8-iI-lgR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="c7J-L7-atR"/>
+                            <constraint firstItem="XO8-iI-lgR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="c7J-L7-atR"/>
                             <constraint firstItem="6gt-l6-8ey" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="kU5-Pe-VLU"/>
                         </constraints>
                     </view>

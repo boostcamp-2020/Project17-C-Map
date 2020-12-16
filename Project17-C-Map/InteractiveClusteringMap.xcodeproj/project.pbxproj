@@ -457,7 +457,6 @@
 				465BA40E258104D5000B6590 /* Splash.storyboard */,
 				37EB73362562592800AC44D6 /* LaunchScreen.storyboard */,
 				465BA41425810580000B6590 /* SplashViewController.swift */,
-				46E7BFB92582745B00688533 /* UILabel+.swift */,
 			);
 			path = Launch;
 			sourceTree = "<group>";
@@ -608,6 +607,7 @@
 				FC2DDBC02587BB6C001CAABE /* NMFMapView+Projection.swift */,
 				46A12E1A256CD099007BDF3E /* Array+.swift */,
 				375CDB27258639F9009E447A /* UIColor+.swift */,
+				46E7BFB92582745B00688533 /* UILabel+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
