@@ -295,7 +295,6 @@
 			children = (
 				FC2DDBA7258760B3001CAABE /* ViewController */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
-				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 			);
@@ -384,7 +383,6 @@
 				19C202CA257FDCB7009DEA27 /* UI */,
 				19B15C6B2572ABB4008CDEE5 /* Map */,
 				FCE422AD257018E30017416F /* Clustering */,
-				FA81D66E2568FEC50023E123 /* CoreData */,
 				197E85362580AC3D00F2B46C /* Network */,
 				FC5B249F2581560E00450EEF /* Extension */,
 				37352CD925695E4D00CAFDFD /* Util */,
@@ -592,6 +590,7 @@
 		FC2DDBA7258760B3001CAABE /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				37EB732C2562592700AC44D6 /* MapViewController.swift */,
 				19C70EF4257F65C8006C86E4 /* PlaceListViewController.swift */,
 				FC72B1EF258264AC00B84C84 /* PlaceListViewController+PanGesture.swift */,
 			);
@@ -601,7 +600,6 @@
 		FC5B249F2581560E00450EEF /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				46A12E1A256CD099007BDF3E /* Array+.swift */,
 				19C70B1C2580B9D90071D3A8 /* URL+Image.swift */,
 				19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */,
 				19C70B212580BA3E0071D3A8 /* FileManager+.swift */,
@@ -856,7 +854,6 @@
 				379DC4C6256E1EC60044DA6C /* KMeans.swift in Sources */,
 				37156B0F25879D2B00A4E8F7 /* DBI.swift in Sources */,
 				FC72B2052582A0A100B84C84 /* FilterButton.swift in Sources */,
-				FAA6342725813A910022F2FC /* NMFMarker+.swift in Sources */,
 				375CDB28258639F9009E447A /* UIColor+.swift in Sources */,
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,

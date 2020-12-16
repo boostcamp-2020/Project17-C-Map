@@ -220,7 +220,8 @@ final class MapViewController: UIViewController {
     
     func setMarkersHandler(marker: ClusteringMarker) {
         marker.touchHandler = { [weak self] _ in
-            guard let self = self else { return true }
+            guard let self = self,
+                  self.interactiveMapView.mode != .edit else { return true }
             
             self.interactiveMapView.drawPolygon(boundingBox: marker.boundingBox)
             self.interactiveMapView.moveCamera(position: marker.position,
