@@ -21,11 +21,7 @@ final class MapViewController: UIViewController {
     private var pickedMarker: LeafNodeMarker?
     private let leafNodeMarkerInfoWindow = LeafNodeMarkerInfoWindow()
     private var placeListViewController: PlaceListViewController?
-    
-    var isTouchedRemove: Bool = false
-    
-    private var touchedDeleteLayer: Bool = false
-    internal var isEditMode: Bool = false
+    private var isTouchedRemove: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -164,16 +160,13 @@ final class MapViewController: UIViewController {
             if let leafNodeMarker = marker as? LeafNodeMarker {
                 leafNodeMarker.createMarkerLayer()
                 self.animate(marker: leafNodeMarker)
-                
-                let userInfo = mapController?.fetchInfo(by: leafNodeMarker.coordinate)
-                leafNodeMarker.configureUserInfo(userInfo: userInfo)
-                
+
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
-                    
+
                     let userInfo = self.mapController?.fetchInfo(by: leafNodeMarker.coordinate)
                     leafNodeMarker.configureUserInfo(userInfo: userInfo)
-                    
+
                     self.pickedMarker?.resizeMarkerSize()
                     leafNodeMarker.sizeUp()
                     self.pickedMarker = leafNodeMarker
@@ -186,6 +179,7 @@ final class MapViewController: UIViewController {
                 self.animate(marker: clusteringMarker)
             }
         }
+        
         updatePlaceListViewController()
     }
     
