@@ -127,7 +127,7 @@ extension PlaceListViewController {
         view.frame = CGRect(x: 0,
                             y: Boundary.partialView,
                             width: self.view.frame.width,
-                            height: Boundary.fullView)
+                            height: Boundary.partialView)
     }
     
 }
