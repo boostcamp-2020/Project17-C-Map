@@ -54,6 +54,11 @@ extension BoundingBox: Hashable {
         return lhs.topRight == rhs.topRight &&
             lhs.bottomLeft == rhs.bottomLeft
     }
+    
+    static func <= (lhs: BoundingBox, rhs: BoundingBox) -> Bool {
+        return lhs.topRight <= rhs.topRight &&
+            rhs.bottomLeft <= lhs.bottomLeft
+    }
 }
 
 private extension BoundingBox {

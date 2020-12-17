@@ -46,7 +46,9 @@ final class QuadTreeClusteringService {
                                   boundingBox: BoundingBox,
                                   zoomLevel: Double) -> [Cluster] {
         
-        let boundingBox = BoundingBox.boundingBox(of: quadTrees)
+        let treeBoundingBox = BoundingBox.boundingBox(of: quadTrees)
+        let boundingBox = boundingBox <= BoundingBox.korea ? boundingBox : treeBoundingBox
+        
         let (widthCount, heightCount) = clusterCount(at: boundingBox, zoomLevel: zoomLevel)
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
