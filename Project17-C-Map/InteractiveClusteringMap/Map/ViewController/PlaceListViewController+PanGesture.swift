@@ -34,10 +34,8 @@ extension PlaceListViewController: UIGestureRecognizerDelegate {
                 guard let self = self else { return }
                 
                 if velocity.y >= 0 {
-                    self.view.frame = CGRect(x: 0,
-                                             y: Boundary.partialView,
-                                             width: self.view.frame.width,
-                                             height: Boundary.fullView)
+                    self.minimumHeightMode()
+                    
                 } else {
                     self.view.frame = CGRect(x: 0,
                                              y: Boundary.fullView,
