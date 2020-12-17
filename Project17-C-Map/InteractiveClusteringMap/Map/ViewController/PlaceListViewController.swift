@@ -123,6 +123,13 @@ extension PlaceListViewController {
         view.frame = CGRect(x: 0, y: y, width: view.frame.width, height: view.frame.height)
     }
     
+    func minimumHeightMode() {
+        view.frame = CGRect(x: 0,
+                            y: Boundary.partialView,
+                            width: self.view.frame.width,
+                            height: Boundary.fullView)
+    }
+    
 }
 
 // MARK: - collectionView

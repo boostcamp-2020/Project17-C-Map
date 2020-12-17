@@ -386,8 +386,7 @@ extension MapViewController: PlaceListViewControllerDelegate {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng), zoomTo: zoom)
         cameraUpdate.animation = .fly
         interactiveMapView.mapView.moveCamera(cameraUpdate)
-        placeListViewController.disappear()
-        placeListButtonAppear()
+        placeListViewController.minimumHeightMode()
     }
     
 }
