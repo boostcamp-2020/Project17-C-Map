@@ -11,7 +11,7 @@ import NMapsMap
 
 final class MapViewController: UIViewController {
     
-    @IBOutlet private weak var interactiveMapView: InteractiveMapView!
+    @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
     
     private let locationManager = CLLocationManager()
@@ -71,6 +71,7 @@ final class MapViewController: UIViewController {
     }
     
     private func configureMap() {
+        interactiveMapView.mapView.addCameraDelegate(delegate: self)
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
