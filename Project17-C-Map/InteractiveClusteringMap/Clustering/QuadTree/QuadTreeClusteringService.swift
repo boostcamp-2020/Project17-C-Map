@@ -46,7 +46,6 @@ final class QuadTreeClusteringService {
                                   boundingBox: BoundingBox,
                                   zoomLevel: Double) -> [Cluster] {
         
-        let boundingBox = BoundingBox.boundingBox(of: quadTrees)
         let (widthCount, heightCount) = clusterCount(at: boundingBox, zoomLevel: zoomLevel)
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
@@ -96,21 +95,4 @@ extension QuadTreeClusteringService: ClusteringServicing {
         DispatchQueue.global().async(execute: workItem)
     }
 
-}
-
-private extension BoundingBox {
-    
-    static func boundingBox(of quadTrees: [QuadTree]) -> BoundingBox {
-        var maxCoordinate = BoundingBox.korea.bottomLeft
-        var minCoordinate = BoundingBox.korea.topRight
-        
-        quadTrees.forEach {
-            let topRight = $0.boundingBox.topRight
-            let bottomLeft = $0.boundingBox.bottomLeft
-            maxCoordinate = maxCoordinate <= topRight ? topRight : maxCoordinate
-            minCoordinate = bottomLeft <= minCoordinate ? bottomLeft : minCoordinate
-        }
-        return BoundingBox(topRight: maxCoordinate, bottomLeft: minCoordinate)
-    }
-    
 }
