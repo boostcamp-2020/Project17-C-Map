@@ -8,8 +8,9 @@
 import NMapsMap
 
 extension MapViewController: NMFMapViewCameraDelegate {
+    
     func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-        if !isEditMode {
+        if interactiveMapView.mode == .normal {
             interactiveMapView.removeAllFromTransparentLayer()
         }
         if reason < 0 {
@@ -18,19 +19,19 @@ extension MapViewController: NMFMapViewCameraDelegate {
     }
     
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-        if !isEditMode {
+        if interactiveMapView.mode == .normal {
             interactiveMapView.removeAllFromTransparentLayer()
         }
     }
     
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        if !isEditMode {
+        if interactiveMapView.mode == .normal {
             interactiveMapView.removeAllFromTransparentLayer()
         }
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-        if !isEditMode {
+        if interactiveMapView.mode == .normal {
             interactiveMapView.removeAllFromTransparentLayer()
         }
     }

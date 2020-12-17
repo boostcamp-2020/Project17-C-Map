@@ -24,7 +24,6 @@ final class MapViewController: UIViewController {
     
     var isTouchedRemove: Bool = false
     
-    private var touchedDeleteLayer: Bool = false
     internal var isEditMode: Bool = false
     
     init?(coder: NSCoder, dataManager: DataManagable) {
