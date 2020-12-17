@@ -46,12 +46,23 @@ final class QuadTreeClusteringService {
                                   boundingBox: BoundingBox,
                                   zoomLevel: Double) -> [Cluster] {
         
+        var result = [Cluster]()
+        
+        if zoomLevel > 21 {
+            let coordinates = quadTrees.flatMap {
+                $0.findCoordinates(region: boundingBox)
+            }
+            coordinates.forEach {
+                result.append(Cluster(coordinates: [$0], boundingBox: boundingBox))
+            }
+            return result
+        }
+        
         let (widthCount, heightCount) = clusterCount(at: boundingBox, zoomLevel: zoomLevel)
         let clusterRegionWidth: Double = (boundingBox.topRight.x - boundingBox.bottomLeft.x) / Double(widthCount)
         let clusterRegionHeight: Double = (boundingBox.topRight.y - boundingBox.bottomLeft.y) / Double(heightCount)
         
         var (bottomLeftX, bottomLeftY) = (boundingBox.bottomLeft.x, boundingBox.bottomLeft.y)
-        var result = [Cluster]()
         
         (0..<heightCount).forEach { _ in
             (0..<widthCount).forEach { _ in
