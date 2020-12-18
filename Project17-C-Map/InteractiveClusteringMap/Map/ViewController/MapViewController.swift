@@ -111,7 +111,7 @@ final class MapViewController: UIViewController {
         present(alert, animated: true)
             
         } else {
-            
+            showToast(message: Name.toastMessage)
         }
     }
     
@@ -394,6 +394,14 @@ extension MapViewController: PlaceListViewControllerDelegate {
         cameraUpdate.animation = .fly
         interactiveMapView.mapView.moveCamera(cameraUpdate)
         placeListViewController.minimumHeightMode()
+    }
+    
+}
+
+private extension MapViewController {
+    
+    enum Name {
+        static let toastMessage = " 마커를 추가하려면 지도를 확대해주세요 "
     }
     
 }
