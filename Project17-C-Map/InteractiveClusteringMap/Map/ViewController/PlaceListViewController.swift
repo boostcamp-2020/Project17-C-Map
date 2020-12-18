@@ -69,7 +69,9 @@ class PlaceListViewController: UIViewController {
     }
     
     func requestPlaces(cluster: Cluster) {
-        poiService?.fetchInfo(coordinates: cluster.coordinates) { [weak self] in
+        let boundingBox = cluster.boundingBox
+        
+        poiService?.fetchInfo(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { [weak self] in
             guard let self = self else { return }
             self.places = $0
             self.categories = Array(Set(self.places.compactMap { $0.info.category }))

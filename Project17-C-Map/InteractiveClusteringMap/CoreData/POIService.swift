@@ -17,6 +17,7 @@ protocol POIServicing {
     func fetchInfo(coordinate: Coordinate, completion: @escaping (Place?) -> Void)
     func fetchInfo(coordinate: Coordinate) -> POIInfo?
     func fetchInfo(coordinates: [Coordinate]) -> [POIInfo]
+    func fetchInfo(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Place]) -> Void)
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void)
     func save()
     
@@ -62,6 +63,17 @@ final class POIService: POIServicing {
     
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void) {
         dataManager.fetchInfo(coordinates: coordinates) { pois in
+            let places: [Place] = pois.compactMap {
+                guard let info = $0.info?.info else { return nil }
+                
+                return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
+            }
+            completion(places)
+        }
+    }
+    
+    func fetchInfo(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Place]) -> Void) {
+        dataManager.fetch(bottomLeft: bottomLeft, topRight: topRight) { pois in
             let places: [Place] = pois.compactMap {
                 guard let info = $0.info?.info else { return nil }
                 
