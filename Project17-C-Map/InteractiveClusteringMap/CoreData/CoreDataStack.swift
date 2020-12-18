@@ -166,26 +166,6 @@ final class CoreDataStack: DataManagable {
         return entity.first?.info
     }
     
-    func fetchInfo(coordinates: [Coordinate], completion: @escaping ([POIMO]) -> Void) {
-        context.perform { [weak self] in
-            let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
-            let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
-            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-            request.predicate = compoundPredicate
-            
-            guard let self = self,
-                  let entities = try? self.context.fetch(request) else {
-                DispatchQueue.main.async {
-                    completion([])
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                completion(entities)
-            }
-        }
-    }
-    
     func setValue(_ poi: POI) {
         guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
               let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
