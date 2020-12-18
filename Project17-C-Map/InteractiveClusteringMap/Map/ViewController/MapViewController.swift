@@ -267,9 +267,9 @@ extension MapViewController: NMFMapViewTouchDelegate {
     
 }
 
-private extension MapViewController {
+extension MapViewController {
     
-    func markersToCoordinates(_ markers: [NMFMarker]) -> [Coordinate] {
+    private func markersToCoordinates(_ markers: [NMFMarker]) -> [Coordinate] {
         let clusters: [[Coordinate]] = markers.compactMap {
             if let marker = $0 as? ClusteringMarker {
                 return marker.cluster.coordinates
@@ -284,7 +284,7 @@ private extension MapViewController {
         return clusters.flatMap { $0 }
     }
     
-    @IBAction func placeListButtonTouched(_ sender: UIButton) {
+    @IBAction private func placeListButtonTouched(_ sender: UIButton) {
         placeListButtonDisappearAnimation()
         placeListViewController?.appearAnimation()
         
@@ -307,6 +307,12 @@ private extension MapViewController {
             placeListButtonDisappear()
             placeListViewController?.disappear()
         }
+    }
+    
+    func placeListViewControllerDisAppear() {
+        placeListButtonAppear()
+        placeListViewController?.disappear()
+        placeListViewController?.cancelAllOperation()
     }
     
     private func placeListButtonAppear() {
