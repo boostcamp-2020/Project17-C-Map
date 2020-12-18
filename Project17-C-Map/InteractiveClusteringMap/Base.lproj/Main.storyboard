@@ -22,6 +22,18 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Edit Mode  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXG-8p-8mH">
+                                <rect key="frame" x="292" y="74" width="106" height="23"/>
+                                <color key="backgroundColor" red="0.80177954471472535" green="0.2734231812511268" blue="0.26797637948393521" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRU-ok-ekw">
                                 <rect key="frame" x="329" y="782" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.40010946990000001" green="0.75605839490000004" blue="0.8000100255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -49,6 +61,8 @@
                         <constraints>
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DO1-sr-pJN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Fov-2Y-YMb" secondAttribute="bottom" id="Fdy-Li-OG1"/>
+                            <constraint firstItem="dXG-8p-8mH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="LRy-NI-Tq5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dXG-8p-8mH" secondAttribute="trailing" constant="16" id="OWo-Pq-m1O"/>
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SGZ-O5-27T"/>
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VgR-o7-Ehi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NRU-ok-ekw" secondAttribute="trailing" constant="35" id="aCO-jN-ku3"/>
@@ -56,6 +70,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="editModeLabel" destination="dXG-8p-8mH" id="4Eq-4w-v1Q"/>
                         <outlet property="interactiveMapView" destination="Fov-2Y-YMb" id="nw5-3S-dA0"/>
                         <outlet property="placeListButton" destination="NRU-ok-ekw" id="sfO-aX-acp"/>
                     </connections>

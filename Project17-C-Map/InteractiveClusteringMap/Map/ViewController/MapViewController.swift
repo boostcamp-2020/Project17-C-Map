@@ -13,6 +13,7 @@ final class MapViewController: UIViewController {
     
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
+    @IBOutlet weak var editModeLabel: UILabel!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -75,6 +76,7 @@ final class MapViewController: UIViewController {
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
+        editModeLabel.isHidden = true
     }
     
     private func bindingHandler() {
@@ -86,6 +88,7 @@ final class MapViewController: UIViewController {
     private func longTouchedMarker(pressedMarker: NMFPickable?, latLng: NMGLatLng) {
         if pressedMarker is LeafNodeMarker {
             interactiveMapView.mode = .edit
+            editModeLabel.isHidden = false
             return
         }
         
@@ -264,6 +267,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         
         leafNodeMarkerInfoWindow.close()
         interactiveMapView.mode = .normal
+        editModeLabel.isHidden = true
         
         presentedMarkers.forEach {
             $0.hidden = false
