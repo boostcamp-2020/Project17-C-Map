@@ -309,10 +309,12 @@ extension MapViewController {
         }
     }
     
-    func placeListViewControllerDisAppear() {
-        placeListButtonAppear()
-        placeListViewController?.disappear()
-        placeListViewController?.cancelAllOperation()
+    func placeListViewControllerDisappear() {
+        if placeListViewController?.isShow ?? false {
+            placeListButtonAppear()
+            placeListViewController?.disappear()
+            placeListViewController?.cancelAllOperation()
+        }
     }
     
     private func placeListButtonAppear() {
