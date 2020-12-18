@@ -22,6 +22,20 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jYe-ej-zh5">
+                                <rect key="frame" x="18" y="57" width="46" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="37X-dW-IiX"/>
+                                    <constraint firstAttribute="width" secondItem="jYe-ej-zh5" secondAttribute="height" multiplier="1:1" id="ahk-hx-q0r"/>
+                                </constraints>
+                                <state key="normal" image="stop"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="21"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Edit Mode  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXG-8p-8mH">
                                 <rect key="frame" x="292" y="74" width="106" height="23"/>
                                 <color key="backgroundColor" red="0.80177954471472535" green="0.2734231812511268" blue="0.26797637948393521" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -59,6 +73,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="jYe-ej-zh5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="13" id="2fz-tT-aUL"/>
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="DO1-sr-pJN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Fov-2Y-YMb" secondAttribute="bottom" id="Fdy-Li-OG1"/>
                             <constraint firstItem="dXG-8p-8mH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="LRy-NI-Tq5"/>
@@ -66,6 +81,7 @@
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SGZ-O5-27T"/>
                             <constraint firstItem="Fov-2Y-YMb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="VgR-o7-Ehi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NRU-ok-ekw" secondAttribute="trailing" constant="35" id="aCO-jN-ku3"/>
+                            <constraint firstItem="jYe-ej-zh5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="18" id="y4q-z4-kCB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NRU-ok-ekw" secondAttribute="bottom" constant="30" id="yAg-Xg-bbb"/>
                         </constraints>
                     </view>
@@ -73,6 +89,7 @@
                         <outlet property="editModeLabel" destination="dXG-8p-8mH" id="4Eq-4w-v1Q"/>
                         <outlet property="interactiveMapView" destination="Fov-2Y-YMb" id="nw5-3S-dA0"/>
                         <outlet property="placeListButton" destination="NRU-ok-ekw" id="sfO-aX-acp"/>
+                        <outlet property="playButton" destination="jYe-ej-zh5" id="jZS-fQ-LYz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -431,6 +448,7 @@
     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>
+        <image name="stop" width="128" height="128"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

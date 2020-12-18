@@ -14,6 +14,7 @@ final class MapViewController: UIViewController {
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
     @IBOutlet weak var editModeLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -77,6 +78,10 @@ final class MapViewController: UIViewController {
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
         editModeLabel.isHidden = true
+        playButton.setImage(UIImage(systemName: "play.circle.fill")?.withTintColor(.blue), for: .normal)
+        
+        playButton.contentVerticalAlignment = .fill
+        playButton.contentHorizontalAlignment = .fill
     }
     
     private func bindingHandler() {
