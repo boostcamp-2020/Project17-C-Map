@@ -98,6 +98,9 @@ final class MapViewController: UIViewController {
     }
     
     private func addLeafNodeMarker(latlng: NMGLatLng) {
+        
+        if interactiveMapView.zoomLevel > 15 {
+        
         let alert = MapAlertControllerFactory.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
@@ -106,6 +109,10 @@ final class MapViewController: UIViewController {
         }
         
         present(alert, animated: true)
+            
+        } else {
+            
+        }
     }
     
     private func changeLeafNodeMarkerMode(layer: TransparentLayer) {
