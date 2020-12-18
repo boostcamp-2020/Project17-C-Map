@@ -78,8 +78,8 @@ final class MapViewController: UIViewController {
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
         editModeLabel.isHidden = true
-        playButton.setImage(UIImage(systemName: "play.circle.fill")?.withTintColor(.blue), for: .normal)
         
+        playButton.setImage(UIImage(systemName: "play.circle.fill")?.withTintColor(.blue), for: .normal)
         playButton.contentVerticalAlignment = .fill
         playButton.contentHorizontalAlignment = .fill
     }
@@ -307,6 +307,10 @@ private extension MapViewController {
         let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
         let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
         placeListViewController?.requestPlaces(cluster: cluster)
+    }
+    
+    @IBAction func touchedPlayButton(_ sender: UIButton) {
+        interactiveMapView.playCameraAnimation()
     }
     
     private func updatePlaceListViewController() {

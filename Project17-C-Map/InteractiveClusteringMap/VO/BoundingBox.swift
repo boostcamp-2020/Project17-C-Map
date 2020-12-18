@@ -9,7 +9,7 @@ import Foundation
 import NMapsMap
 
 struct BoundingBox {
-
+    
     static let korea = BoundingBox(topRight: Coordinate(x: KoreaCoordinate.maxLng, y: KoreaCoordinate.maxLat),
                                    bottomLeft: Coordinate(x: KoreaCoordinate.minLng, y: KoreaCoordinate.minLat))
     let topRight: Coordinate
@@ -56,12 +56,9 @@ extension BoundingBox: Hashable {
     }
 }
 
-private extension BoundingBox {
-    
-    enum KoreaCoordinate {
-        static let minLat: Double = 33
-        static let maxLat: Double = 43
-        static let minLng: Double = 124
-        static let maxLng: Double = 132
-    }
+enum KoreaCoordinate {
+    static let minLat: Double = 33
+    static let maxLat: Double = 43
+    static let minLng: Double = 124
+    static let maxLng: Double = 132
 }
