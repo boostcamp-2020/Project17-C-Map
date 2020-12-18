@@ -62,24 +62,23 @@ final class POIService: POIServicing {
     }
     
     func fetchInfo(coordinates: [Coordinate], completion: @escaping ([Place]) -> Void) {
-        dataManager.fetchInfo(coordinates: coordinates) { pois in
-            let places: [Place] = pois.compactMap {
-                guard let info = $0.info?.info else { return nil }
-                
-                return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
-            }
-            completion(places)
+        dataManager.fetchInfo(coordinates: coordinates) { [weak self] pois in
+            guard let self = self else { return }
+            completion(self.places(from: pois))
         }
     }
     
     func fetchInfo(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Place]) -> Void) {
-        dataManager.fetch(bottomLeft: bottomLeft, topRight: topRight) { pois in
-            let places: [Place] = pois.compactMap {
-                guard let info = $0.info?.info else { return nil }
-                
-                return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
-            }
-            completion(places)
+        dataManager.fetch(bottomLeft: bottomLeft, topRight: topRight) { [weak self] pois in
+            guard let self = self else { return }
+            completion(self.places(from: pois))
+        }
+    }
+    
+    private func places(from pois: [POIMO]) -> [Place] {
+        pois.compactMap {
+            guard let info = $0.info?.info else { return nil }
+            return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
         }
     }
     
