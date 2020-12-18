@@ -101,7 +101,7 @@ final class MapViewController: UIViewController {
         let alert = MapAlertControllerFactory.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
-            let poi = POI(x: latlng.lng, y: latlng.lat, name: text)
+            let poi = POI(x: latlng.lng, y: latlng.lat, name: text, category: Name.categoty)
             self.mapController?.add(poi: poi)
         }
         
@@ -390,3 +390,14 @@ extension MapViewController: PlaceListViewControllerDelegate {
     }
     
 }
+
+
+private extension MapViewController {
+    
+    enum Name {
+        static let categoty = "기타"
+    }
+    
+}
+
+
