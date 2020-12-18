@@ -391,7 +391,6 @@ extension MapViewController: PlaceListViewControllerDelegate {
     
 }
 
-
 private extension MapViewController {
     
     enum Name {
@@ -399,5 +398,3 @@ private extension MapViewController {
     }
     
 }
-
-
