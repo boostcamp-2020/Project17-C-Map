@@ -17,10 +17,10 @@ protocol POIDataBusinessLogic: class {
 
 final class POIDataInteractor: POIDataBusinessLogic {
     
-    private let presenter: DataPresentationLogic
+    private let presenter: POIDataPresentationLogic
     private let treeDataStore: TreeDataStorable
     
-    init(treeDataStore: TreeDataStorable, presenter: DataPresentationLogic) {
+    init(treeDataStore: TreeDataStorable, presenter: POIDataPresentationLogic) {
         self.treeDataStore = treeDataStore
         self.presenter = presenter
     }
