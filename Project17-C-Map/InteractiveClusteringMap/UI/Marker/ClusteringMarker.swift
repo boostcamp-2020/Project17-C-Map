@@ -8,19 +8,26 @@
 import Foundation
 import NMapsMap
 
-final class ClusteringMarker: NMFMarker {
+final class ClusteringMarker: NMFMarker, Markable {
     
     let coordinate: Coordinate
     let coordinatesCount: Int
-    private(set) var markerLayer: ClusteringMarkerLayer
+    let clusteringMarkerLayer: ClusteringMarkerLayer
+    var markerLayer: CALayer {
+        clusteringMarkerLayer
+    }
     let boundingBox: BoundingBox
     let cluster: Cluster
+    
+    var naverMapView: NMFMapView? {
+        mapView
+    }
 
     required init(cluster: Cluster) {
         self.cluster = cluster
         self.coordinate = cluster.center
         self.coordinatesCount = cluster.coordinates.count
-        self.markerLayer = ClusteringMarkerLayer(cluster: cluster)
+        self.clusteringMarkerLayer = ClusteringMarkerLayer(cluster: cluster)
         self.boundingBox = cluster.boundingBox
         super.init()
         position = NMGLatLng(lat: cluster.center.y, lng: cluster.center.x)
@@ -62,7 +69,7 @@ final class ClusteringMarker: NMFMarker {
         return outputImage
     }
     
-    override func animate(position: CGPoint) {
+    func animate(position: CGPoint) {
         let animation = AnimationController.transformScale(option: .increase)
         markerLayer.position = position
         CATransaction.begin()

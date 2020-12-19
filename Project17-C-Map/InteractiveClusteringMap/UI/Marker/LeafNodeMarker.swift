@@ -8,7 +8,7 @@
 import Foundation
 import NMapsMap
 
-final class LeafNodeMarker: NMFMarker {
+final class LeafNodeMarker: NMFMarker, Markable {
     
     private enum InfoKey {
         static let title = "title"
@@ -16,8 +16,16 @@ final class LeafNodeMarker: NMFMarker {
     }
 
     let coordinate: Coordinate
-    private(set) var markerLayer: LeafNodeMarkerLayer?
+    private(set) var leafNodeMarkerLayer: LeafNodeMarkerLayer?
     
+    var markerLayer: CALayer {
+        leafNodeMarkerLayer ?? LeafNodeMarkerLayer()
+    }
+    
+    var naverMapView: NMFMapView? {
+        mapView
+    }
+
     required init(coordinate: Coordinate) {
         self.coordinate = coordinate
         super.init()
@@ -33,8 +41,8 @@ final class LeafNodeMarker: NMFMarker {
     }
     
     func createMarkerLayer() {
-        markerLayer = LeafNodeMarkerLayer()
-        guard let markerLayer = self.markerLayer else { return }
+        leafNodeMarkerLayer = LeafNodeMarkerLayer()
+        guard let markerLayer = self.leafNodeMarkerLayer else { return }
         
         markerLayer.bounds = CGRect(x: 0, y: 0,
                                     width: iconImage.imageWidth,
@@ -77,9 +85,9 @@ final class LeafNodeMarker: NMFMarker {
         return containX && containY
     }
     
-    override func animate(position: CGPoint) {
+    func animate(position: CGPoint) {
         let animation = AnimationController.leafNodeAnimation(position: position)
-        guard let markerLayer = markerLayer else { return }
+        guard let markerLayer = leafNodeMarkerLayer else { return }
         
         markerLayer.anchorPoint = CGPoint(x: 0.5, y: 1)
         markerLayer.position = position

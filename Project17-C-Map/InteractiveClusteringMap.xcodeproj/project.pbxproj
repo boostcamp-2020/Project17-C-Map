@@ -13,6 +13,7 @@
 		192D34B6256E36A000861703 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192D34AC256E355500861703 /* QuadTree.swift */; };
 		192D34BA256E36A200861703 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A12E22256CD4DB007BDF3E /* BoundingBox.swift */; };
 		1943CCC92581F79D0010B103 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1943CCC82581F79D0010B103 /* DataError.swift */; };
+		197D95EA258E595700B60C84 /* Markable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197D95E9258E595700B60C84 /* Markable.swift */; };
 		197E85402580B01600F2B46C /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E853F2580B01600F2B46C /* ImageProvider.swift */; };
 		197E85452580B03000F2B46C /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E85442580B03000F2B46C /* DataProvider.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
@@ -114,7 +115,6 @@
 		FC2A9D6D25723C6100D524B0 /* RandomCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */; };
 		FC2A9D7525723C9800D524B0 /* ScreenCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */; };
 		FC2A9D7D25723D1100D524B0 /* BallCutCentroidGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */; };
-		FC2DDBA325875F10001CAABE /* NMFMarker+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2DDBA225875F10001CAABE /* NMFMarker+Animation.swift */; };
 		FC2DDBBC25876905001CAABE /* MapAlertControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertControllerFactory.swift */; };
 		FC2DDBC12587BB6C001CAABE /* NMFMapView+Projection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2DDBC02587BB6C001CAABE /* NMFMapView+Projection.swift */; };
 		FC2DDBC62587CB87001CAABE /* LeafNodeMarkerInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC2DDBC52587CB87001CAABE /* LeafNodeMarkerInfoWindow.swift */; };
@@ -163,6 +163,7 @@
 		192D34AC256E355500861703 /* QuadTree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		192D34B1256E368D00861703 /* QuadTreeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		1943CCC82581F79D0010B103 /* DataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataError.swift; sourceTree = "<group>"; };
+		197D95E9258E595700B60C84 /* Markable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Markable.swift; sourceTree = "<group>"; };
 		197E853F2580B01600F2B46C /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
 		197E85442580B03000F2B46C /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
@@ -249,7 +250,6 @@
 		FC2A9D6C25723C6100D524B0 /* RandomCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7425723C9800D524B0 /* ScreenCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCentroidGenerator.swift; sourceTree = "<group>"; };
 		FC2A9D7C25723D1100D524B0 /* BallCutCentroidGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallCutCentroidGenerator.swift; sourceTree = "<group>"; };
-		FC2DDBA225875F10001CAABE /* NMFMarker+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMarker+Animation.swift"; sourceTree = "<group>"; };
 		FC2DDBC02587BB6C001CAABE /* NMFMapView+Projection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NMFMapView+Projection.swift"; sourceTree = "<group>"; };
 		FC2DDBC52587CB87001CAABE /* LeafNodeMarkerInfoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerInfoWindow.swift; sourceTree = "<group>"; };
 		FC5B24842580B14500450EEF /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
@@ -586,10 +586,11 @@
 			isa = PBXGroup;
 			children = (
 				46A048E8257765DA00A99BE6 /* ClusteringMarkerLayer.swift */,
+				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
 				46A048ED257768BE00A99BE6 /* TranparentLayer.swift */,
 				468CA477257BF8A6006394C3 /* MarkerTextLayer.swift */,
+				197D95E9258E595700B60C84 /* Markable.swift */,
 				468FFB83257CA65C0020DFF5 /* LeafNodeMarker.swift */,
-				FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */,
 				37955721257E63F200681654 /* ClusteringMarker.swift */,
 			);
 			path = Marker;
@@ -623,7 +624,6 @@
 				19C70B1C2580B9D90071D3A8 /* URL+Image.swift */,
 				19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */,
 				19C70B212580BA3E0071D3A8 /* FileManager+.swift */,
-				FC2DDBA225875F10001CAABE /* NMFMarker+Animation.swift */,
 				FAA63421258131EA0022F2FC /* NMGLatLngBounds+BoundingBox.swift */,
 				FC2DDBC02587BB6C001CAABE /* NMFMapView+Projection.swift */,
 				46A12E1A256CD099007BDF3E /* Array+.swift */,
@@ -859,7 +859,6 @@
 				19C70B1D2580B9D90071D3A8 /* URL+Image.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
-				FC2DDBA325875F10001CAABE /* NMFMarker+Animation.swift in Sources */,
 				FC5B248A2580C75D00450EEF /* PlaceHeaderView.swift in Sources */,
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
@@ -880,6 +879,7 @@
 				376A56542576A7B900D1AE5A /* POIInfo.swift in Sources */,
 				3753DCF0256B4C5B006D26A9 /* POIService.swift in Sources */,
 				197E85452580B03000F2B46C /* DataProvider.swift in Sources */,
+				197D95EA258E595700B60C84 /* Markable.swift in Sources */,
 				468FFB84257CA65C0020DFF5 /* LeafNodeMarker.swift in Sources */,
 				46E7BFBA2582745B00688533 /* UILabel+.swift in Sources */,
 				37B73DDE2577B50600C48E99 /* POIMO+CoreDataProperties.swift in Sources */,
