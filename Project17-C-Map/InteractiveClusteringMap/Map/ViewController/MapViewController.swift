@@ -13,6 +13,8 @@ final class MapViewController: UIViewController {
     
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
+    @IBOutlet private weak var editModeLabel: UILabel!
+    @IBOutlet private weak var playButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -75,6 +77,11 @@ final class MapViewController: UIViewController {
         interactiveMapView?.mapView.touchDelegate = self
         interactiveMapView.mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
         interactiveMapView.configureGesture()
+        editModeLabel.isHidden = true
+        
+        playButton.setImage(UIImage(systemName: "play.circle.fill")?.withTintColor(.blue), for: .normal)
+        playButton.contentVerticalAlignment = .fill
+        playButton.contentHorizontalAlignment = .fill
     }
     
     private func bindingHandler() {
@@ -86,6 +93,7 @@ final class MapViewController: UIViewController {
     private func longTouchedMarker(pressedMarker: NMFPickable?, latLng: NMGLatLng) {
         if pressedMarker is LeafNodeMarker {
             interactiveMapView.mode = .edit
+            editModeLabel.isHidden = false
             return
         }
         
@@ -98,6 +106,9 @@ final class MapViewController: UIViewController {
     }
     
     private func addLeafNodeMarker(latlng: NMGLatLng) {
+        
+        if interactiveMapView.zoomLevel > 15 {
+        
         let alert = MapAlertControllerFactory.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
@@ -106,6 +117,10 @@ final class MapViewController: UIViewController {
         }
         
         present(alert, animated: true)
+            
+        } else {
+            showToast(message: Name.toastMessage)
+        }
     }
     
     private func changeLeafNodeMarkerMode(layer: TransparentLayer) {
@@ -257,6 +272,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         
         leafNodeMarkerInfoWindow.close()
         interactiveMapView.mode = .normal
+        editModeLabel.isHidden = true
         
         presentedMarkers.forEach {
             $0.hidden = false
@@ -291,6 +307,10 @@ private extension MapViewController {
         let coordinates: [Coordinate] = markersToCoordinates(presentedMarkers)
         let cluster = Cluster(coordinates: coordinates, boundingBox: .korea)
         placeListViewController?.requestPlaces(cluster: cluster)
+    }
+    
+    @IBAction func touchedPlayButton(_ sender: UIButton) {
+        interactiveMapView.playCameraAnimation()
     }
     
     private func updatePlaceListViewController() {
@@ -394,6 +414,7 @@ extension MapViewController: PlaceListViewControllerDelegate {
 private extension MapViewController {
     
     enum Name {
+        static let toastMessage = " 마커를 추가하려면 지도를 확대해주세요 "
         static let categoty = "기타"
     }
     
