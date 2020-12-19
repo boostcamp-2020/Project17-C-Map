@@ -248,17 +248,8 @@ private extension MapViewController {
         markers.forEach { marker in
             marker.mapView = self.interactiveMapView.mapView
             marker.hidden = true
-            self.presentedMarkers.append(marker)
-            
-            if let leafNodeMarker = marker as? LeafNodeMarker {
-                leafNodeMarker.createMarkerLayer()
-                self.animate(marker: leafNodeMarker)
-                self.setLeafNodeMarkerTouchHandler(marker: leafNodeMarker)
-                
-            } else if let clusteringMarker = marker as? ClusteringMarker {
-                self.animate(marker: clusteringMarker)
-                self.setClusterTouchHandler(marker: clusteringMarker)
-            }
+            presentedMarkers.append(marker)
+            animate(marker: marker)
         }
         updatePlaceListViewController()
     }
@@ -271,7 +262,9 @@ private extension MapViewController {
         }
     }
     
-    func animate(marker: Markable) {
+    func animate(marker: NMFMarker) {
+        guard let marker = marker as? Markable else { return }
+        
         let markerLayer = marker.markerLayer
         let markerPosition = marker.naverMapView?.project(from: NMGLatLng(lat: marker.coordinate.y,
                                                                           lng: marker.coordinate.x))
