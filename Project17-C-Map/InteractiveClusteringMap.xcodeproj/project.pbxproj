@@ -97,7 +97,6 @@
 		46DCB488256FC93900DE0B4C /* QuadTreeClusteringService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DC3D5256F8303004B9DAA /* QuadTreeClusteringService.swift */; };
 		46E7BFBA2582745B00688533 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E7BFB92582745B00688533 /* UILabel+.swift */; };
 		C9FF187A077822AA8BD00410 /* Pods_InteractiveClusteringMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */; };
-		FA3389302576D294008C74AA /* DBITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA33892F2576D293008C74AA /* DBITests.swift */; };
 		FA81D67825690F360023E123 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		FAA4B519257A96CA00F61D8B /* MapAlertControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B518257A96CA00F61D8B /* MapAlertControllerFactory.swift */; };
 		FAA4B53B257CDA3600F61D8B /* LeafNodeMarkerLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */; };
@@ -231,7 +230,6 @@
 		46E7BFB92582745B00688533 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		57582C893214A43A5DC8E8C9 /* Pods-InteractiveClusteringMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InteractiveClusteringMap.release.xcconfig"; path = "Target Support Files/Pods-InteractiveClusteringMap/Pods-InteractiveClusteringMap.release.xcconfig"; sourceTree = "<group>"; };
 		A551109FA7E11823B10D084F /* Pods_InteractiveClusteringMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InteractiveClusteringMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA33892F2576D293008C74AA /* DBITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBITests.swift; sourceTree = "<group>"; };
 		FA81D67725690F360023E123 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		FAA4B518257A96CA00F61D8B /* MapAlertControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAlertControllerFactory.swift; sourceTree = "<group>"; };
 		FAA4B53A257CDA3600F61D8B /* LeafNodeMarkerLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeafNodeMarkerLayer.swift; sourceTree = "<group>"; };
@@ -448,7 +446,6 @@
 		37FC447A2575324900578543 /* KMeans */ = {
 			isa = PBXGroup;
 			children = (
-				FA33892F2576D293008C74AA /* DBITests.swift */,
 				37FC447B2575324900578543 /* KMeansCentroidsTest.swift */,
 				37FC447C2575324900578543 /* KDefineTests.swift */,
 				37FC447D2575324900578543 /* KMeansTests.swift */,
@@ -964,7 +961,6 @@
 				37FC44812575324900578543 /* KMeansTests.swift in Sources */,
 				19D7F1F8258DF36F00B5F1CA /* POIMO+CoreDataProperties.swift in Sources */,
 				46A12E40256CEDF2007BDF3E /* BoundingBoxTests.swift in Sources */,
-				FA3389302576D294008C74AA /* DBITests.swift in Sources */,
 				37FC44822575324900578543 /* KMeansPerformanceTests.swift in Sources */,
 				466F1838257219C500F95AA4 /* Mockup.swift in Sources */,
 				192D34B6256E36A000861703 /* QuadTree.swift in Sources */,
