@@ -159,15 +159,6 @@ final class CoreDataStack: DataManagable {
         return entity.first?.info
     }
     
-    func setValue(_ poi: POI) {
-        guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
-              let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
-            return
-        }
-        infoMO.setValues(POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
-        poiMO.setValues(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id), info: infoMO)
-    }
-    
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
         context.performAndWait {
             guard context.hasChanges else {
@@ -182,6 +173,15 @@ final class CoreDataStack: DataManagable {
                 failureHandler?(nsError)
             }
         }
+    }
+    
+    private func setValue(_ poi: POI) {
+        guard let poiMO = NSEntityDescription.insertNewObject(forEntityName: POIMO.name, into: context) as? POIMO,
+              let infoMO = NSEntityDescription.insertNewObject(forEntityName: POIInfoMO.name, into: context) as? POIInfoMO else {
+            return
+        }
+        infoMO.setValues(POIInfo(name: poi.name, imageUrl: poi.imageUrl, category: poi.category))
+        poiMO.setValues(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id), info: infoMO)
     }
     
 }
