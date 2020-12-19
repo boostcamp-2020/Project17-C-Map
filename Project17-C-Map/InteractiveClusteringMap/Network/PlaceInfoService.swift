@@ -38,7 +38,9 @@ final class PlaceInfoService: PlaceInfoServicing {
                 if operation.isCancelled { return }
                 
                 let image = UIImage(contentsOfFile: url.path)
-                completion(image)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
             }
         }
         imageOperationQueue.addOperation(operation)
@@ -58,11 +60,15 @@ final class PlaceInfoService: PlaceInfoServicing {
                     if operation.isCancelled { return }
 
                     self.repositroy[coordinate] = result
-                    completion(result)
+                    DispatchQueue.main.async {
+                        completion(result)
+                    }
                 }
                 return
             }
-            completion(address)
+            DispatchQueue.main.async {
+                completion(address)
+            }
         }
         addressOperationQueue.addOperation(operation)
     }
