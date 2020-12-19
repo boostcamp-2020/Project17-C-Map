@@ -34,32 +34,32 @@ class KMeansTests: XCTestCase {
     }
     
     func test_cluster_equal() throws {
-        let cluster1 = Cluster(coordinates: coordinates)
-        let cluster2 = Cluster(coordinates: coordinates)
+        let cluster1 = Cluster(coordinates: coordinates, boundingBox: .korea)
+        let cluster2 = Cluster(coordinates: coordinates, boundingBox: .korea)
         
         XCTAssertEqual(cluster1, cluster2)
     }
     
     func test_cluster_not_equal() throws {
-        let cluster1 = Cluster(coordinates: coordinates)
+        let cluster1 = Cluster(coordinates: coordinates, boundingBox: .korea)
         coordinates.append(Coordinate(x: 10, y: 20))
-        let cluster2 = Cluster(coordinates: coordinates)
+        let cluster2 = Cluster(coordinates: coordinates, boundingBox: .korea)
         
         XCTAssertNotEqual(cluster1, cluster2)
     }
     
     func test_cluster_equal_hash_value() throws {
-        let cluster1 = Cluster(coordinates: coordinates)
-        let cluster2 = Cluster(coordinates: coordinates)
+        let cluster1 = Cluster(coordinates: coordinates, boundingBox: .korea)
+        let cluster2 = Cluster(coordinates: coordinates, boundingBox: .korea)
         
         XCTAssertEqual(cluster1.hashValue, cluster2.hashValue)
     }
     
     func test_cluster_not_equal_hash_value() throws {
         var coordinates = self.coordinates
-        let cluster1 = Cluster(coordinates: coordinates)
+        let cluster1 = Cluster(coordinates: coordinates, boundingBox: .korea)
         coordinates.append(Coordinate(x: 3, y: 17))
-        let cluster2 = Cluster(coordinates: coordinates)
+        let cluster2 = Cluster(coordinates: coordinates, boundingBox: .korea)
         
         XCTAssertNotEqual(cluster1.hashValue, cluster2.hashValue)
         XCTAssertNotEqual(cluster1, cluster2)
