@@ -94,6 +94,7 @@ final class MapViewController: UIViewController {
         if pressedMarker is LeafNodeMarker {
             interactiveMapView.mode = .edit
             editModeLabel.isHidden = false
+            playButton.isEnabled = false
             return
         }
         
@@ -273,6 +274,7 @@ extension MapViewController: NMFMapViewTouchDelegate {
         leafNodeMarkerInfoWindow.close()
         interactiveMapView.mode = .normal
         editModeLabel.isHidden = true
+        playButton.isEnabled = true
         
         presentedMarkers.forEach {
             $0.hidden = false
