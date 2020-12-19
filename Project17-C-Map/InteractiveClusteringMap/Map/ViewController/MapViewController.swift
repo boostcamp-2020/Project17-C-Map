@@ -18,7 +18,9 @@ final class MapViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
+    private var interactor: POIDataBusinessLogic?
     private var dataManager: DataManagable?
+    
     private(set) var presentedMarkers: [NMFMarker] = []
     private var pickedMarker: LeafNodeMarker?
     private let leafNodeMarkerInfoWindow = LeafNodeMarkerInfoWindow()
@@ -77,9 +79,11 @@ final class MapViewController: UIViewController {
         
         let poiService = POIService(dataManager: dataManager)
         let treeDataStore = TreeDataStore(poiService: poiService)
-        let presenter: ClusterPresentationLogic = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
-        let mapInteractor: MapBusinessLogic = MapInteractor(treeDataStore: treeDataStore, presenter: presenter)
-        mapController = MapController(mapView: interactiveMapView, interactor: mapInteractor)
+        
+        let presenter = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
+        let clusterInteractor = ClusterInteractor(treeDataStore: treeDataStore, presenter: presenter)
+        interactor = POIDataInteractor(treeDataStore: treeDataStore, presenter: presenter)
+        mapController = MapController(mapView: interactiveMapView, interactor: clusterInteractor)
     }
     
     private func configureMap() {
@@ -125,7 +129,7 @@ final class MapViewController: UIViewController {
             guard let self = self else { return }
             
             let poi = POI(x: latlng.lng, y: latlng.lat, name: text, category: Name.categoty)
-            self.mapController?.add(poi: poi)
+            self.add(poi: poi)
         }
         
         present(alert, animated: true)
@@ -172,7 +176,7 @@ final class MapViewController: UIViewController {
                 leafNodeMarker.markerLayer?.removeFromSuperlayer()
                 leafNodeMarker.touchHandler = nil
                 self.presentedMarkers.remove(at: index)
-                self.mapController?.delete(coordinate: leafNodeMarker.coordinate)
+                self.delete(coordinate: leafNodeMarker.coordinate)
                 self.isTouchedRemove = false
             }
             present(alert, animated: true)
@@ -192,7 +196,7 @@ final class MapViewController: UIViewController {
                 leafNodeMarker.touchHandler = { [weak self] (_) -> Bool in
                     guard let self = self else { return false }
 
-                    let userInfo = self.mapController?.fetchInfo(by: leafNodeMarker.coordinate)
+                    let userInfo = self.fetchInfo(by: leafNodeMarker.coordinate)
                     leafNodeMarker.configureUserInfo(userInfo: userInfo)
 
                     self.pickedMarker?.resizeMarkerSize()
@@ -304,6 +308,34 @@ private extension MapViewController {
     enum Name {
         static let toastMessage = " 마커를 추가하려면 지도를 확대해주세요 "
         static let categoty = "기타"
+    }
+    
+}
+
+// MARK: - POI add, delete, fetchInfo
+private extension MapViewController {
+    
+    func add(poi: POI) {
+        guard let tileIds = interactiveMapView?.mapView.getCoveringTileIds() as? [CLong] else { return }
+
+        let coordinate = Coordinate(x: poi.x, y: poi.y, id: poi.id)
+
+        for tileId in tileIds {
+            let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
+            let boundingBox = bounds.makeBoundingBox()
+            if boundingBox.contains(coordinate: coordinate) {
+                interactor?.add(tileId: tileId, poi: poi)
+                break
+            }
+        }
+    }
+
+    func delete(coordinate: Coordinate) {
+        interactor?.remove(coordinate: coordinate)
+    }
+
+    func fetchInfo(by coordinate: Coordinate) -> POIInfo? {
+        return interactor?.fetch(coordinate: coordinate)
     }
     
 }
