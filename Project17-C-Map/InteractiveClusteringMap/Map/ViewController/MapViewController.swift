@@ -81,6 +81,9 @@ final class MapViewController: UIViewController {
         let treeDataStore = TreeDataStore(poiService: poiService)
         
         let presenter = MapPresenter(createMarkerHandler: create, removeMarkerHandler: remove)
+        presenter.leafNodeMarkerTouchHandler = leafNodeMarkerTouchHandler
+        presenter.clusterNodeMarkerTouchHandler = clusterTouchHandler
+        
         let clusterInteractor = ClusterInteractor(treeDataStore: treeDataStore, presenter: presenter)
         interactor = POIDataInteractor(treeDataStore: treeDataStore, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: clusterInteractor)
@@ -296,7 +299,51 @@ extension MapViewController: NMFMapViewTouchDelegate {
     
 }
 
+// MARK: - Marker Touch Handler
 private extension MapViewController {
+    
+    private func leafNodeMarkerTouchHandler(marker: LeafNodeMarker) -> Bool {
+        let userInfo = fetchInfo(by: marker.coordinate)
+        marker.configureUserInfo(userInfo: userInfo)
+
+        pickedMarker?.resizeMarkerSize()
+        marker.sizeUp()
+        pickedMarker = marker
+        leafNodeMarkerInfoWindow.open(with: marker)
+        return true
+    }
+    
+    private func clusterTouchHandler(marker: ClusteringMarker) -> Bool {
+        guard interactiveMapView.mode != .edit else { return true }
+        
+        interactiveMapView.drawPolygon(boundingBox: marker.boundingBox)
+        interactiveMapView.moveCamera(position: marker.position,
+                                           boundingBox: marker.boundingBox,
+                                           count: marker.coordinatesCount)
+        let markerLayer = marker.markerLayer
+        
+        guard let position = marker.mapView?.project(from: NMGLatLng(
+                                                        lat: marker.coordinate.y,
+                                                        lng: marker.coordinate.x))
+        else {
+            return false
+        }
+        
+        markerLayer.position = position
+        let markerAnimation = AnimationController.zoomTouchAnimation()
+        markerLayer.opacity = 0
+        interactiveMapView.addToTransparentLayer(markerLayer)
+        
+        CATransaction.begin()
+        marker.hidden = true
+        CATransaction.setCompletionBlock {
+            markerLayer.removeFromSuperlayer()
+        }
+        markerLayer.add(markerAnimation, forKey: "dismissMarker")
+        CATransaction.commit()
+        
+        return true
+    }
     
 }
 
