@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 final class CoreDataStack: DataManagable {
-    
+
     private enum Name {
         static let fileName: String = "restuarant-list-for-test"
         static let queueName: String = "CoreDataStackQueue"
@@ -45,8 +45,9 @@ final class CoreDataStack: DataManagable {
     }
     
     func delete(coordinate: Coordinate) {
-        let request = POIMO.fetchRequest(coordinate: coordinate)
-        guard let objects = try? context.fetch(request) else {
+        guard let request = POIMO.fetchRequest(coordinate: coordinate),
+              let objects = try? context.fetch(request)
+        else {
             return
         }
         objects.forEach {
@@ -61,8 +62,9 @@ final class CoreDataStack: DataManagable {
     }
     
     func update(poi: POI) {
-        let request = POIMO.fetchRequest(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id))
-        guard let objects = try? context.fetch(request) else {
+        guard let request = POIMO.fetchRequest(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id)),
+              let objects = try? context.fetch(request)
+        else {
             return
         }
         objects.first?.update(poi)
@@ -94,8 +96,9 @@ final class CoreDataStack: DataManagable {
     }
     
     func fetch(coordinate: Coordinate) -> [POIMO] {
-        let request = POIMO.fetchRequest(coordinate: coordinate)
-        guard let entities = try? context.fetch(request) else {
+        guard let request = POIMO.fetchRequest(coordinate: coordinate),
+              let entities = try? context.fetch(request)
+        else {
             return []
         }
         return entities
@@ -103,9 +106,10 @@ final class CoreDataStack: DataManagable {
     
     func fetch(coordinate: Coordinate, handler: @escaping ([POIMO]) -> Void) {
         context.perform { [weak self] in
-            let request = POIMO.fetchRequest(coordinate: coordinate)
-            guard let self = self,
-                  let entities = try? self.context.fetch(request) else {
+            guard let request = POIMO.fetchRequest(coordinate: coordinate),
+                  let self = self,
+                  let entities = try? self.context.fetch(request)
+            else {
                 DispatchQueue.main.async {
                     handler([])
                 }
@@ -141,21 +145,10 @@ final class CoreDataStack: DataManagable {
         }
     }
     
-    func fetchInfo(coordinates: [Coordinate]) -> [POIInfoMO] {
-        let predicates = coordinates.map { NSPredicate(format: "id == %@", $0.id) }
-        let compoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
-        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-        request.predicate = compoundPredicate
-        
-        guard let entities = try? context.fetch(request) else {
-            return []
-        }
-        
-        return entities.compactMap { $0.info }
-    }
-    
     func fetchInfo(coordinate: Coordinate) -> POIInfoMO? {
-        let predicate = NSPredicate(format: "id == %@", coordinate.id)
+        guard let id = coordinate.id else { return nil }
+        
+        let predicate = NSPredicate(format: "id == %@", id)
         let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
         request.predicate = predicate
         
