@@ -25,24 +25,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-
+        
     }
     
     // MARK: - Core Data Stack
     
     lazy var container: NSPersistentContainer = {
         let container = NSPersistentContainer(name: containerName)
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            if let error = error as NSError? {
-                print(error.localizedDescription)
+        container.loadPersistentStores(completionHandler: { (description, error) in
+            guard error == nil else {
+                fatalError("NSPersistentStores load failure: \(error.debugDescription)")
             }
-            
-            let description = NSPersistentStoreDescription()
             description.shouldMigrateStoreAutomatically = true
             description.shouldInferMappingModelAutomatically = true
             container.persistentStoreDescriptions = [description]
-            
         })
+        
         return container
     }()
     

@@ -13,8 +13,8 @@ final class MapViewController: UIViewController {
     
     @IBOutlet weak var interactiveMapView: InteractiveMapView!
     @IBOutlet private weak var placeListButton: UIButton!
-    @IBOutlet weak var editModeLabel: UILabel!
-    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet private weak var editModeLabel: UILabel!
+    @IBOutlet private weak var playButton: UIButton!
     
     private let locationManager = CLLocationManager()
     private var mapController: MapController?
@@ -112,7 +112,7 @@ final class MapViewController: UIViewController {
         let alert = MapAlertControllerFactory.createAddAlertController { [weak self] text in
             guard let self = self else { return }
             
-            let poi = POI(x: latlng.lng, y: latlng.lat, name: text)
+            let poi = POI(x: latlng.lng, y: latlng.lat, name: text, category: Name.categoty)
             self.mapController?.add(poi: poi)
         }
         
@@ -415,6 +415,7 @@ private extension MapViewController {
     
     enum Name {
         static let toastMessage = " 마커를 추가하려면 지도를 확대해주세요 "
+        static let categoty = "기타"
     }
     
 }
