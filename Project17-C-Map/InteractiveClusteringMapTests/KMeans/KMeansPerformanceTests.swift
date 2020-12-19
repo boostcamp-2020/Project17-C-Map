@@ -7,7 +7,7 @@
 
 import XCTest
 
-fileprivate struct Mock {
+private struct Mock {
     static let minX = 126.9903617
     static let maxX = 126.9956437
     static let minY = 37.5600365
@@ -44,8 +44,8 @@ class KMeansPerformanceTests: XCTestCase {
     }
     
     private func generatePoint() -> Coordinate {
-        let lat = Double.random(in: 37.5600365...37.5764792)
-        let lng = Double.random(in: 126.9903617...126.9956437)
+        let lat = Double.random(in: Mock.minY...Mock.maxY)
+        let lng = Double.random(in: Mock.minX...Mock.maxX)
         
         return Coordinate(x: lng, y: lat)
     }
