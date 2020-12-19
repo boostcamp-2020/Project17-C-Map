@@ -53,27 +53,6 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func configurePlaceListViewController() {
-        guard let dataManager = dataManager,
-              let placeListViewController = placeListViewController(dataManager: dataManager) else { return }
-        
-        self.placeListViewController = placeListViewController
-        placeListViewController.didMove(toParent: self)
-        addChild(placeListViewController)
-        view.addSubview(placeListViewController.view)
-    }
-    
-    private func presentOnboarding() {
-        let onboardViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(
-            identifier: "OnboardingViewController",
-            creator: { coder in
-                return OnboardingViewController(coder: coder)
-            })
-        onboardViewController.modalPresentationStyle = .overFullScreen
-        
-        present(onboardViewController, animated: true)
-    }
-    
     private func dependencyInject() {
         guard let dataManager = dataManager else { return }
         
@@ -87,6 +66,16 @@ final class MapViewController: UIViewController {
         let clusterInteractor = ClusterInteractor(treeDataStore: treeDataStore, presenter: presenter)
         interactor = POIDataInteractor(treeDataStore: treeDataStore, presenter: presenter)
         mapController = MapController(mapView: interactiveMapView, interactor: clusterInteractor)
+    }
+    
+    private func configurePlaceListViewController() {
+        guard let dataManager = dataManager,
+              let placeListViewController = placeListViewController(dataManager: dataManager) else { return }
+        
+        self.placeListViewController = placeListViewController
+        placeListViewController.didMove(toParent: self)
+        addChild(placeListViewController)
+        view.addSubview(placeListViewController.view)
     }
     
     private func configureMap() {
@@ -108,8 +97,17 @@ final class MapViewController: UIViewController {
         interactiveMapView.showEditModeHandler = changeLeafNodeMarkerMode
         interactiveMapView.removeLeafMarkerHandler = removeLeafNode
     }
+
+    @IBAction private func touchedPlayButton(_ sender: UIButton) {
+        interactiveMapView.playCameraAnimation()
+    }
     
-    private func longTouchedMarker(pressedMarker: NMFPickable?, latLng: NMGLatLng) {
+}
+
+// MARK: - InteractiveMap Handler
+private extension MapViewController {
+    
+    func longTouchedMarker(pressedMarker: NMFPickable?, latLng: NMGLatLng) {
         if pressedMarker is LeafNodeMarker {
             interactiveMapView.mode = .edit
             editModeLabel.isHidden = false
@@ -125,7 +123,7 @@ final class MapViewController: UIViewController {
         addLeafNodeMarker(latlng: latLng)
     }
     
-    private func addLeafNodeMarker(latlng: NMGLatLng) {
+    func addLeafNodeMarker(latlng: NMGLatLng) {
         if interactiveMapView.zoomLevel > 15 {
         
         let alert = MapAlertControllerFactory.createAddAlertController { [weak self] text in
@@ -142,12 +140,12 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func changeLeafNodeMarkerMode(layer: TransparentLayer) {
+    func changeLeafNodeMarkerMode(layer: TransparentLayer) {
         presentedMarkers.forEach { marker in
             guard let marker = marker as? LeafNodeMarker else { return }
             marker.hidden = true
             marker.createMarkerLayer()
-            guard let leafNodeMarkerLayer = marker.leafNodeMarkerLayer else { return }
+            let leafNodeMarkerLayer = marker.leafNodeMarkerLayer
             leafNodeMarkerLayer.bounds = CGRect(x: 0, y: 0,
                                                 width: marker.iconImage.imageWidth,
                                                 height: marker.iconImage.imageHeight)
@@ -166,7 +164,7 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func removeLeafNode(point: CGPoint) {
+    func removeLeafNode(point: CGPoint) {
         for (index, marker) in presentedMarkers.enumerated() {
             guard let leafNodeMarker = marker as? LeafNodeMarker,
                   leafNodeMarker.containsMarker(at: point) else { continue }
@@ -188,58 +186,20 @@ final class MapViewController: UIViewController {
         }
     }
     
-    private func setLeafNodeMarkerTouchHandler(marker: LeafNodeMarker) {
-        marker.touchHandler = { [weak self] (_) -> Bool in
-            guard let self = self else { return false }
+}
 
-            let userInfo = self.fetchInfo(by: marker.coordinate)
-            marker.configureUserInfo(userInfo: userInfo)
-
-            self.pickedMarker?.resizeMarkerSize()
-            marker.sizeUp()
-            self.pickedMarker = marker
-            self.leafNodeMarkerInfoWindow.open(with: marker)
-            return true
-        }
-    }
+// MARK: - Onboarding
+private extension MapViewController {
     
-    private func setClusterTouchHandler(marker: ClusteringMarker) {
-        marker.touchHandler = { [weak self] _ in
-            guard let self = self,
-                  self.interactiveMapView.mode != .edit else { return true }
-            
-            self.interactiveMapView.drawPolygon(boundingBox: marker.boundingBox)
-            self.interactiveMapView.moveCamera(position: marker.position,
-                                               boundingBox: marker.boundingBox,
-                                               count: marker.coordinatesCount)
-            let markerLayer = marker.markerLayer
-            
-            guard let position = marker.mapView?.project(from: NMGLatLng(
-                                                            lat: marker.coordinate.y,
-                                                            lng: marker.coordinate.x))
-            else {
-                return false
-            }
-            
-            markerLayer.position = position
-            let markerAnimation = AnimationController.zoomTouchAnimation()
-            markerLayer.opacity = 0
-            self.interactiveMapView.addToTransparentLayer(markerLayer)
-            
-            CATransaction.begin()
-            marker.hidden = true
-            CATransaction.setCompletionBlock {
-                markerLayer.removeFromSuperlayer()
-            }
-            markerLayer.add(markerAnimation, forKey: "dismissMarker")
-            CATransaction.commit()
-            
-            return true
-        }
-    }
-
-    @IBAction private func touchedPlayButton(_ sender: UIButton) {
-        interactiveMapView.playCameraAnimation()
+    func presentOnboarding() {
+        let onboardViewController = UIStoryboard(name: "Onboarding", bundle: nil).instantiateViewController(
+            identifier: "OnboardingViewController",
+            creator: { coder in
+                return OnboardingViewController(coder: coder)
+            })
+        onboardViewController.modalPresentationStyle = .overFullScreen
+        
+        present(onboardViewController, animated: true)
     }
     
 }
@@ -378,7 +338,7 @@ private extension MapViewController {
 private extension MapViewController {
     
     enum Name {
-        static let toastMessage = " 마커를 추가하려면 지도를 확대해주세요 "
+        static let toastMessage = "마커를 추가하려면 지도를 확대해주세요"
         static let categoty = "기타"
     }
     
