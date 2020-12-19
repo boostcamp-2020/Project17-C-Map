@@ -169,16 +169,18 @@ final class MapViewController: UIViewController {
                   leafNodeMarker.containsMarker(at: point) else { continue }
 
             isTouchedRemove = true
-            let alert = MapAlertControllerFactory.createDeleteAlertController { [weak self] _ in
+            let alert = MapAlertControllerFactory.createDeleteAlertController({ [weak self] _ in
                 guard let self = self else { return }
 
                 leafNodeMarker.mapView = nil
-                leafNodeMarker.leafNodeMarkerLayer?.removeFromSuperlayer()
+                leafNodeMarker.leafNodeMarkerLayer.removeFromSuperlayer()
                 leafNodeMarker.touchHandler = nil
                 self.presentedMarkers.remove(at: index)
                 self.delete(coordinate: leafNodeMarker.coordinate)
                 self.isTouchedRemove = false
-            }
+            }, cancelHandler: { [weak self] _ in
+                self?.isTouchedRemove = false
+            })
             present(alert, animated: true)
         }
     }
