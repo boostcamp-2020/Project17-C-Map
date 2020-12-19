@@ -71,59 +71,10 @@ final class CoreDataStack: DataManagable {
         save(successHandler: nil)
     }
     
-    func fetch() -> [POIMO] {
-        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-        guard let entities = try? context.fetch(request) else {
-            return []
-        }
-        return entities
-    }
-    
-    func fetch(handler: @escaping ([POIMO]) -> Void) {
-        context.perform { [weak self] in
-            let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-            guard let self = self,
-                  let entities = try? self.context.fetch(request) else {
-                DispatchQueue.main.async {
-                    handler([])
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                handler(entities)
-            }
-        }
-    }
-    
     func fetch(coordinate: Coordinate) -> [POIMO] {
         guard let request = POIMO.fetchRequest(coordinate: coordinate),
               let entities = try? context.fetch(request)
         else {
-            return []
-        }
-        return entities
-    }
-    
-    func fetch(coordinate: Coordinate, handler: @escaping ([POIMO]) -> Void) {
-        context.perform { [weak self] in
-            guard let request = POIMO.fetchRequest(coordinate: coordinate),
-                  let self = self,
-                  let entities = try? self.context.fetch(request)
-            else {
-                DispatchQueue.main.async {
-                    handler([])
-                }
-                return
-            }
-            DispatchQueue.main.async {
-                handler(entities)
-            }
-        }
-    }
-    
-    func fetch(bottomLeft: Coordinate, topRight: Coordinate) -> [POIMO] {
-        let fetchRequest = POIMO.fetchRequest(bottomLeft: bottomLeft, topRight: topRight)
-        guard let entities = try? context.fetch(fetchRequest) else {
             return []
         }
         return entities
@@ -143,20 +94,6 @@ final class CoreDataStack: DataManagable {
                 handler(entities)
             }
         }
-    }
-    
-    func fetchInfo(coordinate: Coordinate) -> POIInfoMO? {
-        guard let id = coordinate.id else { return nil }
-        
-        let predicate = NSPredicate(format: "id == %@", id)
-        let request: NSFetchRequest<POIMO> = POIMO.fetchRequest()
-        request.predicate = predicate
-        
-        guard let entity = try? context.fetch(request) else {
-            return nil
-        }
-        
-        return entity.first?.info
     }
     
     func save(successHandler: (() -> Void)?, failureHandler: ((NSError) -> Void)? = nil) {
