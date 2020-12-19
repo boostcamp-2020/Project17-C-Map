@@ -17,7 +17,7 @@
 		197E85452580B03000F2B46C /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197E85442580B03000F2B46C /* DataProvider.swift */; };
 		199DDFF6256B9C8E0065B94E /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37352CDF25695EE000CAFDFD /* Place.swift */; };
 		19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6025727915008CDEE5 /* ClusteringServicing.swift */; };
-		19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */; };
+		19B15C6D2572AD11008CDEE5 /* ClusterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B15C6C2572AD11008CDEE5 /* ClusterInteractor.swift */; };
 		19C202CC257FDCCA009DEA27 /* UIView+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */; };
 		19C70B1D2580B9D90071D3A8 /* URL+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C70B1C2580B9D90071D3A8 /* URL+Image.swift */; };
 		19C70B222580BA3E0071D3A8 /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C70B212580BA3E0071D3A8 /* FileManager+.swift */; };
@@ -34,6 +34,7 @@
 		19D7F213258DF42D00B5F1CA /* TreeDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D16870257BD5D0002888F4 /* TreeDataStore.swift */; };
 		19D7F218258DF4FB00B5F1CA /* BoundingBox+NMFLatLng.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D7F217258DF4FB00B5F1CA /* BoundingBox+NMFLatLng.swift */; };
 		19D7F233258E269C00B5F1CA /* MapViewController+PlaceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D7F232258E269C00B5F1CA /* MapViewController+PlaceListView.swift */; };
+		19D7F23B258E4F6F00B5F1CA /* POIDataInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D7F23A258E4F6F00B5F1CA /* POIDataInteractor.swift */; };
 		3713D3E025694C6B00E703EC /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA81D67725690F360023E123 /* CoreDataStack.swift */; };
 		3713D3E425694CD300E703EC /* POI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216CC256943D300231245 /* POI.swift */; };
 		3713D3FA25694D9C00E703EC /* DataManagable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372216C02569325600231245 /* DataManagable.swift */; };
@@ -165,7 +166,7 @@
 		197E853F2580B01600F2B46C /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
 		197E85442580B03000F2B46C /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		19B15C6025727915008CDEE5 /* ClusteringServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusteringServicing.swift; sourceTree = "<group>"; };
-		19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractor.swift; sourceTree = "<group>"; };
+		19B15C6C2572AD11008CDEE5 /* ClusterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterInteractor.swift; sourceTree = "<group>"; };
 		19C202CB257FDCCA009DEA27 /* UIView+Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Attributes.swift"; sourceTree = "<group>"; };
 		19C70B1C2580B9D90071D3A8 /* URL+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Image.swift"; sourceTree = "<group>"; };
 		19C70B212580BA3E0071D3A8 /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 		19D16870257BD5D0002888F4 /* TreeDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeDataStore.swift; sourceTree = "<group>"; };
 		19D7F217258DF4FB00B5F1CA /* BoundingBox+NMFLatLng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BoundingBox+NMFLatLng.swift"; sourceTree = "<group>"; };
 		19D7F232258E269C00B5F1CA /* MapViewController+PlaceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+PlaceListView.swift"; sourceTree = "<group>"; };
+		19D7F23A258E4F6F00B5F1CA /* POIDataInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIDataInteractor.swift; sourceTree = "<group>"; };
 		37156B0E25879D2B00A4E8F7 /* DBI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBI.swift; sourceTree = "<group>"; };
 		372216C02569325600231245 /* DataManagable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManagable.swift; sourceTree = "<group>"; };
 		372216CC256943D300231245 /* POI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POI.swift; sourceTree = "<group>"; };
@@ -310,7 +312,8 @@
 			children = (
 				FC2DDBA7258760B3001CAABE /* ViewController */,
 				4623BD1225694A1400940B12 /* MapController.swift */,
-				19B15C6C2572AD11008CDEE5 /* MapInteractor.swift */,
+				19B15C6C2572AD11008CDEE5 /* ClusterInteractor.swift */,
+				19D7F23A258E4F6F00B5F1CA /* POIDataInteractor.swift */,
 				190CAB3425738FB800234F23 /* MapPresenter.swift */,
 			);
 			path = Map;
@@ -861,7 +864,7 @@
 				37EB73332562592700AC44D6 /* Model.xcdatamodeld in Sources */,
 				37EB73292562592700AC44D6 /* AppDelegate.swift in Sources */,
 				4623BD1325694A1400940B12 /* MapController.swift in Sources */,
-				19B15C6D2572AD11008CDEE5 /* MapInteractor.swift in Sources */,
+				19B15C6D2572AD11008CDEE5 /* ClusterInteractor.swift in Sources */,
 				461DC3D6256F8303004B9DAA /* QuadTreeClusteringService.swift in Sources */,
 				467F953C2576A20400CD5A3E /* AnimationController.swift in Sources */,
 				19D16871257BD5D0002888F4 /* TreeDataStore.swift in Sources */,
@@ -900,6 +903,7 @@
 				19D7F218258DF4FB00B5F1CA /* BoundingBox+NMFLatLng.swift in Sources */,
 				FC67155D2574F9BC0069DCC8 /* KMeansValidateService.swift in Sources */,
 				FC5B248F2580CF2D00450EEF /* Places.swift in Sources */,
+				19D7F23B258E4F6F00B5F1CA /* POIDataInteractor.swift in Sources */,
 				FAF9428B258D06690080814D /* ViewController+Toast.swift in Sources */,
 				37B73DDC2577B50600C48E99 /* POIMO+CoreDataClass.swift in Sources */,
 				19B15C6125727915008CDEE5 /* ClusteringServicing.swift in Sources */,
