@@ -24,13 +24,15 @@ final class CoreDataStack: DataManagable {
     private init() {
         context.parent = container?.viewContext
         
-        guard let poiCount = try? container?.viewContext.count(for: POIMO.fetchRequest()),
-              poiCount != 0 else {
-            let pois = JSONReader.readPOIs(fileName: Name.fileName)
-            pois?.forEach {
-                setValue($0)
+        context.perform { [weak self] in
+            guard let poiCount = try? self?.container?.viewContext.count(for: POIMO.fetchRequest()),
+                  poiCount != 0 else {
+                let pois = JSONReader.readPOIs(fileName: Name.fileName)
+                pois?.forEach {
+                    self?.setValue($0)
+                }
+                return
             }
-            return
         }
     }
     
