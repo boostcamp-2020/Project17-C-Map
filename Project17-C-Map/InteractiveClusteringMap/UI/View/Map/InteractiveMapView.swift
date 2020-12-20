@@ -44,9 +44,10 @@ final class InteractiveMapView: NMFNaverMapView {
     private func configure() {
         showZoomControls = true
         showLocationButton = true
-        showCompass = true
+        showCompass = false
         showScaleBar = true
         mapView.allowsTilting = false
+        mapView.isStopGestureEnabled = false
         mapView.minZoomLevel = 2
         mapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.56825785, lng: 126.9930027), zoomTo: 15))
     }
@@ -82,10 +83,10 @@ final class InteractiveMapView: NMFNaverMapView {
 extension InteractiveMapView {
     
     private func configureExtent() {
-        let extent = NMGLatLngBounds(southWestLat: Metric.southWestLat,
-                                     southWestLng: Metric.southWestLng,
-                                     northEastLat: Metric.northEastLat,
-                                     northEastLng: Metric.northEastLng)
+        let extent = NMGLatLngBounds(southWestLat: KoreaCoordinate.minLat,
+                                     southWestLng: KoreaCoordinate.minLng,
+                                     northEastLat: KoreaCoordinate.maxLat,
+                                     northEastLng: KoreaCoordinate.maxLng)
         mapView.extent = extent
     }
     
@@ -134,7 +135,7 @@ extension InteractiveMapView {
     }
     
     func drawPolygon(boundingBox: BoundingBox) {
-        polygonOverlay?.mapView = nil
+        removePolygon()
         polygonOverlay = createBoundingBoxPolygon(boundingBox: boundingBox)
         polygonOverlay?.mapView = mapView
     }
@@ -185,13 +186,6 @@ extension InteractiveMapView {
     enum Mode {
         case edit
         case normal
-    }
-    
-    private enum Metric {
-        static let southWestLat: Double = 33
-        static let southWestLng: Double = 124
-        static let northEastLat: Double = 43
-        static let northEastLng: Double = 132
     }
     
 }

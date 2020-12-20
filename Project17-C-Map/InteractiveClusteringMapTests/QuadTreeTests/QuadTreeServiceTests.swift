@@ -9,11 +9,14 @@ import XCTest
 
 struct MockupDataStore: TreeDataStorable {
     
-    func quadTrees(target: BoundingBox) -> [QuadTree] {
-        [Mockup().mockupQuadTree()]
+    func quadTrees(target: BoundingBox, completion: @escaping ([QuadTree]) -> Void) {
+        completion([Mockup().mockupQuadTree()])
     }
     func remove(coordinate: Coordinate) {}
-    func add(coordinate: Coordinate) {}
+    func add(poi: POI) {}
+    func fetch(coordinate: Coordinate) -> POIInfo? {
+        return POIInfo(name: nil, imageUrl: nil, category: nil)
+    }
  
 }
 
@@ -45,10 +48,10 @@ class QuadTreeServiceTests: XCTestCase {
                 Coordinate(x: 1, y: 1),
                 Coordinate(x: 2, y: 2),
                 Coordinate(x: 3, y: 3)
-            ]),
+            ], boundingBox: BoundingBox(topRight: Coordinate(x: 5, y: 5), bottomLeft: bottomLeft)),
             Cluster(coordinates: [
                 Coordinate(x: 6, y: 6)
-            ])
+            ], boundingBox: BoundingBox(topRight: topRight, bottomLeft: Coordinate(x: 5, y: 5)))
         ]
     
         let expectation: XCTestExpectation = self.expectation(description: "QuadTreeClusteringZoom6")
@@ -68,14 +71,14 @@ class QuadTreeServiceTests: XCTestCase {
         let expectedClusters = [
             Cluster(coordinates: [
                 Coordinate(x: 1, y: 1)
-            ]),
+            ], boundingBox: BoundingBox(topRight: Coordinate(x: 5/3, y: 5/3), bottomLeft: bottomLeft)),
             Cluster(coordinates: [
                 Coordinate(x: 2, y: 2),
                 Coordinate(x: 3, y: 3)
-            ]),
+            ], boundingBox: BoundingBox(topRight: Coordinate(x: (10/3), y: (10/3)), bottomLeft: Coordinate(x: 5/3, y: 5/3))),
             Cluster(coordinates: [
                 Coordinate(x: 6, y: 6)
-            ])
+            ], boundingBox: BoundingBox(topRight: Coordinate(x: 5 + (5/3), y: 5 +  (5/3)), bottomLeft: Coordinate(x: 5, y: 5)))
         ]
     
         let expectation: XCTestExpectation = self.expectation(description: "QuadTreeClusteringZoom15")

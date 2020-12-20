@@ -9,6 +9,8 @@
 	</dict>
 	<key>NMFClientId</key>
 	<string>36b5lui25z</string>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
     <key>NMFClientSecret</key>
     <string>svaQ5DXUnKB6kCrdhEDMdZ8dgHiddJ9YxpC7A4CB</string>
 	<key>CFBundleDevelopmentRegion</key>

@@ -19,6 +19,7 @@ class PlaceListViewController: UIViewController {
     
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<String, Place>
     
+    private let operationQueue = OperationQueue()
     @IBOutlet private weak var headerView: UIView!
     @IBOutlet weak var filterScrollView: FilterScrollView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -69,15 +70,33 @@ class PlaceListViewController: UIViewController {
     }
     
     func requestPlaces(cluster: Cluster) {
-        poiService?.fetchInfo(coordinates: cluster.coordinates) { [weak self] in
+        cancelAllOperation()
+        let operation = BlockOperation()
+        
+        operation.addExecutionBlock { [weak self] in
             guard let self = self else { return }
-            self.places = $0
-            self.categories = Array(Set(self.places.compactMap { $0.info.category }))
+            if operation.isCancelled { return }
 
-            self.filterScrollView.configure(filterItems: self.categories) { category in
-                self.moveSection(to: category)
+            let boundingBox = cluster.boundingBox
+            
+            self.poiService?.fetchInfo(bottomLeft: boundingBox.bottomLeft, topRight: boundingBox.topRight) { [weak self] in
+                guard let self = self else { return }
+                if operation.isCancelled { return }
+
+                self.places = $0
+                self.categories = Array(Set(self.places.compactMap { $0.info.category }))
+
+                self.filterScrollView.configure(filterItems: self.categories) { category in
+                    self.moveSection(to: category)
+                }
             }
         }
+        operationQueue.addOperation(operation)
+    }
+    
+    func cancelAllOperation() {
+        operationQueue.cancelAllOperations()
+        placeInfoService?.cancel()
     }
     
 }
@@ -121,6 +140,13 @@ extension PlaceListViewController {
         isShow = false
         let y = UIScreen.main.bounds.maxY
         view.frame = CGRect(x: 0, y: y, width: view.frame.width, height: view.frame.height)
+    }
+    
+    func minimumHeightMode() {
+        view.frame = CGRect(x: 0,
+                            y: Boundary.partialView,
+                            width: self.view.frame.width,
+                            height: Boundary.partialView)
     }
     
 }
@@ -176,7 +202,7 @@ extension PlaceListViewController: UICollectionViewDelegate {
             
             cell.configure(place: identifier)
     
-            self.placeInfoService?.fetchAdrress(lat: identifier.coordinate.y, lng: identifier.coordinate.x, completion: {
+            self.placeInfoService?.fetchAddress(lat: identifier.coordinate.y, lng: identifier.coordinate.x, completion: {
                 cell.configure(address: $0)
             })
     
@@ -238,6 +264,21 @@ extension PlaceListViewController: UICollectionViewDelegate {
         static let headerIdentifier = "PlaceHeaderView"
         static let infoIdentifier = "PlaceCell"
         static let type = UICollectionLayoutSectionOrthogonalScrollingBehavior.groupPaging
+    }
+    
+}
+
+extension PlaceListViewController {
+    
+    static func storyboardInstance(poiService: POIServicing,
+                                   placeInfoService: PlaceInfoServicing) -> PlaceListViewController? {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        return storyboard.instantiateViewController(
+            identifier: "PlaceListViewController",
+            creator: { coder in
+                return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: placeInfoService)
+            })
     }
     
 }

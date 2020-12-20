@@ -12,18 +12,25 @@ protocol ClusterPresentationLogic {
     
     func clustersToMarkers(tileId: CLong, clusters: [Cluster])
     func removePresentMarkers(tileIds: [CLong])
+    
+}
+
+protocol POIDataPresentationLogic {
+    
     func add(tileId: CLong, poi: POI)
     func delete(coordinate: Coordinate)
     
 }
 
-class MapPresenter: ClusterPresentationLogic {
+final class MapPresenter: ClusterPresentationLogic {
     
     private let createMarkerHandler: ([NMFMarker]) -> Void
     private let removeMarkerHandler: ([NMFMarker]) -> Void
     private var presentMarkers: [CLong: [NMFMarker]] = [:]
     private var undeletedTileIds: [CLong] = []
     private let serialQueue = DispatchQueue(label: Name.serialQueue)
+    var leafNodeMarkerTouchHandler: ((LeafNodeMarker) -> Bool)?
+    var clusterNodeMarkerTouchHandler: ((ClusteringMarker) -> Bool)?
     
     init(createMarkerHandler: @escaping ([NMFMarker]) -> Void,
          removeMarkerHandler: @escaping ([NMFMarker]) -> Void) {
@@ -35,16 +42,16 @@ class MapPresenter: ClusterPresentationLogic {
         serialQueue.async { [weak self] in
             guard let self = self else { return }
             
-            guard !self.undeletedTileIds.contains(tileId) else {
+            guard !self.undeletedTileIds.contains(tileId)
+            else {
                 return self.undeletedTileIds.removeAll { $0 == tileId }
             }
             
             let markers: [NMFMarker] = clusters.map {
                 if $0.coordinates.count == 1 {
-                    return LeafNodeMarker(coordinate: $0.coordinates.first ?? Coordinate(x: 0, y: 0))
-                } else {
-                    return ClusteringMarker(cluster: $0)
+                    return self.leafNodeMarker(cluster: $0)
                 }
+                return self.clusterMarker(cluster: $0)
             }
             self.presentMarkers[tileId] = (self.presentMarkers[tileId] ?? []) + markers
             
@@ -71,6 +78,30 @@ class MapPresenter: ClusterPresentationLogic {
             }
         }
     }
+    
+    private func leafNodeMarker(cluster: Cluster) -> LeafNodeMarker {
+        let marker = LeafNodeMarker(coordinate: cluster.coordinates.first ?? Coordinate(x: 0, y: 0))
+        
+        marker.touchHandler = { [weak self] (_) -> Bool in
+            guard let handler = self?.leafNodeMarkerTouchHandler else { return false }
+            return handler(marker)
+        }
+        return marker
+    }
+    
+    private func clusterMarker(cluster: Cluster) -> ClusteringMarker {
+        let marker = ClusteringMarker(cluster: cluster)
+        
+        marker.touchHandler = { [weak self] (_) -> Bool in
+            guard let handler = self?.clusterNodeMarkerTouchHandler else { return false }
+            return handler(marker)
+        }
+        return marker
+    }
+
+}
+
+extension MapPresenter: POIDataPresentationLogic {
     
     func add(tileId: CLong, poi: POI) {
         let leafMarker = LeafNodeMarker(coordinate: Coordinate(x: poi.x, y: poi.y, id: poi.id))

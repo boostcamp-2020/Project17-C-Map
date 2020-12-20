@@ -23,7 +23,7 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertNotNil(boundingBox)
     }
     
-    func test_균일하게_4개로_나누는지_테스트() {
+    func test_splitted_4_BoundingBoxes() {
         guard let boundingBoxes = boundingBox?.splittedQuadBoundingBoxes() else { return }
         XCTAssertEqual(boundingBoxes[safe: 2]?.bottomLeft, Coordinate(x: 0, y: 50))
         XCTAssertEqual(boundingBoxes[safe: 2]?.topRight, Coordinate(x: 50, y: 100))
@@ -35,7 +35,7 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertEqual(boundingBoxes[safe: 1]?.topRight, Coordinate(x: 100, y: 50))
     }
     
-    func test_BoundingBox_경계값_Coordinate_넣었을_때_contains_테스트() {
+    func test_BoundingBox_border_value_contains() {
         guard let boundingBox = boundingBox else { return }
         let bottomLeft = Coordinate(x: 0, y: 0)
         let bottomRight = Coordinate(x: 100, y: 0)
@@ -48,7 +48,7 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertTrue(boundingBox.contains(coordinate: topLeft))
     }
     
-    func test_BoundingBox_외부값_Coodinate_넣었을_때_contains_테스트() {
+    func test_BoundingBox_external_value_contains() {
         guard let boundingBox = boundingBox else { return }
         let bottomLeft = Coordinate(x: -1, y: -1)
         let topRight = Coordinate(x: 101, y: 101)
@@ -57,7 +57,7 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertFalse(boundingBox.contains(coordinate: topRight))
     }
     
-    func test_BoundingBox_겹칠_때_intersectsBoxBounds_테스트() {
+    func test_BoundingBox_overlapped() {
         guard let boundingBox = boundingBox else { return }
         // 오른쪽 위
         let newBox = BoundingBox(topRight: Coordinate(x: 150, y: 150), bottomLeft: Coordinate(x: 100, y: 100))
@@ -74,7 +74,7 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertTrue(boundingBox.isOverlapped(with: newBox4))
     }
     
-    func test_BoundingBox_안_겹칠_때_intersectsBoxBounds_테스트() {
+    func test_BoundingBox_not_overlapped() {
         guard let boundingBox = boundingBox else { return }
         // 오른쪽 위
         let newBox = BoundingBox(topRight: Coordinate(x: 150, y: 150), bottomLeft: Coordinate(x: 101, y: 101))
@@ -90,4 +90,5 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertFalse(boundingBox.isOverlapped(with: newBox3))
         XCTAssertFalse(boundingBox.isOverlapped(with: newBox4))
     }
+    
 }
