@@ -220,8 +220,12 @@ private extension MapViewController {
     func remove(markers: [NMFMarker]) {
         markers.forEach { marker in
             marker.mapView = nil
+            
             self.presentedMarkers.removeAll { $0 == marker }
             marker.touchHandler = nil
+            
+            guard let markableMarker = marker as? Markable else { return }
+            markableMarker.markerLayer.removeFromSuperlayer()
         }
     }
     
