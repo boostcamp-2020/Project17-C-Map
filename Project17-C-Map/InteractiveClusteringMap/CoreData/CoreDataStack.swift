@@ -11,7 +11,7 @@ import CoreData
 final class CoreDataStack: DataManagable {
 
     private enum Name {
-        static let fileName: String = "restuarant-list-for-test"
+        static let fileName: String = "POIData_0_100000"
         static let queueName: String = "CoreDataStackQueue"
     }
     
