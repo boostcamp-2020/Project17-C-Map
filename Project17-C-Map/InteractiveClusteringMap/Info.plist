@@ -2,19 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>NMFClientId</key>
-	<string>36b5lui25z</string>
-    <key>UIUserInterfaceStyle</key>
-    <string>Light</string>
-    <key>NMFClientSecret</key>
-    <string>svaQ5DXUnKB6kCrdhEDMdZ8dgHiddJ9YxpC7A4CB</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>MapC</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -33,6 +24,13 @@
 	<true/>
 	<key>NMFClientId</key>
 	<string>36b5lui25z</string>
+	<key>NMFClientSecret</key>
+	<string>svaQ5DXUnKB6kCrdhEDMdZ8dgHiddJ9YxpC7A4CB</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>사용자의 위치를 받습니다.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -85,5 +83,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
