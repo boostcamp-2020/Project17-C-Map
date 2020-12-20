@@ -26,6 +26,7 @@ final class MapViewController: UIViewController {
     private let leafNodeMarkerInfoWindow = LeafNodeMarkerInfoWindow()
     private(set) var placeListViewController: PlaceListViewController?
     private var isTouchedRemove: Bool = false
+    private var timer: Timer?
     
     init?(coder: NSCoder, dataManager: DataManagable) {
         super.init(coder: coder)
@@ -99,7 +100,29 @@ final class MapViewController: UIViewController {
     }
 
     @IBAction private func touchedPlayButton(_ sender: UIButton) {
-        interactiveMapView.playCameraAnimation()
+        playButton.isEnabled = false
+        playButton.isUserInteractionEnabled = false
+        playCameraAnimation()
+    }
+    
+    private func playCameraAnimation() {
+        zoomOutCamera()
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.zoomOutCamera), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func zoomOutCamera() {
+        guard 7 < interactiveMapView.zoomLevel else {
+            timer?.invalidate()
+            timer = nil
+            playButton.isEnabled = true
+            playButton.isUserInteractionEnabled = true
+            return
+        }
+
+        let cameraUpdate = NMFCameraUpdate(zoomTo: interactiveMapView.zoomLevel - 1.5)
+        cameraUpdate.animation = .easeIn
+        cameraUpdate.animationDuration = 0.5
+        interactiveMapView.mapView.moveCamera(cameraUpdate)
     }
     
 }
@@ -112,6 +135,8 @@ private extension MapViewController {
             interactiveMapView.mode = .edit
             editModeLabel.isHidden = false
             playButton.isEnabled = false
+            
+            playButton.isUserInteractionEnabled = false
             return
         }
         
@@ -246,9 +271,13 @@ extension MapViewController: NMFMapViewTouchDelegate {
         guard isTouchedRemove == false else { return }
         
         leafNodeMarkerInfoWindow.close()
-        interactiveMapView.mode = .normal
-        editModeLabel.isHidden = true
-        playButton.isEnabled = true
+        
+        if interactiveMapView.mode == .edit {
+            interactiveMapView.mode = .normal
+            playButton.isEnabled = true
+            playButton.isUserInteractionEnabled = true
+            editModeLabel.isHidden = true
+        }
         
         presentedMarkers.forEach {
             $0.hidden = false
