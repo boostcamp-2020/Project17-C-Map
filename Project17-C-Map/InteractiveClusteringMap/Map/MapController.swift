@@ -8,43 +8,18 @@
 import Foundation
 import NMapsMap
 
-typealias MapBusinessLogic = ClusterBusinessLogic & DataBusinessLogic
-
 final class MapController: NSObject {
     
     private var tileCoverHelper: NMFTileCoverHelper?
-    private var interactor: MapBusinessLogic?
+    private var interactor: ClusterBusinessLogic?
     private weak var interactiveMapView: InteractiveMapView?
     private let serialQueue = DispatchQueue(label: "SerialQueue", qos: .utility)
     
-    init(mapView: InteractiveMapView, interactor: MapBusinessLogic) {
+    init(mapView: InteractiveMapView, interactor: ClusterBusinessLogic) {
         super.init()
         self.interactiveMapView = mapView
         self.interactor = interactor
         configureTileCoverHelper()
-    }
-    
-    func add(poi: POI) {
-        guard let tileIds = interactiveMapView?.mapView.getCoveringTileIds() as? [CLong] else { return }
-        
-        let coordinate = Coordinate(x: poi.x, y: poi.y, id: poi.id)
-        
-        for tileId in tileIds {
-            let bounds = NMFTileId.toLatLngBounds(fromTileId: tileId)
-            let boundingBox = bounds.makeBoundingBox()
-            if boundingBox.contains(coordinate: coordinate) {
-                interactor?.add(tileId: tileId, poi: poi)
-                break
-            }
-        }
-    }
-    
-    func delete(coordinate: Coordinate) {
-        interactor?.remove(coordinate: coordinate)
-    }
-    
-    func fetchInfo(by coordinate: Coordinate) -> POIInfo? {
-        return interactor?.fetch(coordinate: coordinate)
     }
     
     private func configureTileCoverHelper() {

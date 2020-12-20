@@ -28,9 +28,10 @@ extension POIMO {
         return NSFetchRequest<POIMO>(entityName: name)
     }
     
-    @nonobjc class func fetchRequest(coordinate: Coordinate) -> NSFetchRequest<POIMO> {
+    @nonobjc class func fetchRequest(coordinate: Coordinate) -> NSFetchRequest<POIMO>? {
         let request: NSFetchRequest<POIMO> = fetchRequest()
-        let predicate = NSPredicate(format: Name.equalIDPredicateFormat, coordinate.id)
+        guard let id = coordinate.id else { return nil }
+        let predicate = NSPredicate(format: Name.equalIDPredicateFormat, id)
         
         request.predicate = predicate
         

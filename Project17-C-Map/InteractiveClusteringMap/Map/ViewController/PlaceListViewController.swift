@@ -267,3 +267,18 @@ extension PlaceListViewController: UICollectionViewDelegate {
     }
     
 }
+
+extension PlaceListViewController {
+    
+    static func storyboardInstance(poiService: POIServicing,
+                                   placeInfoService: PlaceInfoServicing) -> PlaceListViewController? {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        return storyboard.instantiateViewController(
+            identifier: "PlaceListViewController",
+            creator: { coder in
+                return PlaceListViewController(coder: coder, poiService: poiService, placeInfoService: placeInfoService)
+            })
+    }
+    
+}

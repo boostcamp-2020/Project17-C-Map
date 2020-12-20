@@ -13,7 +13,6 @@ protocol POIServicing {
     func update(poi: POI)
     func delete(coordinate: Coordinate)
     func fetch(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Coordinate]) -> Void)
-    func fetchInfo(coordinate: Coordinate) -> Place?
     func fetchInfo(coordinate: Coordinate) -> POIInfo?
     func fetchInfo(bottomLeft: Coordinate, topRight: Coordinate, completion: @escaping ([Place]) -> Void)
     func save()
@@ -65,13 +64,6 @@ final class POIService: POIServicing {
             guard let info = $0.info?.info else { return nil }
             return Place(coordinate: Coordinate(x: $0.lng, y: $0.lat, id: $0.id), info: info)
         }
-    }
-    
-    func fetchInfo(coordinate: Coordinate) -> Place? {
-        guard let infoMO = dataManager.fetchInfo(coordinate: coordinate) else {
-            return nil
-        }
-        return Place(coordinate: coordinate, info: infoMO.info)
     }
     
     func save() {
