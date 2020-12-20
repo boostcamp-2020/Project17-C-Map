@@ -11,7 +11,6 @@ import NMapsMap
 final class InteractiveMapView: NMFNaverMapView {
     
     private lazy var transparentLayer: TransparentLayer = TransparentLayer(bounds: bounds)
-    private var timer: Timer?
     
     private var polygonOverlay: NMFPolygonOverlay?
     var mode: Mode = .normal {
@@ -45,7 +44,7 @@ final class InteractiveMapView: NMFNaverMapView {
     private func configure() {
         showZoomControls = true
         showLocationButton = true
-        showCompass = true
+        showCompass = false
         showScaleBar = true
         mapView.allowsTilting = false
         mapView.isStopGestureEnabled = false
@@ -63,23 +62,6 @@ final class InteractiveMapView: NMFNaverMapView {
     
     func removePolygon() {
         polygonOverlay?.mapView = nil
-    }
-    
-    func playCameraAnimation() {
-        zoomOutCamera()
-        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(self.zoomOutCamera), userInfo: nil, repeats: true)
-    }
-    
-    @objc func zoomOutCamera() {
-        let cameraUpdate = NMFCameraUpdate(zoomTo: zoomLevel - 1.5)
-        cameraUpdate.animation = .easeIn
-        cameraUpdate.animationDuration = 0.5
-        mapView.moveCamera(cameraUpdate)
-        
-        if 7 > mapView.zoomLevel {
-            timer?.invalidate()
-            timer = nil
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
